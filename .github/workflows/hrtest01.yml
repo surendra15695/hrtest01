@@ -1,0 +1,40 @@
+name: HrTest01
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  AZURE_FUNCTIONAPP_NAME: 'hrtest01'   # set this to your function app name on Azure
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'       # set this to the path to your function app project, defaults to the repository root
+  DOTNET_VERSION: '3.1'
+  Node_Version: '16.13.0'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # For Linux, use ubuntu-latest
+    environment: dev
+    steps:
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v4
+
+    - name: Check PWD and List
+      run: |
+        pwd
+        ls -l
+
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{env.Node_Version}}
+
+    - name: Install Angular
+      run: npm install -g @angular@cli@8.3.29
+
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+   
