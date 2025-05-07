@@ -43,10 +43,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Restore Dependencies
-      run: Dotnet restore
+      run: dotnet restore
 
     - name: Build Application
-      run: Dotnet Build
+      run: dotnet Build
 
     - name: Publish
       run: |
