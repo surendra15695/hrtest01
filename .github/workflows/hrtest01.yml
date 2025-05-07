@@ -44,7 +44,7 @@ jobs:
 
     - name: Publish
       run: |
-        cd .\Application.WebApp
+        cd Application.WebApp
         dotnet publish --configuration Release --output ./output
         ls -l
 
