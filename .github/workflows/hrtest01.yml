@@ -44,6 +44,8 @@ jobs:
 
     - name: Publish
       run: |
+        dotnet restore
+        dotnet build
         cd Application.WebApp
         ls -l
         dotnet publish --output ./output
