@@ -1,0 +1,135 @@
+<div class='book'>
+    <!--A4 page start-->
+    <div style='width: 74px; text-align: center; margin: 0 auto;'>
+        <img src='https://mrfhrportaldocumentstrg.blob.core.windows.net/signatureupload/logo.png'
+        style='width: 100%; text-align: center;' alt=''>
+    </div>
+    <h2 style='text-align: center;'>NOTICE PERIOD REIMBURSEMENT FORM</h2>
+
+    <div style='margin: 10px 0;'>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; text-align: right;'><b>Date:</b> {{today | date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style='margin: 10px 0;'>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>NAME</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.candidateFullName}}</td>
+            </tr>
+
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>EMPLOYEE NUMBER</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.empNo}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>DATE OF JOINING</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.dateOfJoining}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>DEPARTMENT</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.functionName}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>LOCATION</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.locationOffice}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>GRADE</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.gradeName}}</td>
+            </tr>
+
+            <!-- <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>Notice Period Days:</td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.noticePeriodDays}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>Notice Period Served Days </td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.noticePeriodServeDays}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>Remaining Days </td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.noticePeriodRemainingDays}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>settlement Amount </td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{noticeperiodDataRecord?.settlementAmount}}</td>
+            </tr> -->
+        </table>
+    </div>
+    <p>Please arrange to reimburse a sum of Rs. {{noticeperiodDataRecord?.settlementAmount}} /- being the notice period reimbursement incurred by me as per details given below.</p>
+    <br/>
+    <table border="1">
+        <tr>
+            <td>S.No</td>
+            <td colspan="2">Particulars</td>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td >Offer Received Date</td>
+            <td>{{noticeperiodDataRecord?.offerSendDate}}</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td >Date of Resignation</td>
+            <td>{{noticeperiodDataRecord?.dateresignation}}</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td >Total Notice Period Days</td>
+            <td>{{noticeperiodDataRecord?.noticePeriodDays}}</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td >Days Served</td>
+            <td>{{noticeperiodDataRecord?.noticePeriodServeDays}}</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td >Shortfall Days</td>
+            <td>{{noticeperiodDataRecord?.noticePeriodRemainingDays}}</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Notice Period Recovery on (Basic / Gross / CTC)</td>
+            <td>{{noticeperiodDataRecord?.noticeperiodRecovery}}</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Notice Period Recovery Amount (Per Day)</td>
+            <td>{{noticeperiodDataRecord?.recoveryAmountperDay}}</td>
+        </tr>
+
+    </table>
+    <br/>
+    <h3>Declaration</h3>
+    <p>I hereby declare that the particulars / details given above are correct and complete.</p>
+    <table style='width: 100%;border-collapse: collapse; border-spacing: 0px; text-align: left; margin: 40px 0 0 0;'>
+        <tbody>
+            <tr>
+                <td style='width: 50%; padding: 3px 5px; text-align: right;'>
+                    <img width='100' style='text-align:right'
+                    src="https://hrportaldocumentstorage.blob.core.windows.net/hrdocument/Signature.jpg" alt="">
+                    </td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px; text-align: right;'>SIGNATURE</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

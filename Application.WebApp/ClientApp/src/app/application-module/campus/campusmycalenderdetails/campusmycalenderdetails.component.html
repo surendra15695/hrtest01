@@ -1,0 +1,762 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotomycampusCalendar()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+
+        <h1 class="f-l">View Candidate</h1>
+
+    </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a [ngClass]="pendingActiveTabClass" id="firsttab" data-toggle="tab" href="#tabOne" role="tab"
+                aria-controls="home" aria-selected="true" (click)="showPending()">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a [ngClass]="interviewedActiveTabClass" id="secondtab" data-toggle="tab" href="#tabTwo" role="tab"
+                aria-controls="profile" aria-selected="false" (click)="showInterviewed()">Interviewed</a>
+        </li>
+
+        <!-- <li class="nav-item" style="display: none;">
+            <a class="nav-link" id="thirdtab" data-toggle="tab" href="#tabThree" role="tab" aria-controls="profile"
+                aria-selected="false">Upload Assesment</a>
+        </li> -->
+    </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div [ngClass]="pendingActiveDivClass" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <div class="filter-sec">
+                <form [formGroup]="searchpendingform" (ngSubmit)="fromPendingSubmit()">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3" style="display:none;">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="pfromdatepicker" placeholder="From Date" #pfromDate
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #ptoDate
+                                                formControlName="toDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Interview Name</label>
+                                <ng-select bindLabel="interviewName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="interviewId">
+                                    <ng-option [value]="rec.interviewId" *ngFor="let rec of interviews">
+                                        {{rec.interviewName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName">
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="display:none;">
+                            <div class="form-group">
+                                <label>Mode of Int.</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" formControlName="interviewTypeId">
+                                    <ng-option [value]="0">All</ng-option>
+                                    <ng-option [value]="1">Offline</ng-option>
+                                    <ng-option [value]="2">Online</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Hiring Status</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="true" [clearable]="false" formControlName="hiringStatusId">
+                                    <ng-option [value]="0">All</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Venue </label>
+                                <ng-select bindLabel="venueName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="venueId">
+                                    <ng-option [value]="rec.venueId" *ngFor="let rec of venues">
+                                        {{rec.venueName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Vertical</label>
+
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="verticalId" (change)="changePendingVertical()">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="functionId" (change)="changePendingFunction()">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of pendingFunctions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <ng-select bindLabel="departmentName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="departmentId">
+                                    <ng-option [value]="rec.departmentId" *ngFor="let rec of pendingDepartments">
+                                        {{rec.departmentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Position</label>
+                                <ng-select bindLabel="positionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="positionId">
+                                    <ng-option [value]="rec.positionId" *ngFor="let rec of pendingPositions">
+                                        {{rec.positionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Posting location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of pendingLocations">
+                                        {{rec.locationNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1" (click)=resetPendingForm()><i
+                                    class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="text-right my-2">
+                <button type="button" (click)="openActionModal(3,'Clarification Needed')" *ngIf="isBtnClarification"
+                    class="btn btn-rounded btn-outline-warning btn-sm" data-toggle="modal" data-target="#myModal"><i
+                        class="las la-share"></i> Clarification Needed</button>
+                <button type="button" (click)="openActionModal(1,'Accept Interview')"
+                    class="btn btn-rounded btn-outline-success btn-sm ml-1" data-toggle="modal" *ngIf="isBtnAccept"
+                    data-target="#myModal"><i class="las la-check"></i>Accept</button>
+                <button type="button" (click)="openActionModal(4,'Reject Interview')"
+                    class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal" *ngIf="isBtnReject"
+                    data-target="#myModal"><i class="las la-times"></i>Reject</button>
+                <button type="button" (click)="openActionModal(5,'Cancel Interview')" *ngIf="isBtnCancel"
+                    class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+                    data-target="#myModal"><i class="las la-times"></i>Cancel</button>
+                <button type="button" (click)="openActionModal(6,'Process Interview')" *ngIf="isBtnProcess"
+                    class="btn btn-rounded btn-outline-success btn-sm ml-1" data-toggle="modal"
+                    data-target="#myModal"><i class="las la-check"></i>Process</button>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkPendingAll" value="0"
+                                        (click)="onclickAllClickCbk($event)">
+                                    <label class="chk" for="chkPendingAll"></label>
+                                </div>
+                            </th>
+                            <th>Date & Time</th>
+                            <!-- <th>Interview Name</th> -->
+                            <th>Candidate Id</th>
+                            <th>Candidate Name</th>
+                            <!-- <th>Position For</th> -->
+                            <th>Venue</th>
+                            <th>Mode of interview</th>
+                            <th>Function</th>
+                            <!-- <th>Department</th> -->
+                            <!-- <th>Posting Location</th> -->
+                            <!-- <th>Hiring Status</th> -->
+                            <th>Interview Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of interviewCalendarList"
+                            [ngClass]="data.calendarAcceptStatusId==2?'table-warning':''">
+                            <td>
+                                <input type="hidden" class="calendarId" [value]="data.calendarId" />
+                                <input type="hidden" class="hiringStatusId" [value]="data.hiringStatusId" />
+                                <input type="hidden" class="acceptStatus" [value]="data.calendarAcceptStatusId" />
+                                <div class="form-check"
+                                    *ngIf="data.calendarAcceptStatusId!=4 || data.calendarAcceptStatusId!=5">
+                                    <input type="checkbox" id="chkPending_M_{{data.calendarId}}"
+                                        value="{{data.calendarId}}"
+                                        (click)="selectPending($event,data.calendarId,data.acceptStatus,data.hiringStatusId,data.candidateId,data)">
+                                    <label class="chk" for="chkPending_M_{{data.calendarId}}"></label>
+                                </div>
+                            </td>
+                            <td>{{data.fromDate}}</td>
+                            <!-- <td>{{data.interviewName}}</td> -->
+                            <td>
+                                <input type="hidden" value="{{data.candidateId}}" />
+                                {{data.candidateNo}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" (click)="gotoCandidateView(data)" class="red">
+                                    {{data.fullName}}</a>
+                                <!-- <a *ngIf="data.referalEmpNo!=''" href="javascript:void(0)" class="red"
+                                    data-toggle="popover" [attr.data-content]="data.popoverContent" rel="popover"
+                                    data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a> -->
+                                <!-- <td>{{data.positionName}}</td> -->
+                            <td>{{data.venueName}}</td>
+                            <td>{{data.interviewType}}</td>
+                            <td>{{data.functionName}}</td>
+                            <!-- <td>{{data.departmentName}}</td> -->
+                            <!-- <td>{{data.locationOffice}}</td> -->
+                            <!-- <td>{{data.hiringStatusName}}</td> -->
+                            <td>{{data.status}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                        <a *ngIf="data.applicationCount>0"
+                                            (click)="gotoApplicationForm(data.candidateId,data.requisitionDetailId)"
+                                            class="dropdown-item" href="javascript:void(0)"><i class="las la-file"></i>
+                                            View
+                                            Application</a>
+                                        <a class="dropdown-item" *ngIf="data.applicationCount>0"
+                                            (click)="downloadapplicationform(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-download"></i>Download
+                                            Application Form</a>
+                                        <!-- <a *ngIf="data.calendarAcceptStatusId==2" data-toggle="modal"
+                                            data-target="#InterviewClarificationModal"
+                                            (click)="getInterviewClarificationList(data.calendarId)"
+                                            class="dropdown-item" href="javascript:void(0)"><i class="las la-file"></i>
+                                            View Clarification
+                                            Comment</a> -->
+
+                                        <a class="dropdown-item" *ngIf="data.campusForId==2"
+                                            (click)="gotoStageGetassesment(data)" href="javascript:void(0)"><i
+                                                class="las la-download"></i>View Stage Get Assesment</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div [ngClass]="interviewedActiveDivClass" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <div class="filter-sec">
+                <form [formGroup]="searchinterviewedform" (ngSubmit)="fromInterviewedSubmit()">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3" style="display:none;">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="pfromdatepicker" placeholder="From Date" #pfromDate
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #ptoDate
+                                                formControlName="toDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Interview Name</label>
+                                <ng-select bindLabel="interviewName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="interviewId">
+                                    <ng-option [value]="rec.interviewId" *ngFor="let rec of interviews">
+                                        {{rec.interviewName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName">
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="display:none;">
+                            <div class="form-group">
+                                <label>Mode of Int.</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" formControlName="interviewTypeId">
+                                    <ng-option [value]="0">All</ng-option>
+                                    <ng-option [value]="1">Offline</ng-option>
+                                    <ng-option [value]="2">Online</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Hiring Status</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="true" [clearable]="false" formControlName="hiringStatusId">
+                                    <ng-option [value]="0">All</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Venue </label>
+                                <ng-select bindLabel="venueName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="venueId">
+                                    <ng-option [value]="rec.venueId" *ngFor="let rec of venues">
+                                        {{rec.venueName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="verticalId" (change)="changeInterviewedVertical()">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="functionId" (change)="changeInterviewedFunction()">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of interviewedFunctions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <ng-select bindLabel="departmentName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="departmentId">
+                                    <ng-option [value]="rec.departmentId" *ngFor="let rec of interviewedDepartments">
+                                        {{rec.departmentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Position</label>
+                                <ng-select bindLabel="positionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="positionId">
+                                    <ng-option [value]="rec.positionId" *ngFor="let rec of interviewedPositions">
+                                        {{rec.positionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:none;">
+                            <div class="form-group">
+                                <label>Posting location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of interviewedLocations">
+                                        {{rec.locationNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm" (click)=resetInterviewedForm()><i
+                                    class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="text-right my-2">
+                <button type="button" *ngIf="isBtnAssessment" class="btn btn-rounded btn-outline-primary btn-sm"
+                    (click)="gotoAssessment()">Interview Assesment</button>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkInterviewedAll" value="0">
+                                    <label class="chk" for="chkInterviewedAll"></label>
+                                </div>
+                            </th>
+                            <th>Date & Time</th>
+                            <!-- <th>Interview Name</th> -->
+                            <th>Candidate Id</th>
+                            <th>Candidate Name</th>
+                            <!-- <th>Position For</th> -->
+                            <th>Venue</th>
+                            <th>Mode of interview</th>
+                            <th>Function</th>
+                            <!-- <th>Department</th> -->
+                            <!-- <th>Posting Location</th> -->
+                            <!-- <th>Hiring Status</th> -->
+                            <!-- <th>Filled Status</th> -->
+                            <th>Interview Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of interviewedCalendarList">
+                            <td>
+                                <input type="hidden" class="calendarId" [value]="data.calendarId" />
+                                <input type="hidden" class="hiringStatusId" [value]="data.hiringStatusId" />
+                                <input type="hidden" class="acceptStatus" [value]="data.calendarAcceptStatusId" />
+                                <input type="hidden" class="assessmentFilledStatus"
+                                    [value]="data.assessmentFilledStatus" />
+                                <div class="form-check" *ngIf="data.assessmentFilledStatus==0">
+                                    <input type="checkbox" id="chkInterviewed_M_{{data.calendarId}}"
+                                        value="{{data.calendarId}}"
+                                        (click)="selectInterviewed($event,data.calendarId,data.calendarAcceptStatusId,data.hiringStatusId,data.assessmentFilledStatus,data.candidateId)">
+                                    <label class="chk" for="chkInterviewed_M_{{data.calendarId}}"></label>
+                                </div>
+                            </td>
+                            <td>{{data.fromDate}}</td>
+                            <!-- <td>{{data.interviewName}}</td> -->
+                            <td>
+                                {{data.candidateNo}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" (click)="gotoCandidateView(data)" class="red">
+                                    {{data.fullName}}</a>
+                                <!-- <a *ngIf="data.referalEmpNo!=''" href="javascript:void(0)" class="red"
+                                        data-toggle="popover" [attr.data-content]="data.popoverContent" rel="popover"
+                                        data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a> -->
+                                <!-- <td>{{data.positionName}}</td> -->
+                            <td>{{data.venueName}}</td>
+                            <td>{{data.interviewType}}</td>
+                            <td>{{data.functionName}}</td>
+                            <!-- <td>{{data.departmentName}}</td> -->
+                            <!-- <td>{{data.locationOffice}}</td>
+                            <td>{{data.hiringStatusName}}</td> -->
+                            <td>{{data.status}}</td>
+                            <!-- <td>{{data.assessmentFilledStatus==0?'Pending':'Filled'}}</td> -->
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                        <a *ngIf="data.applicationCount>0"
+                                            (click)="gotoApplicationForm(data.candidateId,data.requisitionDetailId)"
+                                            class="dropdown-item" href="javascript:void(0)"><i class="las la-file"></i>
+                                            View
+                                            Application</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            (click)="gotoIndividualAssessment(data.calendarId,data.candidateId)"><i
+                                                class="las la-file"></i> Interview
+                                            Assessment</a>
+                                        <a class="dropdown-item" *ngIf="data.applicationCount>0"
+                                            (click)="downloadapplicationform(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-download"></i>Download
+                                            Application Form</a>
+                                        <!-- <a class="dropdown-item" data-toggle="modal" data-target="#hrFeedback"
+                                            *ngIf="data.hrPanel>0" href="javascript:void(0)"
+                                            (click)="openFeedbackModal(data.calendarId)"><i class="las la-file"></i>
+                                            HR
+                                            Feedback</a> -->
+                                        <a class="dropdown-item" *ngIf="data.campusForId==2"
+                                            (click)="gotoStageGetassesment(data)" href="javascript:void(0)"><i
+                                                class="las la-download"></i>View Stage Get Assesment</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- <div class="tab-pane fade" id="tabThree" role="tabpanel" aria-labelledby="thirdtab">
+            <div>
+                <h6 class="red">Submit Assesment</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="">Upload Result (Excel format only)<span class="required">*</span></label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile"></label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-black mt-md-4">Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive mt-2">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Candidate Name</th>
+                            <th>Email ID</th>
+                            <th>Contact No.</th>
+                            <th>Aadhar No.</th>
+                            <th>DOB</th>
+                            <th>Interview Completion date</th>
+                            <th>Interview Name</th>
+                            <th>Place</th>
+                            <th>Position For</th>
+                            <th>Assesment Staus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ronita Dev</td>
+                            <td>ronita.dev@mail.com</td>
+                            <td>9987866565</td>
+                            <td>342445645342</td>
+                            <td>02/12/1996</td>
+                            <td>20/05/2021</td>
+                            <td>General Interview</td>
+                            <td>Chennai</td>
+                            <td>Executive</td>
+                            <td class="green">Filled</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4">
+                <button type="button" class="btn btn-primary">Cancel</button>
+                <button type="button" class="btn btn-black">Submit</button>
+            </div>
+        </div> -->
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" #closeActionModal class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">{{modalHeader}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control txtRemarks" placeholder="" [(ngModel)]="Remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-black btn-sm" (click)="actionFormSubmit()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Modal -->
+<div class="modal fade" id="hrFeedback" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="clodeFeedbackModal" #clodeFeedbackModal data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Feedback</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Any history of existing medical illness / accident for self or parents. If yes, give
+                                details<span class="required">*</span></label>
+                            <textarea class="form-control medicalddetails txtareadetails" placeholder=""
+                                (ngModelChange)="feedbackFormData.medicalDetails=$event"
+                                [(ngModel)]="feedbackFormData.medicalDetails"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Annual income pd parents - Please give details of financial condition<span
+                                    class="required">*</span></label>
+                            <textarea class="form-control parentincomedetails txtareadetails" placeholder=""
+                                (ngModelChange)="feedbackFormData.parentIncomeDetails=$event"
+                                [(ngModel)]="feedbackFormData.parentIncomeDetails"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Do candidate have any plan for higher studies?<span class="required">*</span></label>
+                            <textarea class="form-control higherstudiesdetails txtareadetails" placeholder=""
+                                (ngModelChange)="feedbackFormData.higherstudiesDetails=$event"
+                                [(ngModel)]="feedbackFormData.higherStudiesDetails"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Is candidate family dependent on his / her income? If yes, give details<span
+                                    class="required">*</span></label>
+                            <textarea class="form-control dependentdetails txtareadetails" placeholder=""
+                                (ngModelChange)="feedbackFormData.dependentDetails=$event"
+                                [(ngModel)]="feedbackFormData.dependentDetails"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>What is candidate understanding of job profile or role ?<span
+                                    class="required">*</span></label>
+                            <textarea class="form-control understandingdetails txtareadetails" placeholder=""
+                                (ngModelChange)="feedbackFormData.underStandingDetails=$event"
+                                [(ngModel)]="feedbackFormData.underStandingDetails"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer" *ngIf="feedbackButtonVisible">
+                <button type="button" class="btn btn-black btn-sm" (click)="saveFeedback()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+<div class="modal fade" id="InterviewClarificationModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="closeInterviewClarificationModal"
+                    #closeInterviewClarificationModal data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Take Action</h4>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let rec of interviewClarificationList">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="media" *ngFor="let data of rec.clarificationData">
+                                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                                <div class="media-body">
+                                    <h6 class="mt-0">{{data.createdByName}}</h6>
+                                    {{data.remarks}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="rec.clarificationCount">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control" id="calendarRemarks{{rec.calendarId}}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <button *ngIf="rec.clarificationCount" type="button"
+                            (click)="sendInterviewClarification(rec.calendarId,3)"
+                            class="btn btn-rounded btn-outline-warning btn-sm">Clarification Needed</button>
+
+                        <button *ngIf="rec.clarificationCount" type="button"
+                            (click)="sendInterviewClarification(rec.calendarId,1)"
+                            class="btn btn-rounded btn-outline-success btn-sm ml-1">Accept</button>
+
+                        <button *ngIf="rec.clarificationCount" type="button"
+                            (click)="sendInterviewClarification(rec.calendarId,4)"
+                            class="btn btn-rounded btn-outline-primary btn-sm ml-1">Reject</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div id="printerdiv" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>

@@ -1,0 +1,115 @@
+<div class="content-box m-b-15 m-t-10"  *ngIf = "candidateDetailsData[0].hiringStatusId <= 12">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l" style="color: rgb(173, 9, 9);">Selection Acknowledgement mail not sent yet</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-box m-b-15 m-t-10" *ngIf = "candidateDetailsData[0].hiringStatusId >=20 && candidateDetailsData[0].hiringStatusId <= 22">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Selection Acknowledgement</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Name:</p>
+                <p class="d-inline-block">{{candidateDetailsData[0]?.fullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Vertical:</p>
+                <p class="d-inline-block">{{candidateDetailsData[0]?.verticalName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function:</p>
+                <p class="d-inline-block">{{candidateDetailsData[0]?.functionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Position:</p>
+                <p class="d-inline-block">{{candidateDetailsData[0]?.position}}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+        <div>
+            <h6 class="red">Selection Acceptance</h6>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="21" id="radio1"
+                            [disabled]="isReadoly"
+                            (change)="onChangeAcknowledgementType('A')"
+                            [checked]="candidateDetailsData[0]?.hiringStatusId == 21"
+                            type="radio">
+                            <label for="radio1">Accept</label>
+                        </div>
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="22" id="radio2" 
+                            [disabled]="isReadoly"
+                            (change)="onChangeAcknowledgementType('D')"
+                            [checked]="candidateDetailsData[0]?.hiringStatusId == 22"
+                            type="radio">
+                            <label for="radio2">Decline</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"> 
+                    <label>Preferred Location:</label>
+                    <ng-select bindLabel="locationNo" class="ddllocation" [disabled]="isReadoly"
+                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" 
+                    [searchable]="true" [clearable]="false" [(ngModel)]="SelectedLocation">
+                        <ng-option [value]="rec.locationId" *ngFor="let rec of LocationList">
+                            {{rec.locationOffice}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-md-12" *ngIf ="isReadoly != true">
+                    <div class="form-group">
+                        <label for="">Remarks</label>
+                        <textarea name="" id="" class="form-control" placeholder="Enter remarks"
+                            ></textarea>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="row">
+                
+            </div>
+        </div>
+        <div class="mt-4" *ngIf ="isReadoly != true">
+            <button type="button " class="btn btn-black" (click)="onClickFinalSubmit('Y')">Submit</button>
+            <button type="button " class="btn btn-primary ml-1">Cancel</button>
+        </div>    
+</div>
+
+
+<!-- <div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                    correctly.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="onClickFinalSubmit('N')">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onClickFinalSubmit('Y')">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

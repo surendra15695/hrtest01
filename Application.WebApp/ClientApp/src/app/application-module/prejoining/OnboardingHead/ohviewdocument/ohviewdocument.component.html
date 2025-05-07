@@ -1,0 +1,511 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">View Document</h1>
+        <div style="float: right;">
+            <button type="button" class="btn btn-primary btn-sm" (click)="onclickDownloadAll()" >Download All</button>
+        </div>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                        aria-controls="collapseOne">
+                        Candidate Details
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body" *ngFor="let data of candidates">
+                    <div class="candidate-info-header mb-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="col">
+                                <h6 class="red d-inline-block mt-1">{{data.prefixName}} {{data.fullName}}
+                                    ({{data.candidateNo}})</h6>
+                                <span> {{data.emailId}}</span>
+                            </div>
+                            <div class="col" *ngIf="data.hiringStatusId!=1">
+                                <span
+                                    [class]="data.hiringStatusId!=4?'badge badge-pill badge-success':'badge badge-pill badge-danger'">{{data.hiringStatusName}}</span>
+                            </div>
+                        </div>
+                        <div class="pb-1">
+                            <span class="mr-3"><i class="las la-mobile"></i> {{data.contactNo}}</span><span><i
+                                    [class]="data.genderName=='Male'?'las la-male':'las la-female'"></i>
+                                {{data.genderName}}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Age :</p>
+                            <p class="d-inline-block">{{data.age}}Yrs</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Aadhar No. :</p>
+                            <p class="d-inline-block">{{data.aadharNo}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Mother Tongue :</p>
+                            <p class="d-inline-block">{{data.motherTongueName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Languages Known :</p>
+                            <p class="d-inline-block">{{data.languageNames}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Highest Qualification :</p>
+                            <p class="d-inline-block">{{data.qualificationName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Course :</p>
+                            <p class="d-inline-block">{{data.courseName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Stream :</p>
+                            <p class="d-inline-block">{{data.streamName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Percentage :</p>
+                            <p class="d-inline-block">{{data.marksPercentage}}%</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Year of Completion :</p>
+                            <p class="d-inline-block">{{data.completionYear}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Qualification Type :</p>
+                            <p class="d-inline-block">{{data.qualificationTypeName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Total Experience :</p>
+                            <p class="d-inline-block">{{data.experienceYear}}years {{data.experienceMonth}} months</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current CTC :</p>
+                            <p class="d-inline-block">{{data.currentCTC}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current Employer :</p>
+                            <p class="d-inline-block">{{data.currentEmployer}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Designation :</p>
+                            <p class="d-inline-block">{{data.currentDesignation}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Domain :</p>
+                            <p class="d-inline-block">{{data.domainName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Sub-Domain :</p>
+                            <p class="d-inline-block">{{data.subDomainName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current Location :</p>
+                            <p class="d-inline-block">{{data.stateName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Any Previous Application History in MRF :</p>
+                            <p class="d-inline-block">{{data.previousAppliedName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Any relative Working on MRF :</p>
+                            <p class="d-inline-block">{{data.relativeStatusName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+                            <p class="d-inline-block grey">Relative Name :</p>
+                            <p class="d-inline-block">{{data.relativeName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+                            <p class="d-inline-block grey">Relative Contact No :</p>
+                            <p class="d-inline-block">{{data.relativeContactNo}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="data.parentRelationshipId!=0">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Referee's Relation /Familarity :</p>
+                            <p class="d-inline-block">{{data.parentRelationshipName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.childRelationshipId!=0">
+                            <p class="d-inline-block grey">Relation Details :</p>
+                            <p class="d-inline-block">{{data.childRelationshipName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="data.relationshipNotes!=''">
+                        <div class="col-md-12">
+                            <p class="d-inline-block grey">Relationship/Familarity Details :</p>
+                            <p class="d-inline-block">{{data.relationshipNotes}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row" *ngIf="data.cmdApprovalRequired!=0">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Cmd Approval Required :</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalRequired==0">No</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalRequired==1">Yes</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.cmdApprovalRequired==1">
+                            <p class="d-inline-block grey">Cmd Approval Status :</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalStatus==0">No</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalStatus==1">Yes</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.cmdApprovalNo!=''">
+                            <p class="d-inline-block grey">Cmd Approval No :</p>
+                            <p class="d-inline-block">{{data.cmdApprovalNo}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-md-6" *ngIf="data.cmdApprovalNo!=''">
+                            <p>CMD Approval Documnet :</p>
+                            <div class="attach-file">
+                                <a (click)="openFile(data.cmdApprovalDocument)" style="cursor: pointer;" title="Download"><i
+                                        class="las color-black la-paperclip"></i>CMD Approval doc </a>
+                                <a (click)="openFile(data.cmdApprovalDocument)" style="cursor: pointer;"><i
+                                        class="las la-download red"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Resume :</p>
+                            <div class="attach-file">
+                                <a (click)="openFile(data.resume)" style="cursor: pointer;" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Resume doc </a>
+                                <a (click)="openFile(data.resume)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="testScoreVisible">
+                        <hr>
+                        <h6 class="red">Test Score</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Test Completion Date</th>
+                                        <th class="text-center">Score Obtained</th>
+                                        <th class="text-center">Aptitude</th>
+                                        <th class="text-center">Reading/Planning Excercise</th>
+                                        <th class="text-center">Written Excercise/Emotional Maturity</th>
+                                        <th class="text-center">Technical</th>
+                                        <th>Test Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of testResults">
+                                        <td>{{data.testCompletionDate}}</td>
+                                        <td class="text-center">{{data.scoreObtained}}</td>
+                                        <td class="text-center">{{data.apptitude}}</td>
+                                        <td class="text-center">{{data.readingExercise}}</td>
+                                        <td class="text-center">{{data.writtenExercise}}</td>
+                                        <td class="text-center">{{data.technical}}</td>
+                                        <td>{{data.testResult}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree">
+                        Documents
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="border-box mb-2 mt-2 p-3" *ngFor="let data of submittedDocumentArrayList">
+                        <h6 class="mt-0">{{data.doumentTypName}}</h6>
+                        <div class="uploadDocList" *ngFor="let rec of data.documents">
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <label class="grey">{{rec.doumentName}}</label>
+                                    <div class="attach-file" *ngIf="rec.isUploaded">
+                                        <a *ngIf="rec.documentPath!=''" (click)="openFile(rec.documentPath)" style="cursor: pointer;"
+                                            title="Download"><i class="las color-black la-paperclip"></i>Document</a>
+                                        <a *ngIf="rec.documentPath==''" href="javascript:void(0)"
+                                            (click)="downLoadPDF(rec.doumentNameId)" title="Download"><i
+                                                class="las color-black la-paperclip"></i>Document</a>
+                                        <a *ngIf="rec.documentPath!=''" (click)="openFile(rec.documentPath)" style="cursor: pointer;"><i
+                                                class="las la-download red"></i></a>
+                                        <a *ngIf="rec.documentPath==''" (click)="downLoadPDF(rec.doumentNameId)"
+                                            target="_blank"><i class="las la-download red"></i></a>
+                                    </div>
+                                    <div class="attach-file" *ngIf="!rec.isUploaded">
+                                        <a href="javascript:void(0)" title="Download"><i
+                                                class="las color-black la-paperclip"></i>NA</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="grey">Document Verification</label>
+                                    <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                        [searchable]="false" [clearable]="false" [(ngModel)]="rec.approvalStatus"
+                                        [disabled]="disabledField">
+                                        <!-- [disabled]="rec.disabledField" -->
+                                        <ng-option [value]="6">NA</ng-option>
+                                        <ng-option [value]="1">Pending</ng-option>
+                                        <ng-option [value]="3">Verified</ng-option>
+                                        <ng-option [value]="2">Need Clarification</ng-option>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="grey">Remarks</label>
+                                    <p><input type="text" class="form-control" placeholder=""
+                                            [(ngModel)]="rec.approvalRemarks" [disabled]="disabledField"></p>
+                                    <!-- [disabled]="rec.disabledField" -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- for download test Start-->
+                    <!-- <div class="border-box mb-2 mt-2 p-3">
+                        <div class="col-md-4">
+                            <label class="grey">Family Details</label>
+                            <div class="attach-file">
+                                <a href="javascript:void(0)" (click)="downLoadPDF('F')" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Family Details Form</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-box mb-2 mt-2 p-3">
+                        <div class="col-md-4">
+                            <label class="grey">Joining Report</label>
+                            <div class="attach-file">
+                                <a href="javascript:void(0)" (click)="downLoadPDF('J')" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Joining Report</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-box mb-2 mt-2 p-3">
+                        <div class="col-md-4">
+                            <label class="grey">Accident Insurance Policy</label>
+                            <div class="attach-file">
+                                <a href="javascript:void(0)" (click)="downLoadPDF('A')" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Accident Insurance Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-box mb-2 mt-2 p-3">
+                        <div class="col-md-4">
+                            <label class="grey">SEBI Disclosure</label>
+                            <div class="attach-file">
+                                <a href="javascript:void(0)" (click)="downLoadPDF('S')" title="Download"><i
+                                        class="las color-black la-paperclip"></i>SEBI Disclosure</a>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- for download test End-->
+                    <h6 class="red">Additional Documents:</h6> <!-- style="display: none;" -->
+                    <div class="row">
+                        <!-- style="display: none;" -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Any Additional Document Required?</label>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input name="radio" value="1" id="radio1" (click)="changeAdditionDocument('1')"
+                                        type="radio">
+                                    <label for="radio1">Yes</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input name="radio" value="2" id="radio2" type="radio"
+                                        (click)="changeAdditionDocument('2')">
+                                    <label for="radio2">No</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block" style="visibility: hidden;">
+                                    <input name="radio" value="3" class="radio3" id="radio3" type="radio"
+                                        (click)="changeAdditionDocument('3')">
+                                    <label for="radio2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive" *ngIf="additionalAttachment.length>0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Document Type</th>
+                                    <th>Document Particular</th>
+                                    <th>Document Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of additionalAttachment">
+                                    <td>{{data.doumentTypName}}</td>
+                                    <td>{{data.doumentParticularName}}</td>
+                                    <td>{{data.doumentName}}</td>
+                                    <td class="text-center"><a href="javascript:void(0)"
+                                            (click)="removeAdditionalAttachment(data.offerDocumentCollectionDocumentId)"
+                                            class="row-btn"><i class="las la-trash-alt"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" *ngIf="isAdditionalDocumentReq">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Document Type</label>
+                                <ng-select bindLabel="attachmentDocumentTypeName" class="documentType"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="selectedDocumentType"
+                                    (change)="changeDocumentType($event)">
+                                    <ng-option [value]="rec.attachmentDocumentTypeId" *ngFor="let rec of documentTypes">
+                                        {{rec.attachmentDocumentTypeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Document Particular</label>
+                                <ng-select class="" bindLabel="attachmentDocumentParticularName"
+                                    class="documentParticular" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="selectedDocumentParticular"
+                                    (change)="changeDocumentParticular($event)">
+                                    <ng-option [value]="rec.attachmentDocumentParticularId"
+                                        *ngFor="let rec of documentParticularList">
+                                        {{rec.attachmentDocumentParticularName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Document Name</label>
+                                <ng-select class="" bindLabel="attachmentDocumentName" class="documentName"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="selectedDocumentName">
+                                    <ng-option [value]="rec.attachmentDocumentNameId"
+                                        *ngFor="let rec of documentNameList">
+                                        {{rec.attachmentDocumentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 text-right" *ngIf="isAdditionalDocumentReq">
+                        <button type="button" class="btn btn-sm btn-black ml-1" (click)="addAdditionalAttachment()"><i
+                                class="las la-plus"></i> Add
+                            More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-t-4">
+        <!-- style="display: none;" -->
+        <h6 class="red">Additional Remarks:</h6>
+        <div *ngFor="let data of submittedAdditionalRemarksDetails">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdByName}} <span></span></h6>
+                    {{data.reamrks}}
+                </div>
+            </div>
+            <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{documentData?.candidateFullName}} <span></span></h6>
+                    {{data.reamrksReply}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Remarks</label>
+            <textarea id="" class="form-control" [(ngModel)]="additionalRemarks"></textarea>
+        </div>
+    </div>
+
+    <div class="m-t-4" style="display: none;">
+        <label>Enable Modification<span class="required">*</span></label>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="switch"><input type="checkbox" [ngModel]="enableModify"
+                            (ngModelChange)="enableModify = $event">
+                        <div class="slider round">
+                            <span class="on">Yes</span><span class="off">No</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 text-right">
+        <!-- style="display: none;" -->
+        <button type="button " class="btn btn-black" data-toggle="modal" data-target="#confirmPopup">Submit</button>
+        <!-- <button type="button " class="btn btn-primary ml-1">Cancel</button> -->
+    </div>
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to continue?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="submitData()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="printFamilyDetailsDiv" style="display: none;">
+    <app-pdffamilydetailsform [familyDetailsRecord]="familyDetailsData"></app-pdffamilydetailsform>
+</div>
+
+<div id="printJoiningReport" style="display: none;">
+    <app-pdfjoiningreportform [inductionRecord]="joiningReportData"></app-pdfjoiningreportform>
+</div>
+<div id="printAccidentInsurancePolicy" style="display: none;">
+    <app-pdfpersonalaccidentinsuranceform [accidentInsurancePolicyRecord]="accidentInsurancePolicyData">
+    </app-pdfpersonalaccidentinsuranceform>
+</div>
+<div id="printSEBIDisclosure" style="display: none;">
+    <app-pdfsebiinitialdisclosureform [sebiDisclosureRecord]="SEBIDisclosureData"></app-pdfsebiinitialdisclosureform>
+</div>
+
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

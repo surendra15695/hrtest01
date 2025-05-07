@@ -1,0 +1,180 @@
+
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a class="back-btn" href="javascript:void(0)" (click)="onClickBack()"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Batch ID: {{batchNo}}</h1>
+    </div>
+    <h6 class="red">All Candidates</h6>
+    <!-- Fiter section start -->
+    <form [formGroup]="searchForm" (ngSubmit)="searchSubmit()">
+        <div class="filter-sec mb-3">
+            <div class="form-row m-t-10">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Candidate Name</label>
+                        <input type="text" class="form-control" formControlName="candidateName">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="verticalId"
+                            (change)="changeVertical()">
+                            <ng-option [value]="1">Corporate</ng-option>
+                            <ng-option [value]="2">Plant</ng-option>
+                            <ng-option [value]="3">Sales and Marketing</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Pos. Location</label>
+                        <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="locationId">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="onClickReset()"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Fiter section End -->
+
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <!-- <th>
+                        <div class="form-check">
+                            <input type="checkbox" id="chkAll" [(ngModel)]="selectAll"
+                                (change)="onCheckSelectAll($event)">
+                            <label class="chk" for="chkAll"></label>
+                        </div>
+                    </th> -->
+                    <th>Cand. ID</th>
+                    <th>Candidate Name</th>
+                    <th>Designation</th>
+                    <th>Pos. Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Qualification</th>
+                    <th>Exp.</th>
+                    <th>Cur. Location</th>
+                    <th>D.O.J</th>
+                    <th>M.O.J</th>
+                    <th>Gross Monthly</th>
+                    <th>Remarks</th>
+                    <th>Document Status</th>
+                    <th>Hiring Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of candidateList;let i=index;">
+                    <!-- <td>
+                        <div class="form-check">
+                            <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatusRowWise(data)"
+                                (change)="onCheckRowWiseData(data,$event,i)">
+                            <label class="chk" for="{{i}}"></label>
+                        </div>
+                    </td> -->
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.candidateFullName}}</td>
+                    <td>{{data.designationName}}</td>
+                    <td>{{data.locationName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.emailId}}</td>
+                    <td>{{data.contact}}</td>
+                    <td>{{data.courseName}} {{data.streamName}}</td>
+                    <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                    <td>{{data.communicationAddress}} , {{data.communicationStateName}} <br>
+                        </td>  <!-- {{data.communicationPin}} -->
+                    <td>{{data.dateofJoining}}</td>
+                    <td>{{data.modeofJoiningName}}</td>
+                    <td>{{data.monthlyGross}}</td>
+                    <td>{{data.remarks}}
+                        <!-- <a href="#" class="red" data-toggle="popover"
+                        data-content="<div>Lorem ipsum dolor sit amet consectetur adipisicing.</div>"
+                        rel="popover" data-placement="right" data-trigger="hover"><i
+                            class="fa fa-info-circle"></i></a> -->
+                    </td>
+                    <td>
+                        {{data.docApprovalStatus}}
+                        <a *ngIf="data.onboardingManagerNotApproveDoc!=' '" href="javascript:void(0)" class="red"
+                            data-toggle="popover" [attr.data-content]="data.popoverContent" rel="popover"
+                            data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+                    </td>
+                    <td>{{data.hiringStatusName}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <!-- <a class="dropdown-item" *ngIf="data.hiringStatusId>=47 &&data.hiringStatusId<=52 && data.hiringStatusId!=55"
+                                    href="javascript:void(0)" (click)="onClickJoiningCheckList(data)"><i
+                                        class="las la-tasks"></i>Joining
+                                    Checklist</a>
+                                <a *ngIf="data.hiringStatusId>=47 && data.hiringStatusId<48 && data.hiringStatusId!=55" class="dropdown-item"
+                                    href="javascript:void(0)" (click)="onOptionClickShareWithCandidate(data)"
+                                    data-toggle="modal" data-target="#shareWithCandidateModal"><i
+                                        class="las la-share"></i> Share With
+                                    Candidate</a> -->
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)"
+                                    (click)="onClickViewDocument(data)"><i class="las la-folder-open"></i> View
+                                    Document</a>
+                                <!-- <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#moveCandidateModal" (click)="onMoveRowWise(data)"><i
+                                        class="las la-pen"></i> Move Candidate</a>
+                                <a class="dropdown-item"  href="javascript:void(0)" *ngIf="data.dateofJoining!='' && data.hiringStatusId!=55"
+                                    data-toggle="modal" data-target="#updateJoiningDateModal"
+                                    (click)="onClickUpdateJoningDate(data)"><i class="las la-pen"></i>
+                                    Update Joining Date</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#declineModal"
+                                    (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'ViewCandidate')"><i
+                                        class="las la-times-circle"></i>
+                                    Declined</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<!-- for showing loader -->
+ 
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

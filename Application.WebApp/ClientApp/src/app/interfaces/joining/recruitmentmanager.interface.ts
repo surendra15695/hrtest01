@@ -1,0 +1,35 @@
+export interface IEmployeeManagement {
+    requisitionDetailId: number;
+    candidateId: number;
+    candidateNo: string;
+    requisitionNo: string;
+    candidateFullName: string;
+    verticalId: number;
+    verticalName: string;
+    designation: number;
+    designationName: string;
+    functionId: number;
+    functionName: string;
+    departmentId: number;
+    departmentName: string;
+    locationId: number;
+    locationName: string;
+    gradeId: number;
+    gradeName: string;
+    dateofJoining: string;
+    docApprovalStatusId: number;
+    docApprovalStatus: string;
+    sourceChannelId: number;
+    sourceChannelName: string;
+    candidateOwnerId: number;
+    candidateOwner: string;
+    empId: number;
+    empNo: string;
+    empStatusId: boolean;
+    empStatusName: string;
+    candidateNoticePeriodBuyOutId: number;
+    candidateReallocationReimbursementEnableId: number;
+    hiringStatusId: number;
+    hiringStatusName: string;
+    checked: boolean;
+}

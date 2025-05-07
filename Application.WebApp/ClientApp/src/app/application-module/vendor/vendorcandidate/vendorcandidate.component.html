@@ -1,0 +1,383 @@
+<form [formGroup]="saveForm" (ngSubmit)="onSubmit()">
+    <div class="content-box m-b-15 m-t-10" >
+    <div class="page-title-area pb-2 mb-2">
+        <a href="#" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Submit Candidate</h1>
+    </div>
+    <h6 class="red">General information</h6>
+   
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Name<span class="required">*</span></label>
+                <div class="form-row">
+                    <div class="col-3">
+                        <div class="dropdown bootstrap-select form-control">
+                                                        <select class="selectpicker" formControlName="PrefixId" title="Select" tabindex="-98">
+                                                            <option *ngFor="let pre of prefix"  [ngValue]="pre.prefixId">
+                                                                {{pre.prefixName}}
+                                                            </option>
+                            </select>
+                            <!-- <span class="text-danger m-t-5"
+                                            *ngIf="submitted===true && ['Prefix'].valid && !saveForm.controls['Prefix'].touched">
+                                            Prefix is required
+                                        </span>    -->
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" formControlName="FullName" name="FullName"  placeholder="Name as per Aadhar card">
+                        <span class="text-danger m-t-5"                                          *ngIf="submitted===true && !saveForm.controls['FullName'].valid && !saveForm.controls['FullName'].touched">
+                                            <span *ngIf="saveForm.controls['FullName'].hasError('required')"></span>Name is required
+                                        </span>  
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Gender<span class="required">*</span></label>
+                <div class="rdio rdio-primary d-inline-block">
+                    <input checked="true" formControlName="GenderId" name="radio" value="1" id="radio1" type="radio" checked="">
+                    <label for="radio1">Male</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                    <input formControlName="GenderId" name="radio" value="2" id="radio2" type="radio">
+                    <label for="radio2">Female</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                    <input formControlName="GenderId" name="radio" value="3" id="radio3" type="radio">
+                    <label for="radio3">Others</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Date of Birth</label>
+                <div class="input-group datepiker date">
+                    <input type="text" class="form-control pull-right" value="14/04/1990" formControlName="DOB" id="datepicker" placeholder="From Date">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Age</label>
+                <input type="text" class="form-control" formControlName="Age" value="31" disabled="">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Email ID<span class="required">*</span></label>
+            <input type="text" class="form-control" formControlName="EmailId" placeholder="Enter email">
+            <span class="text-danger m-t-5"
+                  *ngIf="submitted===true && !saveForm.controls['EmailId'].valid && !saveForm.controls['EmailId'].touched">
+              <span *ngIf="saveForm.controls['EmailId'].hasError('required')">Email is required</span>
+              <div *ngIf="saveForm.controls['EmailId'].hasError('pattern')">
+                Email not valid.
+            </div>     </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Phone No.<span class="required">*</span></label>
+            <input type="text" class="form-control" formControlName="ContactNo" placeholder="Eg:9800123456">
+            <span class="text-danger m-t-5"
+                  *ngIf="submitted===true && !saveForm.controls['ContactNo'].valid && !saveForm.controls['ContactNo'].touched">
+              <span *ngIf="saveForm.controls['ContactNo'].hasError('required')">Contact No. is required</span>
+              <div *ngIf="saveForm.controls['ContactNo'].hasError('pattern')">Invalid phone number.</div>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Aadhar No.<span class="required">*</span></label>
+                <input type="text" class="form-control" formControlName="AadharNo" placeholder="Eg:1234/12345/12345">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Mother Tongue<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select class="selectpicker form-control" title="Select" formControlName="MotherTongueId" tabindex="-98">
+                       <option [ngValue]="1">English</option>
+                        <option [ngValue]="2">Hindi</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Languages Known<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select show-tick">
+                    <select class="selectpicker form-control" title="Select" formControlName="LanguageIds" tabindex="-98">
+                        <option *ngFor="let lang of language" [ngValue]="lang.languagesId">
+                            {{lang.languageName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Highest Qualification<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select formControlName="QualificationId" class="selectpicker form-control"  title="Select" tabindex="-98">
+                        <option *ngFor="let qual of qualification" [ngValue]="qual.qualificationId">
+                            {{qual.qualificationName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Course<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select formControlName="CourseId" class="selectpicker form-control" title="Select"  tabindex="-98">
+                        <option *ngFor="let c of course" [ngValue]="c.courseId">
+                            {{c.courseName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Stream<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select formControlName="StreamId" class="selectpicker form-control"  title="Select" tabindex="-98">
+                        <option *ngFor="let s of stream" [ngValue]="s.streamId">
+                            {{s.streamName}}
+                        </option>
+                    </select>                   
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Percentage<span class="required">*</span></label>
+            <input type="text" class="form-control" formControlName="MarksPercentage" placeholder="CGPA to be conv. to %">%
+            <span class="text-danger m-t-5"
+                  *ngIf="submitted===true && !saveForm.controls['MarksPercentage'].valid && !saveForm.controls['MarksPercentage'].touched">
+              <span *ngIf="saveForm.controls['MarksPercentage'].hasError('required')">Marks Percentage is required</span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Year of Completion<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select class="selectpicker form-control" formControlName="CompletionYear" title="Select" tabindex="-98">
+                        <option [ngValue]="2021">2021</option>
+                        <option [ngValue]="2020">2020</option>
+                    </select>
+                                   </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Qualification Type<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select class="selectpicker form-control" formControlName="QualificationTypeId"  title="Select" tabindex="-98">
+                        <option *ngFor="let qual of qualification" [ngValue]="qual.qualificationId">
+                            {{qual.qualificationName}}
+                        </option>
+                    </select>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Total Experience <span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <label>Years<span class="required">*</span></label>
+                    <select formControlName="ExperienceYear" class="selectpicker form-control" title="Select" tabindex="-98">
+                        <option [ngValue]="1">1</option>
+                        <option [ngValue]="2">2</option>
+                        <option [ngValue]="1">3</option>
+                        <option [ngValue]="2">4</option>
+                        <option [ngValue]="1">5</option>
+                        <option [ngValue]="2">6</option>
+                        <option [ngValue]="1">7</option>
+                        <option [ngValue]="2">8</option>
+                        <option [ngValue]="1">9</option>
+                        <option [ngValue]="2">10</option>
+                        <option [ngValue]="1">11</option>
+                        <option [ngValue]="2">12</option>
+                    </select>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Months<span class="required">*</span></label>
+                <select formControlName="ExperienceMonth" class="selectpicker form-control" title="Select" tabindex="-98">
+                    <option [ngValue]="1">1</option>
+                    <option [ngValue]="2">2</option>
+                    <option [ngValue]="1">3</option>
+                    <option [ngValue]="2">4</option>
+                    <option [ngValue]="1">5</option>
+                    <option [ngValue]="2">6</option>
+                    <option [ngValue]="1">7</option>
+                    <option [ngValue]="2">8</option>
+                    <option [ngValue]="1">9</option>
+                    <option [ngValue]="2">10</option>
+                    <option [ngValue]="1">11</option>
+                    <option [ngValue]="2">12</option>
+                </select>Month(s)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Current CTC<span class="required">*</span></label>
+                <input type="text" formControlName="CurrentCTC" class="form-control"  placeholder="Enter CTC">
+                <span class="text-danger m-t-5"
+                      *ngIf="submitted===true && !saveForm.controls['CurrentCTC'].valid && !saveForm.controls['CurrentCTC'].touched">
+                  <span *ngIf="saveForm.controls['CurrentCTC'].hasError('required')"></span>Current CTC is required
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Current Employer<span class="required">*</span></label>
+            <input type="text" formControlName="CurrentEmployer" class="form-control" placeholder="Employer Name">
+            <span class="text-danger m-t-5"
+                  *ngIf="submitted===true && !saveForm.controls['CurrentEmployer'].valid && !saveForm.controls['CurrentEmployer'].touched">
+              <span *ngIf="saveForm.controls['CurrentEmployer'].hasError('required')"></span>Current Employer is required
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Designation<span class="required">*</span></label>
+            <input type="text" formControlName="CurrentDesignation" class="form-control" placeholder="Enter Designation">
+            <span class="text-danger m-t-5"
+                  *ngIf="submitted===true && !saveForm.controls['CurrentDesignation'].valid && !saveForm.controls['CurrentDesignation'].touched">
+              <span *ngIf="saveForm.controls['CurrentDesignation'].hasError('required')"></span>Current Designation is required
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Domain<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select formControlName="DomainId" class="selectpicker form-control" title="Select"  tabindex="-98">
+                        <option *ngFor="let d of domain"  [ngValue]="d.domainId">
+                            {{d.domainName}}
+                        </option>
+                    </select>                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Sub-Domain<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                      <select formControlName="SubDomainId" class="selectpicker form-control" title="Select"  tabindex="-98">
+                            <option *ngFor="let d of domain"  [ngValue]="d.domainId">
+                                {{d.domainName}}
+                            </option>
+                        </select>
+                                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Current Location<span class="required">*</span></label>
+                <div class="dropdown bootstrap-select form-control">
+                    <select formControlName="StateId" class="selectpicker" title="Select"
+                                        (change)="onLocationChange($event.target.value)">
+                                        <option *ngFor="let loc of locations" [ngValue]="loc.locationId">
+                                            {{loc.locationOffice}}
+                                        </option>
+                                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Any Previous Application History in MRF<span class="required">*</span></label>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="dropdown bootstrap-select form-control">
+                            <select formControlName="PreviousApplied" class="selectpicker form-control" title="Select" tabindex="-98">
+                                <option [ngValue]="true">Yes</option>
+                                <option [ngValue]="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="swichLabel">Any Relative Working in MRF<span class="required">*</span></label>
+                <label class="switch">
+                    <input type="checkbox"  id="togBtn">
+                    <!-- <div class="slider round">
+                        ADDED HTML<span formControlName="RelativeStatus" [ngvalue]="true" class="on">Yes</span><span formControlName="RelativeStatus" [ngvalue]="false" class="off">No</span>
+                        END
+                    </div> -->
+                    <select formControlName="RelativeStatus" name="RelativeStatus" #RelativeStatus class="selectpicker form-control" title="Select" tabindex="-98">
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Relative Name<span class="required">*</span></label>
+                <input type="text" class="form-control" formControlName="RelativeName" placeholder="Enter Name" >
+                <span class="text-danger m-t-5"
+                *ngIf="submitted===true && !saveForm.controls['RelativeName'].valid && !saveForm.controls['RelativeName'].touched">
+            <span *ngIf="saveForm.controls['RelativeName'].hasError('required')"></span>Relative Name is required
+          </span>  </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Relative's Mobile No.<span class="required">*</span></label>
+            <input type="text" class="form-control" formControlName="RelativeContactNo" placeholder="Eg:9800123456">
+            <span class="text-danger m-t-5"
+                  *ngIf="submitted===true && !saveForm.controls['RelativeContactNo'].valid && !saveForm.controls['RelativeContactNo'].touched">
+              <span *ngIf="saveForm.controls['RelativeContactNo'].hasError('required')"></span>Relative Contact No. is required
+            </span>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="">Attach Resume <span class="required">*</span></label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile"
+                    (change)="onFileChange($event.target.files)">
+                <label class="custom-file-label" for="customFile" #candidateResumeImport>Choose file</label>
+            </div>
+        </div>
+    </div>
+    <div class="my-3" style="display: none;">
+        <span class="red">Aadhar Disclaimer:</span>
+        <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus expedita optio vero.</span>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit"  class="btn btn-black" >Submit</button>
+        <button type="button" class="btn btn-primary">Cancel</button>
+    </div>
+   
+</div> 
+</form>

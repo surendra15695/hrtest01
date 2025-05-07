@@ -1,0 +1,163 @@
+<style type='text/css'>
+    body {
+        font-family: 'Segoe UI', 'Segoe UI', 'Segoe', Tahoma, Helvetica, Arial, sans-serif;
+        font-size: 13px;
+    }
+</style>
+
+<div>
+    <h5 style='text-align: center;text-transform: uppercase; margin-bottom: 15px;'>Stage Gate Assesment
+    </h5>
+    <div style="margin-bottom: 10px;">
+        <table cellspacing="0" cellpadding="0"
+            style='width: 700px; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tbody>
+                <tr>
+                    <td style='padding: 2px 3px;'>
+                        <p style="margin:0;">Candidate Name:</p>
+                        <p style="margin:0;"><b>{{pdfValues?.fullName}}</b></p>
+                    </td>
+                    <td style='padding: 2px 3px;'>
+                        <p style="margin:0;">State of Origin:</p>
+                        <p style="margin:0;"><b>{{pdfValues?.stateName}}</b></p>
+                    </td>
+                    <td style='padding: 2px 3px;'>
+                        <p style="margin:0;">Current Location:</p>
+                        <p style="margin:0;"><b>{{pdfValues?.homeTown}}</b></p>
+                    </td>
+                    <td style='padding: 2px 3px;'>
+                        <p style="margin:0;">Date:</p>
+                        <p style="margin:0;"><b>{{currentDate | date:'dd/MM/yyyy'}}</b></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div>
+    <!-- <div>
+        <div class="form-row m-b-10">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate Name:</p>
+                <p class="d-inline-block">{{pdfValues?.fullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">State of Origin:</p>
+                <p class="d-inline-block">{{pdfValues?.stateName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Current Location:</p>
+                <p class="d-inline-block">{{pdfValues?.homeTown}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Date:</p>
+                <p class="d-inline-block">{{currentDate | date:'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
+
+    </div> -->
+
+
+    <table cellspacing="0" cellpadding="0"
+            style='width: 710px; border-collapse: collapse; border-spacing: 0px; border:1px solid #000; text-align: left;'>
+        <thead>
+            <tr>
+                <th colspan="10" style='border:1px solid #000; padding: 2px 3px; text-align: center;'>GATE III - FINAL SCORING SHEET</th>
+            </tr>
+            <tr>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Competencies</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>IQ Test</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Negotiation Excercise</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Planning & Writing Excercise</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Presentation Excercise</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Competency Based Total Score</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Competency Average Total Score</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Weightage%</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>Final Score (Average Score Multiplied into Weightage)</th>
+                <th style='border:1px solid #000; padding: 2px 3px;'>On a Maximum Score</th>
+            </tr>
+
+        </thead>
+
+        <tr>
+            <td style='border:1px solid #000; padding: 2px 3px;'>Analytical</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.analyticalIq}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; '></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.analyticalplan}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.analyticaltotal}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.analyticalavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.analyticalweight}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.analiticalfinal}}</td>
+            <td rowspan="6" style='border:1px solid #000; padding: 2px 3px; text-align: center;'><b>25</b></td>
+        </tr>
+        <tr>
+            <td style='border:1px solid #000; padding: 2px 3px;text-align: center;'>Planning</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.plainingnego}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px;text-align: center;'>{{pdfValues?.plainingwriting}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.plainingtotal}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.plainingavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.plainingweight}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.planingfinal}}</td>
+        </tr>
+        <tr>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>Selling Skill</td>
+            <td style='border:1px solid #000; padding: 2px 3px; '></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.sellingnego}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.sellingprese}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.sellingtotal}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.sellingavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.sellingweight}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.sellingfinal}}</td>
+        </tr>
+        <tr>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>Taking Conversation</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.takeconvnego}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.takeconvprese}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.takeconvtotal}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.takeconvavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.takeconvweight}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.takeconvfinal}}</td>
+        </tr>
+        <tr>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>Customer Orientation</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.customertotalavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px;'></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.customertotalavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.customertotalavg}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.customerweight}}</td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'>{{pdfValues?.customerfinal}}</td>
+        </tr>
+        <tr>
+            <td colspan="8" style='border:1px solid #000; padding: 2px 3px;'><b>Total</b></td>
+            <td style='border:1px solid #000; padding: 2px 3px; text-align: center;'><b>{{pdfValues?.totalMarks}}</b></td>
+        </tr>
+    </table>
+
+
+    <div>
+        <h6>Instructions:</h6>
+        <ol class="grey">
+            <li>The rating for each Competency (*) in each Exercise will present in the Individual Exercise Marking
+                Guide.</li>
+            <li>Those marked " * " with an asterisk is mandatory to be scored in this Gate III Final scoring Sheet.</li>
+            <li>Competency Based Total Score is the sum of the score of the mandatory field in a particular competency.
+            </li>
+            <li>Competency Based Average Score is the average score of the mandatory fields in a particular competency.
+            </li>
+            <li>Final Score of each Competency shall be arrived by multiplying the Average Score into the Weightage.
+            </li>
+            <li>The final Score shall be on 25.</li>
+            <li>Please note that the shaded fields should not be scored.</li>
+        </ol>
+    </div>
+</div>

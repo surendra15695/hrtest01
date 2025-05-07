@@ -1,0 +1,85 @@
+<div class="content-box m-b-15 m-t-10" *ngIf="offerLetterHeader?.offerLetterId == 0">
+    <div class="page-title-area pb-2 mb-2">
+      <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+        <div>
+          <h1 class="f-l">You do not have any offer yet.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="content-box m-b-15 m-t-10" *ngIf="offerLetterHeader?.offerLetterId !=0">
+    <div class="page-title-area pb-2 mb-2">
+      <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+        <div>
+          <h1 class="f-l">
+            Job Offer Acceptance -
+            <span *ngIf="acceptance==1" class="d-inline yellow">Pending</span>
+            <span *ngIf="acceptance==2" class="d-inline green">Accepted</span>
+            <span *ngIf="acceptance==3" class="d-inline red">Declined</span>
+          </h1>
+        </div>
+      </div>
+    </div>
+  
+    <div class="d-flex align-items-center p-2 border-bottom">
+      <span>View Offer Letter</span>
+      <a href="javascript:void(0)" class="btn btn-primary btn-rounded btn-sm ml-2" (click)="DownloadPDF()">Download</a>
+    </div>
+    <div *ngIf="Acceptance==1 ">
+      <h6 class="red">Take Action</h6>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Action</label>
+            <div class="rdio rdio-primary d-inline-block">
+              <input name="offerAcceptance" [value]="2" [(ngModel)]="offerAcceptance" id="radio1" type="radio">
+              <label for="radio1">Accept</label>
+            </div>
+            <div class="rdio rdio-primary d-inline-block">
+              <input name="offerAcceptance" [value]="3" [(ngModel)]="offerAcceptance" id="radio2" type="radio">
+              <label for="radio2">Decline</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="">Remarks</label>
+            <textarea name="" id="txtRemarks" class="form-control" [(ngModel)]="remarks" #Remarks="ngModel"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div class="media mb-3">
+        <div class="media-body">
+          <h6 class="mt-0">Remarks : <span></span></h6>
+          {{offerLetterHeader?.remarks}}
+        </div>
+      </div>
+    </div>
+    <!-- <div class="table-responsive">
+      <table class="table table-bordered">
+          <thead>
+              <tr> 
+                  <th>Remarks For</th>
+                  <th>Remarks By</th>
+                  <th>Date</th>
+                  <th>Remarks</th>                   
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let rec of candidateremarksList">
+                  <td>{{rec.statusName}}</td>
+                  <td>{{rec.empName}}</td> 
+                  <td>{{rec.createdOn}}</td> 
+                  <td>{{rec.remarks}}</td>
+              </tr>
+          </tbody>
+      </table>
+    </div> -->
+    <div class="mt-4" *ngIf="Acceptance==1">
+      <button type="button" class="btn btn-black" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>

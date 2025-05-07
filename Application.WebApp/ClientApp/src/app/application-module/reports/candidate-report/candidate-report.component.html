@@ -1,0 +1,922 @@
+<div class="content-box m-b-15 m-t-10" id="main">    
+  <div class="page-title-area pb-2 mb-2">
+    <h4 class="f-l">All Position</h4>            
+  </div>   
+  <div id="mySidenav" class="sidenav">
+    <div class="slidenav_header">
+      <h4>Filters</h4>
+      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="onFilter()" autocomplete="off" >
+      <div class="slidenav_container">
+        <div class="panel-group snj-panel" id="accordion" role="tablist" aria-multiselectable="true">
+          <div  class="col-sm-12">
+            <div class="form-group">
+              <label>Candidate Id</label>
+              <input type="text" class="form-control" placeholder="Enter Candidate Id" formControlName="CandidateNo" autocomplete="off"/>
+            </div>
+          </div>
+          <div  class="col-sm-12">
+            <div class="form-group">
+              <label>Employee Id</label>
+              <input type="text" class="form-control" formControlName="EmpNo" #EmpId placeholder="Enter Employee Id." autocomplete="off">
+            </div>
+          </div>
+          <div  class="col-sm-12">
+            <div class="form-group">
+              <label>Requisition No</label>
+              <input type="text" class="form-control" formControlName="RequisitionNo" #EmpId placeholder="EnterRequisition No." autocomplete="off">
+            </div>
+          </div>
+          <div  class="col-sm-12">
+            <div class="form-group">
+              <label>Candidate Name</label>
+              <input type="text" class="form-control" formControlName="CandidateName" #CandidateName placeholder="Enter Candidate Name." autocomplete="off">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>DOJ</label>
+                        <div class="form-row">
+                          <div class="col-sm-6">
+                                  <div class="input-group datepiker date">
+                                          <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                              placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                          <div class="input-group-append">
+                                              <span class="input-group-text" id="basic-addon2">
+                                                  <i class="fa fa-calendar"></i>
+                                              </span>
+                                          </div>
+                                  </div>
+                              </div>
+                              <div class="col-sm-6">
+                                  <div class="input-group datepiker date">
+                                      <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                          placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                      <div class="input-group-append">
+                                          <span class="input-group-text" id="basic-addon2">
+                                              <i class="fa fa-calendar"></i>
+                                          </span>
+                                      </div>
+                                  </div>
+                           </div>
+                      </div>
+            </div>
+          </div>  
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label>Aadhar No.</label>
+                <input type="text" class="form-control" formControlName="AadharNo" #AadharNo
+                    placeholder="Enter No.">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label>Email ID</label>
+                <input type="text" class="form-control" formControlName="EmailId" #EmailId
+                    placeholder="Enter Email">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label>Phone No.</label>
+                <input type="text" class="form-control" formControlName="ContactNo" #ContactNo
+                    placeholder="Enter No.">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Age</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="text" formControlName="FromAge" #FromAge class="form-control" placeholder="Min Age">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" formControlName="ToAge" #ToAge class="form-control" placeholder="Max Age">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Vertical</label>
+              <select class="selectpicker" title='Select' formControlName="verticalId" #verticalId [multiple]="true"
+                (change)="changeVertical()">
+                <option *ngFor="let rec of verticals" [ngValue]="rec.verticalId">
+                  {{rec.verticalName}}
+                </option>
+              </select>
+            </div>
+          </div> 
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Location</label>
+              <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+               [multiple]="true" formControlName="locationId" #locationId>
+                <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                  {{rec.locationOffice}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Function</label>
+              <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                (change)="getAllFunction()" [multiple]="true" formControlName="functionId" #functionId>
+                <ng-option *ngFor="let rec of functions" [value]="rec.functionId">
+                  {{rec.functionName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Department</label>
+              <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                [multiple]="true" formControlName="departmentId" #departmentId>
+                <ng-option *ngFor="let rec of departments" [value]="rec.departmentId">
+                  {{rec.departmentName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+                <label>Grade</label>
+                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="gradeId" #gradeId name="gradeId"
+                    [multiple]="true" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                    [clearable]="false">
+                    <ng-option [value]="rec.gradeId" *ngFor="let rec of grades">
+                        {{rec.gradeName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label>Gender</label>
+                <select formControlName="genderId" multiple name="GenderStatus" #GenderStatus
+                    class="selectpicker form-control" title="Select" tabindex="-98">
+                    <option [ngValue]="0">Male</option>
+                    <option [ngValue]="1">Female</option>
+                    <option [ngValue]="2">Others</option>
+                </select>
+            </div>
+          </div>
+         <div class="col-sm-12">
+            <div class="form-group">
+                <label>Mother Tongue</label>
+                <select class="selectpicker form-control" title='Select' multiple
+                    formControlName="MotherTongueIds">
+                    <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                        {{lang.languageName}}
+                    </option>
+                </select>
+            </div>
+         </div>
+         <div class="col-sm-12">
+            <div class="form-group">
+                <label>Languages Known</label>
+                <select class="selectpicker form-control" multiple title="Select"
+                    formControlName="LanguageKnownIds">
+                    <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                        {{lang.languageName}}
+                    </option>
+                </select>
+            </div>
+          </div>
+       <div class="col-sm-12">
+        <div class="form-group">
+            <label>Home Town</label>
+            <input type="text" class="form-control" formControlName="HomeTown" #Hometown
+                placeholder="Enter Home Town">
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label>Qualification Type</label>
+          <select class="selectpicker form-control" multiple formControlName="QualificationTypeIds" title="Select"
+            tabindex="-98">
+            <option [ngValue]="0">All</option>
+            <option *ngFor="let qual of qualificationType" [ngValue]="qual.qualificationTypeId">
+              {{qual.qualificationTypeName}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- <div class="col-sm-12">
+        <div class="form-group">
+            <label>Candidate Owner</label>
+            <input type="text" class="form-control" formControlName="CandidateOwner" #CandidateOwner
+                placeholder="Enter Candidate Owner">
+        </div>
+      </div> -->
+      <div class="col-sm-12">
+        <div class="form-group">
+            <label>Marks%</label>
+            <div class="form-row">
+                <div class="col-sm-6">
+                    <input type="number" formControlName="FromPercentage" #FromPresentage
+                        class="form-control" placeholder="Min">
+                </div>
+                <div class="col-sm-6">
+                    <input type="number" formControlName="ToPercentage" #ToPresentage
+                        class="form-control" placeholder="Max">
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+       <div class="form-group">
+        <label>Course</label>
+        <select formControlName="CourseIds" multiple class="selectpicker form-control" title="Select" #CourseId
+          tabindex="-98">
+          <option [ngValue]="0">All</option>
+          <option *ngFor="let c of courses" [ngValue]="c.courseId">
+            {{c.courseName}}
+          </option>
+        </select>
+       </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="form-group">
+         <label>Father Occupation</label>
+         <select formControlName="FatherOccupation" multiple class="selectpicker form-control" title="Select" #FatherOccupation
+           tabindex="-98">
+           <option [ngValue]="0">All</option>
+           <option *ngFor="let obj of fatherOccupationDetail" [ngValue]="obj.occupationId">
+             {{obj.occupationName}}
+           </option>
+         </select>
+        </div>
+       </div>
+      <!-- <div class="col-sm-12">
+        <div class="form-group">
+            <label>Total Experience</label>
+            <div class="form-row">
+              <div class="col-sm-6">
+                  <input type="number" formControlName="FromExperience" #FromExperience
+                     class="form-control" placeholder="Min">
+              </div>
+              <div class="col-sm-6">
+                  <input type="number" formControlName="ToExperience" #ToExperience
+                    class="form-control" placeholder="Max">
+              </div>
+            </div>
+        </div>
+     </div> -->
+     <!-- <div class="col-sm-12">
+      <div class="form-group">
+          <label>MRF Experience</label>
+          <div class="form-row">
+              <div class="col-sm-6">
+                  <input type="number" formControlName="FromMRFExperience" #FromMRFExperience
+                      class="form-control" placeholder="Min">
+              </div>
+              <div class="col-sm-6">
+                  <input type="number" formControlName="ToMRFExperience" #ToMRFExperience
+                      class="form-control" placeholder="Max">
+              </div>
+          </div>
+      </div>
+     </div> -->
+     <!-- <div class="col-sm-12">
+      <div class="form-group">
+          <label>Previous Experience</label>
+          <div class="form-row">
+              <div class="col-sm-6">
+                  <input type="number" formControlName="FromPreviousExperience" #FromPreviousExperience
+                      class="form-control" placeholder="Min">
+              </div>
+              <div class="col-sm-6">
+                  <input type="number" formControlName="ToPreviousExperience" #ToPreviousExperience
+                      class="form-control" placeholder="Max">
+              </div>
+          </div>
+      </div>
+     </div> -->
+     <div class="col-sm-12">
+      <div class="form-group">
+          <label>Eyesight corrected</label>
+          <select formControlName="EyeSightCorrected"  name="Eyesight" #Eyesight
+              class="selectpicker form-control" title="Select" tabindex="-92">
+              <option [ngValue]="0">Yes</option>
+              <option [ngValue]="1">No</option>           
+          </select>
+      </div>
+     </div>
+     <!-- <div class="col-sm-12">
+      <div class="form-group">
+          <label>Disability</label>
+          <select formControlName="HandiCapDetails" multiple name="disability" #disability
+              class="selectpicker form-control" title="Select" tabindex="-92">
+              <option [ngValue]="0">Yes</option>
+              <option [ngValue]="1">No</option>           
+          </select>
+      </div>
+     </div> -->
+     <div class="col-sm-12">
+      <div class="form-group">
+        <label>Native State</label>
+        <select formControlName="PermanentNativeState" multiple name="NativeState" #PermanentNativeState
+          class="selectpicker form-control" title="Select" tabindex="-92">
+          <option [ngValue]="1">West Bengal</option>
+          <option [ngValue]="2">Bihar</option>
+          <option [ngValue]="3">Goa</option>
+          <option [ngValue]="4">Kerala</option>
+          <option [ngValue]="5">Arunachal Pradesh</option>
+          <option [ngValue]="6">Andhra Pradesh</option>
+          <option [ngValue]="7">Assam</option>
+          <option [ngValue]="8">Tamilnadu</option>
+          <option [ngValue]="9">Puducherry</option>
+          <option [ngValue]="10">Chhattisgarh</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label>Present State</label>
+        <select formControlName="CommunicationState" multiple name="CommunicationState" #CommunicationState
+          class="selectpicker form-control" title="Select" tabindex="-92">
+          <option [ngValue]="1">West Bengal</option>
+          <option [ngValue]="2">Bihar</option>
+          <option [ngValue]="3">Goa</option>
+          <option [ngValue]="4">Kerala</option>
+          <option [ngValue]="5">Arunachal Pradesh</option>
+          <option [ngValue]="6">Andhra Pradesh</option>
+          <option [ngValue]="7">Assam</option>
+          <option [ngValue]="8">Tamilnadu</option>
+          <option [ngValue]="9">Puducherry</option>
+          <option [ngValue]="10">Chhattisgarh</option>
+        </select>
+      </div>
+    </div>
+     <div class="col-sm-12">
+      <div class="form-group">
+          <label>Blood Group</label>
+          <select formControlName="BloodGroup" multiple name="Bloodgroup" #Bloodgroup
+              class="selectpicker form-control" title="Select" tabindex="-92">
+              <option [ngValue]="0">A+</option>
+              <option [ngValue]="1">B+</option>     
+              <option [ngValue]="2">O+</option>
+              <option [ngValue]="3">AB+</option>  
+              <option [ngValue]="4">A-</option>
+              <option [ngValue]="5">B-</option> 
+              <option [ngValue]="6">O-</option>
+              <option [ngValue]="7">AB-</option> 
+          </select>
+      </div>
+     </div>
+     <div class="col-sm-12">
+      <div class="form-group">
+        <label>MRF Relative Status</label>
+        <select formControlName="MRFRelativeStatus"  name="MRFRelativeStatus" #MRFRelativeStatus
+          class="selectpicker form-control" title="Select" tabindex="-92">
+          <option [ngValue]="2">Yes</option>
+          <option [ngValue]="1">No</option>
+        </select>
+      </div>
+    </div>
+     <!-- <div class="col-sm-12">
+      <div class="form-group">
+          <label>MRF Rec/Appl History</label>
+          <select formControlName="MRFHistory" multiple name="MRFHistory" #MRFHistory
+              class="selectpicker form-control" title="Select" tabindex="-92">
+              <option [ngValue]="0">Yes</option>
+              <option [ngValue]="1">No</option>           
+          </select>
+      </div>
+     </div> -->
+     <div class="col-sm-12">
+      <div class="form-group">
+          <label>BGV Report</label>
+          <select formControlName="CandidateBVGReportId"  name="BGVReport" #BGVReport
+          class="selectpicker form-control" title="Select"  tabindex="-92">
+              <option [ngValue]="0">All</option>
+              <option [ngValue]="1">Yes</option>
+              <option [ngValue]="2">No</option>    
+              <option [ngValue]="3">NA</option>       
+          </select>
+      </div>
+     </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+            <label>Health Issues </label>
+            <select formControlName="CronicMajorIllnessId"  name="HelthProblem " #HelthProblem 
+                class="selectpicker form-control" title="Select" tabindex="-92">
+                <option [ngValue]="0">All</option>
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="2">No</option>           
+            </select>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+            <label>Disability</label>
+            <select formControlName="HandiCapId"  name="Disability " #HandiCapId 
+                class="selectpicker form-control" title="Select" tabindex="-92">
+                <option [ngValue]="0">All</option>
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="2">No</option>           
+            </select>
+        </div>
+      </div>
+     </div>
+     </div>
+      <div class="slidenav_footer">
+        <button type="submit" class="btn btn-secondary btn-sm">Apply Filter</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="reset()">Reset</button>
+      </div>
+    </form>
+  </div>  
+  <div class="col-sm-12 text-right">
+    <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+      <div>
+        <button type="button" class="btn btn-rounded btn-secondary btn-sm ml-3" (click)="openNav()"><i
+          class="las la-filter"></i>Filters</button>
+      </div>
+    </div>
+  </div>
+    <!-- Fiter section start -->
+    <!-- <form [formGroup]="filterForm" (ngSubmit)="onFilter()" >
+     <div class="filter-sec mb-3">
+          <div class="form-row m-t-10">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Candidate Id</label>
+                <input type="text" class="form-control" placeholder="Enter Candidate Id" formControlName="candidateNo" #candidateNo autocomplete="off"/>
+              </div>
+            </div>
+            <!-- <div class="col-sm-2">
+              <div class="form-group">
+                <label>Vertical</label>
+                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId (change)="changeVertical()" name="verticalId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                  <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                    {{rec.verticalName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div> -->
+            <!-- <div class="col-sm-2">
+              <div class="form-group">
+                <label>Function</label>
+                <ng-select bindLabel="venueName" class="ddltestvenue" name="functionId" formControlName="functionId" #functionId [placeholder]="'Select'" 
+                [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                  <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                    {{rec.functionName}}
+                  </ng-option>
+                </ng-select>
+
+                <!-- <select class="selectpicker ddlfunction" title='Select' formControlName="functionId"
+      #functionId>
+          <option *ngFor="let rec of functions" [ngValue]="rec.functionId">
+              {{rec.functionName}}
+            </option>
+      </select> -->
+              <!-- </div>
+            </div> -->
+           <!-- <div class="col-md-3">
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Hiring Status</label>
+                    <ng-select bindLabel="hiringStatusId" class="ddltestvenue" formControlName="HiringStatusId"
+                        #HiringStatusId name="HiringStatusId" [placeholder]="'Select'" [appendTo]="'body'"
+                        [multiple]="false" [searchable]="true" [clearable]="false">
+                        <ng-option [value]="rec.hiringStatusId" *ngFor="let rec of candidateLists">
+                            {{rec.hiringStatusName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-3 mt-md-4">
+              <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+              <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-2"><i class="las la-sync-alt"></i> Reset</button>
+            </div>
+          </div>
+    </div> -->
+   <!-- </form>  -->
+    <!-- Fiter section End -->
+                
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>                   
+                    <th>Candidate Id</th>
+                    <th>Emp Id</th>
+                    <th>Req No</th>
+                    <th>Aadhar No</th>
+                    <th>PAN NO</th>
+                    <th>UAN No</th>
+                    <th>Name </th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Age </th>
+                    <!-- <th>Dateof Application </th> -->
+                    <!-- <th>Date of Final Selection </th> -->
+                    <!-- <th>Date of Approval Generation </th> -->
+                    <!-- <th>Date of Approval upload </th> -->
+                    <th>Date of offer </th>
+                    <th>Date of Joining</th>
+                    <th>Year of Joining</th>
+                    <th>Date of Leaving</th>
+                    <th>Hiring Status</th>
+                    <th>Employment Status</th>
+                    <th>Vertical</th>
+                    <th>Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>Phone No</th>
+                    <th>Candidate owner</th>
+                    <!-- <th>If Referral, Referred Emp No</th> -->
+                    <th>Email ID</th>
+                    <th>Alternate Phone no</th>
+                    <th>Home Town</th>
+                    <th>Native State</th>
+                    <th>Present State</th>
+                    <th>Mother Tongue</th>
+                    <th>Languages known</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                    <th>Eyesight Corrected</th>
+                    <th>Right</th>
+                    <th>Left</th>
+                    <th>Disability</th>
+                    <!-- <th>Health Issues</th> -->
+                    <th>Blood Group</th>
+                    <th>Father Occupation</th>
+                    <!-- <th>Mother Occupation</th> -->
+                    <th>No of Siblings</th>
+                    <th>No of Brothers</th>
+                    <th>No Of Sisters</th>
+                    <th>Maritial Status</th>
+                    <th>Spouse Occupation</th>
+                    <th>No of Children</th>
+                    <th>Qualification (1) Name</th>
+                    <th>Qual 1-Course</th>
+                    <!-- <th>Qual 1-Stream</th> -->
+                    <!-- <th>Qual 1-Type</th> -->
+                    <th> Qual 1-Institution</th>
+                    <th>Qual 1-Institute Location</th>
+                    <th>Qual 1-University/Board</th>
+                    <th>Qual 1-Year of Passing</th>
+                    <th>Qual 1-Mark%</th>
+                    <th>Qualification (2)-Name</th>
+                    <th>Qual 2 -Course</th>
+                    <!-- <th>Qual 1-Stream</th> -->
+                    <!-- <th>Qual 1-Type</th> -->
+
+                    <th> Qual 2-Institution</th>
+                    <th>Qual 2-Institute Location</th>
+                    <th>Qual 2-University/Board</th>
+                    <th>Qual 2-Year of Passing</th>
+                    <th>Qual 2-Mark%</th>
+                    <th>Qualification (3)-Name</th>
+                    <th>Qual 3 -Course</th>
+
+                    <!-- <th>Qual 1-Stream</th> -->
+                    <!-- <th>Qual 1-Type</th> -->
+
+                    <th> Qual 3-Institution</th>
+                    <th>Qual 3-Institute Location</th>
+                    <th>Qual 3-University/Board</th>
+                    <th>Qual 3-Year of Passing</th>
+                    <th>Qual 3-Mark%</th>
+                    <th>Qualification (4)-Name</th>
+                    <th>Qual 4 -Course</th>
+                    <!-- <th>Qual 1-Stream</th> -->
+                    <!-- <th>Qual 1-Type</th> -->
+                    <th> Qual 4-Institution</th>
+                    <th>Qual 4-Institute Location</th>
+                    <th>Qual 4-University/Board</th>
+                    <th>Qual 4-Year of Passing</th>
+                    <th>Qual 4-Mark%</th>
+                    <th>Qualification(5)-Name</th>
+                    <th>Qual 5-Course</th>
+                    <!-- <th>Qual 1-Stream</th> -->
+                    <!-- <th>Qual 1-Type</th> -->
+                    <th> Qual 5-Institution</th>
+                    <th>Qual 5-Institute Location</th>
+                    <th>Qual 5-University/Board</th>
+                    <th>Qual 5-Year of Passing</th>
+                    <th>Qual 5-Mark%</th>
+                    <th>Qualification(6)-Name</th>
+                    <th>Qual 6-Course</th>
+                    <!-- <th>Qual 1-Stream</th> -->
+                    <!-- <th>Qual 1-Type</th> -->
+                    <th> Qual 6-Institution</th>
+                    <th>Qual 6-Institute Location</th>
+                    <th>Qual 6-University/Board</th>
+                    <th>Qual 6-Year of Passing</th>
+                    <th>Qual 6-Mark%</th>
+                    <!-- <th style="text-align: center;"></th> -->
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of CandidatemasterList">
+                <td>{{data.candidateId}}</td>
+                <td>{{data.empNo}}</td>
+                <td>{{data.requisitionNo}}</td>
+                <td>{{data.aadharNo}}</td>
+                <td>{{data.panNo}}</td>
+                <td>{{data.uanno}}</td>
+                <td>{{data.fullName}}</td>
+                <td>{{data.genderName}}</td>
+                <td>{{data.dob}}</td>
+                <td>{{data.age}}</td>
+                <td>{{data.dateOfOffer}}</td>
+                <td>{{data.doj}}</td>
+                <td>{{data.joiningYear}}</td>
+                <td>{{data.dol}}</td>
+                <td>{{data.hiringStatus}}</td>
+                <td>{{data.employmentStatus}}</td>
+                <td>{{data.verticalName}}</td>
+                <td>{{data.locationOffice}}</td>
+                <td>{{data.functionName}}</td>
+                <td>{{data.departmentName}}</td>
+                <td>{{data.gradeName}}</td>
+                <td>{{data.contactNo}}</td>
+                <td>{{data.candidateOwner}}</td>
+                <td>{{data.emailId}}</td>
+                <td>{{data.alternateContactNo}}</td>
+                <td>{{data.hometown}}</td>
+                <td>{{data.nativeState}}</td>
+                <td>{{data.presesntState}}</td>
+                <td>{{data.motherToung}}</td>
+                <td>{{data.languageKnown}}</td>
+                <td>{{data.height}}</td>
+                <td>{{data.weight}}</td>
+                <td>{{data.eyeSightCorrected}}</td>
+                <td>{{data.eyeSightLeft}}</td>
+                <td>{{data.eyeSightRight}}</td>
+                <td>{{data.disability}}</td>
+                <!-- <td>{{data.helthIssue}}</td> -->
+                <td>{{data.bloodgroup}}</td>
+                <td>{{data.fatherOccupation}}</td>
+                <td>{{data.noOfSibilings}}</td>
+                <td>{{data.noOfBrothers}}</td>
+                <td>{{data.noOfSisters}}</td>
+                <td>{{data.maritialStatus}}</td>
+                <td>{{data.spouseOccupation}}</td>
+                <td>{{data.noOfChildren}}</td>
+                <td>{{data.qualification1Name}}</td>
+                <td>{{data.qual1CourseName}}</td>
+                <td>{{data.instutation1}}</td>
+                <td>{{data.institutionAddress1}}</td>
+                <td>{{data.universityBoard1}}</td>
+                <td>{{data.yearOfPassing1}}</td>
+                <td>{{data.percentOfMarks1}}</td>
+                <td>{{data.qualification2Name}}</td>
+                <td>{{data.qual2CourseName}}</td>
+                <td>{{data.instutation2}}</td>
+                <td>{{data.institutionAddress2}}</td>
+                <td>{{data.universityBoard2}}</td>
+                <td>{{data.yearOfPassing2}}</td>
+                <td>{{data.percentOfMarks2}}</td>
+                <td>{{data.qualification3Name}}</td>
+                <td>{{data.qual3CourseName}}</td>
+                <td>{{data.instutation3}}</td>
+                <td>{{data.institutionAddress3}}</td>
+                <td>{{data.universityBoard3}}</td>
+                <td>{{data.yearOfPassing3}}</td>
+                <td>{{data.percentOfMarks3}}</td>
+                <td>{{data.qualification4Name}}</td>
+                <td>{{data.qual4CourseName}}</td>
+                <td>{{data.instutation4}}</td>
+                <td>{{data.institutionAddress4}}</td>
+                <td>{{data.universityBoard4}}</td>
+                <td>{{data.yearOfPassing4}}</td>
+                <td>{{data.percentOfMarks4}}</td>
+                <td>{{data.qualification5Name}}</td>
+                <td>{{data.qual5CourseName}}</td>
+                <td>{{data.instutation5}}</td>
+                <td>{{data.institutionAddress5}}</td>
+                <td>{{data.universityBoard5}}</td>
+                <td>{{data.yearOfPassing5}}</td>
+                <td>{{data.percentOfMarks5}}</td>
+                <td>{{data.qualification6Name}}</td>
+                <td>{{data.qual6CourseName}}</td>
+                <td>{{data.instutation6}}</td>
+                <td>{{data.institutionAddress6}}</td>
+                <td>{{data.universityBoard6}}</td>
+                <td>{{data.yearOfPassing6}}</td>
+                <td>{{data.percentOfMarks6}}</td>
+              </tr>     
+            </tbody>
+        </table>
+        <table id="exportTable" style="display:none;">
+          <thead>
+            <tr>                   
+              <th>Candidate Id</th>
+              <th>Emp Id</th>
+              <th>Req No</th>
+              <th>Aadhar No</th>
+              <th>PAN NO</th>
+              <th>UAN No</th>
+              <th>Name </th>
+              <th>Gender</th>
+              <th>DOB</th>
+              <th>Age </th>
+              <!-- <th>Dateof Application </th> -->
+              <!-- <th>Date of Final Selection </th> -->
+              <!-- <th>Date of Approval Generation </th> -->
+              <!-- <th>Date of Approval upload </th> -->
+              <th>Date of offer </th>
+              <th>Date of Joining</th>
+              <th>Year of Joining</th>
+              <!-- <th>Date of Leaving</th> -->
+              <th>Hiring Status</th>
+              <th>Employment Status</th>
+              <th>Vertical</th>
+              <th>Location</th>
+              <th>Function</th>
+              <th>Department</th>
+              <th>Grade</th>
+              <th>Phone No</th>
+              <th>Candidate owner</th>
+              <!-- <th>If Referral, Referred Emp No</th> -->
+              <th>Email ID</th>
+              <th>Alternate Phone no</th>
+              <th>Home Town</th>
+              <th>Native State</th>
+              <th>Present State</th>
+              <th>Mother Tongue</th>
+              <th>Languages known</th>
+              <th>Height</th>
+              <th>Weight</th>
+              <th>Eyesight Corrected</th>
+              <th>Right</th>
+              <th>Left</th>
+              <th>Disability</th>
+              <!-- <th>Health Issues</th> -->
+              <th>Blood Group</th>
+              <th>Father Occupation</th>
+              <!-- <th>Mother Occupation</th> -->
+              <th>No of Siblings</th>
+              <th>No of Brothers</th>
+              <th>No Of Sisters</th>
+              <th>Maritial Status</th>
+              <th>Spouse Occupation</th>
+              <th>No of Children</th>
+              <th>Qualification (1) Name</th>
+              <th>Qual 1-Course</th>
+              <!-- <th>Qual 1-Stream</th> -->
+              <!-- <th>Qual 1-Type</th> -->
+              <th> Qual 1-Institution</th>
+              <th>Qual 1-Institute Location</th>
+              <th>Qual 1-University/Board</th>
+              <th>Qual 1-Year of Passing</th>
+              <th>Qual 1-Mark%</th>
+              <th>Qualification (2)-Name</th>
+              <th>Qual 2 -Course</th>
+              <!-- <th>Qual 1-Stream</th> -->
+              <!-- <th>Qual 1-Type</th> -->
+
+              <th> Qual 2-Institution</th>
+              <th>Qual 2-Institute Location</th>
+              <th>Qual 2-University/Board</th>
+              <th>Qual 2-Year of Passing</th>
+              <th>Qual 2-Mark%</th>
+              <th>Qualification (3)-Name</th>
+              <th>Qual 3 -Course</th>
+
+              <!-- <th>Qual 1-Stream</th> -->
+              <!-- <th>Qual 1-Type</th> -->
+
+              <th> Qual 3-Institution</th>
+              <th>Qual 3-Institute Location</th>
+              <th>Qual 3-University/Board</th>
+              <th>Qual 3-Year of Passing</th>
+              <th>Qual 3-Mark%</th>
+              <th>Qualification (4)-Name</th>
+              <th>Qual 4 -Course</th>
+              <!-- <th>Qual 1-Stream</th> -->
+              <!-- <th>Qual 1-Type</th> -->
+              <th> Qual 4-Institution</th>
+              <th>Qual 4-Institute Location</th>
+              <th>Qual 4-University/Board</th>
+              <th>Qual 4-Year of Passing</th>
+              <th>Qual 4-Mark%</th>
+              <th>Qualification(5)-Name</th>
+              <th>Qual 5-Course</th>
+              <!-- <th>Qual 1-Stream</th> -->
+              <!-- <th>Qual 1-Type</th> -->
+              <th> Qual 5-Institution</th>
+              <th>Qual 5-Institute Location</th>
+              <th>Qual 5-University/Board</th>
+              <th>Qual 5-Year of Passing</th>
+              <th>Qual 5-Mark%</th>
+              <th>Qualification(6)-Name</th>
+              <th>Qual 6-Course</th>
+              <!-- <th>Qual 1-Stream</th> -->
+              <!-- <th>Qual 1-Type</th> -->
+              <th> Qual 6-Institution</th>
+              <th>Qual 6-Institute Location</th>
+              <th>Qual 6-University/Board</th>
+              <th>Qual 6-Year of Passing</th>
+              <th>Qual 6-Mark%</th>
+              <!-- <th style="text-align: center;"></th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of CandidatemasterList">
+            <td>{{data.candidateId}}</td>
+            <td>{{data.empNo}}</td>
+            <td>{{data.requisitionNo}}</td>
+            <td>{{data.aadharNo}}</td>
+            <td>{{data.panNo}}</td>
+            <td>{{data.uanno}}</td>
+            <td>{{data.fullName}}</td>
+            <td>{{data.genderName}}</td>
+            <td>{{data.dob}}</td>
+            <td>{{data.age}}</td>
+            <td>{{data.dateOfOffer}}</td>
+            <td>{{data.doj}}</td>
+            <td>{{data.joiningYear}}</td>
+            <td>{{data.hiringStatus}}</td>
+            <td>{{data.employmentStatus}}</td>
+            <td>{{data.verticalName}}</td>
+            <td>{{data.locationOffice}}</td>
+            <td>{{data.functionName}}</td>
+            <td>{{data.departmentName}}</td>
+            <td>{{data.gradeName}}</td>
+            <td>{{data.contactNo}}</td>
+            <td>{{data.candidateOwner}}</td>
+            <td>{{data.emailId}}</td>
+            <td>{{data.alternateContactNo}}</td>
+            <td>{{data.hometown}}</td>
+            <td>{{data.nativeState}}</td>
+            <td>{{data.presesntState}}</td>
+            <td>{{data.motherToung}}</td>
+            <td>{{data.languageKnown}}</td>
+            <td>{{data.height}}</td>
+            <td>{{data.weight}}</td>
+            <td>{{data.eyeSightCorrected}}</td>
+            <td>{{data.eyeSightLeft}}</td>
+            <td>{{data.eyeSightRight}}</td>
+            <td>{{data.disability}}</td>
+            <!-- <td>{{data.helthIssue}}</td> -->
+            <td>{{data.bloodgroup}}</td>
+            <td>{{data.fatherOccupation}}</td>
+            <td>{{data.noOfSibilings}}</td>
+            <td>{{data.noOfBrothers}}</td>
+            <td>{{data.noOfSisters}}</td>
+            <td>{{data.maritialStatus}}</td>
+            <td>{{data.spouseOccupation}}</td>
+            <td>{{data.noOfChildren}}</td>
+            <td>{{data.qualification1Name}}</td>
+            <td>{{data.qual1CourseName}}</td>
+            <td>{{data.instutation1}}</td>
+            <td>{{data.institutionAddress1}}</td>
+            <td>{{data.universityBoard1}}</td>
+            <td>{{data.yearOfPassing1}}</td>
+            <td>{{data.percentOfMarks1}}</td>
+            <td>{{data.qualification2Name}}</td>
+            <td>{{data.qual2CourseName}}</td>
+            <td>{{data.instutation2}}</td>
+            <td>{{data.institutionAddress2}}</td>
+            <td>{{data.universityBoard2}}</td>
+            <td>{{data.yearOfPassing2}}</td>
+            <td>{{data.percentOfMarks2}}</td>
+            <td>{{data.qualification3Name}}</td>
+            <td>{{data.qual3CourseName}}</td>
+            <td>{{data.instutation3}}</td>
+            <td>{{data.institutionAddress3}}</td>
+            <td>{{data.universityBoard3}}</td>
+            <td>{{data.yearOfPassing3}}</td>
+            <td>{{data.percentOfMarks3}}</td>
+            <td>{{data.qualification4Name}}</td>
+            <td>{{data.qual4CourseName}}</td>
+            <td>{{data.instutation4}}</td>
+            <td>{{data.institutionAddress4}}</td>
+            <td>{{data.universityBoard4}}</td>
+            <td>{{data.yearOfPassing4}}</td>
+            <td>{{data.percentOfMarks4}}</td>
+            <td>{{data.qualification5Name}}</td>
+            <td>{{data.qual5CourseName}}</td>
+            <td>{{data.instutation5}}</td>
+            <td>{{data.institutionAddress5}}</td>
+            <td>{{data.universityBoard5}}</td>
+            <td>{{data.yearOfPassing5}}</td>
+            <td>{{data.percentOfMarks5}}</td>
+            <td>{{data.qualification6Name}}</td>
+            <td>{{data.qual6CourseName}}</td>
+            <td>{{data.instutation6}}</td>
+            <td>{{data.institutionAddress6}}</td>
+            <td>{{data.universityBoard6}}</td>
+            <td>{{data.yearOfPassing6}}</td>
+            <td>{{data.percentOfMarks6}}</td>
+          </tr>     
+        </tbody>
+        </table>
+    </div>
+    <button type="button" (click)="Next()" class="btn btn-primary btn-sm">Load More Data</button>&nbsp;
+    <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm">Export Report</button>
+ </div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,199 @@
+<div class="content-box m-b-15 m-t-10" id="main" style="padding: 0.938rem;">
+    <div class="page-title-area pb-1 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="gotoRoRequisitionList()" class="back-btn"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l mr-4">All Candidates</h1>
+            </div>
+        </div>
+    </div>
+    <div class="page-title-area pb-1 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <button type="button" *ngIf="btnUpdateManagementApprovalVisible"
+                    class="btn btn-rounded btn-outline-primary btn-sm" (click)="gotoGenerateManagementApproval()"><i
+                        class="las la-check"></i> Update Generate Management Approval</button>
+            </div>
+            <div>
+                <button type="button" *ngIf="btnUploadManagementApprovalVisible"
+                    class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                    data-target="#managementApprovalModal"><i class="las la-check"></i> Upload Management
+                    Approval</button>
+            </div>
+            <div>
+                <button type="button" *ngIf="btnReuploadManagementApprovalVisible"
+                    class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                    data-target="#reuploadManagementApprovalModal"><i class="las la-check"></i> Reupload Management
+                    Approval</button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Candidate Id</th>
+                    <th>Candidate Name</th>
+                    <th>Age</th>
+                    <th>Highest Qualification</th>
+                    <th>Course</th>
+                    <th>Stream</th>
+                    <th>Experience</th>
+                    <th>Present Company</th>
+                    <th>Designation</th>
+                    <th>MRF REC/EMP History</th>
+                    <th>Source</th>
+                    <th>Candidate Owner</th>
+                    <th>Hiring Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of candidates" class="tr_row">
+                    <td>
+                        <input type="hidden" class="cmdUpdateStatus" [value]="data.cmdUpdateStatus" />
+                        <div class="form-check"
+                            *ngIf="data.hiringStatusId>=40 && data.hiringStatusId!=54 && data.hiringStatusId!=55 && data.hiringStatusId!=56 || data.hiringStatusId==39 || data.hiringStatusId==40">
+                            <input type="checkbox" id="chkm{{data.candidateId}}" value="1"
+                                (click)="select($event,data.candidateId,data.hiringStatusId,data.emailId,data.candidateNo,data.managementApprovalId,data.managementApprovalFlag)">
+                            <label class="chk" for="chkm{{data.candidateId}}"></label>
+                        </div>
+                    </td>
+                    <td>{{data.candidateNo}}</td>
+                    <td><a href="javascript:void(0)" (click)="gotoCandidateAction(data.candidateId)"
+                            class="red">{{data.prefixName}} {{data.fullName}}</a></td>
+                    <td>{{data.age}}</td>
+                    <td>{{data.qualificationName}}</td>
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.streamName}}</td>
+                    <td>{{data.experienceYear}} Years {{data.experienceMonth}} Months</td>
+                    <td>{{data.currentEmployer}}</td>
+                    <td>{{data.currentDesignation}}</td>
+                    <td>{{data.previousAppliedName}}</td>
+                    <td>{{data.sourceChannelName}}
+                    </td>
+                    <td>{{data.candidateOwner}}</td>
+                    <td *ngIf="data.hiringStatusId==2">Pending Action</td>
+                    <td *ngIf="data.hiringStatusId!=2">{{data.hiringStatusName}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=2"
+                                    (click)="gotoCandidateAction(data.candidateId)" href="javascript:void(0)"><i
+                                        class="las la-check-square"></i> View Candidate</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId>=36"
+                                    (click)="gotoCandidateDocumentAction(data.candidateId)" href="javascript:void(0)"><i
+                                        class="las la-check-square"></i> View Documets</a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId>=40  && data.hiringStatusId!=54 && data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.managementApprovalFlag==1 "
+                                    (click)="gotoManagementApproval(data.candidateId)" href="javascript:void(0)">
+                                    <i class="las la-check-square"></i>Update Generate Management Approval
+                                </a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId>=39 && data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.managementApprovalFlag==1"
+                                    (click)="gotoManagementApprovalView(data.candidateId)" href="javascript:void(0)">
+                                    <i class="las la-check-square"></i> View Management Approval
+                                </a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId==40 && data.hiringStatusId!=55 && data.hiringStatusId!=56 "
+                                    (click)="gotoSendOfferLetter(data.candidateId)" href="javascript:void(0)">
+                                    <i class="las la-check-square"></i> Send Offer Letter
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- Upload Management Approval Start -->
+
+    <div class="modal fade" id="managementApprovalModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="closeManagementApprovalModal" #closeManagementApprovalModal class="close"
+                        data-dismiss="modal"><i class="las la-times"></i></button>
+                    <h4 class="modal-title">Upload Management Approval</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Upload <span class="grey">(PDF format only)</span><span
+                                        class="required">*</span></label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile"
+                                        accept="application/pdf" (change)="onFileChange($event)">
+                                    <label class="custom-file-label" for="customFile" #managementFileImport>Choose
+                                        file</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"
+                        (click)="UploadManagementApproval()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Upload Management Approval End -->
+
+    <!-- Reupload Management Approval Start -->
+
+    <div class="modal fade" id="reuploadManagementApprovalModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="closeReuploadManagementApprovalModal" #closeReuploadManagementApprovalModal class="close"
+                        data-dismiss="modal"><i class="las la-times"></i></button>
+                    <h4 class="modal-title">Reupload Management Approval</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Upload <span class="grey">(PDF format only)</span><span
+                                        class="required">*</span></label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile"
+                                        accept="application/pdf" (change)="onReuploadFileChange($event)">
+                                    <label class="custom-file-label" for="customFile" #managementReuploadFileImport>Choose
+                                        file</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"
+                        (click)="reuploadManagementApproval()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Reupload Management Approval End -->
+
+</div>
+
+<!-- Spinner -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,195 @@
+<div class="content-box">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="firsttab" data-toggle="tab" (click)="onClickPending()" href="#tabOne" role="tab" aria-controls="home"
+                aria-selected="true">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="secondtab" data-toggle="tab" href="#tabTwo" (click)="onCLickVerified()" role="tab" aria-controls="profile"
+                aria-selected="false">Verified</a>
+        </li>
+    </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div class="tab-pane fade show active" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <div class="filter-sec">
+                <form [formGroup]="searchpendingform" (ngSubmit)="fromPendingSubmit()">
+                    <div class="form-row m-t-10">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="fromdatepicker" placeholder="From Date" #pfromDate
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #ptoDate formControlName="toDate"
+                                                autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="name" #name>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="onClickPendingReset()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Requested On</th>
+                            <th>Candidate Name</th>
+                            <th>Vertical</th>
+                            <th>Designation</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Posting Location</th>
+                            <th>Verification Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of pendingCandidateList">
+                            <td>{{data.createdOn | date:'dd/MM/yy'}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.verticalName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.verificationStatus}}</td>
+                            <td class="text-center"><a href="javascript:void(0)" class="row-btn"
+                                    (click)="onClickView(data)"><i class="las la-pen"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <div class="filter-sec">
+                <form [formGroup]="searchverifiedform" (ngSubmit)="fromVerifiedSubmit()">
+                    <div class="form-row m-t-10">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="fromdatepicker" placeholder="From Date" #vfromDate
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #vtoDate formControlName="toDate"
+                                                autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="name" #name>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm" (click)="onClickVerifiedReset()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Requested On</th>
+                            <th>Candidate Name</th>
+                            <th>Vertical</th>
+                            <th>Designation</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Posting Location</th>
+                            <th>Verification Status</th>
+                            <th>Medical Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of verifiedCandidateList">
+                            <td>{{data.createdOn | date:'dd/MM/yy'}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.verticalName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.verificationStatus}}</td>
+                            <td>{{data.medicalallyFitStatus}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a class="dropdown-item" href="javcascript:void(0)" (click)="onClickViewDetails(data)"><i class="las la-eye"></i>View Details</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

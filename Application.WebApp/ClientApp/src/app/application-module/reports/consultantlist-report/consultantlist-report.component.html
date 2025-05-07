@@ -1,0 +1,97 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Filters</h1>
+    </div>
+
+    <form [formGroup]="searchForm" (ngSubmit)="formSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Date</label>
+                                <div class="form-row">
+                                      <div class="col-sm-6">
+                                          <div class="input-group datepiker date">
+                                                  <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                                      placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                                  <div class="input-group-append">
+                                                      <span class="input-group-text" id="basic-addon2">
+                                                          <i class="fa fa-calendar"></i>
+                                                      </span>
+                                                  </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-6">
+                                          <div class="input-group datepiker date">
+                                              <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                                  placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                              <div class="input-group-append">
+                                                  <span class="input-group-text" id="basic-addon2">
+                                                      <i class="fa fa-calendar"></i>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                               </div>
+                        </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Consultant Name</label>
+                        <input type="text" class="form-control" formControlName="vendorName" #vendorName placeholder="Enter Vendor Name." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Email Id</label>
+                        <input type="text" class="form-control" formControlName="emailId" #emailId placeholder="Enter Email Id." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Contact No</label>
+                        <input type="text" class="form-control" formControlName="contactNo" #contactNo placeholder="Enter Contact No." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Consultant Name</th>
+                    <th>Contact Person</th>
+                    <th>Mail Id</th>
+                    <th>Contact No</th>
+                    <th>Agreement Status</th>
+                    <th>Agreement Validity Date</th>
+                    <th>Rates</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of consultantReportList">
+                    <td>{{data.vendorName}}</td>
+                    <td>{{data.contactPersonName}}</td>
+                    <td>{{data.emailId}}</td>
+                    <td>{{data.contactNo}}</td>
+                    <td>{{data.agreementStatus}}</td>
+                    <td>{{data.agreementValidityDate}}</td>
+                    <td>{{data.rates}}</td>
+                    <td>{{data.remarks}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>  
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

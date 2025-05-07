@@ -1,0 +1,807 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a *ngIf="showBack" href="javascript:void(0)" (click)="gotoList()" class="back-btn"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Application Details </h1>
+            </div>
+            <div>
+                <button type="button" class="btn btn-rounded btn-outline-success btn-sm ml-1" (click)="DownloadPDF()"><i
+                        class="las la-download"></i> Download</button>
+            </div>
+        </div>
+    </div>
+    <div #content>
+        <!-- Section 1 -->
+        <div class="section1">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">Personal Profile:</h6>
+            <div class="row">
+                <div class="col-md-2">
+                    <!-- <div class="avater">
+                        <img [src]="candidateProfile?.candiadatePhoto" width="170px" alt="">
+                    </div> -->
+                    <div class="circle">
+                        <img class="profile-pic" [src]="applicationFormData.candiadatePhoto">
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <!-- <div class="col-md-6">
+                            <p class="d-inline-block grey">Position applied for:</p>
+                            <p class="d-inline-block">{{candidateProfile?.positionAppliedFor}}</p>
+                        </div>   COMMENTED OUT by Sayandeep as postion is not there for campus candidate-->
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Name:</p>
+                            <p class="d-inline-block">{{candidateProfile?.fullName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Date of Birth:</p>
+                            <p class="d-inline-block">{{candidateProfile?.dob}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Age(Yrs):</p>
+                            <p class="d-inline-block">{{candidateProfile?.age}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Gender:</p>
+                            <p class="d-inline-block">{{candidateProfile?.genderName}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h6>Communication Address:</h6>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Address:</p>
+                    <p class="d-inline-block">{{candidateProfile?.communicationAddress}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">State:</p>
+                    <p class="d-inline-block">{{candidateProfile?.communicationStateName}}</p>
+                </div>
+                <div class="col-md-4" style="display: none;">
+                    <p class="d-inline-block grey">Country:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentCountryName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">PIN:</p>
+                    <p class="d-inline-block">{{candidateProfile?.communicationPin}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Phone No.:</p>
+                    <p class="d-inline-block">{{candidateProfile?.communicationPhoneNo}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Alternate Contact No.:</p>
+                    <p class="d-inline-block">{{candidateProfile?.communicationAlternativeContactNo}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Email ID:</p>
+                    <p class="d-inline-block">{{candidateProfile?.emailId}}</p>
+                </div>
+            </div>
+            <hr>
+            <h6>Permanent Address:</h6>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Address:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentAddress}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Country:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentCountryName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">State:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentStateName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Native State:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentNativeStateName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">PIN:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentPin}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Phone No.:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentPhone}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Home Town:</p>
+                    <p class="d-inline-block">{{candidateProfile?.permanentHomeTown}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Aadhar No.:</p>
+                    <p class="d-inline-block">{{candidateProfile?.aadharNo}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">UAN No.:</p>
+                    <p class="d-inline-block">{{candidateProfile?.uanno}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">PAN No:</p>
+                    <p class="d-inline-block">{{candidateProfile?.panNo}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Nationality:</p>
+                    <p class="d-inline-block">{{candidateProfile?.nationalityName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Religion:</p>
+                    <p class="d-inline-block">{{candidateProfile?.religionName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Caste:</p>
+                    <p class="d-inline-block">{{candidateProfile?.casteName}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Height(Cms):</p>
+                    <p class="d-inline-block">{{candidateProfile?.height}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Weight(Kgs):</p>
+                    <p class="d-inline-block">{{candidateProfile?.weight}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Blood Group:</p>
+                    <p class="d-inline-block">{{candidateProfile?.bloodGroupName}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Eye Sight Corrected:</p>
+                    <p class="d-inline-block">{{candidateProfile?.eyeSightCorrected==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Right:</p>
+                    <p class="d-inline-block">{{candidateProfile?.eyeSightRight}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Left:</p>
+                    <p class="d-inline-block">{{candidateProfile?.eyeSightLeft}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Any Handicaps:</p>
+                    <p class="d-inline-block">{{candidateProfile?.handiCap==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-md-12" *ngIf="candidateProfile?.handiCap">
+                    <p class="d-inline-block grey">Details:</p>
+                    <p class="d-inline-block">{{candidateProfile?.handiCapDetails}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Chronic/Major illness:</p>
+                    <p class="d-inline-block">{{candidateProfile?.cronicMajorIllness==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-md-12" *ngIf="candidateProfile?.cronicMajorIllness">
+                    <p class="d-inline-block grey">Details:</p>
+                    <p class="d-inline-block">{{candidateProfile?.cronicMajorIllnessDetails}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="grey">Identification Marks:</p>
+                    <ol>
+                        <li>{{candidateProfile?.identificationMarks1}}</li>
+                        <li>{{candidateProfile?.identificationMarks2}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- Section 1 End-->
+        <!-- Section 2 -->
+        <div class="section2">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">FAMILY BACKGROUND:</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Relationship</th>
+                            <th>Name</th>
+                            <th>DOB</th>
+                            <th>Education</th>
+                            <th>Occupation</th>
+                            <th>Organisation/Place</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateProfile?.familyBackGroundDetails">
+                            <td>{{data.familyRelationShipName}}</td>
+                            <td>{{data.familyName}}</td>
+                            <td>{{data.familyDOB}}</td>
+                            <td>{{data.educationName}}</td>
+                            <td>{{data.occupationName}}</td>
+                            <td>{{data.familyOrganisation}}</td>
+                        </tr>
+                        <tr *ngIf="candidateProfile?.familyBackGroundDetails.length==0">
+                            <td>NA</td>
+                            <td>NA</td>
+                            <td>NA</td>
+                            <td>NA</td>
+                            <td>NA</td>
+                            <td>NA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Do you have any relatives in MRF?:</p>
+                    <p class="d-inline-block">{{candidateProfile?.mrfRealtives==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-sm-12" *ngIf="candidateProfile?.mrfRealtives">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Employee ID</th>
+                                    <th>Designation</th>
+                                    <th>Relationship</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of candidateProfile?.mrfRelationShipDetails;let i=index">
+                                    <td>{{data.relativeName}}</td>
+                                    <td>{{data.relativeEmployeeId}}</td>
+                                    <td>{{data.relativeDesignation}}</td>
+                                    <td>{{data.relativeRelationShipName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Do you have any relatives working for tyre companies, Tyre Dealers or
+                        Tyre Retreaders?:</p>
+                    <p class="d-inline-block">{{candidateProfile?.tyreCompanyRealtionShip==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-sm-12" *ngIf="candidateProfile?.tyreCompanyRealtionShip">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Tyre Company/ Tyre Dealer/ Tyre Retreader</th>
+                                    <th>Relationship</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of candidateProfile?.tyreCompanyRelationShipDetails;let i=index">
+                                    <td>{{data.tyreRelativeName}}</td>
+                                    <td>{{data.tyreRelativeDesignation}}</td>
+                                    <td>{{data.tyreRelativeCompanyName}}</td>
+                                    <td>{{data.tyreRelativeRelationShipName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Section 2 End-->
+        <!-- Section 3 -->
+        <div class="section3">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">ACADEMIC ACHIVEMENTS:</h6>
+            <div class="border-box mb-2" *ngFor="let data of candidateProfile?.academicDetails; let i=index">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Qualification:</p>
+                        <p class="d-inline-block">{{data.qualificationName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Course:</p>
+                        <p class="d-inline-block">{{data.courseName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Specialization/Stream:</p>
+                        <p class="d-inline-block">{{data.specalization}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Institution:</p>
+                        <p class="d-inline-block">{{data.instutation}}</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="d-inline-block grey">Address:</p>
+                        <p class="d-inline-block">{{data.academicAddress}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">University/Board:</p>
+                        <!-- <p class="d-inline-block">{{data.universityName}}</p> -->
+                        <!-- previous -->
+                        <p class="d-inline-block">{{data.university==0?data.otherUniversityName:data.universityName}}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Duration:</p>
+                        <p class="d-inline-block">{{data.academicDurationFrom}} - {{data.academicDurationTo}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Course Type:</p>
+                        <p class="d-inline-block">{{data.courseTypeName}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Core/Major Subjects:</p>
+                        <p class="d-inline-block">{{data.subjects}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Month & Year of Passing:</p>
+                        <p class="d-inline-block">{{data.monthNameOfPassing}} - {{data.yearOfPassing}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Class/Grade/Division:</p>
+                        <p class="d-inline-block">{{data.gradeName}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="d-inline-block grey">Marks Aggregate (%):</p>
+                        <p class="d-inline-block">{{data.marks}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.reasonforGap!=''">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">State reason for gap if any:</p>
+                    <p class="d-inline-block">{{candidateProfile?.reasonforGap}}</p>
+                </div>
+            </div>
+            <hr>
+            <h6>CERTIFICATION / TRAINING (PROFESSIONAL /
+                VOCATIONAL):</h6> <!-- *ngIf="candidateProfile?.certificationDetails.length>0" -->
+            <div class="table-responsive">
+                <!-- *ngIf="candidateProfile?.certificationDetails.length>0" -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Organisation</th>
+                            <th rowspan="2">Nature of Training</th>
+                            <th colspan="2">Duration</th>
+                        </tr>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateProfile?.certificationDetails;let i=index">
+                            <td>{{data.certificationOrganisation}}</td>
+                            <td>{{data.certificationNatureofTraining}}</td>
+                            <td>{{data.certificationDurationFrom}}</td>
+                            <td>{{data.certificationDurationTo}}</td>
+                        </tr>
+                        <tr *ngIf="candidateProfile?.certificationDetails.length==0">
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h6>MEMBERSHIP OF PROFESSIONAL BODIES:</h6> <!-- *ngIf="candidateProfile?.membershipDetails.length>0" -->
+            <div class="table-responsive">
+                <!-- *ngIf="candidateProfile?.membershipDetails.length>0" -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Professional Body / Institution</th>
+                            <th>Class od Membership</th>
+                            <th>From</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateProfile?.membershipDetails;let i=index">
+                            <td>{{data.institution}}</td>
+                            <td>{{data.classofMemberShip}}</td>
+                            <td>{{data.membershipFrom}}</td>
+                        </tr>
+                        <tr *ngIf="candidateProfile?.membershipDetails.length==0">
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Section 3 End-->
+        <!-- Section 4 -->
+        <div class="section4">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">EXTRA CURRICULAR ACTIVITIES / SPARE TIME INTEREST:</h6>
+            <!-- *ngIf="candidateProfile?.extraCarricularActivitiesDetails.length>0" -->
+            <div class="table-responsive">
+                <!-- *ngIf="candidateProfile?.extraCarricularActivitiesDetails.length>0" -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nature of Activity</th>
+                            <th>Level of Achievement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateProfile?.extraCarricularActivitiesDetails;let i=index">
+                            <td>{{data.natureofActivities}}</td>
+                            <td>{{data.levelofAchivement}}</td>
+                        </tr>
+                        <tr *ngIf="candidateProfile?.extraCarricularActivitiesDetails.length==0">
+                            <td>NIL</td>
+                            <td>NIL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Section 4 End-->
+        <!-- Section 5 -->
+        <div class="section5">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">
+                LANGUAGES KNOWN:</h6> <!-- *ngIf="candidateProfile?.languageKnownDetails.length>0" -->
+            <div class="table-responsive">
+                <!-- *ngIf="candidateProfile?.languageKnownDetails.length>0" -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Languages Known</th>
+                            <th class="text-center">Read</th>
+                            <th class="text-center">Write</th>
+                            <th class="text-center">Speak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateProfile?.languageKnownDetails;let i=index">
+                            <td>{{data.motherTongueName}}</td>
+                            <td class="text-center">{{data.read==true?'Yes':'No'}}</td>
+                            <td class="text-center">{{data.write==true?'Yes':'No'}}</td>
+                            <td class="text-center">{{data.speak==true?'Yes':'No'}}</td>
+                        </tr>
+                        <tr *ngIf="candidateProfile?.languageKnownDetails.length==0">
+                            <td>NIL</td>
+                            <td class="text-center">NIL</td>
+                            <td class="text-center">NIL</td>
+                            <td class="text-center">NIL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Section 5 End-->
+        <!-- Section 6 -->
+        <div class="section6">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">WORK EXPERIENCE:</h6>
+            <!-- *ngIf="candidateProfile?.peviousAssignmentDetails.length>0" -->
+            <div class="table-responsive">
+                <!-- *ngIf="candidateProfile?.peviousAssignmentDetails.length>0" -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Organisation</th>
+                            <th>Address</th>
+                            <th>Position</th>
+                            <th>Nature of Training / Work</th>
+                            <th class="text-right">CTC PA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateProfile?.peviousAssignmentDetails;let i=index">
+                            <td>{{data.peviousAssignmentFrom}}</td>
+                            <td>{{data.peviousAssignmentTo}}</td>
+                            <td>{{data.peviousAssignmentOrganisation}}</td>
+                            <td>{{data.peviousAssignmentAddress}}</td>
+                            <td>{{data.peviousAssignmentPosition}}</td>
+                            <td>{{data.peviousAssignmentDescriptionofWork}}</td>
+                            <td class="text-right">{{data.peviousAssignmentCTC}}</td>
+                        </tr>
+                        <tr *ngIf="candidateProfile?.peviousAssignmentDetails.length==0">
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td>NIL</td>
+                            <td class="text-right">NIL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.previousAssignmentGap!=''">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">State reason for gap if any:</p>
+                    <p class="d-inline-block">{{candidateProfile?.previousAssignmentGap}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Expected CTC(PA):</p>
+                    <p class="d-inline-block">{{candidateProfile?.expectedCTC}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Joining Time Required:</p>
+                    <p class="d-inline-block">{{candidateProfile?.joiningDaysRequired}} days</p>
+                </div>
+            </div>
+        </div>
+        <!-- Section 6 End-->
+        <!-- Section 7 -->
+        <div class="section7">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">REFERENCE DETAILS (OTHER THAN RELATIVES):</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Organisation</th>
+                            <th>Location</th>
+                            <th>Contact No.</th>
+                            <th>Email ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>{{candidateProfile?.ref1Name}}</td>
+                            <td>{{candidateProfile?.ref1Position}}</td>
+                            <td>{{candidateProfile?.ref1Organisation}}</td>
+                            <td>{{candidateProfile?.ref1Location}}</td>
+                            <td>{{candidateProfile?.ref1ContactNo}}</td>
+                            <td>{{candidateProfile?.ref1EmailId}}</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>{{candidateProfile?.ref2Name}}</td>
+                            <td>{{candidateProfile?.ref2Position}}</td>
+                            <td>{{candidateProfile?.ref2Organisation}}</td>
+                            <td>{{candidateProfile?.ref2Location}}</td>
+                            <td>{{candidateProfile?.ref2ContactNo}}</td>
+                            <td>{{candidateProfile?.ref2EmailId}}</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>{{candidateProfile?.ref3Name}}</td>
+                            <td>{{candidateProfile?.ref3Position}}</td>
+                            <td>{{candidateProfile?.ref3Organisation}}</td>
+                            <td>{{candidateProfile?.ref3Location}}</td>
+                            <td>{{candidateProfile?.ref3ContactNo}}</td>
+                            <td>{{candidateProfile?.ref3EmailId}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Section 7 End-->
+        <!-- Section 8 -->
+        <div class="section8">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">OTHER DETAILS:</h6>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Why do you consider yourself suitable for the position applied?:</p>
+                    <p class="d-inline-block">{{candidateProfile?.joiningComments}}</p>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Any additional information you wish to provide:</p>
+                    <p class="d-inline-block">{{candidateProfile?.additionoalDetails}}</p>
+                </div>
+            </div>
+            <hr *ngIf="candidateProfile?.preInterViewMRF" />
+            <div class="row" *ngIf="candidateProfile?.preInterViewMRF">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Have you ever been interviewed for any position in MRF?:</p>
+                    <p class="d-inline-block">{{candidateProfile?.preInterViewMRF==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of candidateProfile?.mrfPreInterviewDetails;let i=index">
+                                    <td>{{data.positionName}}</td>
+                                    <td>{{data.interviewDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Have you ever been prosecuted in a criminal court or is there any
+                        pending claims, action, suits or proceeding against you?:</p>
+                    <p class="d-inline-block">{{candidateProfile?.criminalCase==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-md-12" *ngIf="candidateProfile?.criminalCase">
+                    <p class="d-inline-block grey">Details:</p>
+                    <p class="d-inline-block">{{candidateProfile?.criminalCaseDetails}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">Have you ever been involved any fraud, unethical and/or immoral acts,
+                        departmental enquiry in your previous employment(s):</p>
+                    <p class="d-inline-block">{{candidateProfile?.previousEmployemntEnquiry==true?'Yes':'No'}}</p>
+                </div>
+                <div class="col-md-12" *ngIf="candidateProfile?.previousEmployemntEnquiry">
+                    <p class="d-inline-block grey">Details:</p>
+                    <p class="d-inline-block">{{candidateProfile?.previousEmployemntEnquiryDetails}}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Section 8 End-->
+        <!-- Section 9 -->
+        <div class="section9">
+            <h6 class="bg-black white py-1 px-2 text-uppercase">HOW DID YOU GET TO KNOW ABOUT THIS POSITION:</h6>
+            <div class="row" *ngIf="candidateProfile?.employeeReferal">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Employee Referral:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.employeeReferal==true?'Employee Referral':''}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.employeeReferal">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Name of Employee:</p>
+                    <p class="d-inline-block">{{candidateProfile?.refNameofEmployee}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Employee ID:</p>
+                    <p class="d-inline-block">{{candidateProfile?.refEmployeeId}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Employee Designation:</p>
+                    <p class="d-inline-block">{{candidateProfile?.refEmployeeDesignation}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.employeeReferal">
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Location:</p>
+                    <p class="d-inline-block">{{candidateProfile?.employeeReferal}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Function:</p>
+                    <p class="d-inline-block">{{candidateProfile?.refEmployeeFunction}}</p>
+                </div>
+                <div class="col-md-12">
+                    <p class="d-inline-block grey">How do you know the employee who has referred you:</p>
+                    <p class="d-inline-block">{{candidateProfile?.refEmployeeKnowing}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.jobPortal">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Job Portal:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.jobPortal==true?'Job Portal':''}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.campusPlacement">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Campus Placement office:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.campusPlacement==true?'Campus Placement office':''}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.linkedIn">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Social Media:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.linkedIn==true?'Social Media':''}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.careerSite">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Career Site:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.careerSite==true?'Career Site':''}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="candidateProfile?.paperAdvertisement">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Paper Advertisement:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.paperAdvertisement==true?'Paper Advertisement':''}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="candidateProfile?.consultantApplicable">
+                <div class="col-md-4">
+                    <!-- <p class="d-inline-block grey">Consultant:</p> -->
+                    <p class="d-inline-block">{{candidateProfile?.consultantApplicable==true?'Consultant':''}}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="d-inline-block grey">Consultant Name:</p>
+                    <p class="d-inline-block">
+                        {{candidateProfile?.consultant==0?otherSource:candidateProfile?.consultantName}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <!-- <div class="col-md-4">
+                <p class="grey">Date:</p>
+                <p>03/04/2021</p>
+            </div>
+            <div class="col-md-4">
+                <p class="grey">Place:</p>
+                <p>Kolkata</p>
+            </div> -->
+                <div class="col-md-2">
+                    <p class="d-inline-block grey">Attached Signature:</p>
+                    <!-- <div class="signature-area">
+                        <img [src]="candidateProfile?.signature" alt="">
+                    </div> -->
+                    <div class="circle">
+                        <img class="profile-pic" [src]="applicationFormData.signature" alt="No Signature Available">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row" *ngIf="showEnable" style="margin-top: 20px;">
+            <div class="col-md-12">
+                <label>Enable/Disable Candidate Application form<span class="required">*</span></label>
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="switch"><input type="checkbox" [ngModel]="isFormEnabled"
+                                    (ngModelChange)="changeProfileStatus($event)">
+                                <div class="slider round">
+                                    <span class="on">Yes</span><span class="off">No</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 clearfix">
+                <button type="button " class="btn btn-black float-left" (click)="updateProfileStatus()">Submit</button>
+
+            </div>
+        </div>
+        <!-- Section 9 End-->
+    </div>
+</div>
+<div id="printerdiv" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

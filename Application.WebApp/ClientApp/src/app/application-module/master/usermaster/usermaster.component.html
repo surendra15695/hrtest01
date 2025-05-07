@@ -1,0 +1,40 @@
+<form [formGroup]="saveForm" (ngSubmit)="onSubmit()">
+    <div class="col col-md-6">
+        <div class="log-card mt-5 p-md-5 p-sm-4 p-4">
+            <h5>Create Account</h5>
+          
+                <div class="mb-3">
+                    <label for="validationCustomUsername">Email ID <span class="required">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend"><i class="las la-envelope"></i></span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="EmailId" placeholder="Enter email">
+                    <span class="text-danger m-t-5"
+                        *ngIf="!saveForm.controls['EmailId'].valid && !saveForm.controls['EmailId'].touched">
+                        <span *ngIf="saveForm.controls['EmailId'].hasError('required')">Email is required</span>
+                        <small *ngIf="saveForm.controls['EmailId']?.pattern" class="text-danger">Please provide a valid email address</small>
+                    </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="validationCustomPassword">Password <span class="required">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend"><i class="las la-lock"></i></span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="Password" placeholder="Password">
+                        <span class="text-danger m-t-5"
+                            *ngIf="!saveForm.controls['Password'].valid && !saveForm.controls['Password'].touched">
+                            <span *ngIf="saveForm.controls['Password'].hasError('required')"></span>Password is
+                            required
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-primary my-3 w-100" type="submit">Submit</button>
+                <p>Already have an account? <a href="#" class="red">Sign In.</a></p>
+          
+        </div>
+    </div>
+
+</form>

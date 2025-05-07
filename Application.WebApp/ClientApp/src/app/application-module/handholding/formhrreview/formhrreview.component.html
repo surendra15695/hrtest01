@@ -1,0 +1,82 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>  
+               <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>                                
+               <h1 class="f-l">HR Review</h1>
+            </div>
+        </div>   
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{empName}}</p>
+            </div> 
+        </div>
+         
+        <hr>
+    </div>
+    <div>                          
+        <form [formGroup]="saveForm" autocomplete="off"> 
+        <div class="form-group">
+            <label>How did the induction and plant training help the employee to perform the job</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question1Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Does the employee has relevant tools to perform the job</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question2Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>What are the interpersonal issues/difficulties while performing duties</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question3Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>What support does the employee need from organizaton</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question4Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Is he recognized/appreciated during the last 6 months? Please clarify with one instance </label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question5Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Overall comments on employee's working with MRF</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question6Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>                           
+        <div class="form-group">
+            <label>Any support is requested/needed</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question7Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Any specific action plan</label>
+            <textarea class="form-control" placeholder="Write here..." formControlName="Question8Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="mt-4"  *ngIf="!showButton">
+            <button type="submit" class="btn btn-black" data-target="#confirmPopup" data-toggle="modal">Submit</button>
+        </div>
+        </form>
+    </div>            
+   
+</div>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to continue?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onSubmit()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

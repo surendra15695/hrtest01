@@ -1,0 +1,189 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Hold Release - Plant</h1>
+    </div>
+    <!-- <form > -->
+    <div class="form-row m-t-10">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Plant Office <span class="required">*</span></label>
+                <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="selectedLocation"
+                    (change)="onLocationChange()">
+                    <ng-option *ngFor="let location of locations" [value]="location">
+                        {{location.locationNo}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Code</label>
+                <input type="text" class="form-control" disabled [value]="selectedLocationCode">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" class="form-control" disabled [value]="selectedLocationOffice">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <a href="javascript:void(0)" class="add_btn" (click)="startRequisition()"><span>+</span>Add</a>
+        </div>
+    </div>
+    <div *ngIf="showTable">
+        <div class="row m-t-10">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th style="position: sticky; min-width: 60px; max-width: 60px; z-index: 9; left:0; background-color: #efefef;">Select</th>
+                                <th style="position: sticky; min-width: 100px; max-width: 100px; z-index: 9; left:60px; background-color: #efefef;">EmpNo <span class="required">*</span></th>
+                                <th style="position: sticky; min-width: 160px; max-width: 160px; z-index: 9; left:160px; background-color: #efefef;">Name</th>
+                                <th style="min-width: 160px;">Designation</th>
+                                <th style="min-width: 60px;">Grade</th>
+                                <th style="max-width: 120px;">Function </th>
+                                <th style="max-width: 120px;">Department </th>
+                                <th style="min-width: 80px;">DOR </th>
+                                <th style="max-width: 100px;">Pos. Status </th>
+                                <th style="min-width: 120px;">Target <span class="required">*</span></th>
+                                <th>Rep. Position <span class="required">*</span></th>
+                                <th style="max-width: 120px;">Rep. Grade <span class="required">*</span></th>
+                                <th>Type <span class="required">*</span></th>
+                                <th>JD <span class="required">*</span></th>
+                                <th style="min-width: 160px;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of successionPlanDetailData; let i = index">
+                                <td style="position: sticky; min-width: 60px; max-width: 60px; z-index: 9; left:0; background-color: inherit;">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="chkm{{data.successionPlanDetailId}}"
+                                            value="{{data.successionPlanDetailId}}"
+                                            (click)="select($event,data.successionPlanDetailId,data.departmentId,data.functionId)">
+                                        <label class="chk" for="chkm{{data.successionPlanDetailId}}"></label>
+                                    </div>
+                                </td>
+                                <td style="position: sticky; min-width: 100px; max-width: 100px; z-index: 9; left:60px; background-color: inherit;">{{data.empNo}}</td>
+                                <td style="position: sticky; min-width: 160px; max-width: 160px; z-index: 9; left:160px; background-color: inherit;">{{data.empName}}</td>
+                                <td>{{data.designation}}</td>
+                                <td>{{data.oldGradeName}}</td>
+                                <td>{{data.functionName}}</td>
+                                <td>{{data.departmentName}}</td>
+                                <td>{{data.dor}}</td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 160px !important;">
+                                        <select class="selectpicker no-remove" data-container="body" disabled
+                                            title="Select" id="ddlReplacementStatus{{data.successionPlanDetailId}}"
+                                            [(ngModel)]="data.selectedReplacementStatus"
+                                            (change)="onReplacementChange(data.selectedReplacementStatus,data.successionPlanDetailId)">
+                                            <option *ngFor="let replacementStatus of replacementStatuses"
+                                                [ngValue]="replacementStatus">
+                                                {{replacementStatus.statusName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                [disabled]="!data.checkStatus || (data.selectedReplacementStatus!=undefined && data.selectedReplacementStatus.statusId==3)"
+                                                id="datepicker{{i}}" placeholder="Target Date" #tDate
+                                                autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 160px !important;">
+                                        <select class="selectpicker no-remove hold{{data.successionPlanDetailId}}"
+                                            data-container="body" title="Select"
+                                            (change)="onPositionChange(data.selectedPosition,data.successionPlanDetailId)"
+                                            disabled [(ngModel)]="data.selectedPosition"
+                                            id="ddlPosition{{data.successionPlanDetailId}}">
+                                            <option *ngFor="let position of positions" [ngValue]="position">
+                                                {{position.positionName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 120px !important;">
+                                        <select class="selectpicker hold{{data.successionPlanDetailId}} graderefresh"
+                                            data-container="body" title="Select"
+                                            id="ddlGrade{{data.successionPlanDetailId}}"
+                                            [(ngModel)]="data.selectedGrade" disabled
+                                            (change)="onGradeChange(data.selectedGrade,data.successionPlanDetailId)">
+                                            <option *ngFor="let grade of data.gradeList" [ngValue]="grade">
+                                                {{grade.gradeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 110px !important;">
+                                        <select class="selectpicker no-remove hold{{data.successionPlanDetailId}}"
+                                            data-container="body" title="Select" [(ngModel)]="data.selectedJobType"
+                                            disabled id="ddlJT{{data.successionPlanDetailId}}"
+                                            (change)="onJTChange(data.selectedJobType,data.successionPlanDetailId)">
+                                            <option *ngFor="let jobtype of jobtypes" [ngValue]="jobtype">
+                                                {{jobtype.jobTypeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group m-0" style="width: 190px !important;">
+                                        <select class="selectpicker no-remove hold{{data.successionPlanDetailId}}"
+                                            data-container="body" title="Select" disabled
+                                            id="ddlJD{{data.successionPlanDetailId}}"
+                                            [(ngModel)]="data.selectedJobDescription"
+                                            (change)="onJDChange(data.selectedJobDescription,data.successionPlanDetailId)">
+                                            <!-- <option *ngFor="let jobdescription of jobdescriptions"
+                                                [ngValue]="jobdescription">
+                                                {{jobdescription.jobDescriptionName}}
+                                            </option> -->
+                                            <option *ngFor="let jobdescription of data.jobdescriptionList"
+                                                [ngValue]="jobdescription">
+                                                {{jobdescription.jobDescriptionName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control"
+                                            [(ngModel)]="data.remarks">    <!-- [disabled]="!data.checkStatus" -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" (click)="formSubmit()"><i class="las la-save"></i>
+                    Submit</button>
+                <button type="button" class="btn btn-secondary" (click)="clearEntireForm()"><i
+                        class="las la-undo-alt"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

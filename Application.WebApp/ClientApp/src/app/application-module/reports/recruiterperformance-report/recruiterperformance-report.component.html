@@ -1,0 +1,147 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">Filters</h1>
+  </div>
+
+  <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Req No</label>
+            <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo placeholder="Enter requisition no." autocomplete="off" >
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Position</label>
+            <ng-select bindLabel="venueName" class="ddltestvenue" name="positionId" formControlName="positionId" #positionId (change)="onchangePosition()" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.positionId" *ngFor="let rec of positions">
+                {{rec.positionName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+              <label>Vertical</label>
+              <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId (change)="changeVertical()"
+               name="verticalId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                  <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                      {{rec.verticalName}}
+                  </ng-option>
+              </ng-select>                        
+          </div>
+      </div>
+      <div class="col-sm-2">
+          <div class="form-group">
+              <label>Function</label>
+              <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" name="functionId" formControlName="functionId" #functionId 
+              [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                  <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                      {{rec.functionName}}
+                  </ng-option>
+              </ng-select> 
+          </div>
+      </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>Date</label>
+            <div class="form-row">
+                  <div class="col-sm-6">
+                      <div class="input-group datepiker date">
+                              <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                  placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                              <div class="input-group-append">
+                                  <span class="input-group-text" id="basic-addon2">
+                                      <i class="fa fa-calendar"></i>
+                                  </span>
+                              </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6">
+                      <div class="input-group datepiker date">
+                          <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                              placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                          <div class="input-group-append">
+                              <span class="input-group-text" id="basic-addon2">
+                                  <i class="fa fa-calendar"></i>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+        <div class="col-sm-12 text-right">
+          <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Serial No</th>
+          <th>Requisition No</th>
+          <th>No Of Position</th>
+          <th>Position</th>
+          <th>Recruiter Name</th>
+          <th>No Of Candidates Sourced</th>
+          <th>No Of Candidates Shortlisted</th>
+          <th>No Of Candidates Not Attended Interview</th>
+          <th>No Of Candidates Selected</th>
+          <th>Yet To Putup For Approval</th>
+          <th>Awaiting CMDs Approval</th>
+          <th>No Of Candidates Offered</th>
+          <th>No Of Candidates Declined</th>
+          <th>No Of Candidates Joined</th>
+          <th>Days Taken Requisition To Joining</th>
+          <th>Days Taken Requisition To Selection</th>
+          <th>Days Taken Selection To CMDApvl</th>
+          <th>Days Taken CMDApvl To Joining</th>
+          <th>No Of Days Since Open</th>
+          <th>No Of Positions Closed Within TAT</th>
+          <th>No Of Employees Still Active</th>
+          <th>No Of Employees Resigned In Six Months</th>
+          <th>No Of Employees Resigned Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of recruiterperformancereportLists;let i=index;">
+          <td>{{i+1}}</td>
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.noOfPosition}}</td>
+          <td>{{data.position}}</td>
+          <td>{{data.recruiterName}}</td>
+          <td>{{data.noofcandidatessourced}}</td>
+          <td>{{data.noofcandidatesshortlisted}}</td>
+          <td>{{data.noofcandidatesnotattendedinterview}}</td>
+          <td>{{data.noofcandidatesselected}}</td>
+          <td>{{data.yettoputupforapproval}}</td>
+          <td>{{data.awaitingCMDsapproval}}</td>
+          <td>{{data.noofcandidatesoffered}}</td>
+          <td>{{data.noofcandidatesdeclined}}</td>
+          <td>{{data.noofcandidatesJoined}}</td>
+          <td>{{data.daystakenRequisitiontojoining}}</td>
+          <td>{{data.daystakenRequisitiontoselection}}</td>
+          <td>{{data.daysTakenSelectiontoCMDApvl}}</td>
+          <td>{{data.daystakenCMDApvltoJoining}}</td>
+          <td>{{data.noofdayssinceopen}}</td>
+          <td>{{data.noofpositionsclosedwithinTAT}}</td>
+          <td>{{data.noofemployeesstillactive}}</td>
+          <td>{{data.noofemployeesresignedinsixmonths}}</td>
+          <td>{{data.noofemployeesresignedtotal}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Export</button>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

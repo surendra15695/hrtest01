@@ -1,0 +1,156 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">New Requisition - Plant & Corporate</h1>
+    </div>
+    <!-- <form > -->
+    <div class="form-row m-t-10">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Vertical <span class="required">*</span></label>
+                <ng-select bindLabel="verticalName" [(ngModel)]="selectedVertical" [disabled]="showTable" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false" (change)="changeVertical($event)">
+                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                        {{rec.verticalName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Recruitment Year</label>
+                <ng-select bindLabel="campusYearName" [(ngModel)]="selectedCampusYear" [disabled]="showTable" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                    <ng-option [value]="rec.campusYearId" *ngFor="let rec of campusYears">
+                        {{rec.campusYearName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Course</label>
+                <ng-select bindLabel="courseName" [(ngModel)]="selectedCampusCourse" [disabled]="showTable" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false" (change)="changeCourse($event)">
+                    <ng-option [value]="rec.campusCourseId" *ngFor="let rec of courses">
+                        {{rec.courseName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Stream</label>
+                <ng-select bindLabel="streamName" [(ngModel)]="selectedCampusStream" [disabled]="showTable" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                    <ng-option [value]="rec.campusStreamId" *ngFor="let rec of courseStreams">
+                        {{rec.streamName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <a href="javascript:void(0)" class="add_btn" (click)="startRequisition()"><span>+</span>Add</a>
+        </div>
+    </div>
+    <div *ngIf="showTable">
+        <div class="row m-t-10">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">Sl. No.</th>
+                                <th style="width: 200px;">Requisition Type <span class="required">*</span></th>
+                                <th style="width: 200px;">Title <span class="required">*</span></th>
+                                <th style="width: 250px;">Function <span class="required">*</span></th>
+                                <th style="width: 150px;">No. of Candidate <span class="required">*</span></th>
+                                <th style="width: 150px;">College Category <span class="required">*</span></th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <ng-select bindLabel="functionName" [(ngModel)]="requisitionTypeId"
+                                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                            [searchable]="false" [clearable]="false">
+                                            <ng-option [value]="1">Actual Requisition</ng-option>
+                                            <ng-option [value]="2">Dummy Requisition</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control"
+                                            [(ngModel)]="requisitionTitle">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <ng-select bindLabel="functionName" [(ngModel)]="selectedFunction"
+                                           (change)="oncahngefunction()" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                            [searchable]="false" [clearable]="false">
+                                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                                {{rec.functionName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" numbersOnly class="form-control"
+                                            [(ngModel)]="candidateCount">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <ng-select bindLabel="collegeCategoryName" [(ngModel)]="selectedCollegeCategory"
+                                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                            [searchable]="false" [clearable]="false">
+                                            <ng-option [value]="rec.collegeCategoryId"
+                                                *ngFor="let rec of collegeCategories">
+                                                {{rec.collegeCategoryName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </td>
+                                <td class="text-right"><a href="javascript:void(0)" class="row-btn"
+                                        (click)="addRow()">+</a> </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr *ngFor="let data of requisitionDataDetail; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.requisitionTypeName}}</td>
+                                <td>{{data.requisitionTitle}}</td>
+                                <td>{{data.functionName}}</td>
+                                <td>{{data.candidateCount}}</td>
+                                <td>{{data.collegeCategoryName}}</td>
+                                <td class="text-right"><a href="javascript:void(0)" (click)="removeRow(data.autoId)"
+                                        class="row-btn"><i class="las la-trash-alt"></i></a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" (click)="formSubmit()"><i class="las la-save"></i>
+                    Submit</button>
+                <button type="button" class="btn btn-secondary ml-1" (click)="clearEntireForm()"><i
+                        class="las la-undo-alt"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

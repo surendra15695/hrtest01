@@ -1,0 +1,289 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="gotoFeedback()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Interview Experience Feedback</h1>
+            </div>
+        </div>   
+    </div>
+    <h6 class="red">Rate the experience of your interview process with MRF</h6>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>experiences</th>
+                    <th class="text-center">1</th>
+                    <th class="text-center">2</th>
+                    <th class="text-center">3</th>
+                    <th class="text-center">4</th>
+                    <th class="text-center">5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Anifur has removed [disabled]="!isVisisble" this condiditon from all as its only view if need to keep the condition again then can reffer addinterviewfeedback component -->
+                <tr>
+                    <td>1</td>
+                    <td>The online application system and the application form was user friendly</td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="applicationSystemRate==1?true:false" id="ApplicationSystemRate_1" (click)="updateRate('ApplicationSystemRate',1)" name="ApplicationSystemRate">
+                            <label class="chk" for="ApplicationSystemRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="applicationSystemRate==2?true:false" id="ApplicationSystemRate_2" (click)="updateRate('ApplicationSystemRate',2)" name="ApplicationSystemRate">
+                            <label class="chk" for="ApplicationSystemRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="applicationSystemRate==3?true:false" id="ApplicationSystemRate_3" (click)="updateRate('ApplicationSystemRate',3)" name="ApplicationSystemRate">
+                            <label class="chk" for="ApplicationSystemRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="applicationSystemRate==4?true:false" id="ApplicationSystemRate_4" (click)="updateRate('ApplicationSystemRate',4)" name="ApplicationSystemRate">
+                            <label class="chk" for="ApplicationSystemRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="applicationSystemRate==5?true:false" id="ApplicationSystemRate_5" (click)="updateRate('ApplicationSystemRate',5)" name="ApplicationSystemRate">
+                            <label class="chk" for="ApplicationSystemRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>The roles & responsibilities were clearly explained by the recruiter</td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="explanationRate==1?true:false" id="ExplanationRate_1" (click)="updateRate('ExplanationRate',1)" name="ExplanationRate">
+                            <label class="chk" for="ExplanationRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="explanationRate==2?true:false" id="ExplanationRate_2" (click)="updateRate('ExplanationRate',2)" name="ExplanationRate">
+                            <label class="chk" for="ExplanationRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="explanationRate==3?true:false" id="ExplanationRate_3" (click)="updateRate('ExplanationRate',3)" name="ExplanationRate">
+                            <label class="chk" for="ExplanationRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="explanationRate==4?true:false" id="ExplanationRate_4" (click)="updateRate('ExplanationRate',4)" name="ExplanationRate">
+                            <label class="chk" for="ExplanationRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="explanationRate==5?true:false" id="ExplanationRate_5" (click)="updateRate('ExplanationRate',5)" name="ExplanationRate">
+                            <label class="chk" for="ExplanationRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Recruiter was professional and helpful </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="helpfulRate==1?true:false" id="HelpfulRate_1" (click)="updateRate('HelpfulRate',1)" name="HelpfulRate">
+                            <label class="chk" for="HelpfulRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="helpfulRate==2?true:false" id="HelpfulRate_2" (click)="updateRate('HelpfulRate',2)" name="HelpfulRate">
+                            <label class="chk" for="HelpfulRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="helpfulRate==3?true:false" id="HelpfulRate_3" (click)="updateRate('HelpfulRate',3)" name="HelpfulRate">
+                            <label class="chk" for="HelpfulRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="helpfulRate==4?true:false" id="HelpfulRate_4" (click)="updateRate('HelpfulRate',4)" name="HelpfulRate">
+                            <label class="chk" for="HelpfulRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="helpfulRate==5?true:false" id="HelpfulRate_5" (click)="updateRate('HelpfulRate',5)" name="HelpfulRate">
+                            <label class="chk" for="HelpfulRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>All relevant informations were timely communicated by the recruiter</td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="informativeRate==1?true:false" id="InformativeRate_1" (click)="updateRate('InformativeRate',1)" name="InformativeRate">
+                            <label class="chk" for="InformativeRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="informativeRate==2?true:false" id="InformativeRate_2" (click)="updateRate('InformativeRate',2)" name="InformativeRate">
+                            <label class="chk" for="InformativeRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="informativeRate==3?true:false" id="InformativeRate_3" (click)="updateRate('InformativeRate',3)" name="InformativeRate">
+                            <label class="chk" for="InformativeRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="informativeRate==4?true:false" id="InformativeRate_4" (click)="updateRate('InformativeRate',4)" name="InformativeRate">
+                            <label class="chk" for="InformativeRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="informativeRate==5?true:false" id="InformativeRate_5" (click)="updateRate('InformativeRate',5)" name="InformativeRate">
+                            <label class="chk" for="InformativeRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>The interview process was well organized and conducted without any hazzle</td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="interviewProcessRate==1?true:false" id="InterviewProcessRate_1" (click)="updateRate('InterviewProcessRate',1)" name="InterviewProcessRate">
+                            <label class="chk" for="InterviewProcessRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="interviewProcessRate==2?true:false" id="InterviewProcessRate_2" (click)="updateRate('InterviewProcessRate',2)" name="InterviewProcessRate">
+                            <label class="chk" for="InterviewProcessRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="interviewProcessRate==3?true:false" id="InterviewProcessRate_3" (click)="updateRate('InterviewProcessRate',3)" name="InterviewProcessRate">
+                            <label class="chk" for="InterviewProcessRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="interviewProcessRate==4?true:false" id="InterviewProcessRate_4" (click)="updateRate('InterviewProcessRate',4)" name="InterviewProcessRate">
+                            <label class="chk" for="InterviewProcessRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="interviewProcessRate==5?true:false" id="InterviewProcessRate_5" (click)="updateRate('InterviewProcessRate',5)" name="InterviewProcessRate">
+                            <label class="chk" for="InterviewProcessRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>The interview panel members made me comfortable and treated me professionally</td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="comfortableRate==1?true:false" id="ComfortableRate_1" (click)="updateRate('ComfortableRate',1)" name="ComfortableRate">
+                            <label class="chk" for="ComfortableRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="comfortableRate==2?true:false" id="ComfortableRate_2" (click)="updateRate('ComfortableRate',2)" name="ComfortableRate">
+                            <label class="chk" for="ComfortableRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="comfortableRate==3?true:false" id="ComfortableRate_3" (click)="updateRate('ComfortableRate',3)" name="ComfortableRate">
+                            <label class="chk" for="ComfortableRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="comfortableRate==4?true:false" id="ComfortableRate_4" (click)="updateRate('ComfortableRate',4)" name="ComfortableRate">
+                            <label class="chk" for="ComfortableRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="comfortableRate==5?true:false" id="ComfortableRate_5" (click)="updateRate('ComfortableRate',5)" name="ComfortableRate">
+                            <label class="chk" for="ComfortableRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>I would definitely recommend MRF to other job seekers</td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="recomendedRate==1?true:false" id="RecomendedRate_1" (click)="updateRate('RecomendedRate',1)" name="RecomendedRate">
+                            <label class="chk" for="RecomendedRate_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="recomendedRate==2?true:false" id="RecomendedRate_2" (click)="updateRate('RecomendedRate',2)" name="RecomendedRate">
+                            <label class="chk" for="RecomendedRate_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="recomendedRate==3?true:false" id="RecomendedRate_3" (click)="updateRate('RecomendedRate',3)" name="RecomendedRate">
+                            <label class="chk" for="RecomendedRate_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="recomendedRate==4?true:false" id="RecomendedRate_4" (click)="updateRate('RecomendedRate',4)" name="RecomendedRate">
+                            <label class="chk" for="RecomendedRate_4"></label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="form-check">
+                            <input type="radio"  disabled [checked]="recomendedRate==5?true:false" id="RecomendedRate_5" (click)="updateRate('RecomendedRate',5)" name="RecomendedRate">
+                            <label class="chk" for="RecomendedRate_5"></label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-4">
+        <span class="red"><b>Rating Scale:</b></span>
+        <span class="grey mr-2">1 - Strongly Disagree</span>
+        <span class="grey mr-2">2 - Disagree</span>
+        <span class="grey mr-2">3 - Neither Agree nor Disgree</span>
+        <span class="grey mr-2">4 - Agree</span>
+        <span class="grey">5 - Strongly Agree</span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>How do you describe your overall experience  of  the recruitement process ? Please comment<span class="required">*</span></label>
+                <textarea class="form-control" placeholder=""  disabled [(ngModel)]="overallExperience" (ngModelChange)="overallExperience = $event"></textarea>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Do you have any suggestions to  improve the process?( Especially on the parameters on which you don’t agree)<span class="required">*</span></label>
+                <textarea class="form-control" placeholder=""  disabled (ngModelChange)="suggestion = $event" [(ngModel)]="suggestion"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

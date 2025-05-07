@@ -1,0 +1,161 @@
+<div class="page-title-area pb-2 mb-2">
+    <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+      <div *ngIf="showheading">
+        <h1 class="f-l">Cost Center Mapping</h1>
+      </div>
+      <div  *ngIf="showadd">
+        <a href="javascript:void(0)" (click)="onClickAddNew()" class="btn btn-primary btn-sm"><i class="las la-plus"></i>
+          Add New Mapping</a>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive" *ngIf="showGirdList">
+    <table id="dataTable1" class="table table-striped" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Personnel Subarea</th>
+          <th>Cost Center</th>
+          <th>Cost Center Text</th>
+          <th>Vertical Name</th>
+          <th>Function Name</th>
+          <th>Location Name</th>
+          <th>State Name</th>
+          <th>Is Active</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of costCenterGridData; let i = index;">
+          <td>{{item.subAreaName}}</td>
+          <td>{{item.costCenterId}}</td>
+          <td>{{item.costCenterName}}</td>
+          <td>{{item.verticalname}}</td>
+          <td>{{item.functionname}}</td>
+          <td>{{item.locationname}}</td>
+          <td>{{item.statename}}</td>
+          <td class="green" *ngIf="item.isActive==true">Active</td>
+          <td class="red" *ngIf="item.isActive==false">Inactive</td>
+          <td class="text-center">
+            <div class="row-dropdown">
+              <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" (click)="onEdit(item)" href="#" data-toggle="modal" data-target="#myModal"><i
+                    class="las la-pen"></i> Edit</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="content" *ngIf="!showGirdList">
+    <div class="alert alert-warning">
+      <p>
+        <span style="color:red;">Note:</span>
+         Please Select Function after Vertical</p>
+    </div>
+  
+    <div class="content-box m-b-15 m-t-10">
+      <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">{{mapingText}}</h1>
+      </div>
+    <form [formGroup]="saveForm" autocomplete="off">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Sub Area</label>
+                <ng-select bindLabel="userrole" 
+                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                formControlName="SubAreaId"
+                [clearable]="false">
+                <ng-option [value]="rec.subAreaId" *ngFor="let rec of SubAreaList">
+                  {{rec.subAreaName}}
+                </ng-option>
+              </ng-select>
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                  <label>Cost Center</label>
+                  <input type="text" class="form-control" formControlName="Costcenter" numbersOnly>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Cost Center Text</label>
+                  <input type="text" class="form-control" formControlName="CostcenterText">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Vertical</label>
+                  <ng-select formControlName="verticalId" bindLabel="VerticalName" [placeholder]="'Select'"
+                  [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false" 
+                  (change)="onChangeVericle($event)">
+                  <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals;">
+                    {{rec.verticalName}}
+                  </ng-option>
+                </ng-select>
+                </div>
+              </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Function</label>
+                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" (change)="getAllLocations($event)"
+                [searchable]="true" [clearable]="false" formControlName="FunctionId">
+                <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                  {{rec.functionName}}
+                </ng-option>
+              </ng-select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Location</label>
+                <ng-select bindLabel="locationName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true"
+                [searchable]="true" [clearable]="false" formControlName="LocationId">
+                <ng-option [value]="rec.locationId" *ngFor="let rec of locationList">
+                  {{rec.locationOffice}}
+                </ng-option>
+              </ng-select>
+              </div>
+            </div>
+            <!--Piu-->
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>State</label>
+                <ng-select formControlName="StateId" bindLabel="StateName"
+                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" 
+                [searchable]="true" [clearable]="false">
+                <ng-option [value]="rec.stateId" *ngFor="let rec of stateList;">
+                 {{rec.stateName}}
+                </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="swichLabel">Active</label>
+                <label class="switch">
+                  <input type="checkbox" id="togBtn" name="togBtn" formControlName="IsActive" name="IsActive" />
+                  <div class="slider round">
+                    <!--ADDED HTML -->
+                    <span class="on">Yes</span><span class="off">No</span>
+                    <!--END-->
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <button type="submit" (click)="onSubmit()" class="btn btn-black btn-sm">Submit</button>
+            </div>
+          </div>
+        </div>
+    </form>
+    </div>
+  
+  </div>

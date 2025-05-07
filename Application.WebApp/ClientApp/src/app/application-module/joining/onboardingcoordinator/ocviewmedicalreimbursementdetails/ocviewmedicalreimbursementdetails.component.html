@@ -1,0 +1,166 @@
+<div class="content-box">
+  <!--<div class="page-title-area pb-2 mb-2">
+      <a href="javascript:void(0)" routerLink="/oc-medical-reimbursement-list" class="back-btn"><i
+              class="las la-arrow-circle-left"></i></a>
+      <h1 class="f-l">Pre Employee Medical Reimbursement Details</h1>
+  </div>-->
+  <div class="page-title-area pb-2 mb-2">
+    <a href="javascript:void(0)" (click)="onClickBack()" class="back-btn">
+      <i class="las la-arrow-circle-left"></i>
+    </a>
+    <h1 class="f-l">Pre Employee Medical Reimbursement Details</h1>
+  </div>
+  <div class="col-md-12 text-right mb-2">
+    <!-- <a type="button" class="btn btn-rounded btn-outline-primary btn-sm" href="{{DocumentPathForPDF}}" target="_blank">
+      <i class="las la-download"></i>
+      Download Form
+    </a> -->
+    <a type="button" class="btn btn-rounded btn-outline-primary btn-sm" (click)="openFile(DocumentPathForPDF)"
+      target="_blank">
+      <i class="las la-download"></i>
+      Download Form
+    </a>
+  </div>
+  <div class="mb-4">
+    <h6 class="red">Employee Details</h6>
+    <div class="form-row">
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Employee ID:</p>
+        <p class="d-inline-block">{{medicalReimbursementDetails?.empNo}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Name:</p>
+        <p class="d-inline-block">{{medicalReimbursementDetails?.candidateFullName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Date of Joining:</p>
+        <p class="d-inline-block">{{medicalReimbursementDetails?.dateofJoining}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Designation:</p>
+        <!-- <p class="d-inline-block">{{medicalReimbursementDetails.}}</p> -->
+        <p class="d-inline-block">{{medicalReimbursementDetails?.designationName}}</p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Postin
+          g Location:
+        </p>
+        in
+        <p class="d-inline-block">{{medicalReimbursementDetails?.location}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Function:</p>
+        <p class="d-inline-block">{{medicalReimbursementDetails?.functionName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Department:</p>
+        <p class="d-inline-block">{{medicalReimbursementDetails?.departmentName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Grade:</p>
+        <p class="d-inline-block">{{medicalReimbursementDetails?.gradeName}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <h6 class="red">Bill Details</h6>
+    <div class="form-row">
+      <div class="col-md-6">
+        <p class="d-inline-block grey">Submitted On:</p>
+        <p class="d-inline-block">10/10/2021</p>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="width: 50px;">Sl. No.</th>
+            <th>Bill No.</th>
+            <th>Bill Date</th>
+            <th class="text-right">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of billDetailsArray;let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{data.billNo}}</td>
+            <td>{{data.billDate}}</td>
+            <td class="text-right">{{data.amount}}</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="text-right"><b>Total Amount</b></td>
+            <td class="text-right"><b>{{totalAmount}}</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <div>
+      <h6 class="red">Uploaded Bill</h6>
+      <div class="attach-file">
+          <a href="{{medicalReimbursementDetails?.billDetails}}" title="Download" target="_blank"><i class="las color-black la-paperclip"></i>Uploaded Bill </a>
+          <a href="{{medicalReimbursementDetails?.billDetails}}"><i class="las la-download red"></i></a>
+      </div>
+      <hr>
+  </div> -->
+  <div class="col-md-4" *ngIf="uploadedFileArray.length>0">
+    <div class="form-group">
+      <label>Uploaded Bill</label>
+      <div class="attach-file" *ngFor="let data of uploadedFileArray">
+        <!-- <a *ngIf="data.FilePath!=''" href="{{data.FilePath}}" target="_blank">
+          <i class="las la-download red"></i>{{data.FileName}}
+        </a> -->
+        <a *ngIf="data.FilePath!=''" (click)="openFile(data.FilePath)" target="_blank">
+          <i class="las la-download red"></i>{{data.FileName}}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!IsReadOnly">
+    <h6 class="red">Take Action</h6>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Action<span class="required">*</span></label>
+          <div class="rdio rdio-primary d-inline-block">
+            <input name="radio" value="1" id="radio1" type="radio" (change)="onChangeRadioValue('A')" checked="">
+            <label for="radio1">Accept</label>
+          </div>
+          <div class="rdio rdio-primary d-inline-block">
+            <input name="radio" value="2" id="radio2" type="radio" (change)="onChangeRadioValue('R')">
+            <label for="radio2">Reject</label>
+          </div>
+          <div class="rdio rdio-primary d-inline-block">
+            <input name="radio" value="3" id="radio3" type="radio" (change)="onChangeRadioValue('S')">
+            <label for="radio3">Send Back to Candidate</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label>Remarks</label>
+          <textarea class="form-control" id="" placeholder="Enter Remarks..." [(ngModel)]="claimRemarks"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="media mb-3" *ngFor="let item of ForPrintRemarks">
+      <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+      <div class="media-body">
+        <h6>{{item.printName}}</h6>
+        {{item.printRemarks}}
+      </div>
+    </div>
+  </div>
+  <div class="mt-4" *ngIf="!IsReadOnly">
+    <button type="button" class="btn btn-black" (click)="onSubmitClaim()">Submit</button>
+    <button type="button" class="btn btn-primary ml-2">Cancel</button>
+  </div>
+</div>
+<div id="printMedicalReimbursement" style="display: none;">
+  <app-pdfmedicalreimbursement [medicalReimbursementRecord]="medicalReimbursementDetails"></app-pdfmedicalreimbursement>
+</div>

@@ -1,0 +1,470 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">All Positions</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" (change)="changeVertical()"
+                            formControlName="verticalId">
+                            <ng-option *ngFor="let rec of verticals" [value]="rec.verticalId">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="functionId"
+                            #functionId>
+                            <ng-option *ngFor="let rec of functions" [value]="rec.functionId">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="locationId"
+                            #locationId>
+                            <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                                {{rec.locationNo}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Position Status</label>
+                        <select class="selectpicker" data-container="body" title="All"
+                            formControlName="replacementStatusId" #replacementStatusId>
+                            <option *ngFor="let replacementStatus of replacementStatuses"
+                                [ngValue]="replacementStatus.statusId">
+                                {{replacementStatus.statusName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Reason</label>
+                        <select class="selectpicker" data-container="body" title="All" formControlName="reasonId"
+                            #reasonId>
+                            <option *ngFor="let reason of reasons" [ngValue]="reason.statusId">
+                                {{reason.statusName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="dropdown bootstrap-select form-control">
+                            <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                formControlName="resignationProcessStatus" #resignationProcessStatus>
+                                <ng-option *ngFor="let rec of statuses" [value]="rec.statusId">
+                                    {{rec.statusName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right">
+
+                    <button type="submit" class="btn btn-black btn-sm">
+                        <i class="las la-filter"></i>
+                        Filter
+                    </button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1">
+                        <i class="las la-sync-alt"></i>
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <div class="page-title-area pb-1 mb-2" *ngIf="isMerge">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+
+            <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" (click)="merge()"><i
+                    class="las la-plus-circle"></i> Merge</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Requested By</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>EmpNo</th>
+                    <th>EmpName</th>
+                    <th>Designation</th>
+                    <th>Grade</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>DOR</th>
+                    <th>LWD</th>
+                    <th>Sept Int</th>
+                    <th>Position Status</th>
+                    <th>Reason</th>
+                    <th>Replacement Position</th>
+                    <th>Replacement Grade</th>
+                    <th>Type</th>
+                    <th>Target</th>
+                    <th>JD</th>
+                    <th style="text-align: center;">Approval</th>
+                    <th>Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of resignationLists">
+                    <td>{{data.createdByUserName}}</td>
+                    <td>{{data.locationNo}}</td>
+                    <td>{{data.createdOn}}</td>
+                    <td>{{data.empNo}}</td>
+                    <td>{{data.empName}}</td>
+                    <td>{{data.designation}}</td>
+                    <td>{{data.oldGradeName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.dor}}</td>
+                    <td>{{data.lwd}}</td>
+                    <td><a (click)="openFile(data.sepInt)" style="cursor: pointer;">letter</a></td>
+                    <td>{{data.replacementStatusName}}</td>
+                    <td>{{data.reasonName}}</td>
+                    <td>{{data.positionName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.jobTypeName}}</td>
+                    <td>{{data.targetDate}}</td>
+                    <td>{{data.jobDescriptionName}}</td>
+                    <td class="text-center"><img src="{{data.processStatusIcon}}" alt="Send For Approval" /></td>
+                    <td>{{data.processStatus}}</td>
+                    <!-- <td *ngIf="data.resignationProcessStatusId==7">{{data.processStatus}}
+                        <a href="javascript:void(0)" class="red" data-toggle="modal" data-target="#commentModal"
+                            (click)="openModalPopup(data.resignationDetailId,data.functionId,data.verticalId,data.departmentId,data.dor,data.lwd,data.targetDate,data.positionId,data.gradeId,data.jobTypeId,data.jobDescriptionId)">
+                            <i class="fa fa-info-circle"></i>
+                        </a>
+                    </td> -->
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="las la-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton">
+                                <!--  <a *ngIf="(data.resignationProcessStatusId==6 || data.resignationProcessStatusId==8 )||(data.replacementStatusId==2 || data.replacementStatusId==3)"
+                               data-toggle="modal" data-target="#myModal" class="dropdown-item" href="javascript:void(0)"
+                               (click)="openActionModal(data.resignationDetailId)"><i class="las la-check-square"></i> Take
+                                Action</a> -->
+                                <a *ngIf="(data.resignationProcessStatusId==8 ||(data.replacementStatusId==2 || data.replacementStatusId==3) || data.resignationProcessStatusId==7)"
+                                    data-toggle="modal" data-target="#myModal" class="dropdown-item"
+                                    href="javascript:void(0)" (click)="openActionModal(data.resignationDetailId)"><i
+                                        class="las la-check-square"></i> Take
+                                    Action</a><!--data.resignationProcessStatusId==7 added on 04-03-2024-->
+                                <a *ngIf="data.resignationProcessStatusId>=6 && data.replacementStatusId!=2 && data.replacementStatusId!=3"
+                                    (click)="DownloadJD(data.jdDocument,data.jobDescriptionName)" class="dropdown-item"
+                                    href="javascript:void(0)"><i class="las la-file-pdf"></i>
+                                    View JD</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="commentModal" role="dialog">
+    <!-- <form [formGroup]="saveform"> -->
+    <div class="modal-dialog modal-md modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="closeModal" #closeModal data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Clarification</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="media" *ngFor="let data of resignationClarificationList">
+                            <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                            <div class="media-body">
+                                <h6 class="mt-0">{{data.createdByName}}</h6>
+                                {{data.clarificationRemarks}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Department<span class="required">*</span></label>
+                            <ng-select bindLabel="departmentName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="selectedDepartmentId">
+                                <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                                    {{rec.departmentName}}
+                                </ng-option>
+                            </ng-select>
+                            <!-- <select class="selectpicker form-control pselectpicker" data-container="body" title="Select"
+                                [(ngModel)]="selectedDepartment">
+                                <option *ngFor="let department of departments" [ngValue]="department">
+                                    {{department.departmentName}}
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Sep. Int<span class="required">*</span></label>
+                        <div class="custom-file">
+
+                            <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                                (change)="onFileChange($event.target.files)">
+                            <label class="custom-file-label" for="customFile" #managementFileImport>Choose file</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>DOR<span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control pull-right pdatepicker" autocomplete="off"
+                                    id="datepickerdor" placeholder="DOR" #dDate [(ngModel)]="dor">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>LWD<span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control pull-right pdatepicker" id="datepickerlwd"
+                                    placeholder="LWD" #lDate [(ngModel)]="lwd" autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Replacement Position<span class="required">*</span></label>
+                            <ng-select bindLabel="positionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="selectedPositionId" (change)="onPositionChange($event)">
+                                <ng-option [value]="rec.positionId" *ngFor="let rec of positions">
+                                    {{rec.positionName}}
+                                </ng-option>
+                            </ng-select>
+                            <!-- <select class="selectpicker form-control pselectpicker" data-container="body" title="Select"
+                                [(ngModel)]="selectedPosition" (change)="onPositionChange()">
+                                <option *ngFor="let position of positions" [ngValue]="position">
+                                    {{position.positionName}}
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Replacement Grade<span class="required">*</span></label>
+                            <ng-select bindLabel="gradeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false" [(ngModel)]="selectedGrade">
+                                <ng-option [value]="rec.gradeId" *ngFor="let rec of grades">
+                                    {{rec.gradeName}}
+                                </ng-option>
+                            </ng-select>
+                            <!-- <select class="selectpicker form-control pselectpicker ddlgradeId"  data-container="body" title="Select"
+                                [(ngModel)]="selectedGrade">
+                                <option *ngFor="let grade of grades" [value]="grade.gradeId">
+                                    {{grade.gradeName}}
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Type<span class="required">*</span></label>
+                            <ng-select bindLabel="jobTypeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="selectedJobTypeId">
+                                <ng-option [value]="rec.jobTypeId" *ngFor="let rec of jobtypes">
+                                    {{rec.jobTypeName}}
+                                </ng-option>
+                            </ng-select>
+                            <!-- <select class="selectpicker form-control pselectpicker" data-container="body" title="Select"
+                                [(ngModel)]="selectedJobType">
+                                <option *ngFor="let jobtype of jobtypes" [ngValue]="jobtype">
+                                    {{jobtype.jobTypeName}}
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Target<span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control pull-right pdatepicker" [disabled]="isHoldStatus"
+                                    id="datepickertargetdate" placeholder="Target Date" #tarDate
+                                    [(ngModel)]="targetDate" autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>JD<span class="required">*</span></label>
+                            <ng-select bindLabel="jobDescriptionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="selectedJobDescriptionId">
+                                <ng-option [value]="rec.jobDescriptionId" *ngFor="let rec of jobdescriptions">
+                                    {{rec.jobDescriptionName}}
+                                </ng-option>
+                            </ng-select>
+                            <!-- <select class="selectpicker form-control pselectpicker" data-container="body" title="Select"
+                                [(ngModel)]="selectedJobDescription">
+                                <option *ngFor="let jobdescription of jobdescriptions" [ngValue]="jobdescription">
+                                    {{jobdescription.jobDescriptionName}}
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="display: none;">
+                        <div class="form-group">
+                            <label>Remarks<span class="required">*</span></label>
+                            <input type="text" class="form-control" [(ngModel)]="remarks">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Comments<span class="required">*</span></label>
+                            <textarea class="form-control" [(ngModel)]="clarificationRemarks" placeholder=""></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-black " (click)="UpdateResignation()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+    <!-- </form> -->
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="closeModal" #closeModal data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Take Action</h4>
+            </div>
+            <form [formGroup]="saveform">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="media" *ngFor="let data of resignationClarificationList">
+                                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                                <div class="media-body">
+                                    <h6 class="mt-0">{{data.createdByName}}</h6>
+                                    {{data.clarificationRemarks}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Action<span class="required">*</span></label>
+                                <select class="selectpicker ddlacknowledge" data-container="body" title="Select"
+                                    formControlName="acknowledgementStatusId" #replacementStatusId>
+                                    <option [ngValue]="9">Acknowledge</option>
+                                    <option [ngValue]="7">Clarification Needed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control" formControlName="remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveform.invalid"
+                        (click)="acknowledge()">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

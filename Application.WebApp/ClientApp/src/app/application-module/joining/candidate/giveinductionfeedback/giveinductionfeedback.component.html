@@ -1,0 +1,75 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <a href="javascript:void(0)" (click)="onBackClick()" class="back-btn"><i
+                                class="las la-arrow-circle-left"></i></a>
+                        <h1 class="f-l">Provide Feedback</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <h6>Training:{{trainingTittle}}</h6>
+                <p class="grey">Rating scale = 1-{{candidatefeedbackQuestionDetails[0]?.feedBackQuestionTypeOptionId}} 
+                    (1=Lowest, {{candidatefeedbackQuestionDetails[0]?.feedBackQuestionTypeOptionId}}=Highest)</p>
+            </div>
+            <div class="table-responsive my-2">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th width="50%">Induction Training Feedback</th>
+                            <th>Your Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidatefeedbackQuestionDetails;let i=index;">
+                            <td>{{i+1}}</td>
+                            <td>{{data.feedBackQuestion}}</td>
+                            <td *ngIf="data.feedBackQuestionTypeId==1">
+                                <select type="text" class="form-control"
+                                    [disabled]="fieldReadOnly" [(ngModel)]="data.feedBackAnswer"
+                                    placeholder="Rating scale 1-5" min="0" max="5" (keypress)="numberOnly($event)">
+                                    <option value="">Select</option>
+                                    <option *ngIf="data.feedBackQuestionTypeOptionId >=1" value = 1>1</option>
+                                    <option *ngIf="data.feedBackQuestionTypeOptionId >=2" value = 2>2</option>
+                                    <option *ngIf="data.feedBackQuestionTypeOptionId >=3" value = 3>3</option>
+                                    <option *ngIf="data.feedBackQuestionTypeOptionId >=4" value = 4>4</option>
+                                    <option *ngIf="data.feedBackQuestionTypeOptionId >=5" value = 5>5</option>
+                                </select>
+                            </td>
+                            <td *ngIf="data.feedBackQuestionTypeId==2">
+                                <select name="" id="" [(ngModel)]="data.feedBackAnswer" class="form-control"
+                                    [disabled]="fieldReadOnly">
+                                    <option value="" disabled>Select</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </td>
+                            <td *ngIf="data.feedBackQuestionTypeId==3">
+                                <textarea name="" id="" cols="30" rows="10" class="form-control"
+                                    [(ngModel)]="data.feedBackAnswer" placeholder="write your feedback"
+                                    [readonly]="fieldReadOnly"></textarea>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-4" *ngIf="!fieldReadOnly">
+                    <button type="button" class="btn btn-black mr-1" (click)="onSaveFeedback()">Submit</button>
+                    <button type="button" class="btn btn-primary" (click)="onCancelClick()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

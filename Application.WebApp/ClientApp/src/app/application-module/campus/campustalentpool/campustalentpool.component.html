@@ -1,0 +1,2052 @@
+<div class="content-box m-b-15 m-t-10" id="main" style="padding:10px;">
+  <div id="mySidenav" class="sidenav">
+    <div class="slidenav_header">
+      <h4>Filters</h4>
+      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    </div>
+    <form [formGroup]="filterForm" (ngSubmit)="onFilter()" autocomplete="off">
+      <div class="slidenav_container">
+        <div class="panel-group snj-panel" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Candidate ID</label>
+              <input type="text" class="form-control" formControlName="Candidateid" #Candidateid
+                     id="Name" placeholder="Enter Id">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Candidate Name</label>
+              <input type="text" class="form-control" formControlName="CandidateName" #CandidateName
+                     id="Name" placeholder="Enter Name">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Applied Date</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <div class="input-group datepiker date">
+                    <input type="text" class="form-control pull-right datepicker" id="datepicker"
+                           placeholder="From Date" #fromDate formControlName="FromDate">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="input-group datepiker date">
+                    <input type="text" class="form-control pull-right datepicker" id="datepicker1"
+                           placeholder="To Date" #toDate formControlName="ToDate">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Hiring Status</label>
+              <!-- <select class="selectpicker form-control" title='Select' #HiringStatusId
+                      formControlName="HiringStatusId">
+                <option [value]="0">All </option>
+                <option *ngFor="let arr of hiringstatus" [ngValue]="arr.statusId">
+                  {{arr.statusName}}
+              </select> -->
+              <ng-select class=""  [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false"  #HiringStatusId
+                formControlName="HiringStatusId" >
+                <ng-option [value]="0">All </ng-option>
+                <ng-option [value]="arr.statusId" *ngFor="let arr of hiringstatus">
+                  {{arr.statusName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Gender</label>
+              <select class="selectpicker form-control" multiple title="Select"
+                      formControlName="GenderId">
+                <option *ngFor="let data of genders" [ngValue]="data.genderId">
+                  {{data.genderName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Age</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="text" formControlName="FromAge" #FromAge class="form-control"
+                         placeholder="Min Age">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" formControlName="ToAge" #ToAge class="form-control"
+                         placeholder="Max Age">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Aadhar No.</label>
+              <input type="text" class="form-control" formControlName="AadharNo" #AadharNo
+                     placeholder="Enter No.">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Phone No.</label>
+              <input type="text" class="form-control" formControlName="ContactNo" #ContactNo
+                     placeholder="Enter No.">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Email ID</label>
+              <input type="text" class="form-control" formControlName="EmailId" #EmailId
+                     placeholder="Enter Email">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Mother Tongue</label>
+              <select class="selectpicker form-control" title='Select' multiple
+                      formControlName="MotherTongueIds">
+                <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                  {{lang.languageName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Languages Known</label>
+              <select class="selectpicker form-control" multiple title="Select"
+                      formControlName="LanguageIds">
+                <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                  {{lang.languageName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Native State</label>
+              <select formControlName="NativeStateIds"  class="selectpicker" title="Select">
+                <option *ngFor="let s of State" [ngValue]="s.stateId">
+                  {{s.stateName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Present State</label>
+              <select formControlName="PresentStateIds"  class="selectpicker" title="Select">
+                <option *ngFor="let s of State" [ngValue]="s.stateId">
+                  {{s.stateName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Father's Occupation</label>
+              <select formControlName="FatherOccupation"  class="selectpicker" title="Select">
+                <option *ngFor="let rec of familyOccupations" [ngValue]="rec.id">
+                  {{rec.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Mother's Occupation</label>
+              <select formControlName="MotherOccupation"  class="selectpicker" title="Select">
+                <option *ngFor="let rec of familyOccupations" [ngValue]="rec.id">
+                  {{rec.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Institution</label>
+              <select formControlName="InstitutionId" multiple class="selectpicker form-control" title="Select"
+                      #InstitutionId tabindex="-98" (change)="changeInstitution()">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let rec of academicUniversity" [ngValue]="rec.qulificationUniversityBoardId">
+                  {{rec.qulificationUniversityBoardName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Highest Qualification</label>
+              <select formControlName="QualificationId" multiple class="selectpicker form-control"
+                      title="Select" tabindex="-98" (change)="changeQualification()">
+                <option *ngFor="let q of qualifications" [ngValue]="q.qualificationId">
+                  {{q.qualificationName}}
+                </option>
+              </select>
+            </div>
+          </div>
+         
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Course</label>
+              <select formControlName="CourseId" multiple class="selectpicker form-control" title="Select"
+                      #CourseId tabindex="-98" (change)="changeCourse()">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let c of courses" [ngValue]="c.courseId">
+                  {{c.courseName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Stream</label>
+              <select formControlName="StreamId" multiple #StreamId class="selectpicker form-control"
+                      title="Select" tabindex="-98">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let s of streams" [ngValue]="s.streamId">
+                  {{s.streamName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Percentage</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="number" formControlName="FromPercent" #FromPercent class="form-control"
+                         placeholder="Min">
+                </div>
+                <div class="col-sm-6">
+                  <input type="number" formControlName="ToPercent" #ToPercent class="form-control"
+                         placeholder="Max">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Year of Completion</label>
+              <select class="selectpicker form-control" multiple formControlName="CompletionYear"
+                      title="Select" tabindex="-98">
+                <option *ngFor="let y of CompletionYear" [ngValue]="y.yearsId">
+                  {{y.yearsName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Height(in cm)</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="number" formControlName="FromHeight" #FromHeight
+                         class="form-control" placeholder="Min">
+                </div>
+                <div class="col-sm-6">
+                  <input type="number" formControlName="ToHeight" #ToHeight
+                         class="form-control" placeholder="Max">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Weight(in kg)</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="number" formControlName="FromWeight" #FromHeight
+                         class="form-control" placeholder="Min">
+                </div>
+                <div class="col-sm-6">
+                  <input type="number" formControlName="ToWeight" #ToHeight
+                         class="form-control" placeholder="Max">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Disability</label>
+              <select formControlName="Disability" multiple name="Disability" #Disability
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Health Issues</label>
+              <select formControlName="Health" multiple name="Health" #Health
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Eye Sight Corrected</label>
+              <select formControlName="EyeSightCorrected" multiple name="EyeSightCorrected" #EyeSightCorrected
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>No. of Siblings</label>
+              <input type="text" class="form-control" formControlName="Siblings" #Siblings
+                     id="Name" placeholder="Enter No. of Siblings">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Commitment</label>
+              <select formControlName="Commitment" multiple name="Commitment" #Commitment
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Qualification Type</label>
+              <select class="selectpicker form-control" multiple formControlName="QualificationTypeId"
+                      title="Select" tabindex="-98">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let qual of qualificationType" [ngValue]="qual.qualificationTypeId">
+                  {{qual.qualificationTypeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Total Experience</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="number" formControlName="FromExperience" #FromExperience
+                         class="form-control" placeholder="Min">
+                </div>
+                <div class="col-sm-6">
+                  <input type="number" formControlName="ToExperience" #ToExperience
+                         class="form-control" placeholder="Max">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Current CTC</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="number" formControlName="FromCTC" #FromCTC class="form-control"
+                         placeholder="Min">
+                </div>
+                <div class="col-sm-6">
+                  <input type="number" formControlName="ToCTC" #ToCTC class="form-control"
+                         placeholder="Max">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Current Employer</label>
+              <input type="text" class="form-control" formControlName="CurrentEmployer" #CurrentEmployer
+                     placeholder="Employer Name">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Designation</label>
+              <input type="text" class="form-control" formControlName="Designation" #Designation
+                     placeholder="Enter Designation">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Domain</label>
+              <select formControlName="DomainId" multiple name="DomainId" #DomainId
+                      class="selectpicker form-control domains domainid" title="Select" tabindex="-98"
+                      (change)="changeDomain()">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let d of domain" [ngValue]="d.domainId">
+                  {{d.domainName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Sub-Domain</label>
+              <select formControlName="SubDomainId" multiple class="selectpicker form-control domains"
+                      title="Select" tabindex="-98">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let sd of subdomain" [ngValue]="sd.domainId">
+                  {{sd.domainName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Current Location</label>
+              <select formControlName="StateIds" multiple class="selectpicker" title="Select">
+                <option [ngValue]="0">All</option>
+                <option *ngFor="let s of State" [ngValue]="s.stateId">
+                  {{s.stateName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Shift & Ext Hours</label>
+              <select formControlName="WorkingShift" multiple name="WorkingShift" #WorkingShift
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Job Type Priyority</label>
+              <select formControlName="JobTypePriyority" multiple name="JobTypePriyority" #JobTypePriyority
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Core manufacturing</option>
+                <option [ngValue]="2">IT Job</option>
+                <option [ngValue]="3">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Influencing Factor</label>
+              <select formControlName="CriticalFactor" multiple name="CriticalFactor" #CriticalFactor
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">Critical Factor 1</option>
+                <option [ngValue]="2">Critical Factor 2</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Any Previous Application History</label>
+              <select formControlName="PreviousApplied" class="selectpicker form-control" title="Select"
+                      tabindex="-98">
+                <option [ngValue]="0">All</option>
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Any Relative Working in MRF</label>
+              <select formControlName="RelativeStatus" multiple name="RelativeStatus" #RelativeStatus
+                      class="selectpicker form-control" title="Select" tabindex="-98"
+                      (change)="changeRelativeStatus()">
+                <option [ngValue]="1">Yes</option>
+                <option [ngValue]="0">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Source</label>
+              <select class="selectpicker form-control" multiple formControlName="SourceChannelId"
+                      #SourceChannleId title='Select'>
+                <option [value]="0">All</option>
+                <option [value]="1">HR</option>
+                <option [value]="2">Career Site </option>
+                <option [value]="3">Internal Employee</option>
+                <option [value]="4">Referred</option>
+                <option [value]="5">Vendor</option>
+                <option [value]="6">Job Portal</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>ExtraCurricular Activity</label>
+              <select formControlName="ExtraCurricularActivity" multiple name="ExtraCurricularActivity" #ExtraCurricularActivity
+                      class="selectpicker form-control" title="Select" tabindex="-98">
+                <option [ngValue]="1">NCC / Scouts</option>
+                <option [ngValue]="2">National Service Scheme</option>
+                <option [ngValue]="3">Sports</option>
+                <option [ngValue]="4">Athletics</option>
+                <option [ngValue]="5">Arts(Acting,Dance,etc)</option>
+                <option [ngValue]="6">College Clubs</option>
+                <option [ngValue]="7">Others</option>
+              </select>
+            </div>
+          </div>
+          <!-- <div class="col-sm-12">
+              <div class="form-group">
+                  <label>Candidate Owner</label>
+                  <select class="selectpicker form-control" title='Select'>
+                      <option value="0">Ankenpally Plant </option>
+                      <option value="0">Arakonam Plant</option>
+                  </select>
+              </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="slidenav_footer">
+        <button type="submit" class="btn btn-secondary btn-sm">Apply Filter</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="resetFilter()">Reset</button>
+      </div>
+    </form>
+  </div>
+  <div class="page-title-area pb-1 mb-2">
+    <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+      <div>
+        <a href="javascript:void(0)" (click)="gotoCampusLink()" class="back-btn">
+          <i class="las la-arrow-circle-left"></i>
+        </a>
+        <h1 class="f-l mr-4">All Candidates</h1>
+        <button type="button" (click)="openModalPopup('2')" data-toggle="modal"  *ngIf="callngIfFunction?isbtnshortlistvisible():false"  data-target="#myModal"
+               class="btn btn-rounded btn-outline-success btn-sm ml-1">
+          <i class="las la-check"></i> Shortlist
+        </button>
+        <button type="button" (click)="openModalPopup('3')" data-toggle="modal" *ngIf="callngIfFunction?isbtnshortlistvisible():false" data-target="#myModal"
+               class="btn btn-rounded btn-outline-primary btn-sm ml-1">
+          <i class="las la-times"></i> Reject
+        </button>
+      </div>
+      <div>
+        <button type="button" *ngIf="callngIfFunction?isBTNUniversityMultipleVisible():false" class="btn btn-rounded btn-outline-primary btn-sm"
+                data-toggle="modal" data-target="#instituteModal" (click)=openInstitueModal(-1)>
+          <i class="las la-check"></i> Edit Institue Name
+        </button>
+        <button type="button" *ngIf="callngIfFunction?isbtnscheduletestvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#scheduleModal" (click)="openTestScheduleModal()">
+          <i class="las la-check"></i> Schedule Test
+        </button>
+        <button type="button" *ngIf="callngIfFunction?isbtnrescheduletestvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#scheduleModal" (click)="openReScheduleTestModal()">
+          <i class="las la-check"></i> ReSchedule Test
+        </button>
+        <button type="button" *ngIf="callngIfFunction?isbtnrescheduletestvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#cancelModal" (click)="openCancelTestModal()">
+          <i class="las la-check"></i> Cancel Test
+        </button>
+        <button type="button" *ngIf="callngIfFunction?isbtnscheduleinterviewvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#interviewModal" (click)="openInterviewModal()">
+          <i class="las la-check"></i> Schedule Interview
+        </button>
+        <button type="button" *ngIf="callngIfFunction?isbtnpreplacementvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#preplacementModal" (click)="openpreplacementTalkModal()">
+          <i class="las la-check"></i>Preplacement talk/Orientation schedule
+        </button>
+        <!-- <button type="button" *ngIf="btnreshedulepreplacementVisible" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#preplacementModal" (click)="openreshedulepreplacementTalkModal()">
+          <i class="las la-check"></i>Reschedule Preplacement talk/Orientation schedule
+        </button> -->
+        <!-- <button type="button" *ngIf="btncancelpreplacementVisible" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#cancelModal" (click)="cancelpreplacementTalkModal()">
+          <i class="las la-check"></i>Cancel Preplacement talk
+        </button> -->
+        <button type="button" *ngIf="callngIfFunction?isbtncancelinterviewvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#cancelModal" (click)="cancelinterviewModal()">
+          <i class="las la-check"></i>Cancel Interview
+        </button>
+        <!--
+                                <button type="button" *ngIf="btnTestVisible" class="btn btn-rounded btn-outline-success btn-sm"
+                            data-toggle="modal" data-target="#scheduleModal" (click)="rescheduleTest(data.candidateId,data.emailId,data.candidateNo)"><i
+                                class="las la-check"></i> Reschedule Test</button>
+                         -->
+        <!-- NeedSomeChange -->
+        <button type="button" *ngIf="callngIfFunction?isbtnrescheduleterviewvisible():false" class="btn btn-rounded btn-outline-success btn-sm"
+                data-toggle="modal" data-target="#interviewModal" (click)="openInterviewModal()">
+          <i class="las la-check"></i> Reschedule Interview
+        </button>
+
+        <button type="button" class="btn btn-rounded btn-secondary btn-sm ml-3"
+                (click)="ExportReport()">
+          <i class="las la-download"></i>Download Candidate Details
+        </button>
+
+        <button type="button" class="btn btn-rounded btn-secondary btn-sm ml-3" (click)="openNav()">
+          <i class="las la-filter"></i> Filter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+            <div class="form-check">
+              <input type="checkbox" id="ani" [(ngModel)]="selectAllchckbox" (change)="onCheckSelectAll($event)">
+              <label class="chk" for="ani"></label>
+            </div>
+          </th>
+          <th>Candidate Id</th>
+          <th>Candidate Name</th>
+          <th>Age</th>
+          <th>Highest Qualification</th>
+          <th>Course</th>
+          <th>Stream</th>
+          <th>Email Id</th>
+          <th>Phone No.</th>
+          <th>Institute Name</th>
+          <th>Institute Location</th>
+          <th>Mapped Verticals</th>
+          <th>Mapped Function</th>
+          <th>Application Form Status</th>
+          <th>Hiring Status</th>
+          <th style="text-align: center;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of candidates;let i=index;" class="tr_row">
+          <td>
+            <div class="form-check" *ngIf="(data.hiringStatusId==1 || data.hiringStatusId==2  || data.hiringStatusId==4 ||
+                         data.hiringStatusId==5 || data.hiringStatusId==6  || data.hiringStatusId==7 || data.hiringStatusId==8 || data.hiringStatusId==14 || data.hiringStatusId==9 ||
+                         data.hiringStatusId==17)">
+                         <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)"
+                         (change)="onCheckRowWise(data,$event,i)">
+                     <label class="chk" for="{{i}}"></label>
+            </div>
+          </td>
+          <td>{{data.candidateNo}}</td>
+          <td><a href="javascript:void(0)" (click)="gotoCandidateDetail(data)" class="red"> {{data.fullName}}</a></td>
+          <td>{{data.age}}</td>
+          <td>{{data.highestQualification}}</td>
+          <td>{{data.course}}</td>
+          <td>{{data.stream}}</td>
+          <td>{{data.emailId}}</td>
+          <td>{{data.phoneNo}}</td>
+          <td>{{data.institite}}</td>
+          <td>{{data.instititeLocation}}</td>
+          <td>{{data.verticalName}}</td>
+          <td>{{data.functionName}}</td>
+          <td>{{data.applicationCount>0?'Filled':'Not Filled'}}</td>
+          <!-- <td *ngIf="data.hiringStatusId!=7 || data.hiringStatusId!=8 || data.hiringStatusId!=9">{{data.hiringStatusName}}</td> -->
+          <td>
+            {{data.hiringStatusName}}
+            <a *ngIf="data.hiringStatusId==7 || data.hiringStatusId==8 || data.hiringStatusId==9"
+               href="javascript:void(0)" class="red" data-toggle="popover"
+               [attr.data-content]="data.popoverContent" rel="popover" data-placement="left"
+               data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+          </td>
+          <td class="text-center">
+            <div class="row-dropdown">
+              <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                <i class="las la-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu custom-menu dropdown-menu-right"
+                   aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" data-toggle="modal"
+                   data-target="#instituteModal" (click)="openInstitueModal(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Edit Institute name</a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==2" data-toggle="modal"
+                   data-target="#scheduleModal" (click)="scheduleTest(data.candidateId,data.emailId,data.candidateNo)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Schedule Test</a>
+
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==4" data-toggle="modal"
+                   data-target="#scheduleModal" (click)="rescheduleTest(data.candidateId,data.emailId,data.candidateNo)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Reschedule Test</a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==4" data-toggle="modal"
+                   data-target="#cancelModal" (click)="cancelTest(data.candidateId,data.emailId,data.candidateNo,data.fullName)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Cancel Test</a>
+
+                <!-- Added by Amartya -->
+                <a class="dropdown-item" data-toggle="modal" *ngIf="(data.hiringStatusId==2 || data.hiringStatusId==3|| data.hiringStatusId==4|| data.hiringStatusId==5|| data.hiringStatusId==6 || data.hiringStatusId==14)&&(data.preplacementId==0)"
+                   data-target="#preplacementModal" (click)="openTalkModal(data)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i>Preplacement talk/Orientation schedule</a>
+
+                <a class="dropdown-item" data-toggle="modal" *ngIf="(data.hiringStatusId==2 || data.hiringStatusId==3|| data.hiringStatusId==4|| data.hiringStatusId==5|| data.hiringStatusId==6 || data.hiringStatusId==14)&&(data.preplacementId==1)"
+                   data-target="#preplacementModal" (click)="openRescheduleTalkModal(data)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i>ReSchedule Preplacement talk/Orientation schedule</a>
+
+                <a class="dropdown-item" data-toggle="modal"
+                   data-target="#editProfileModal" (click)="openOnEditModal(data)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Edit Profile</a>
+                <!-- two options are added -->
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==14 || data.hiringStatusId==8 || data.hiringStatusId==9 || data.hiringStatusId==17" data-toggle="modal"
+                   data-target="#interviewModal" (click)="scheduleInterview(data.candidateId,data.emailId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Schedule Interview</a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId>6 " data-toggle="modal"
+                   data-target="#interviewDetails" (click)="onclickInterviewDetails(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Interview Details</a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==7 || data.hiringStatusId==17 || data.hiringStatusId==19" data-toggle="modal"
+                   data-target="#interviewModal" (click)="rescheduleInterview(data.candidateId,data.emailId,data.candidateNo,data.hiringStatusId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Reschedule Interview</a>
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==8 || data.hiringStatusId==12 || data.hiringStatusId==14" data-toggle="modal"
+                   data-target="#functionModal" (click)="openFunctionModal(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Define Function</a>
+                   <a class="dropdown-item" *ngIf="isVisibleStageGetAssesment"
+                    (click)="gotoStageGetAssesment(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Fill Stage Gate Assessment</a>
+               <!--  <a class="dropdown-item" *ngIf="data.hiringStatusId>=12" data-toggle="modal"
+                   data-target="#requisitionModal" (click)="openRequisitionModal(data.verticalId,data.functionId,data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Map Requisition</a> -->
+                <a class="dropdown-item" (click)="gotoCandidateFeedback(data)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> View Candidate Feedback</a>
+                <a class="dropdown-item" (click)="gotoCandidateDetail(data)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Candidate Details</a>
+                <!-- <a class="dropdown-item" *ngIf="data.applicationCount>0" (click)="gotoApplicationForm(data.candidateId)"
+                href="javascript:void(0)"><i class="las la-check-square"></i> View Application Form</a> -->
+                <a class="dropdown-item" *ngIf="data.hiringStatusId>=7" (click)="gotoInterviewAssessment(data)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> View Interview Assessment</a>
+                <a class="dropdown-item" *ngIf="data.hiringStatusId>=7" (click)="gotoInterviewHRFeedback(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> View HR Feedback</a>
+                <a class="dropdown-item" *ngIf="data.hiringStatusId>4 && (data.applicationCount>0)" (click)="viewapplicationform(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> View Application Form</a>
+                <a class="dropdown-item"  (click)="viewregistrationform(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> View Registration Form</a>
+                <a class="dropdown-item" *ngIf="data.hiringStatusId ==2 || data.hiringStatusId==3"
+                   href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                   (click)="openModalForDecline(data.candidateId)">
+                  <i class="las la-times-circle"></i>Decline
+                </a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId ==2 || data.hiringStatusId==13"
+                   href="javascript:void(0)" data-toggle="modal" data-target="#rejectModal"
+                   (click)="openModalForReject(data.candidateId)">
+                  <i class="las la-times-circle"></i>Reject
+                </a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==1" href="javascript:void(0)" data-toggle="modal" data-target="#TakeactionModal"
+                   (click)="openModalForTakeaction(data.candidateId)">
+                  <i class="las la-check-square"></i>Take action
+                </a>
+                <a class="dropdown-item" *ngIf="data.preplacementId==1"
+                   href="javascript:void(0)" data-toggle="modal" data-target="#cancelModal"
+                   (click)="openModalForCancelPrePlacement(data.candidateId,data.emailId,data.fullName)">
+                  <i class="las la-times-circle"></i>CancelPrePlacement talk
+                </a>
+
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==7 || data.hiringStatusId==17"
+                   href="javascript:void(0)" data-toggle="modal" data-target="#cancelModal"
+                   (click)="openModalForCancelInterview(data.candidateId,data.emailId,data.fullName)">
+                  <i class="las la-times-circle"></i>Cancel Interview
+                </a>
+                <a class="dropdown-item" *ngIf="data.flag==1"
+                   href="javascript:void(0)" data-toggle="modal" data-target="#enableFeedbackModal"
+                   (click)="openModalForEnableInterviewFeedback(data.candidateId,data)">
+                  <i class="las la-check-square"></i>Enable Interview Feedback
+                </a><!--Piu-->
+                <a class="dropdown-item" *ngIf="data.flag==1"
+                   href="javascript:void(0)" data-toggle="modal" data-target="#enableFeedbackModal1"
+                   (click)="openModalForDisableInterviewFeedback(data.candidateId,data)">
+                  <i class="las la-times-circle"></i>Disable Interview Feedback
+                </a><!--Piu-->
+                <a class="dropdown-item" data-toggle="modal"
+                   data-target="#editCampusCandidateModalforRegistration"  (click)="openOnEditCampusCandidateModalforRegistration(data.candidateId,data.emailId,data.candidateNo,data.fullName)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Enable Registration Form</a>
+                <a class="dropdown-item" data-toggle="modal"
+                   data-target="#editCampusCandidateModal" *ngIf="data.applicationCount>0" (click)="openOnEditCampusCandidateModal(data.candidateId,data.emailId,data.candidateNo,data.fullName)"
+                   href="javascript:void(0)"><i class="las la-check-square"></i> Enable Application Form</a>
+                <a class="dropdown-item" *ngIf="data.applicationCount>0" (click)="downloadapplicationform(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-download"></i>Download Application Form</a>
+                <a class="dropdown-item" (click)="downloadcandidate(data.candidateId)"
+                   href="javascript:void(0)"><i class="las la-download"></i>Download Candidate Details</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="printerdiv" style="display: none;">
+  <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+
+<div class="modal fade" id="editCampusCandidateModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">Enable modification of Application form</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="Applicationremarks"
+                        ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="Foreditingapplicationform()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal fade" id="editCampusCandidateModalforRegistration" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">Enable modification of registration form</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="Registrationremarks"
+                        ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="Foreditingregistrationform()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--Piu Start-->
+<div class="modal fade" id="enableFeedbackModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+        <h6 class="conComment text-center">Enable Interview Feedback</h6>
+        <div class="mt-4 text-center">
+          <button type="button" class="btn btn-black ml-2" data-dismiss="modal" (click)="EnableFeedback()">Enable</button>&nbsp;
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="enableFeedbackModal1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+        <h6 class="conComment text-center"> Disable Interview Feedback</h6>
+        <div class="mt-4 text-center">
+          <button type="button" class="btn btn-black ml-2" data-dismiss="modal" (click)="EnableFeedback()">Disable</button>&nbsp;
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Piu End-->
+<div class="modal fade" id="TakeactionModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+        <h6 class="conComment text-center">Do you want to shortlist</h6>
+        <div class="mt-4 text-center">
+          <button type="button" class="btn btn-black ml-2" data-dismiss="modal" (click)="ForShortListCandidate()">Shortlist</button>&nbsp;
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" #closeModal class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">{{actionName}}</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="remarks" #Remarks="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessCandidate()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade zoom-in" id="scheduleModal" role="dialog">
+  <!-- <form [formGroup]="scheduleForm" (ngSubmit)="onTestSchedule()" autocomplete="off"> -->
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeScheduleModal()" class="close"><i class="las la-times"></i></button>
+        <h4 class="modal-title">{{testheader}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="step1" *ngIf="stepCount==1">
+          <h6 class="red mt-0">{{requisitionPositionName}}</h6>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label>Test Type<span class="required">*</span></label>
+                <div class="rdio rdio-primary d-inline-block">
+                  <input name="testTypeId" [(ngModel)]="testTypeId" (change)="changeTestType()"
+                         value="1" id="radio1" type="radio" [checked]="true">
+                  <label for="radio1">Offline</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                  <input name="testTypeId" [(ngModel)]="testTypeId" (change)="changeTestType()"
+                         value="2" id="radio2" type="radio">
+                  <label for="radio2">Online</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-12" *ngIf="isOnlineTest">
+              <div class="form-group">
+                <label>Test Link<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTestLink==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="testLink" placeholder="Enter Test link">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>From Date Time</label>
+                <div class="input-group dateTimepik date" id="fromdatetimepik">
+                  <input type="text" [(ngModel)]="testFromDateTime" #fTestDateTime
+                         [ngClass]="checkTestFromDate==='' ? 'form-control pull-right fromdate' : 'form-control pull-right fromdate is-invalid'"
+                         placeholder="From Date">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>To Date Time</label>
+                <div class="input-group dateTimepik date" id="todatetimepik">
+                  <input type="text" [(ngModel)]="testToDateTime" #tTestDateTime
+                         [ngClass]="checkTestToDate==='' ? 'form-control pull-right fromdate' : 'form-control pull-right fromdate is-invalid'"
+                         placeholder="To Date" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Venue<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTestVenue==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="selectedTestVenueName" placeholder="Enter Venue">
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Venue Address<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTestVenue==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="selectedTestVenueAddress" placeholder="Enter Venue Address">
+              </div>
+
+            </div>
+          </div>
+          <!-- <div class="row" *ngIf="isOnlineTest==false">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Institute Email Id<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checktestInstituteEmail==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="testInstituteEmail" placeholder="Enter Institute Email Id">
+              </div>
+
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Contact person<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTestContactName==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="testContactName" placeholder="Enter Contact Person">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Phone No.<span class="required">*</span></label>
+                <input type="text" (keypress)="keyPress($event)" numbersOnly maxlength="10"
+                       [ngClass]="checkTestContactNo==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="testContactNo" placeholder="">
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="!isOnlineTest">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="swichLabel">Provide Travel Reimbursement</label>
+                <label class="switch">
+                  <input type="checkbox" id="togBtn" [(ngModel)]="isTestTravel" (change)="onInterviewTravelChange()">
+                  <div class="slider round">
+                    <span class="on">Yes</span><span class="off">No</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="isTestTravel">
+              <div class="form-group">
+                <label>Eligible Mode<span class="required">*</span></label>
+                <select class="selectpicker ddltravelmode form-control" multiple title='Select'>
+                  <option value="1">Bus</option>
+                  <option value="2">Taxi/Cab</option>
+                  <option value="3">Train</option>
+                  <option value="4">Air</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step2" *ngIf="stepCount==2">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Choose Communication Template<span class="required">*</span></label>
+                <select class="selectpicker ddltestemailtemplate" title='Select'
+                        [(ngModel)]="selectedTestEmailTemplateId" (change)="changeTestEmailTemplate()">
+                  <option *ngFor="let rec of emailTemplates" [value]="rec.templateId">
+                    {{rec.templateEmailName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Edit Template</label>
+                <ckeditor [(ngModel)]="testEmailTemplateDescription2" [config]="ckeConfig"
+                          debounce="500"></ckeditor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                (click)="closeScheduleModal()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-black " *ngIf="stepCount==1" (click)="btnTestNext()">
+          Next <i class="las la-angle-right"></i>
+        </button>
+        <button type="button" class="btn btn-gray " *ngIf="stepCount==2" (click)="btnTestBack()">
+          <i class="las la-angle-left"></i> Back
+        </button>
+        <button type="submit" class="btn btn-black" (click)="onTestSchedule()" *ngIf="stepCount==2">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--Piu-->
+  <!-- </form> -->
+</div>
+<!-- Added by Amartya -->
+<div class="modal fade zoom-in" id="preplacementModal" role="dialog">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closePreplacementModal()" class="close"><i class="las la-times"></i></button>
+        <h4 class="modal-title">{{talkheader}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="step1" *ngIf="stepCount==1">
+          <h6 class="red mt-0"></h6>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label>Type<span class="required">*</span></label>
+                <div class="rdio rdio-primary d-inline-block">
+                  <input name="talkTypeId" [(ngModel)]="talkTypeId" (change)="changeTalkType()"
+                         value="1" id="radio3" type="radio" [checked]="true">
+                  <label for="radio3">Offline</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                  <input name="talkTypeId" [(ngModel)]="talkTypeId" (change)="changeTalkType()"
+                         value="2" id="radio4" type="radio">
+                  <label for="radio4">Online</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-12" *ngIf="isOnlineTest">
+              <div class="form-group">
+                <label>Talk Link<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTalkLink==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="talkLink" placeholder="Enter Talk link">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>From Date Time</label>
+                <div class="input-group dateTimepik date" id="tfromdatetimepik">
+                  <input type="text" [(ngModel)]="talkFromDateTime" #fTalkDateTime
+                         [ngClass]="checkTalkFromDate==='' ? 'form-control pull-right fromdate' : 'form-control pull-right fromdate is-invalid'"
+                         placeholder="From Date">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" >
+              <div class="form-group">
+                <label>To Date Time</label>
+                <div class="input-group dateTimepik date" id="ttodatetimepik">
+                  <input type="text" [(ngModel)]="talkToDateTime" #tTalkDateTime
+                         [ngClass]="checkTalkToDate==='' ? 'form-control pull-right fromdate' : 'form-control pull-right fromdate is-invalid'"
+                         placeholder="To Date" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12" *ngIf="!isOnlineTest">
+              <div class="form-group">
+                <label>Venue<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTalkVenue==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="talkVenueName" placeholder="Enter Venue">
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Institute Email Id<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTalkMailId==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="talkmailid" placeholder="Enter Venue">
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Contact person<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTalkContactName==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="talkContactName" placeholder="Enter Contact Person">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Phone No.<span class="required">*</span></label>
+                <input type="text"
+                       [ngClass]="checkTalkContactNo==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="talkContactNo" placeholder="" numbersOnly>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="step2" *ngIf="stepCount==2">
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Communication  Details</label>
+                <ckeditor [(ngModel)]="talkEmailTemplateDescription" [config]="ckeConfig"
+                          debounce="500"></ckeditor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-black " (click)="closePreplacementModal()">Cancel</button>
+        <button type="button" class="btn btn-black " *ngIf="stepCount==1" (click)="btnTalkNext()">
+          Next <i class="las la-angle-right"></i>
+        </button>
+        <button type="button" class="btn btn-gray " *ngIf="stepCount==2" (click)="btnTalkBack()">
+          <i class="las la-angle-left"></i> Back
+        </button>
+        <button type="submit" class="btn btn-black" (click)="onTalkSchedule()" *ngIf="stepCount==2">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- / Added by Amartya -->
+<div class="modal fade zoom-in" id="interviewModal" role="dialog">
+  <!-- <form [formGroup]="scheduleForm" (ngSubmit)="onTestSchedule()" autocomplete="off"> -->
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeInterviewModal()" class="close">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Schedule Interview</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="step1" *ngIf="stepCount==1">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Vertical<span class="required">*</span></label>
+                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           [(ngModel)]="selectedInterviewVerticalId" (change)="getAllFunction($event)">
+                  <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                    {{rec.verticalName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Function<span class="required">*</span></label>
+                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           [(ngModel)]="selectedInterviewFunctionId">
+                  <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                    {{rec.functionName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <!-- <div class="col-md-6" style="visibility: hidden;">
+                <div class="form-group">
+                    <label>Interview Room<span class="required">*</span></label>
+                    <ng-select bindLabel="interviewRoomName" class="ddlinterviewroom"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="selectedInterViewRoom">
+                        <ng-option [value]="rec.interviewRoomId" *ngFor="let rec of interviewRooms">
+                            {{rec.interviewRoomName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6" style="visibility: hidden;">
+                <div class="form-group">
+                    <label>Interview Room<span class="required">*</span></label>
+                    <ng-select bindLabel="interviewRoomName" class="ddlinterviewroom"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="selectedInterViewRoom">
+                        <ng-option [value]="rec.interviewRoomId" *ngFor="let rec of interviewRooms">
+                            {{rec.interviewRoomName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Interview Name<span class="required">*</span></label>
+                <ng-select bindLabel="interviewname" class="ddlinterviewhrpanel" [placeholder]="'Select'"
+                    [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="selectedInterviewId"
+                    > 
+                    <ng-option [value]="rec.interviewNameId" *ngFor="let rec of interviewNameList;">
+                        {{rec.interviewName}}
+                    </ng-option>
+                    
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>HR Panel<span class="required">*</span></label>
+                <ng-select bindLabel="empNameEmpNo" class="ddlinterviewhrpanel" [placeholder]="'Select'"
+                    [multiple]="true" [searchable]="true" [clearable]="false"
+                    [(ngModel)]="selectedInterViewHR">
+                    <ng-option [value]="rec.autoUserId" *ngFor="let rec of interviewPanelMembersHR">
+                        {{rec.empNameEmpNo}}
+                    </ng-option>
+                </ng-select>
+                <!-- <select class="selectpicker ddlinterviewhrpanel form-control" multiple title='Select'>
+                  <option *ngFor="let rec of interviewPanelMembersHR;" [value]="rec.autoUserId">
+                    {{rec.empNameEmpNo}}
+                  </option>
+                </select> -->
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label>Interview Panel<span class="required">*</span></label>
+
+                <ng-select bindLabel="empNameEmpNo" class="ddlinterview" [placeholder]="'Select'"
+                    [multiple]="true" [searchable]="true" [clearable]="false"
+                    [(ngModel)]="selectedInterViewInterview">
+                    <ng-option [value]="rec.autoUserId" *ngFor="let rec of interviewPanelMembersFunction">
+                        {{rec.empNameEmpNo}}
+                    </ng-option>
+                </ng-select>
+                <!-- <select class="selectpicker ddlinterviewfunctionpanel form-control" multiple
+                        title='Select'>
+                  <option *ngFor="let rec of interviewPanelMembersFunction" [value]="rec.autoUserId">
+                    {{rec.empNameEmpNo}}
+                  </option>
+                </select> -->
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <label>No. of Candidate</label>
+                      <input type="text" class="form-control" placeholder="" disabled>
+                  </div>
+              </div>
+              <div class="col-md-8">
+                  <div class="form-group">
+
+                  </div>
+              </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>From</label>
+                <div class="input-group dateTimepik date" id="ifromdatetimepik">
+                  <input type="text" [(ngModel)]="interviewFromDateTime" #fInterviewDateTime
+                         [ngClass]="checkInterviewFromDate==='' ? 'form-control pull-right fromdate' : 'form-control pull-right fromdate is-invalid'"
+                         placeholder="From Date">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>To</label>
+                <div class="input-group dateTimepik date" id="itodatetimepik">
+                  <input type="text" [(ngModel)]="interviewToDateTime" #tInterviewDateTime
+                         [ngClass]="checkInterviewToDate==='' ? 'form-control pull-right fromdate' : 'form-control pull-right fromdate is-invalid'"
+                         placeholder="From Date">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4" style="display: none;">
+              <div class="form-group">
+                <label>Slot Duration</label>
+                <!-- <div class="input-group timepik date" id="itimepik">
+                    <input type="text" class="form-control pull-right" placeholder="From Date">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"><i
+                                class="fa fa-clock-o"></i></span>
+                    </div>
+                </div> -->
+                <ng-select class="ddlinterviewslot" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           [(ngModel)]="selectedSlot">
+                  <ng-option [value]="00.30">00.30</ng-option>
+                  <ng-option [value]="01.00">01.00</ng-option>
+                  <ng-option [value]="01.30">01.30</ng-option>
+                  <ng-option [value]="02.00">02.00</ng-option>
+                </ng-select>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Mode of Interview<span class="required">*</span></label>
+                <div class="rdio rdio-primary d-inline-block">
+                  <input name="interviewTypeId" [(ngModel)]="interviewTypeId"
+                         (change)="changeInterviewType()" value="1" id="interviewradio1" type="radio"
+                         [checked]="true">
+                  <label for="interviewradio1">Offline</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                  <input name="interviewTypeId" [(ngModel)]="interviewTypeId"
+                         (change)="changeInterviewType()" value="2" id="interviewradio2" type="radio">
+                  <label for="interviewradio2">Online</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" *ngIf="!isOnlineTest">
+              <div class="form-group">
+                <label>Venue<span class="required">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="selectedInterviewVenueName"
+                       placeholder="Enter Venue">
+              </div>
+
+            </div>
+            <div class="col-md-12" *ngIf="!isOnlineTest">
+              <div class="form-group">
+                <label>Venue Address<span class="required">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="selectedInterviewVenueAddress"
+                       placeholder="Enter Venue Address">
+              </div>
+
+            </div>
+          </div>
+          <div class="row" *ngIf="isOnlineTest">
+            <div class="col-md-12">
+              
+              <div class="form-group">
+                <label>Email Link</label>
+                <input type="text"
+                       [ngClass]="checkInterviewLink==='' ? 'form-control' : 'form-control is-invalid'"
+                       [(ngModel)]="interviewLink" placeholder="Enter Interview link">
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="!isOnlineTest">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="swichLabel">Provide Accommodation</label>
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="isInterviewAccomodation"
+                         id="togBtn">
+                  <div class="slider round">
+                    <span class="on">Yes</span><span class="off">No</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12" *ngIf="isInterviewAccomodation">
+              <div class="form-group">
+                <textarea name="" id=""
+                          [ngClass]="checkAccomodationDetails==='' ? 'form-control' : 'form-control is-invalid'"
+                          [(ngModel)]="interviewAccomodationDetails"
+                          placeholder="Accommodation Details..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="!isOnlineTest">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="swichLabel">Provide Travel Reimbursement</label>
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="isInterviewTravel"
+                         (change)="onInterviewTravelChange()" id="togBtn">
+                  <div class="slider round">
+                    <span class="on">Yes</span><span class="off">No</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="isInterviewTravel">
+              <div class="form-group">
+                <label>Eligible Mode<span class="required">*</span></label>
+                <select class="selectpicker ddltravelmode form-control" multiple title='Select'>
+                  <option value="1">Bus</option>
+                  <option value="2">Taxi/Cab</option>
+                  <option value="3">Train</option>
+                  <option value="4">Air</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="display: none;">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="swichLabel">Form Anexture</label>
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="isFormAnexture" id="togBtn">
+                  <div class="slider round">
+                    <span class="on">Yes</span><span class="off">No</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12" style="display: none;">
+              <div class="form-group">
+                <label>Schedule Comments</label>
+                <textarea name="" id="" [(ngModel)]="interviewComments" class="form-control"
+                          placeholder="Add Comment..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step2" *ngIf="stepCount==2">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Choose Interview Card<span class="required">*</span></label>
+                <ng-select bindLabel="templateEmailName" class="ddlinterviewemailtemplate"
+                           [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                           [clearable]="false" [(ngModel)]="selectedInterviewEmailTemplateId"
+                           (change)="changeInterviewEmailTemplate()">
+                  <ng-option [value]="rec.templateId" *ngFor="let rec of interviewemailTemplates">
+                    {{rec.templateEmailName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Edit Template</label>
+                <ckeditor [(ngModel)]="interviewEmailTemplateDescription2" [config]="ckeConfig"
+                          debounce="500"></ckeditor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary">Cancel</button> -->
+        <button type="button" class="btn btn-black " (click)="closeInterviewModal()">Cancel </button>
+        <button type="button" class="btn btn-black " *ngIf="stepCount==1" (click)="btnInterviewNext()">
+          Next <i class="las la-angle-right"></i>
+        </button>
+        <button type="button" class="btn btn-gray " *ngIf="stepCount==2" (click)="btnInterviewBack()">
+          <i class="las la-angle-left"></i> Back
+        </button>
+        <button type="submit" class="btn btn-black" (click)="onInterviewSchedule()" *ngIf="stepCount==2">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<div class="modal fade zoom-in" id="functionModal" role="dialog">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeFunctionModal()" class="close">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Define Function</h4>
+       
+       
+      </div>
+      <div>
+        <table class="table table-bordered">
+            <thead>
+              <tr> 
+                <th>CANDIDATE NAME</th>
+                  <th>CANDIDATE ID</th>
+                  <th>MAPPED VERTICAL</th>
+                  <th>MAPPED FUNCTION</th>
+                  <th>INTERVIEW ROUND</th>
+                  <th>SELECTION STATUS</th>                   
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let rec of mapListData">
+                  <td>{{rec.fullName}}</td>
+                  <td>{{rec.candidateNo}}</td>
+                  <td>{{rec.verticalName}}</td> 
+                  <td>{{rec.functionName}}</td> 
+                  <td>{{rec.roundName}}</td> 
+                  <td>{{rec.statusName}}</td>
+              </tr>
+          </tbody>
+       </table>
+     </div>
+      <div class="modal-body">
+
+        <div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Vertical<span class="required">*</span></label>
+                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           [(ngModel)]="selectedCampusVerticalId" (change)="changeCampusVerticalFunction($event)">
+                  <ng-option [value]="rec.verticalId" *ngFor="let rec of campusverticals">
+                    {{rec.verticalName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Function<span class="required">*</span></label>
+                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           [(ngModel)]="selectedCampusFunctionId"(change)="changeFunctionfordefine()">
+                  <ng-option [value]="rec.functionId" *ngFor="let rec of campusverticalfunctions">
+                    {{rec.functionName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label>Available Requisitions<span class="required">*</span></label>
+                  <ng-select bindLabel="RequisitionName" [placeholder]="'Select'" [appendTo]="'body'"
+                      [multiple]="false" [searchable]="false" [clearable]="false"
+                      [(ngModel)]="selectedFunctionwiseRequisition">
+                      <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of campusfuncwisereq">
+                          {{rec.requisitionNo}}
+                      </ng-option>
+                  </ng-select>
+              </div>
+          </div>
+          <!-- <div class="col-md-6">
+              <div class="form-group">
+                  <label>Positions<span class="required">*</span></label>
+                  <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                      [multiple]="false" [searchable]="false" [clearable]="false"
+                      [(ngModel)]="selectedCampusPositionId">
+                      <ng-option [value]="rec.positionId" *ngFor="let rec of campusVerticalpositions">
+                          {{rec.positionname}}
+                      </ng-option>
+                  </ng-select>
+              </div>
+          </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-black" (click)="onUpdateFunction()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<div class="modal fade zoom-in" id="requisitionModal" role="dialog">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeRequisitionModal()" class="close">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Map Requisition</h4>
+      </div>
+      <div class="modal-body">
+
+        <div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Requisition No<span class="required">*</span></label>
+                <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           [(ngModel)]="selectedRequisitionDetailId">
+                  <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of campusrequisitionLists">
+                    {{rec.requisitionNo}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-black" (click)="onMapRequisition()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<div class="modal fade zoom-in" id="instituteModal" role="dialog">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeInstituteModal()" class="close">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Edit Institute name</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Institute Name<span class="required">*</span></label>
+                <input type="text" [(ngModel)]="NewInstituteName" class="form-control" name="NewInstituteName" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-black" (click)="onInstitueUpdate()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+<div class="modal fade zoom-in" id="editProfileModal" role="dialog">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeEditModal()" class="close">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Edit Profile</h4>
+      </div>
+      <div class="modal-body">
+
+        <div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" [(ngModel)]="objModelForCampus.fullName" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <!-- <div class="form-group">
+                  <label>Date Of Birth</label>
+                  <input type="date" [(ngModel)]="objModelForCampusdob" class="form-control" numbersOnly/>
+              </div> -->
+              <label>Date of Birth<span class="required">*</span></label>
+              <div class="input-group datepiker date">
+                <input type="text" class="form-control pull-right datepicker" id="datepicker3"
+                       [(ngModel)]="objModelForCampusdob" #edob>
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>EmailId</label>
+                <input type="text" [(ngModel)]="objModelForCampus.emailId" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Phone No.</label>
+                <input type="text" [(ngModel)]="objModelForCampus.phoneNo" class="form-control" numbersOnly />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <!-- <div class="form-group">
+                <label>HomeTown</label>
+                <input type="text" [(ngModel)]="objModelForCampus.homeTown" class="form-control" />
+              </div> -->
+              <div class="form-group">
+                <label>Highest Qualification<span class="required">*</span></label>
+                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    name="HighestQualification" #HighestQualification="ngModel" [searchable]="false"
+                    [clearable]="false" [(ngModel)]="objModelForCampus.highestQualification" required
+                    (ngModelChange)="highestQualification($event)">
+                   <!-- <ng-option [value]="-1">10th Standard</ng-option>
+                        <ng-option [value]="1">12th Standard</ng-option> -->
+                        <ng-option [value]="5">Diploma</ng-option>
+                        <ng-option [value]="2">Under Graduation</ng-option>
+                  <!-- <ng-option [value]="4">Professional Degree</ng-option> -->
+                        <ng-option [value]="3">Post Graduation</ng-option>
+                        <ng-option [value]="6">Post Graduate Diploma</ng-option>
+                </ng-select>
+            </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Height</label>
+                <input type="text" [(ngModel)]="objModelForCampus.height" class="form-control" numbersOnly />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Weight</label>
+                <input type="text" [(ngModel)]="objModelForCampus.weight" class="form-control" numbersOnly />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-black" (click)="onClickEditButton()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<!--decline model-->
+<div class="modal fade" id="declineModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">{{actionName}}</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="declineremarks"
+                        #DeclineRemarks="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessdeclineCandidate()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--decline model end-->
+<!--reject model-->
+<div class="modal fade" id="rejectModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">{{actionNameReject}}</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="rejectremarks"
+                        #DeclineRemarks="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="ForRejectCandidate()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--reject model end-->
+<!--Cancel model-->
+<div class="modal fade" id="cancelModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">{{Heading}}</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="declineremarks"
+                        #DeclineRemarks="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="onclickcancelplacement()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--Cancel model end-->
+
+<div class="modal fade zoom-in" id="interviewDetails" role="dialog">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="interviewDetails" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Interview Details</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Function</th>
+                <th>Round</th>
+                <th>Interview Date </th>
+
+                <th>Panel Member</th>
+                <th>Status</th>
+                <th>Assesment Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of interviewDetailsData;">
+                <td>{{data.functionName}}</td>
+                <td>{{data.roundName}}</td>
+                <td>{{data.interviewDate}}</td>
+
+                <td>{{data.pannelMemberName}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.assesmentstatus}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>

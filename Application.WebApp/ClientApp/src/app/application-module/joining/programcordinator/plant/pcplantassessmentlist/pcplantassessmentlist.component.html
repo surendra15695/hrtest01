@@ -1,0 +1,600 @@
+<div class="content-box">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a [ngClass]="activeTabNameShow=='Individual'?'nav-link active':'nav-link'" id="secondtab" data-toggle="tab"
+         href="#tabTwo" role="tab" aria-controls="tabTwo" aria-selected="false"
+         (click)="showIndividualAssessment()">Individual</a>
+    </li>
+    <li class="nav-item">
+      <a [ngClass]="activeTabNameShow=='Batch'?'nav-link active':'nav-link'" id="thirdtab" data-toggle="tab"
+         href="#tabThree" role="tab" aria-controls="tabThree" aria-selected="false"
+         (click)="showBatchWiseAssessment()">Batch</a>
+    </li>
+  </ul>
+  <!-- Tab Section Start -->
+  <div class="tab-content mt-3" id="myTabContent">
+    <!-- tab two Start-->
+    <div [ngClass]="activeTabNameShow=='Individual'?'tab-pane fade show active':'tab-pane fade'" id="tabTwo"
+         role="tabpanel" aria-labelledby="secondtab">
+      <!-- Fiter section start -->
+      <form [formGroup]="searchFormIndividual" (ngSubmit)="onSearchIndividual()">
+        <div class="filter-sec mb-3">
+          <div class="form-row m-t-10">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Candidate ID</label>
+                <input type="text" class="form-control" formControlName="candidateNo">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Employee ID</label>
+                <input type="text" class="form-control" formControlName="empNo">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Candidate Name</label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Pos. Location</label>
+                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           formControlName="location">
+                  <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                    {{rec.locationNo}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Function</label>
+                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           formControlName="function">
+                  <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                    {{rec.functionName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Assessment Status</label>
+                <ng-select bindLabel="statusname" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           formControlName="assesmentStatus">
+                  <ng-option [value]="rec.statusId" *ngFor="let rec of assessmentStatusList">
+                    {{rec.statusname}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-12 text-right">
+              <button type="button" class="btn btn-black btn-sm">
+                <i class="las la-filter"></i>Filter
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm ml-1"
+                      (click)="onResetClickIndividual()">
+                <i class="las la-sync-alt"></i>
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Fiter section End -->
+      <div class="text-right my-2" *ngIf="callngIfFunction?showBtnReleaseAssessment():false">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                data-target="#releaseAssessmentModal" (click)="btnClickReleaseAssessment()">
+          Release
+          Assessment
+        </button>
+      </div>
+      <!--<div class="text-right my-2" *ngIf="callngIfFunction?showBtnReleaseFeedback():false">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                data-target="#releaseFeedbackModal" (click)="btnClickReleaseFeedback()">
+          Release
+          Feedback
+        </button>
+      </div>-->
+      <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                <div class="form-check">
+                  <input type="checkbox" id="chkAll" [(ngModel)]="selectAll"
+                         (change)="onCheckSelectAll($event)">
+                  <label class="chk" for="chkAll"></label>
+                </div>
+              </th>
+              <!-- <th>Cand. ID</th> -->
+              <th>Emp. ID</th>
+              <th>Emp. / Cand. Name</th>
+              <th>Emp. Status</th>
+              <!-- <th>Designation</th> -->
+              <th>Pos. Location</th>
+              <th>Function</th>
+              <th>Department</th>
+              <th>Grade</th>
+              <!-- <th>Email</th> -->
+              <th>Contact</th>
+              <!-- <th>D.O.J</th> -->
+              <th>Total Assessment</th>
+              <th>Assesment Details</th>
+              <th>Assessment Status</th>
+              <th>Feedback Details</th>
+              <th>Feedback Status</th>
+              <th style="text-align: center;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of candidateAssessmentList">
+              <td>
+                <div class="form-check">
+                  <input type="checkbox" id="{{data.candidateId}}" [ngModel]="getEnableStatus(data)"
+                         (change)="onCheckRowWise(data,$event)">
+                  <label class="chk" for="{{data.candidateId}}"></label>
+                </div>
+              </td>
+              <!-- <td>{{data.candidateNo}}</td> -->
+              <td>{{data.empNo}}</td>
+              <td>{{data.candidateFullName}}</td>
+              <td>{{data.employeeStatusName}}</td>
+              <!-- <td>{{data.designationName}}</td> -->
+              <td>{{data.locationName}}</td>
+              <td>{{data.functionName}}</td>
+              <td>{{data.departmentName}}</td>
+              <td>{{data.gradeName}}</td>
+              <!-- <td>{{data.emailId}}</td> -->
+              <td>{{data.contactNo}}</td>
+              <!-- <td>{{data.dateofJoining}}</td> -->
+              <td style="text-align: center;">{{data.totalAssignment}}</td>
+              <td>
+                <a href="javascript:vpoid(0)" data-toggle="modal" data-target="#assesmentpreview"
+                   (click)="onClickAssesmentDetails(data.candidateId)">Assesment List</a>
+              </td>
+              <td>{{data.assessmentStatus}}</td>
+              <td>
+                <a href="javascript:vpoid(0)" data-toggle="modal" data-target="#feedbackpreview"
+                   (click)="onClickFeedbackDetails(data.candidateId)">Feedback List</a>
+              </td>
+              <td>{{data.feedBackStatus}}</td>
+              <td class="text-center">
+                <div class="row-dropdown">
+                  <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" data-boundary="window">
+                    <i class="las la-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu custom-menu dropdown-menu-right"
+                       aria-labelledby="dropdownMenuButton" data-boundary="window"
+                       x-placement="bottom-end">
+                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                       data-target="#releaseAssessmentModal"
+                       (click)="onClickReleaseAssment(data,'Candidate')">
+                      <i class="las la-check-circle"></i> Release Assessment
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClickEvaluateAssessmentCandidate(data,'Candidate')">
+                      <i class="las la-clipboard-list"></i> Evaluate
+                      Assessment
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClicViewAssessment(data)">
+                      <i class="las la-clipboard-list"></i>
+                      View Assesment
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClickCandiateAssessmentSummary(data)">
+                      <i class="las la-clipboard-list"></i>Assessment Summary
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClickViewFeedBack(data)">
+                      <i class="las la-reply"></i>
+                      View
+                      Feedback
+                    </a>
+                    <!--<a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                       data-target="#releaseFeedbackModal"
+                       (click)="onClickReleaseFeedback(data,'Candidate')">
+                      <i class="las la-check-circle"></i> Release Feedback
+                    </a>--><!--Piu-->
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="onDownloadFeedback(data)">
+                      <i class="las la-download"></i>
+                      Download
+                      Feedback
+                    </a>
+                    <!-- <a class="dropdown-item" *ngIf="data.hiringStatusId!=63"
+                href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId)"><i
+                    class="las la-times-circle"></i> Discontinue Candidate</a> -->
+
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- tab two end-->
+    <div id="printFeedBack" style="display: none;">
+      <app-pdffeedback [feedbackRecord]="feedbackData"></app-pdffeedback>
+    </div>
+    <!-- tab Three Start-->
+    <div [ngClass]="activeTabNameShow=='Batch'?'tab-pane fade show active':'tab-pane fade'" id="tabThree"
+         role="tabpanel" aria-labelledby="thirdtab">
+      <!-- Fiter section start -->
+      <form [formGroup]="searchFormBatchwise" (ngSubmit)="onSearchBatchwise()">
+        <div class="filter-sec mb-3 pb-0">
+          <div class="form-row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Date of Joining</label>
+                <div class="form-row">
+                  <div class="col-sm-6">
+                    <div class="input-group datepiker date">
+                      <input type="text" class="form-control pull-right datepicker"
+                             id="datepicker" placeholder="From Date"
+                             formControlName="dtofJoiningFrom" #dtofJoiningFrom>
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group datepiker date">
+                      <input type="text" class="form-control pull-right datepicker"
+                             id="datepicker1" placeholder="To Date" formControlName="dtofJoiningTo"
+                             #dtofJoiningTo>
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Batch ID</label>
+                <input type="text" class="form-control" formControlName="batchNo">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Assessment Status</label>
+                <!-- <select class="selectpicker" title='Select'>
+                    <option value="0">Option1</option>
+                    <option value="1">Option2</option>
+                </select> -->
+                <ng-select bindLabel="statusname" [placeholder]="'Select'" [appendTo]="'body'"
+                           [multiple]="false" [searchable]="false" [clearable]="false"
+                           formControlName="assesmentStatus">
+                  <ng-option [value]="rec.statusId" *ngFor="let rec of assessmentStatusList">
+                    {{rec.statusname}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-4 mt-md-4 text-right">
+              <button type="submit" class="btn btn-black btn-sm">
+                <i class="las la-filter"></i>Filter
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm ml-1"
+                      (click)="onClickBatchwiseReset()">
+                <i class="las la-sync-alt"></i>
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive">
+        <table id="dataTable2" class="table">
+          <thead>
+            <tr>
+              <th>Batch ID</th>
+              <th>Total Candidates</th>
+              <!--<th>Date of Joining</th>-->
+              <th>Total Assessment</th>
+              <th>Assessment Status</th>
+              <th>Feedback Ststus</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of assessmentListBatchWise">
+              <td><a href="#" class="red">{{data.batchNo}}</a></td>
+              <td>{{data.totalCandidates}}</td>
+              <!--<td>{{data.dateofJoining}}</td>-->
+              <td>{{data.totalAssignment}}</td>
+              <td>{{data.assessmentStatus}}
+                <a href="javascript:vpoid(0)" class="red" (click)="onClickAssesmentPendingDetails(data)"><i class="fa fa-eye"></i></a>
+              </td>
+              <td>{{data.feedBackStatus}}</td>
+              <td class="text-center">
+                <div class="row-dropdown">
+                  <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" data-boundary="window">
+                    <i class="las la-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu custom-menu dropdown-menu-right"
+                       aria-labelledby="dropdownMenuButton" data-boundary="window"
+                       x-placement="bottom-end">
+                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                       data-target="#releaseAssessmentModal"
+                       (click)="onClickReleaseAssment(data,'Batch')">
+                      <i class="las la-check-circle"></i> Release Assessment
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClickEvaluateAssessment(data,'Batch')">
+                      <i class="las la-clipboard-list"></i> Evaluate
+                      Assessment
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                       data-target="#releaseFeedbackModal"
+                       (click)="onClickReleaseFeedback(data,'Batch')">
+                      <i class="las la-check-circle"></i> Release Feedback
+                    </a><!--Piu-->
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClickFeedbackList(data,'Batch')">
+                      <i class="las la-clipboard-list"></i> Feedback Status List
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"
+                       (click)="onClickViewCandidate(data)">
+                      <i class="las la-reply"></i>View new
+                      joiners List
+                    </a>
+                    <a *ngIf="data.totalAssignment > 0" class="dropdown-item"
+                       href="javascript:void(0)" (click)="onClickAssessmentSummary(data)">
+                      <i class="las la-clipboard-list"></i>Assessment Summary
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Fiter section End -->
+    </div>
+    <!-- tab Three end-->
+  </div>
+  <!-- Tab Section end -->
+</div>
+
+
+<!-- Release Assessment Modal -->
+<div class="modal fade" id="releaseAssessmentModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Release Assessment</h4>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <p class="d-inline-block grey">{{assessmentAssignReleaseType}} ID:</p>
+          <p class="d-inline-block">{{assessmentAssignRealeaseNo}}</p>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Training Title</th>
+                <th>Assessment</th>
+                <th>Training Type</th>
+                <th *ngIf="assessmentAssignReleaseType =='Candidate'">Candidate Id.</th>
+                <th class="text-center">Assign</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let aarl of assessmentAssignReleaseList;let i=index;">
+                <td>{{aarl.traingTitle}}</td>
+                <td>{{aarl.assessmentName}}</td>
+                <td>{{aarl.assessmentTypeName}}</td>
+                <td *ngIf="assessmentAssignReleaseType =='Candidate'">{{aarl.candidateNo}}</td>
+                <td class="text-center">
+                  <div class="form-check" *ngIf="aarl.isChecked==false">
+                    <input type="checkbox" id="{{aarl.assessmentAssignId}}"
+                           (change)="onCheckAssign($event,aarl)" [ngModel]="getAssignedStatus(aarl)">
+                    <label class="chk" for="{{aarl.assessmentAssignId}}"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                (click)="onReleaseCancleClick()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-black btn-sm" (click)="onClickRelease()">Release</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal end -->
+<!-- Release Feedback Modal --> <!--Piu-->
+<div class="modal fade" id="releaseFeedbackModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Release Feedback</h4>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <p class="d-inline-block grey">{{feedbackAssignReleaseType}} ID:</p>
+          <p class="d-inline-block">{{feedbackAssignRealeaseNo}}</p>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Training Title</th>
+                <th>Feedback Name</th>
+                <!--<th>Training Type</th>-->
+                <th *ngIf="assessmentAssignReleaseType =='Candidate'">Candidate Id.</th>
+                <th class="text-center">Assign</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let aarl of evaluateFeedbackDetails;let i=index;">
+                <td>{{aarl.traingTitle}}</td>
+                <td>{{aarl.assessmentName}}</td>
+                <!--<td>{{aarl.assessmentTypeName}}</td>-->
+                <td *ngIf="assessmentAssignReleaseType =='Candidate'">{{aarl.candidateId}}</td>
+                <td class="text-center">
+                  <div class="form-check" [hidden]="aarl.feedChecked!=0">
+                    <input type="checkbox" id="{{aarl.feedBackAssignId}}"
+                           (change)="onCheckFeed($event,aarl)" [(ngModel)]="aarl.isChecked">
+                    <label class="chk" for="{{aarl.feedBackAssignId}}"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                (click)="onReleaseFeedCancleClick()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-black btn-sm" (click)="onClickReleaseFeed()" data-dismiss="modal">Release</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal end -->
+<!--Piu-->
+<!-- Decline Modal -->
+<div class="modal fade" id="declineModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">{{actionName}}</h6>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="discontinueRemarks"
+                        #DeclineRemarks="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessCandidate()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Assesment List Modal-->
+<div class="modal fade" id="assesmentpreview" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="previewCloseModal" class="close" data-toggle="modal"
+                data-target="#assesmentpreview">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Assesment Details</h4>
+      </div>
+      <div class="modal-body popup-maxheigth-500">
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table table-striped" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Sl. No.</th>
+                  <th>Assesment Name</th>
+                  <th>Assesment Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of candidateWiseAssesmentList; let i = index;">
+                  <td>{{i+1}}</td>
+                  <td><a class="red">{{item.assessmentName}} </a></td>
+                  <td>{{item.assesmentStatus}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Feedback List Modal-->
+<div class="modal fade" id="feedbackpreview" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="previewCloseModal" class="close" data-toggle="modal"
+                data-target="#feedbackpreview">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Feedback Details</h4>
+      </div>
+      <div class="modal-body popup-maxheigth-500">
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table table-striped" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Sl. No.</th>
+                  <th>Feedback Name</th>
+                  <th>Feedback Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of feedbackWiseAssesmentList; let i = index;">
+                  <td>{{i+1}}</td>
+                  <td><a class="red">{{item.assessmentName}} </a></td>
+                  <td>{{item.feedbackStatus}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

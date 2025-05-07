@@ -1,0 +1,217 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">All Candidates</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Submit Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="selectpicker" title='Select' formControlName="requisitionProcessStatus" #requisitionProcessStatus>
+                            <option *ngFor="let rec of statuses" [ngValue]="rec.statusId">
+                                {{rec.statusName}}
+                              </option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="col-sm-12 text-right">
+
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                        Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm"><i class="las la-sync-alt"></i>
+                        Reset</button>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <div class="text-right my-2">
+        <button type="button" (click)="openActionModal(2,'Clarification Needed')" *ngIf="isBtnClarification"
+            class="btn btn-rounded btn-outline-warning btn-sm" data-toggle="modal" data-target="#myModal"><i
+                class="las la-share"></i> Send back</button>
+        <button type="button" (click)="openActionModal(4,'Accept')" *ngIf="isBtnAccept"
+            class="btn btn-rounded btn-outline-success btn-sm ml-1" data-toggle="modal"
+            data-target="#myModal"><i class="las la-check"></i>Accept</button>
+        <button type="button" (click)="openActionModal(5,'Reject')" *ngIf="isBtnReject"
+            class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            data-target="#myModal"><i class="las la-times"></i>Reject</button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <input type="checkbox" id="chkAll">
+                            <label class="chk" for="chkAll"></label>
+                        </div>
+                    </th>
+                    <th>Requisition No</th>
+                    <th>Candidate Id</th>
+                    <th>Candidate Name</th>
+                    <th>Designation</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>Email Id</th>
+                    <th>Contact No.</th>
+                    <th>DOJ</th>
+                    <th>Montly Gross</th>
+                    <th>Submitted On</th>
+                    <th>Submitted By</th>
+                    <th>Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of candidateList">
+                    <td>
+                        <input type="hidden" class="invoiceStatus" [value]="data.invoiceStatusId" />
+                        <div class="form-check" *ngIf="(data.invoiceStatusId==1  || data.invoiceStatusId==3 )">
+                            <input type="checkbox" id="chkm{{data.candidateId}}" value="1"
+                                (click)="select($event,data.vendorInvoiceId,data.invoiceStatusId)">
+                            <label class="chk" for="chkm{{data.candidateId}}"></label>
+                        </div>
+                    </td>
+                    <td><a href="javascript:void(0)">{{data.requisitionNo}}</a></td>
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.candidateFullName}}</td>
+                    <td>{{data.designationName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.emailId}}</td>
+                    <td>{{data.contact}}</td>
+                    <td>{{data.dateOfJoining}}</td>
+                    <td>{{data.monthlyGross}}</td>
+                    <td>{{data.submittedOn}}</td>
+                    <td>{{data.vendorName}}</td>
+                    <td>{{data.invoiceStatusName}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button data-boundary="window" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" (click)="openFile(data.invoicePath)" style="cursor: pointer;"><i
+                                        class="las la-check-square"></i> View Invoice</a>
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#clarificationModal" (click)="openClarificationModal(data.vendorInvoiceId)" *ngIf="data.invoiceStatusId==3"  ><i
+                                  class="las la-check-square"></i> View
+                                    Clarification</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" #closeActionModal class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">{{modalHeader}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control txtRemarks" placeholder="" [(ngModel)]="invoiceremarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-black btn-sm" (click)="actionFormSubmit()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="clarificationModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="closeClarificationModal" #closeClarificationModal
+                    data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Take Action</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="media" *ngFor="let data of clarificationList">
+                            <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                            <div class="media-body">
+                                <h6 class="mt-0">{{data.createdByName}}</h6>
+                                {{data.clarificationRemarks}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control txtRemarks" [(ngModel)]="ClarificationRemarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-black btn-sm" (click)="clarificationSubmit('2')">Send Back</button>
+                <button type="submit" class="btn btn-black btn-sm" (click)="clarificationSubmit('4')">Accept</button>
+                <button type="submit" class="btn btn-black btn-sm" (click)="clarificationSubmit('5')">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

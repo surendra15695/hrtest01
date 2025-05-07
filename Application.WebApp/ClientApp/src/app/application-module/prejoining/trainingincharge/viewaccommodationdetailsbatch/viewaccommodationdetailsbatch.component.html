@@ -1,0 +1,198 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="backTo()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">View Accommodation</h1>
+    </div>
+    <!-- accordion section start -->
+    <div id="accordion" class="myaccordion">
+
+        <!-- Induction Schedule section start -->
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                        aria-controls="collapseTwo">
+                        Induction Schedule
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="form-row mb-3">
+                        <div class="col-md-2">
+                            <p class="grey">{{editAccommodationFor}} No : </p>
+                            <p>{{editAccommodationForNo}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="grey">Reporting Venue:</p>
+                            <!-- <p>{{editAccommodationcandidateDetailsObj?.venueAddress}}</p> -->
+                            <p>{{editAccommodationcandidateDetailsObj?.venueName}}</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="grey">Address:</p>
+                            <p>{{editAccommodationcandidateDetailsObj?.reprtingVenueAddress}}</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Training Title</th>
+                                    <th>Date</th>
+                                    <th>From Time </th>
+                                    <th>To Time</th>
+                                    <th>Details of Session</th>
+                                    <th>{{trainerTypename}}</th>
+                                    <th>Mode</th>
+                                    <th>Location</th>
+                                    <th>Venue</th>
+                                    <th>Coordinator</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of editAccommodationInductionSchedule">
+                                    <td>{{data.traingTitle}}</td>
+                                    <td>{{data.dateFrom}}-{{data.dateTo}}</td>
+                                    <td>{{data.timeFrom}}</td>
+                                    <td>{{data.timeTo}}</td>
+                                    <td>{{data.detailsofSession}}</td>
+                                    <td>{{data.trainerName}}</td>
+                                    <td>{{data.inductioneName}}</td>
+                                    <td>{{data.locationName}}</td>
+                                    <td>{{data.inductionVenueName}}</td>
+                                    <td>{{data.trainingCoOrdinatorName}}</td>
+                                    <td>{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Induction Schedule section End -->
+
+        <!-- Edit Accommodation section start -->
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree">
+                        Accommodation Details
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Candidate ID</th>
+                                    <th rowspan="2">Candidate Name</th>
+                                    <th class="text-center"
+                                        *ngFor="let acmddate of filteredArrayForShowingDatesLocation">
+                                        {{acmddate.locationName}}
+                                    </th>
+                                    <!-- <th [attr.rowspan]="requiredColspan"></th> -->
+                                </tr>
+                                <tr>
+                                    <th class="text-center"
+                                        *ngFor="let acmddate of filteredArrayForShowingDatesLocation">
+                                        {{acmddate.dateFrom}}-{{acmddate.dateTo}}
+                                    </th>
+                                    <!-- <th style="display: none;" [attr.rowspan]="requiredColspan" ></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let idntclcndt of identicalCandidateArray">
+                                    <td>{{idntclcndt?.candidateNo}}</td>
+                                    <td>{{idntclcndt?.candidateFullName}}</td>
+                                    <td class="text-center"
+                                        *ngFor="let acmddate of filteredArrayForShowingDatesLocation;let i=index;">
+                                        {{getAccommodationDetails(idntclcndt,acmddate)}}
+                                    </td>
+                                    <!-- <td class="text-center" style="display: none;">
+                                        <a href="javascript:void(0)" class="row-btn" data-toggle="modal"
+                                            data-target="#myModal" (click)="onClickEdit(idntclcndt)"><i
+                                                class="las la-pen"></i></a>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="my-2 clearfix" style="display: none;">
+                        <button type="button" class="btn btn-black" (click)="onClickSaveAndUpdate()">Save &
+                            Update</button>
+                        <button type="button" class="btn btn-primary ml-2" (click)="onClickCancel()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Accommodation section End -->
+
+    </div>
+    <!-- accordion section End -->
+</div>
+
+
+<!-- Edit Accommodation Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Edit Accommodation</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <p class="grey d-inline">Candidate ID:</p>
+                        <p class="d-inline">{{candidateNoForPopup}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="grey d-inline">Candidate Name:</p>
+                        <p class="d-inline">{{candidateNameForPopup}}</p>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 170px;">Location</th>
+                                <th style="width: 170px;">Date</th>
+                                <th>Accommodation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of accommodationDetailsForPopup">
+                                <td>{{data.locationName}}</td>
+                                <td>{{data.fromDate}}-{{data.toDate}}</td>
+                                <td>
+                                    <textarea class="form-control" [(ngModel)]="data.accomodation"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                    (click)="onClickPopUpCancel()">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2" (click)="onSubmitPopup()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->

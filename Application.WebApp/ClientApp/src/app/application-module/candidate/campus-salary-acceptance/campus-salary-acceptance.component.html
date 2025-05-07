@@ -1,0 +1,163 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Salary Acceptance</h1>
+            </div>
+        </div>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card" *ngFor="let data of savedSalaryData?.salaryFitmentDetails; let i=index ">
+            <div class="card-header" id="heading{{data.salaryFitmentDetailsId}}">
+                <h6 class="d-flex align-items-center justify-content-start">
+                    <button class="header-btn btn btn-link text-left" data-toggle="collapse" attr.data-target="#collapse{{data.salaryFitmentDetailsId}}" aria-expanded="false" attr.aria-controls="collapse{{data.salaryFitmentDetailsId}}"><span>
+                          <i class="fa fa-plus"></i>
+                        </span>
+                      Proposed Salary Details-{{i+1}}
+                    </button>
+                    <div>
+                        <small class="d-inline">Status:</small>
+                        <small class="d-inline yellow" *ngIf="data.acceptance==1">Pending</small>
+                        <small class="d-inline green" *ngIf="data.acceptance==2">Accepted</small>
+                        <small class="d-inline red" *ngIf="data.acceptance==3">Declined</small>    
+                    <div>
+                </div></div></h6>
+            </div>
+            <div id="collapse{{data.salaryFitmentDetailsId}}" class="collapse" attr.aria-labelledby="heading{{data.salaryFitmentDetailsId}}" data-parent="#accordion">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Designation</label>
+                      <!-- <input type="text" class="form-control" [(ngModel)]="selectedCandidateDesignationText" readonly="readonly"/> --> <!-- Previous -->
+                      <input type="text" class="form-control" [(ngModel)]="data.designationName" readonly="readonly"/>   <!-- Added by anif on 08-08-2022 -->
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Location</label>
+                      <!-- <input type="text" class="form-control" [(ngModel)]="selectedCandidatelocationText" readonly="readonly"/> --> <!-- Previous -->
+                      <input type="text" class="form-control" [(ngModel)]="data.locationOffice" readonly="readonly"/> <!-- Added by anif on 08-08-2022 -->
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>Probation</label>
+                      <!-- <input type="text" class="form-control" [(ngModel)]="selectedCandidateprobationText" readonly="readonly"/> --> <!-- Previous -->
+                      <input type="text" class="form-control" [(ngModel)]="data.probationName" readonly="readonly"/>  <!-- Added by anif on 08-08-2022 -->
+                    </div>
+                  </div>
+                  <!-- added by arghya on 29.06.2022 -->
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>Grade </label>
+                      <!-- <input type="text" class="form-control" [(ngModel)]="selectedCandidateGradeText" readonly="readonly" /> --> <!-- Previous -->
+                      <input type="text" class="form-control" [(ngModel)]="data.gradeName" readonly="readonly" />  <!-- Added by anif on 08-08-2022 -->
+                    </div>
+                  </div>
+                   <!-- Till this -->
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th rowspan="2" style="width: 40px;"></th>
+                        <th rowspan="2"></th>
+                        <th colspan="2" class="text-center">Proposed</th>
+                      </tr>
+                      <tr>
+                        <th class="text-right" style="width: 140px;">Monthly(Rs.)</th>
+                        <th class="text-right" style="width: 140px;">Yearly(Rs.)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let rec of data.salaryFitmentSalaryDetailsFormat">
+                        <td>{{rec.visibleOrder}}</td>
+                        <td>{{rec.salaryAccountHeadName}}</td>
+                        <td class="text-right">{{rec.calculatedSalaryValue>0?rec.calculatedSalaryValue:''}}</td>
+                        <td class="text-right">{{rec.calculatedSalaryValueYearly>0?rec.calculatedSalaryValueYearly:''}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-12">
+                In addition to the above you will be eligible for the following benefits as per Company policy
+                <ul>
+                    <li>Group Hospitalization Insurance for self, wife and dependent children</li>
+                    <li>Group Personal Accident Insurance for self </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="my-3 pb-2 border-bottom" *ngIf="savedSalaryData?.salaryFitmentRemaks.length>0">
+        <h6 class="red">Communication History</h6>
+        <div *ngFor="let data of savedSalaryData?.salaryFitmentRemaks">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdByName}} <span></span></h6>
+                    {{data.reamrks}}
+                </div>
+            </div>
+            <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data?.modifiedByName}} <span></span></h6>
+                    {{data.reamrksReply}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="Acceptance==1">
+        <h6 class="red">Take Action</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Action</label>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input name="salaryAcceptance" [value]="2" [(ngModel)]="salaryAcceptance" id="radio1" type="radio">
+                        <label for="radio1">Accept</label>
+                    </div>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input name="salaryAcceptance" [value]="3" [(ngModel)]="salaryAcceptance" id="radio2" type="radio">
+                        <label for="radio2">Decline</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Remarks</label>
+                    <textarea name="" id="txtRemarks" class="form-control" [(ngModel)]="remarks"
+                        #Remarks="ngModel"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="table-responsive">
+      <table class="table table-bordered">
+          <thead>
+              <tr> 
+                  <th>Remarks For</th>
+                  <th>Remarks By</th>
+                  <th>Date</th>
+                  <th>Remarks</th>                   
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let rec of candidateremarksList">
+                  <td>{{rec.statusName}}</td>
+                  <td>{{rec.empName}}</td> 
+                  <td>{{rec.createdOn}}</td> 
+                  <td>{{rec.remarks}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div> -->
+    <div class="mt-4" *ngIf="Acceptance==1">
+        <button type="button" class="btn btn-black" (click)="onSubmit()">Submit</button>
+    </div>
+</div>
+

@@ -1,0 +1,100 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="gotoListenReviewList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Listen Review</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{empName}}</p>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+    <form [formGroup]="saveForm"  autocomplete="off">
+        <div>
+            <div class="form-group">
+                <label>How do you find your work engaging? How can we improve it? </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question1Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>How are the additional support you expect to excel in your work?</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question2Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>What are the challenges in the work envirnment?</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question3Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Any training area/tolls to improve your work? </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question4Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Any grievances(observed/explained) </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question5Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Any critical incident/achievements to be noted(Positive/Negative) </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question6Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Status on points of last listening process(if any)</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question7Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Observed Strength, if any(with specific example)</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question8Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Overall are for improvement, if any(with specific example)</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question9Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Any specific action plan based on the current listening</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question10Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="mt-4" *ngIf="!showButton">
+                <button type="button" data-target="#confirmPopup" data-toggle="modal" class="btn btn-black">Submit</button>
+            
+                <button type="button " class="btn btn-secondary" (click)="saveasDraftFormat()">Save as Draft</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to continue?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onSubmit()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

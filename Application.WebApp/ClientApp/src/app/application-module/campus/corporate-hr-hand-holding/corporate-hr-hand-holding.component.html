@@ -1,0 +1,372 @@
+<div class="content-box">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="firsttab" data-toggle="tab" href="#tabOne" role="tab" aria-controls="home"
+                aria-selected="true" (click)="onClickPendingTab()">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="secondtab" data-toggle="tab" href="#tabTwo" role="tab" aria-controls="profile"
+                aria-selected="false" (click)="onClickAllocatedTab()">Feedback</a>
+        </li>
+    </ul>
+    <!-- Tab Section Start -->
+    <div class="tab-content mt-3" id="myTabContent">
+        <!-- tab One Start-->
+        <div class="tab-pane fade show active" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchformPending" (ngSubmit)="pendingFormSubmit()">
+                <div class="filter-sec">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Employee Id</label>
+                                <input type="text" class="form-control" formControlName="empId">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" formControlName="empName">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Joining Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                                placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                                placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="functionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Probation</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" formControlName="probationId">
+                                    <ng-option [value]="0">Select</ng-option>
+                                    <ng-option [value]="1">6 Months</ng-option>
+                                    <ng-option [value]="2">1 Year</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="pendingResetClick()"><i
+                                    class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+            <div class="text-right my-2">
+
+            </div>
+
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Emp. ID</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>DOJ</th>
+                            <th>Probation</th>
+                            <th>Designation</th>
+                            <th>Pos. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Confirmation Due</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of allocationPendingList;let i=index;">
+                            <!-- <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{i}}" [ngModel]="getPendingEnableStatus(data)"
+                                        (change)="onCheckRowWisePending(data,$event,i)">
+                                    <label class="chk" for="{{i}}"></label>
+                                </div>
+                            </td> -->
+                            <td>{{data.employeeNo}}</td>
+                            <td>{{data.fullName}}</td>
+                            <td>{{data.employeeStatus}}</td>
+                            <td>{{data.doj}}</td>
+                            <td>{{data.probation}}</td>
+                            <td>{{data.designation}}</td>
+                            <td>{{data.locationOffice}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.confirmationDue}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="onFeedback(data)"><i
+                                            *ngIf="data.feedbackId == 0 && data.elidgbleFeedBack == 1"
+                                                class="las la-check-square"></i>
+                                            Feedback</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                            data-target="#myModal" (click)="onReassign(data)"><i
+                                            class="las la-share"></i>
+                                            Reassign</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+         <!-- tab One End-->
+
+        <!-- tab two Start-->
+        <div class="tab-pane fade" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchformAllocated" (ngSubmit)="allocatedFormSubmit()">
+                <div class="filter-sec">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Employee Id</label>
+                                <input type="text" class="form-control" formControlName="empId">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" formControlName="empName">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Joining Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="fromdatepicker" placeholder="From Date" #fromDateAllocated
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #toDateAllocated
+                                                formControlName="toDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="functionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Probation</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" formControlName="probationId">
+                                    <ng-option [value]="0">Select</ng-option>
+                                    <ng-option [value]="1">6 Months</ng-option>
+                                    <ng-option [value]="2">1 Year</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button> <!-- (click)="allocatedFormSubmit()" -->
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="allocatedResetClick()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+
+
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <!-- <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAllAllocated" [(ngModel)]="selectAllAllocated"
+                                        (change)="onCheckSelectAllAllocated($event)">
+                                    <label class="chk" for="chkAllAllocated"></label>
+                                </div>
+                            </th> -->
+                            <th>Emp. ID</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>DOJ</th>
+                            <th>Probation</th>
+                            <th>Designation</th>
+                            <th>Pos. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Confirmation Due</th>
+                            <th>Allocated To</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of allocationAllocatedList; ">
+                            <!-- let j=index; -->
+                            <!-- <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{data.candidateId}}"
+                                        [ngModel]="getEnableStatusAllocated(data)"
+                                        (change)="onCheckRowWiseAllocated(data,$event)">
+                                    <label class="chk" for="{{data.candidateId}}"></label>
+                                </div>
+                            </td> -->
+                            <td>{{data.employeeNo}}</td>
+                            <td>{{data.fullName}}</td>
+                            <td>{{data.employeeStatus}}</td>
+                            <td>{{data.doj}}</td>
+                            <td>{{data.probation}}</td>
+                            <td>{{data.designation}}</td>
+                            <td>{{data.locationOffice}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.confirmationDue}}</td>
+                            <td>{{data.allocatedUserName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton">
+                                       
+                                        <a class="dropdown-item"  (click)="onFeedback(data)"
+                                        href="javascript:void(0)"><i class="las la-check-square"></i>View Hr Feedback</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Tab Section end -->
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">ReAassign</h4>
+            </div>
+            <form [formGroup]="saveform" (ngSubmit)="onSubmitmodal()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Select AIC<span class="required">*</span></label>
+                        <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="autoUserId">
+                            <ng-option [value]="rec.autoUserId" *ngFor="let rec of aicList">
+                                {{rec.employeeName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        (click)="onClickCancel()">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveform.invalid"
+                        id="send">ReAllocate</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

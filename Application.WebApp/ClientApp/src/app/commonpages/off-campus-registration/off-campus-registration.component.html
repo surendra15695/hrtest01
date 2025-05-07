@@ -1,0 +1,1389 @@
+<div class="container">
+    <div class="regist_form_container" *ngIf="campusLinks[0]?.disableStatus==1">
+        <h1 class="title">Candidate Registration period has been closed. Your time and effort throughout this process are greatly acknowledged</h1>
+    </div>
+    <div class="regist_form_container" *ngIf="campusLinks[0]?.disableStatus==0">
+        <h1 class="title">MRF Off Campus {{campusLinks[0]?.campusYearName}} Student Registration</h1>
+
+
+        <!-- <div class="inner-container">
+            <p>The purpose of this form is to collect relevant details of the eligible Students for MRF Off Campus Drive
+                Initial Screening Process.(Shortlisted candidates alone will be considered for
+                the selection process.)</p>
+            <h6 class="red">Eligibility Criteria</h6>
+            <ol>
+                <li>Qualification: BSc & MSc ( 2022 Passing out candidates)</li>
+                <li>BSc (Preferably Chemistry, Physics, Maths, Statistics), MSc (Preferably Chemistry, Statistics)</li>
+                <li>Aggregate Percentage: Minimum 60% up to last semester.</li>
+                <li>No active Arrears / Backlogs. Candidates those who have active Arrears/Backlogs (including written
+                    Arrears/Backlogs exam but results not published) are not eligible to apply.</li>
+                <li>Candidates should be ready to work in Night Shifts and any of our manufacturing plant locations.
+                </li>
+            </ol>
+
+            <h6 class="red">MRF Screening Process</h6>
+            <ol>
+                <li>Technical Test (30 Qtns / 30 Min) Objective Type - Subject Related</li>
+                <li>IQ Test (30 Qtns / 40 Min)</li>
+                <li>Personality Test(44 Qtns / 10 Min)</li>
+                <li>Scheduling Test (7 Qtns /20 Min)</li>
+                <li>GD</li>
+            </ol>
+
+            <h6 class="red">Personal Interview</h6>
+            <ol>
+                <li>Preliminary(Tech & HR)</li>
+                <li>Final (Tech & HR)</li>
+            </ol>
+
+            <h6 class="red">Job Role / Designation : Key Responsibilities</h6>
+            <p class="font-weight-bold">A. Production / Supervisor(BSc – Specified Streams </p>
+            <ol>
+                <li>Planning materials for achieving the Daily production target.</li>
+                <li>Allocation of Roles & Responsibilities for the Employees & Junior staffs.</li>
+                <li>Supervising workers and ensuring that targets are met)</li>
+                <li>Ensure Full utilization of Man & Machine to achieve pre set production targets.</li>
+                <li>Completing and maintaining Production records as and when batches are over.</li>
+            </ol>
+
+            <p class="font-weight-bold">B. Quality Assurance / Supervisor(BSc [Chemistry, Physics, Maths, Statistics],
+                MSc [Statistics])</p>
+            <ol>
+                <li>Product audit, Process audit, dock audits</li>
+                <li>Customer Complaint Analysis and problem solving using 7 QC tools.</li>
+                <li>Line return analysis, Reducing the line return.</li>
+                <li>Maintaining records and quantifiers for ISO.</li>
+                <li>Maintaining quality records in SAP. </li>
+            </ol>
+
+            <p class="font-weight-bold">C. Plant or Corp Technical / Supervisor(BSc [Chemistry, Physics], MSc
+                [Chemistry])</p>
+            <ol>
+                <li>Testing of Raw Materials, Chemicals and products.</li>
+                <li>Handling of new products development on the shop floor.</li>
+                <li>Handling equipment’s like micro scope, image analyser, Rockwell, hardness tester.</li>
+                <li>Product Design, Design Intend, Component Design. </li>
+            </ol>
+
+            
+        </div> -->
+        <!-- <div class="mt-4 text-right">
+                <button type="button" class="btn btn-primary">Next <i class="las la-angle-right"></i></button>
+            </div> -->
+            <div class="inner-container" [innerHtml]=campusLinks[0].campusTemplate>
+                
+            </div>
+            <!-- {{campusLinks[0].campusTemplate}} -->
+            <div class="alert alert-warning">
+              </div>
+        <div class="inner-container">
+            <form name="saveForm" (ngSubmit)="onSubmit()" #f="ngForm" autocomplete="off">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p>(<span class="red">*</span> Mandatory Fields)</p>
+                    </div>
+                    <!-- <div><button type="button" class="btn btn-secondary ml-2" (click)="onclickback()"><i
+                                class="las la-angle-left"></i> Back to
+                            Description</button></div> -->
+                </div>
+                <div>
+                    <h6 class="text-uppercase">General Information</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name<span class="required">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="campusCandidate.FullName"
+                                    placeholder="Name as per aadhar card" name="FullName" #FullName="ngModel" required>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && FullName.invalid) || (FullName.touched && FullName.invalid)">
+                                    <span *ngIf="FullName.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Gender<span class="required">*</span></label>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input [(ngModel)]="campusCandidate.GenderId" #GenderId="ngModel" name="GenderId"
+                                        value="1" #radio1 id="radio1" type="radio"
+                                        [checked]="campusCandidate.GenderId==1?true:false">
+                                    <label for="radio1">Male</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input [(ngModel)]="campusCandidate.GenderId" #GenderId="ngModel" name="GenderId"
+                                        value="2" #radio2 id="radio2" type="radio"
+                                        [checked]="campusCandidate.GenderId==2?true:false">
+                                    <label for="radio2">Female</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input [(ngModel)]="campusCandidate.GenderId" #GenderId="ngModel" name="GenderId"
+                                        value="3" #radio3 id="radio3" type="radio"
+                                        [checked]="campusCandidate.GenderId==3?true:false">
+                                    <label for="radio3">Others</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker"
+                                        [(ngModel)]="campusCandidate.DOB" name="DOB" #DOB="ngModel"
+                                        placeholder="dd-mm-yyyy" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="text" disabled maxlength="2" class="form-control" id="txtAge"
+                                    [(ngModel)]="campusCandidate.Age" name="Age" #Age="ngModel">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email ID<span class="required">*</span></label>
+                                <input type="text" class="form-control" name="EmailId" #EmailId="ngModel"
+                                    [(ngModel)]="campusCandidate.EmailId" placeholder="Enter correct email. Eg:sample@gmail.com " (keypress)="email($event)" required />
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && EmailId.invalid) || (EmailId.touched && EmailId.invalid)">
+                                    <span *ngIf="EmailId.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Phone No.<span class="required">*</span></label>
+                                <input numbersOnly maxlength="10" type="text" class="form-control"
+                                    [(ngModel)]="campusCandidate.ContactNo" name="ContactNo" required
+                                    #ContactNo="ngModel" placeholder="e.g :9800123456" (keypress)="numberOnly($event)">
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && ContactNo.invalid) || (ContactNo.touched && ContactNo.invalid)">
+                                    <span *ngIf="ContactNo.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Aadhar No.<span class="required">*</span></label>
+                                <input type="text" numbersOnly class="form-control"
+                                    [(ngModel)]="campusCandidate.AadharNo" required #AadharNo="ngModel" name="AadharNo"
+                                    maxlength="12" placeholder="e.g :123412341234" (keypress)="numberOnly($event)">
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && AadharNo.invalid) || (AadharNo.touched && AadharNo.invalid)">
+                                    <span *ngIf="AadharNo.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Home Town<span class="required">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="campusCandidate.HomeTown"
+                                    placeholder="Home Town" name="HomeTown" #HomeTown="ngModel" required>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && HomeTown.invalid) || (HomeTown.touched && HomeTown.invalid)">
+                                    <span *ngIf="HomeTown.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Native State<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="true" [clearable]="false" name="NativeState" #NativeState="ngModel"
+                                    [(ngModel)]="campusCandidate.NativeState" required>
+                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                        {{rec.stateName}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && NativeState.invalid) || (NativeState.touched && NativeState.invalid)">
+                                    <span *ngIf="NativeState.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Present State<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="true" [clearable]="false" name="PresentState" #PresentState="ngModel"
+                                    [(ngModel)]="campusCandidate.PresentState" required>
+                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                        {{rec.stateName}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && PresentState.invalid) || (PresentState.touched && PresentState.invalid)">
+                                    <span *ngIf="PresentState.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Mother Tongue<span class="required">*</span></label>
+                                <div class="dropdown bootstrap-select form-control">
+                                    <ng-select bindLabel="languageName" [placeholder]="'Select'" [appendTo]="'body'"
+                                        [multiple]="false" [searchable]="true" [clearable]="false"
+                                        [(ngModel)]="campusCandidate.MotherTongueId" name="MotherTongueId"
+                                        #MotherTongueId="ngModel" required>
+                                        <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                                            {{rec.languageName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <p class="error-msg"
+                                        *ngIf="(f.submitted && MotherTongueId.invalid) || (MotherTongueId.touched && MotherTongueId.invalid)">
+                                        <span *ngIf="MotherTongueId.errors.required">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Languages able to speak<span class="required">*</span></label>
+                                <div class="dropdown bootstrap-select form-control">
+                                    <ng-select bindLabel="languageName" [placeholder]="'Select'" [appendTo]="'body'"
+                                        [multiple]="true" [searchable]="false" [clearable]="false"
+                                        #LanguageIds="ngModel" name="LanguageIds" required
+                                        [(ngModel)]="campusCandidate.LanguageIds" (change)="changeLanguageKnown()">
+                                        <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                                            {{rec.languageName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <p class="error-msg"
+                                        *ngIf="(f.submitted && LanguageIds.invalid) || (LanguageIds.touched && LanguageIds.invalid)">
+                                        <span *ngIf="LanguageIds.errors.required">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Height(CM)<span class="required">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="campusCandidate.Height" numbersOnly
+                                    placeholder="Height in CM" (keypress)="numberOnly($event)" #Height="ngModel" name="Height" required>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && Height.invalid) || (Height.touched && Height.invalid)">
+                                    <span *ngIf="Height.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Weight(KG)<span class="required">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="campusCandidate.Weight" numbersOnly
+                                    placeholder="Weight in KG"  (keypress)="numberOnly($event)" #Weight="ngModel" name="Weight" required>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && Weight.invalid) || (Weight.touched && Weight.invalid)">
+                                    <span *ngIf="Weight.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label>Eye Sight Corrected<span class="required">*</span></label>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                            [searchable]="false" [clearable]="false" (change)="onchangeeye($event)"
+                                            [(ngModel)]="campusCandidate.EyeSightCorrected" name="EyeSightCorrected"
+                                            #EyeSightCorrected="ngModel" required>
+                                            <ng-option [value]="1">Yes</ng-option>
+                                            <ng-option [value]="0">No</ng-option>
+                                        </ng-select>
+                                        <p class="error-msg"
+                                            *ngIf="(f.submitted && EyeSightCorrected.invalid) || (EyeSightCorrected.touched && EyeSightCorrected.invalid)">
+                                            <span *ngIf="EyeSightCorrected.errors.required">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group normal">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Right</div>
+                                        </div>
+                                        <input [(readOnly)]="readeye" type="text" class="form-control" id="" appTwoDigitDecimaNumber (keypress)="numberOnlyeye($event)"
+                                        placeholder="eye power(e.g : +3.5 -3.5)"  [(ngModel)]="campusCandidate.EyeSightRight" #EyeSightRight="ngModel"
+                                            name="EyeSightRight">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group normal">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Left</div>
+                                        </div>
+                                        <input [(readOnly)]="readeye" type="text" class="form-control" id="" appTwoDigitDecimaNumber (keypress)="numberOnlyeye($event)"
+                                        placeholder="eye power(e.g : +3.5 -3.5)" [(ngModel)]="campusCandidate.EyeSightLeft" name="EyeSightLeft"
+                                            #EyeSightLeft="ngModel">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Father’s Occupation<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.FatherOccupation" name="FatherOccupation"
+                                    #FatherOccupation="ngModel" required>
+                                    <ng-option [value]="rec.id" *ngFor="let rec of familyOccupations">
+                                        {{rec.name}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && FatherOccupation.invalid) || (FatherOccupation.touched && FatherOccupation.invalid)">
+                                    <span *ngIf="FatherOccupation.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Mother’s Occupation<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="MotherOccupation" #MotherOccupation="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.MotherOccupation" required>
+                                    <ng-option [value]="rec.id" *ngFor="let rec of motherOccupations">
+                                        {{rec.name}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && MotherOccupation.invalid) || (MotherOccupation.touched && MotherOccupation.invalid)">
+                                    <span *ngIf="MotherOccupation.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Disability<span class="required">*</span></label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="Disability" #Disability="ngModel" [searchable]="false" [clearable]="false" (change)="onchangedisab($event)"
+                                    [(ngModel)]="campusCandidate.Disability" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && Disability.invalid) || (Disability.touched && Disability.invalid)">
+                                    <span *ngIf="Disability.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Disability Details</label>
+                                <textarea [(readOnly)]="readdisability" class="form-control" placeholder="Enter details" name="DisabilityDetails"
+                                    #DisabilityDetails="ngModel"
+                                    [(ngModel)]="campusCandidate.DisabilityDetails"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Health Issues<span class="required">*</span></label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="HealthIssue" #HealthIssue="ngModel" [searchable]="false" [clearable]="false" (change)="onchangehealth($event)"
+                                    [(ngModel)]="campusCandidate.HealthIssue" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && HealthIssue.invalid) || (HealthIssue.touched && HealthIssue.invalid)">
+                                    <span *ngIf="HealthIssue.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Health Issue Details</label>
+                                <textarea [(readOnly)]="readhealth" class="form-control" placeholder="Enter details"
+                                    [(ngModel)]="campusCandidate.HealthIssueDetails" name="HealthIssueDetails"
+                                    #HealthIssueDetails="ngModel"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>How many siblings you have?<span class="required">*</span></label>
+                                <input type="text" class="form-control" placeholder="If NA type 0" (keypress)="numberOnly($event)"
+                                    [(ngModel)]="campusCandidate.NoofSiblings" name="NoofSiblings"
+                                    #NoofSiblings="ngModel" required>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && NoofSiblings.invalid) || (NoofSiblings.touched && NoofSiblings.invalid)">
+                                    <span *ngIf="NoofSiblings.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-uppercase">Academic Details</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Highest Qualification <span class="required">*</span>(Choose the relevant qualification, if you are currently pursuing final year *Under Graduation* we will consider your highest qualification as    *Under Graduation*)</label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="HighestQualification" #HighestQualification="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.HighestQualification" required
+                                    (ngModelChange)="changeQualification($event)">
+                                    <!-- <ng-option [value]="-1">10th Standard</ng-option>
+                                    <ng-option [value]="1">12th Standard</ng-option> -->
+                                    <ng-option [value]="5">Diploma</ng-option>
+                                    <ng-option [value]="2">Under Graduation</ng-option>
+                                    <!-- <ng-option [value]="4">Professional Degree</ng-option> -->
+                                    <ng-option [value]="3">Post Graduation</ng-option>
+                                    <ng-option [value]="6">Post Graduate Diploma</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && HighestQualification.invalid) || (HighestQualification.touched && HighestQualification.invalid)">
+                                    <span *ngIf="HighestQualification.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="accordion" class="myaccordion">
+                        <div class="card" *ngIf="showTen">
+                            <div class="card-header" id="headingOne">
+                                <h2>
+                                    <!-- // By Sayandeep on 05-08-2023 -->
+                                    <!-- <button
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                        10 STD / High School
+                                        <span>
+                                            <i class="fa fa-minus"></i>
+                                        </span>
+                                    </button> -->
+                                    <!-- // By Sayandeep on 05-08-2023 -->
+                                    <a href="javascript:void(0)"
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                        10 STD / High School
+                                        <span>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Course Status<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="TenCourseStatus" #TenCourseStatus="ngModel"
+                                                    [searchable]="false" [clearable]="false"
+                                                    [(ngModel)]="campusCandidate.TenCourseStatus">
+                                                    <ng-option [value]="1">Pursuing</ng-option>
+                                                    <ng-option [value]="2">Completed</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Course<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="TenCourses" #TenCourses="ngModel"
+                                                    [searchable]="false" [clearable]="false"
+                                                    [(ngModel)]="campusCandidate.TenCourses">
+                                                    <ng-option [value]="rec.courseId" *ngFor="let rec of tenCourseList">
+                                                        {{rec.courseName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Year of Passing<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="TenYearOfPassing"
+                                                    #TenYearOfPassing="ngModel" [searchable]="false" [clearable]="false"
+                                                    [(ngModel)]="campusCandidate.TenYearOfPassing">
+                                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                                        {{rec.yearsName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Mark (%)<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="CGPA to be conv %" name="TenMarks"
+                                                    #TenMarks="ngModel" [(ngModel)]="campusCandidate.TenMarks"
+                                                    appTwoDigitDecimaNumberLessThan100 (keypress)="numberOnlymarks($event)" (keyup)="chck()" required>
+                                                <p class="error-msg"
+                                                    *ngIf="(f.submitted && TenMarks.invalid) || (TenMarks.touched && TenMarks.invalid)">
+                                                    <span *ngIf="TenMarks.errors.required">Required</span>
+                                                    
+                                                </p>
+                                                <p class="error-msg" *ngIf="(TenMarks.touched && TenMarks.valid)">
+                                                    <span *ngIf="markten">Enter between 30% to 100%</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="showTwelve">
+                            <div class="card-header" id="headingTwo">
+                                <h2>
+                                    <a href="javascript:void(0)"
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">
+                                        12 STD(+2) / Higher Secondary
+                                        <span>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Course Status<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="TwelveCourseStatus"
+                                                    #TwelveCourseStatus="ngModel" [searchable]="false"
+                                                    [clearable]="false" (change)="onchangecourse($event)"
+                                                    [(ngModel)]="campusCandidate.TwelveCourseStatus">
+                                                    <ng-option [value]="1">Pursuing</ng-option>
+                                                    <ng-option [value]="2">Completed</ng-option>
+                                                    <ng-option [value]="3">NA</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Course<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="TwelveCourses" #TwelveCourses="ngModel"
+                                                    [searchable]="false" [clearable]="false" [disabled]="disablecourse"
+                                                    [(ngModel)]="campusCandidate.TwelveCourses">
+                                                    <ng-option [value]="rec.courseId"
+                                                        *ngFor="let rec of twelveCourseList">
+                                                        {{rec.courseName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Year of Passing<span class="required">*</span></label>
+                                                <ng-select class="" [disabled]="disableyear" [placeholder]="'Select'"
+                                                    [appendTo]="'body'" [multiple]="false" name="TwelveYearOfPassing"
+                                                    #TwelveYearOfPassing="ngModel" [searchable]="false"
+                                                    [clearable]="false"
+                                                    [(ngModel)]="campusCandidate.TwelveYearOfPassing">
+                                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                                        {{rec.yearsName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Mark (%)<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="CGPA to be conv %"
+                                                    name="TwelveMarks" #TwelveMarks="ngModel" [disabled]="disablemarks"
+                                                    [(ngModel)]="campusCandidate.TwelveMarks"
+                                                    appTwoDigitDecimaNumberLessThan100 (keypress)="numberOnlymarks($event)" (keyup)="chcktwelve()" required>
+                                                <p class="error-msg"
+                                                    *ngIf="(f.submitted && TwelveMarks.invalid) || (TwelveMarks.touched && TwelveMarks.invalid)">
+                                                    <span *ngIf="TwelveMarks.errors.required">Required</span>
+                                                    
+                                                </p>
+                                                <p class="error-msg" *ngIf="(TwelveMarks.touched && TwelveMarks.valid)">
+                                                    <span *ngIf="marktwelve">Enter between 30% to 100%</span>
+                                                </p>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="showDiploma">
+                            <div class="card-header" id="headingThree">
+                                <h2>
+                                    <a href="javascript:void(0)"
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        Diploma / Equivalent Diploma
+                                        <span>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course Status<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DiplomaCourseStatus"
+                                                    #DiplomaCourseStatus="ngModel" [searchable]="false"
+                                                    [clearable]="false" (change)="onchangediploma($event)"
+                                                    [(ngModel)]="campusCandidate.DiplomaCourseStatus">
+                                                    <ng-option [value]="1">Pursuing</ng-option>
+                                                    <ng-option [value]="2">Completed</ng-option>
+                                                    <ng-option [value]="3">NA</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DiplomaCourses" #DiplomaCourses="ngModel"
+                                                    [searchable]="false" [clearable]="false"
+                                                    [disabled]="disablediplomacourse"
+                                                    [(ngModel)]="campusCandidate.DiplomaCourses"
+                                                    (ngModelChange)="getAllDiplomaStream($event)">
+                                                    <ng-option [value]="rec.courseId"
+                                                        *ngFor="let rec of diplomaCourseList">
+                                                        {{rec.courseName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Specialization / Stream<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DiplomaStreams" #DiplomaStreams="ngModel"
+                                                    [searchable]="false" [clearable]="false"
+                                                    [disabled]="disablediplomaspecial"
+                                                    [(ngModel)]="campusCandidate.DiplomaStreams">
+                                                    <ng-option [value]="rec.streamId"
+                                                        *ngFor="let rec of diplomaStreamList">
+                                                        {{rec.streamName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Institution <span class="grey">(If name is not in the list then
+                                                        choose “Other” and write the correct name)</span><span
+                                                        class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DiplomaUniversity"
+                                                    #DiplomaUniversity="ngModel" [searchable]="true"
+                                                    [clearable]="false" (change)="onchangediplomainstitute($event)" [disabled]="disablediplomainstitute"
+                                                    [(ngModel)]="campusCandidate.DiplomaUniversity">
+                                                    <ng-option [value]="rec.qulificationUniversityBoardId"
+                                                        *ngFor="let rec of academicUniversity">
+                                                        {{rec.qulificationUniversityBoardName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" [hidden]="hidediplomainstitutename" >
+                                            <div class="form-group">
+                                                <label>Institute Name<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="Enter name"
+                                                    [disabled]="disablediplomainstitutename"
+                                                    [(ngModel)]="campusCandidate.DiplomaInstituteName"
+                                                    name="DiplomaInstituteName" #DiplomaInstituteName="ngModel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Institute Location<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                                    [disabled]="disablediplomainstitutelocation"
+                                                    name="DiplomaInstituteLocation" #DiplomaInstituteLocation="ngModel"
+                                                    [(ngModel)]="campusCandidate.DiplomaInstituteLocation">
+                                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                                        {{rec.stateName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Year of Passing<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DiplomaYearOfPassing"
+                                                    #DiplomaYearOfPassing="ngModel" [searchable]="false"
+                                                    [clearable]="false" [disabled]="disablediplomayear"
+                                                    [(ngModel)]="campusCandidate.DiplomaYearOfPassing">
+                                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                                        {{rec.yearsName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Mark (%)<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="CGPA to be conv %"
+                                                    name="DiplomaMarks" #DiplomaMarks="ngModel"
+                                                    [disabled]="disablediplomamarks"
+                                                    [(ngModel)]="campusCandidate.DiplomaMarks"
+                                                    appTwoDigitDecimaNumberLessThan100 (keypress)="numberOnlymarks($event)" (keyup)="chckdiploma()" required>
+                                                    <p class="error-msg"
+                                                        *ngIf="(f.submitted && DiplomaMarks.invalid) || (DiplomaMarks.touched && DiplomaMarks.invalid)">
+                                                        <span *ngIf="DiplomaMarks.errors.required">Required</span>
+                                                        
+                                                    </p>
+                                                    <p class="error-msg" *ngIf="(DiplomaMarks.touched && DiplomaMarks.valid)">
+                                                        <span *ngIf="markdiploma">Enter between 30% to 100%</span>
+                                                    </p>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="showDegree">
+                            <div class="card-header" id="headingFour">
+                                <h2>
+                                    <a href="javascript:void(0)"
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                                        aria-controls="collapseFour">
+                                        Under Graduation
+                                        <span>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course Status<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DegreeCourseStatus"
+                                                    #DegreeCourseStatus="ngModel" [searchable]="false"
+                                                    [clearable]="false" (change)="onchangegraduation($event)"
+                                                    [(ngModel)]="campusCandidate.DegreeCourseStatus">
+                                                    <ng-option [value]="1">Pursuing</ng-option>
+                                                    <ng-option [value]="2">Completed</ng-option>
+                                                    <ng-option [value]="3">NA</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DegreeCourses" #DegreeCourses="ngModel"
+                                                    [searchable]="false" [clearable]="false"
+                                                    [disabled]="disablegradcourse"
+                                                    [(ngModel)]="campusCandidate.DegreeCourses"
+                                                    (ngModelChange)="getAllDegreeStream($event)">
+                                                    <ng-option [value]="{ courseId: rec.courseId, qualificationId: rec.qualificationId }"
+                                                        *ngFor="let rec of degreeCourseList">
+                                                        {{rec.courseName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Specialization / Stream<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DegreeStreams" #DegreeStreams="ngModel"
+                                                    [searchable]="false" [clearable]="false"
+                                                    [disabled]="disablegradspecial"
+                                                    [(ngModel)]="campusCandidate.DegreeStreams">
+                                                    <ng-option [value]="rec.streamId"
+                                                        *ngFor="let rec of degreeStreamList">
+                                                        {{rec.streamName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Institution <span class="grey">(If name is not in the list then
+                                                        choose “Other” and write the correct name)</span><span
+                                                        class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DegreeUniversity"
+                                                    #DegreeUniversity="ngModel" [searchable]="true" [clearable]="false"
+                                                    (change)="onchangeunderinstitute($event)" [disabled]="disablegradinstitute"
+                                                    [(ngModel)]="campusCandidate.DegreeUniversity">
+                                                    <ng-option [value]="rec.qulificationUniversityBoardId"
+                                                        *ngFor="let rec of academicUniversity">
+                                                        {{rec.qulificationUniversityBoardName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" [hidden]="hideunderinstitute">
+                                            <div class="form-group">
+                                                <label>Institute Name<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="Enter name"
+                                                    [disabled]="disablegradinstitutename"
+                                                    [(ngModel)]="campusCandidate.DegreeInstituteName"
+                                                    name="DegreeInstituteName" #DegreeInstituteName="ngModel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Institute Location<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                                    [disabled]="disablegradinstitutelocation"
+                                                    name="DegreeInstituteLocation" #DegreeInstituteLocation="ngModel"
+                                                    [(ngModel)]="campusCandidate.DegreeInstituteLocation">
+                                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                                        {{rec.stateName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Year of Passing<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="DegreeYearOfPassing"
+                                                    #DegreeYearOfPassing="ngModel" [searchable]="false"
+                                                    [clearable]="false" [disabled]="disablegradyear"
+                                                    [(ngModel)]="campusCandidate.DegreeYearOfPassing">
+                                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                                        {{rec.yearsName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Mark (%)<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="CGPA to be conv %"
+                                                    name="DegreeMarks" #DegreeMarks="ngModel"
+                                                    [disabled]="disablegradmarks"
+                                                    [(ngModel)]="campusCandidate.DegreeMarks"
+                                                    appTwoDigitDecimaNumberLessThan100 (keypress)="numberOnlymarks($event)" (keyup)="chckundergrad()" required>
+                                                    <p class="error-msg"
+                                                        *ngIf="(f.submitted && DegreeMarks.invalid) || (DegreeMarks.touched && DegreeMarks.invalid)">
+                                                        <span *ngIf="DegreeMarks.errors.required">Required</span>
+                                                        
+                                                    </p>
+                                                    <p class="error-msg" *ngIf="(DegreeMarks.touched && DegreeMarks.valid)">
+                                                        <span *ngIf="markundergrad">Enter between 30% to 100%</span>
+                                                    </p>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="showPG">
+                            <div class="card-header" id="headingFive">
+                                <h2>
+                                    <a href="javascript:void(0)"
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
+                                        aria-controls="collapseFive">
+                                        Post Graduation / PG Diploma
+                                        <span>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course Status<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="PostDegreeCourseStatus"
+                                                    #PostDegreeCourseStatus="ngModel" [searchable]="false"
+                                                    [clearable]="false" (change)="onchangepg($event)"
+                                                    [(ngModel)]="campusCandidate.PostDegreeCourseStatus">
+                                                    <ng-option [value]="1">Pursuing</ng-option>
+                                                    <ng-option [value]="2">Completed</ng-option>
+                                                    <ng-option [value]="3">NA</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="PostDegreeCourses"
+                                                    #PostDegreeCourses="ngModel" [searchable]="false"
+                                                    [clearable]="false" [disabled]="disablepgcourse"
+                                                    [(ngModel)]="campusCandidate.PostDegreeCourses"
+                                                    (ngModelChange)="getAllPostDegreeStream($event)">
+                                                    <ng-option [value]="{ courseId: rec.courseId, qualificationId: rec.qualificationId }"
+                                                        *ngFor="let rec of postDegreeCourseList">
+                                                        {{rec.courseName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Specialization / Stream<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="PostDegreeStreams"
+                                                    #PostDegreeStreams="ngModel" [searchable]="false"
+                                                    [clearable]="false" [disabled]="disablepgspecial"
+                                                    [(ngModel)]="campusCandidate.PostDegreeStreams">
+                                                    <ng-option [value]="rec.streamId"
+                                                        *ngFor="let rec of postDegreeStreamList">
+                                                        {{rec.streamName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Institution <span class="grey">(If name is not in the list then
+                                                        choose “Other” and write the correct name)</span><span
+                                                        class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="PostDegreeUniversity"
+                                                    #PostDegreeUniversity="ngModel" [searchable]="true"
+                                                    [clearable]="false" (change)="onchangepginstitute($event)" [disabled]="disablepginstitute"
+                                                    [(ngModel)]="campusCandidate.PostDegreeUniversity">
+                                                    <ng-option [value]="rec.qulificationUniversityBoardId"
+                                                        *ngFor="let rec of academicUniversity">
+                                                        {{rec.qulificationUniversityBoardName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" [hidden]="hidepginstitute">
+                                            <div class="form-group">
+                                                <label>Institute Name<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="Enter name"
+                                                    [disabled]="disablepginstitutename"
+                                                    [(ngModel)]="campusCandidate.PostDegreeInstituteName"
+                                                    name="PostDegreeInstituteName" #PostDegreeInstituteName="ngModel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Institute Location<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                                    name="PostDegreeInstituteLocation"
+                                                    [disabled]="disablepginstitutelocation"
+                                                    #PostDegreeInstituteLocation="ngModel"
+                                                    [(ngModel)]="campusCandidate.PostDegreeInstituteLocation">
+                                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                                        {{rec.stateName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Year of Passing<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="PostDegreeYearOfPassing"
+                                                    #PostDegreeYearOfPassing="ngModel" [searchable]="false"
+                                                    [clearable]="false" [disabled]="disablepgyear"
+                                                    [(ngModel)]="campusCandidate.PostDegreeYearOfPassing">
+                                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                                        {{rec.yearsName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Mark (%)<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="CGPA to be conv %"
+                                                    name="PostDegreeMarks" #PostDegreeMarks="ngModel"
+                                                    [(ngModel)]="campusCandidate.PostDegreeMarks"
+                                                    [disabled]="disablepgmarks" appTwoDigitDecimaNumberLessThan100 (keypress)="numberOnlymarks($event)" (keyup)="chckpostgrad()" required>
+                                                    <p class="error-msg"
+                                                        *ngIf="(f.submitted && PostDegreeMarks.invalid) || (PostDegreeMarks.touched && PostDegreeMarks.invalid)">
+                                                        <span *ngIf="PostDegreeMarks.errors.required">Required</span>
+                                                        
+                                                    </p>
+                                                    <p class="error-msg" *ngIf="(PostDegreeMarks.touched && PostDegreeMarks.valid)">
+                                                        <span *ngIf="markpostgrad">Enter between 30% to 100%</span>
+                                                    </p>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="showAnyOther">
+                            <div class="card-header" id="headingSix">
+                                <h2>
+                                    <a href="javascript:void(0)"
+                                        class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseSix" aria-expanded="false"
+                                        aria-controls="collapseSix">
+                                        Any Other Qualification (optional)
+                                        <span>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="collapseSix" class="collapse" aria-labelledby="headingSix"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Qualification<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder=""
+                                                    name="AnyOtherQualification" #AnyOtherQualification="ngModel"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualification">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder=""
+                                                    name="AnyOtherQualificationCourse"
+                                                    #AnyOtherQualificationCourse="ngModel"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationCourse">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Course Status<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="AnyOtherQualificationCourseStatus"
+                                                    #AnyOtherQualificationCourseStatus="ngModel" [searchable]="false"
+                                                    [clearable]="false"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationCourseStatus">
+                                                    <ng-option [value]="1">Pursuing</ng-option>
+                                                    <ng-option [value]="2">Completed</ng-option>
+                                                    <!-- <ng-option [value]="3">NA</ng-option> -->
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Specialization / Stream<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder=""
+                                                    name="AnyOtherQualificationStream"
+                                                    #AnyOtherQualificationStream="ngModel"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationStream">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Institution <span class="grey">(If name is not in the list then
+                                                        choose “Other” and write the correct name)</span><span
+                                                        class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="AnyOtherQualificationInstitite"
+                                                    #AnyOtherQualificationInstitite="ngModel" [searchable]="true"
+                                                    [clearable]="false" (change)="onchangeanyotherinstituteinstitute($event)"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationInstitite">
+                                                    <ng-option [value]="rec.qulificationUniversityBoardId"
+                                                        *ngFor="let rec of academicUniversity">
+                                                        {{rec.qulificationUniversityBoardName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" [hidden]="hideanyotherinstitute">
+                                            <div class="form-group">
+                                                <label>Institute Name<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="Enter name"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationInstititeName"
+                                                    name="AnyOtherQualificationInstititeName"
+                                                    #AnyOtherQualificationInstititeName="ngModel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Institute Location<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                                    name="AnyOtherQualificationInstititeLocation"
+                                                    #AnyOtherQualificationInstititeLocation="ngModel"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationInstititeLocation">
+                                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                                        {{rec.stateName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Year of Passing<span class="required">*</span></label>
+                                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'"
+                                                    [multiple]="false" name="AnyOtherQualificationYearOfPassing"
+                                                    #AnyOtherQualificationYearOfPassing="ngModel" [searchable]="false"
+                                                    [clearable]="false"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationYearOfPassing">
+                                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                                        {{rec.yearsName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Mark (%)<span class="required">*</span></label>
+                                                <input type="text" class="form-control" placeholder="CGPA to be conv %"
+                                                    name="AnyOtherQualificationMarks"
+                                                    #AnyOtherQualificationMarks="ngModel"
+                                                    [(ngModel)]="campusCandidate.AnyOtherQualificationMarks"
+                                                    appTwoDigitDecimaNumberLessThan100 (keypress)="numberOnlymarks($event)" (keyup)="chckanyothr()" required>
+                                                    <p class="error-msg"
+                                                        *ngIf="(f.submitted && AnyOtherQualificationMarks.invalid) || (AnyOtherQualificationMarks.touched && AnyOtherQualificationMarks.invalid)">
+                                                        <span *ngIf="AnyOtherQualificationMarks.errors.required">Required</span>
+                                                        
+                                                    </p>
+                                                    <p class="error-msg" *ngIf="(AnyOtherQualificationMarks.touched && AnyOtherQualificationMarks.valid)">
+                                                        <span *ngIf="markanyothr">Enter between 30% to 100%</span>
+                                                    </p>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-uppercase">Other Details</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Willing for 3 year commitment<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="YearsCommitments" #YearsCommitments="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.YearsCommitments" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && YearsCommitments.invalid) || (YearsCommitments.touched && YearsCommitments.invalid)">
+                                    <span *ngIf="YearsCommitments.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Willing to work anywhere in India<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="AnyWhereinIndia" #AnyWhereinIndia="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.AnyWhereinIndia" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && AnyWhereinIndia.invalid) || (AnyWhereinIndia.touched && AnyWhereinIndia.invalid)">
+                                    <span *ngIf="AnyWhereinIndia.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Do you have any Active Arrears/Backlogs (Highest Qualification)?<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="ActiveArrears" #ActiveArrears="ngModel"
+                                    [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.ActiveArrears" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && ActiveArrears.invalid) || (ActiveArrears.touched && ActiveArrears.invalid)">
+                                    <span *ngIf="ActiveArrears.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Most Preferred Benefit<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="MostPreferdBenifit" #MostPreferdBenifit="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.MostPreferdBenifit" required>
+                                    <ng-option [value]="1">Subsidized Canteen</ng-option>
+                                    <ng-option [value]="2">Travelling Facility</ng-option>
+                                    <ng-option [value]="3">Accommodation Facility</ng-option>
+                                    <ng-option [value]="4">Regulated Working Hours & 5 Day Week</ng-option>
+                                    <ng-option [value]="5">Work From Home Facility</ng-option>
+                                    <ng-option [value]="6">Others</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && MostPreferdBenifit.invalid) || (MostPreferdBenifit.touched && MostPreferdBenifit.invalid)">
+                                    <span *ngIf="MostPreferdBenifit.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Extra Curricular Activities<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true"
+                                    name="ExtraCurricularActivities" #ExtraCurricularActivities="ngModel"
+                                    [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.ExtraCurricularActivities" required>
+                                    <ng-option [value]="rec.id" *ngFor="let rec of extracuricullar">
+                                        {{rec.name}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && ExtraCurricularActivities.invalid) || (ExtraCurricularActivities.touched && ExtraCurricularActivities.invalid)">
+                                    <span *ngIf="ExtraCurricularActivities.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Job Type Priority<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="JobTypePriority" #JobTypePriority="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.JobTypePriority" required>
+                                    <ng-option [value]="1">Core Manufacturing</ng-option>
+                                    <ng-option [value]="2">IT Job</ng-option>
+                                    <ng-option [value]="3">Other</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && JobTypePriority.invalid) || (JobTypePriority.touched && JobTypePriority.invalid)">
+                                    <span *ngIf="JobTypePriority.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Critical factor which influence Job decision<span
+                                        class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="CriticalFactor" #CriticalFactor="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.CriticalFactor" required>
+                                    <ng-option [value]="1">Job Profile </ng-option>
+                                    <ng-option [value]="2">Job Security </ng-option>
+                                    <ng-option [value]="3">Career Growth </ng-option>
+                                    <ng-option [value]="4">Learning Opportunities </ng-option>
+                                    <ng-option [value]="5">Salary & Other benifits </ng-option>
+                                    <ng-option [value]="6">Other </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && CriticalFactor.invalid) || (CriticalFactor.touched && CriticalFactor.invalid)">
+                                    <span *ngIf="CriticalFactor.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Willing to work in rotational shift including Night Shift (only plants) &
+                                    stretched
+                                    working hours<span class="required">*</span></label>
+                                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="WorkinginShift" #WorkinginShift="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.WorkinginShift" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && WorkinginShift.invalid) || (WorkinginShift.touched && WorkinginShift.invalid)">
+                                    <span *ngIf="WorkinginShift.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Upload Resume (Max size 500KB) <span class="required">*</span></label>
+                            <div class="custom-file">
+                                <!-- <input type="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile"></label> -->
+                                <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                                    (change)="onFileChange($event.target.files)">
+                                <label class="custom-file-label" for="customFile" #candidateResumeImport>Choose
+                                    file</label>
+                                <p class="error-msg msgfile" style="display: none;">
+                                    <span>Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-10">
+                          <div class="form-group">
+                            <label>
+                              <input type="checkbox" (change)="checkValue($event)" />&nbsp;&nbsp;
+                              I have read and understood the Job Profiles and other Eligibility Criteria
+                              with respect to the MRF Campus Selection Process. I hereby declare that
+                              the particulars, including my personal identity details as given in this
+                              registration form, are true and with my sole consent. I know that any false
+                              information contained in this registration form shall automatically rescind
+                              the contract of employment if selected or discontinued during the course of
+                              your selection.
+                            </label>
+                          </div>
+                        </div>
+                      </div>                      
+                    
+                </div>
+               
+                <div class="mt-4 clearfix">
+                    <!-- <button type="submit" class="btn btn-secondary"><i class="las la-angle-left"></i> Back</button> -->
+                    <button type="submit" class="btn btn-primary ml-1">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

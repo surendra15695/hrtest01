@@ -1,0 +1,305 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Share Off Campus</h1>
+            </div>
+            <div>
+                <a href="javascript:void(0)" (click)="openLinkPopup()" class="btn btn-primary btn-sm"
+                    data-toggle="modal" data-target="#myModal1"><i class="las la-plus"></i> Generate Link</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-auto">
+            <label class="d-inline-block">Off Campus Recruitment: </label>
+            <ng-select bindLabel="campusYearName" [(ngModel)]="selectedCampusYear" (change)="changeCampusYear($event)"
+                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false"
+                class="w-auto">
+                <ng-option [value]="rec.campusYearId" *ngFor="let rec of campusYears">
+                    {{rec.campusYearName}}
+                </ng-option>
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Screening Link</th>
+                    <th>Type</th>
+                    <th>Created on</th>
+                    <th style="text-align: center;">No. of Profiles</th>
+                    <th style="text-align: center;">Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of campusLinks">
+                    <td>{{data.courseName}}</td>
+                    <td class="red"> <a  href="{{data.campusLink}}" target="_blank"
+                        title="Download">{{data.campusLink}}</a>
+                    <td *ngIf="data.campusForId==1">Corporate & Manufacture</td>
+                    <td *ngIf="data.campusForId==2">Sales & Marketing</td>
+                    <td>{{data.createdOn}}</td>
+                    <td class="text-center">{{data.candidateCount}}</td>
+                    <td class="text-center" *ngIf="data.disableStatus==0">Enabled</td>
+                    <td class="text-center" *ngIf="data.disableStatus==1">Disabled</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <!-- <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#myModal" (click)="openShareLink(data.campusLinkId)"><i class="las la-share"></i> Send to Colleges</a> -->
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="gotoCandidateList(data.campusLinkId,data)"><i class="las la-users"></i> Talent
+                                    Pool</a>
+                                    <a class="dropdown-item" href="javascript:void(0)"
+                                    data-toggle="modal" (click)="openModifyTemplate(data)"
+                                    data-target="#modifytemplate"><i class="las la-pen"></i>Modify Template</a>
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="gotoSubmitTestResult(data.campusLinkId)"><i class="fa fa-check-square"></i> Submit Test Result</a>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    (click)="openEnableDisableModal(data,2)" data-toggle="modal" *ngIf="data.disableStatus==1"
+                                    data-target="#confirmPopup"><i class="las la-pen"></i> Enable</a>
+                                <a class="dropdown-item" href="javascript:void(0)"  *ngIf="data.disableStatus==0"
+                                (click)="openEnableDisableModal(data,1)" data-toggle="modal"
+                                data-target="#confirmPopup"><i class="fa fa-ban"></i> Disable</a>
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#confirmPopup" (click)="openEnableDisableModal(data,3)"><i class="las la-trash-alt"></i>
+                                    Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Generate Link Modal -->
+<div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Generate Link</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Recruitment Year <span class="required">*</span></label>
+                            <ng-select bindLabel="campusYearName" [(ngModel)]="selectedLinkCampusYear"
+                                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                [clearable]="false" class="w-auto"  (change)="getRequisitionTitle()">
+                                <ng-option [value]="rec.campusYearId" *ngFor="let rec of campusYears">
+                                    {{rec.campusYearName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Course <span class="required">*</span></label>
+                            <ng-select bindLabel="courseName" [(ngModel)]="selectedLinkCampusCourseId"
+                                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                [clearable]="false" (change)="getRequisitionTitle()">
+                                <ng-option [value]="rec.campusCourseId" *ngFor="let rec of courses">
+                                    {{rec.courseName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Type <span class="required">*</span></label>
+                            <ng-select [(ngModel)]="selectedLinkCampusForId" [placeholder]="'Select'"  (change)="getRequisitionTitle()"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false" (change)="changeVerticalTemplate()">
+                                
+                                <ng-option [value]="rec.campusForId" *ngFor="let rec of campusFor">
+                                    {{rec.campusForName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Title <span class="required">*</span></label>
+                            <ng-select bindLabel="requisitionTitle" [(ngModel)]="selectedLinkCampusRequisitionDetailId"
+                                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                [clearable]="false">
+                                <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of requisitionTitle">
+                                    {{rec.requisitionTitle}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Choose Template<span class="required">*</span></label>
+                            <ng-select bindLabel="templateEmailName" class="emailtemplate"
+                                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                [clearable]="false" [(ngModel)]="selectedEmailTemplateId"
+                                (change)="changeEmailTemplate()">
+                                <ng-option [value]="rec.templateId" *ngFor="let rec of emailTemplates">
+                                    {{rec.templateEmailName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Eligibility Criteria <span class="required">*</span></label>
+                            <ckeditor [(ngModel)]="campusLinkTemplate" [config]="ckeConfig" debounce="500"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-1" (click)="generateCampusLink()">Generate</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- Share with Colleges Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" #closeCollegeModal data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Share with Institutes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="filter-sec mb-3 pb-0">
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <ng-select bindLabel="collegeCategoryName" [(ngModel)]="selectedCollegeCategoryId"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                    [clearable]="false">
+                                    <ng-option [value]="rec.collegeCategoryId" *ngFor="let rec of collegeCategories">
+                                        {{rec.collegeCategoryName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>State</label>
+                                <ng-select bindLabel="stateName" [(ngModel)]="selectedStateId" [placeholder]="'Select'"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                    {{rec.stateName}}
+                                </ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mt-md-4 text-right">
+                            <button type="button" class="btn btn-black btn-sm" (click)="searchColleges()"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-2" (click)="resetCollege()"><i
+                                    class="las la-sync-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>University/College</th>
+                                <th>State</th>
+                                <th>Placement Coordinator</th>
+                                <th>Email ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of campusColleges; let i = index;">
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="chkm{{item.campusCollegeId}}"
+                                        (click)="select($event,item.campusCollegeId)" [checked]="item.campusLinkStatus==1?true:false">
+                                        <label class="chk" for="chkm{{item.campusCollegeId}}"></label>
+                                    </div>
+                                </td>
+                                <td>{{item.collegeName}}</td>
+                                <td>{{item.stateName}}</td>
+                                <td>{{item.contactName}}</td>
+                                <td>{{item.contactEmailId}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-1" (click)="shareLink()">Share</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to continue.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2"  (click)="onDeleteSubmit()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modifytemplate" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Modify Template</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Template<span class="required">*</span></label>
+                            <ckeditor [(ngModel)]="modifiedtemplate" [config]="ckeConfig" debounce="500"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-1" (click)="updatetemplate()">Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>

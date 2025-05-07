@@ -1,0 +1,56 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" (click)="onClickBack()"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Feedback Status</h1>
+            </div>
+        </div>
+    </div>
+    <div class="mb-4">
+        <div class="form-row">
+            <div class="col-md-2">
+                <p class="d-inline-block grey">Batch ID:</p>
+                <p class="d-inline-block">{{evaluateFeedbackListBatch?.batchNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Date of Joining:</p>
+                <p class="d-inline-block">{{evaluateFeedbackListBatch?.dateofJoining}}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="d-inline-block grey">Total Feedback:</p>
+                <p class="d-inline-block">{{evaluateFeedbackListBatch?.totalAssignment}}</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h6 class="red">Feedback List</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Training Title</th>
+                        <!--<th>Training Type</th>-->
+                        <th>Feedback Name</th>
+                        <th class="text-center">Total Candidates</th>
+                        <th class="text-center">Feedback Given</th>
+                        <th>Feedback Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of evaluateFeedbackDetails">
+                        <td>{{data.traingTitle}}</td>
+                        <!--<td>{{data.assessmentTypeName}}</td>-->
+                        <td>{{data.assessmentName}}</td>
+                        <td class="text-center">{{data.candidate}}</td>
+                        <td class="text-center">{{data.feedbackDone}}</td>
+                        <td *ngIf="data.feedbackDone == '0'">Feedback Pending</td>
+                        <td *ngIf="data.feedbackDone != '0' && data.candidate != data.feedbackDone">Feedback Partially Given</td>
+                        <td *ngIf="data.candidate == data.feedbackDone">Feedback Given</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

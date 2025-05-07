@@ -1,0 +1,1635 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Verify Document</h1>
+        <div style="float: right;">
+            <button type="button" class="btn btn-primary btn-sm" (click)="onclickDownloadAll()">Download All</button>
+        </div>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                        aria-controls="collapseOne">
+                        Candidate Details
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body" *ngFor="let data of candidates">
+                    <div class="candidate-info-header mb-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="col">
+                                <h6 class="red d-inline-block mt-1">{{data.prefixName}} {{data.fullName}}
+                                    ({{data.candidateNo}})</h6>
+                                <span> {{data.emailId}}</span>
+                            </div>
+                            <div class="col" *ngIf="data.hiringStatusId!=1">
+                                <span
+                                    [class]="data.hiringStatusId!=4?'badge badge-pill badge-success':'badge badge-pill badge-danger'">{{data.hiringStatusName}}</span>
+                            </div>
+                        </div>
+                        <div class="pb-1">
+                            <span class="mr-3"><i class="las la-mobile"></i> {{data.contactNo}}</span><span><i
+                                    [class]="data.genderName=='Male'?'las la-male':'las la-female'"></i>
+                                {{data.genderName}}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Age :</p>
+                            <p class="d-inline-block">{{data.age}}Yrs</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Aadhar No. :</p>
+                            <p class="d-inline-block">{{data.aadharNo}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Mother Tongue :</p>
+                            <p class="d-inline-block">{{data.motherTongueName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Languages Known :</p>
+                            <p class="d-inline-block">{{data.languageNames}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Highest Qualification :</p>
+                            <p class="d-inline-block">{{data.qualificationName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Course :</p>
+                            <p class="d-inline-block">{{data.courseName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Stream :</p>
+                            <p class="d-inline-block">{{data.streamName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Percentage :</p>
+                            <p class="d-inline-block">{{data.marksPercentage}}%</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Year of Completion :</p>
+                            <p class="d-inline-block">{{data.completionYear}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Qualification Type :</p>
+                            <p class="d-inline-block">{{data.qualificationTypeName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Total Experience :</p>
+                            <p class="d-inline-block">{{data.experienceYear}}years {{data.experienceMonth}} months</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current CTC :</p>
+                            <p class="d-inline-block">{{data.currentCTC}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current Employer :</p>
+                            <p class="d-inline-block">{{data.currentEmployer}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Designation :</p>
+                            <p class="d-inline-block">{{data.currentDesignation}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Domain :</p>
+                            <p class="d-inline-block">{{data.domainName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Sub-Domain :</p>
+                            <p class="d-inline-block">{{data.subDomainName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current Location :</p>
+                            <p class="d-inline-block">{{data.stateName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Any Previous Application History in MRF :</p>
+                            <p class="d-inline-block">{{data.previousAppliedName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Any relative Working on MRF :</p>
+                            <p class="d-inline-block">{{data.relativeStatusName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+                            <p class="d-inline-block grey">Relative Name :</p>
+                            <p class="d-inline-block">{{data.relativeName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+                            <p class="d-inline-block grey">Relative Contact No :</p>
+                            <p class="d-inline-block">{{data.relativeContactNo}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="data.parentRelationshipId!=0">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Referee's Relation /Familarity :</p>
+                            <p class="d-inline-block">{{data.parentRelationshipName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.childRelationshipId!=0">
+                            <p class="d-inline-block grey">Relation Details :</p>
+                            <p class="d-inline-block">{{data.childRelationshipName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="data.relationshipNotes!=''">
+                        <div class="col-md-12">
+                            <p class="d-inline-block grey">Relationship/Familarity Details :</p>
+                            <p class="d-inline-block">{{data.relationshipNotes}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row" *ngIf="data.cmdApprovalRequired!=0">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Cmd Approval Required :</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalRequired==0">No</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalRequired==1">Yes</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.cmdApprovalRequired==1">
+                            <p class="d-inline-block grey">Cmd Approval Status :</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalStatus==0">No</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalStatus==1">Yes</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.cmdApprovalNo!=''">
+                            <p class="d-inline-block grey">Cmd Approval No :</p>
+                            <p class="d-inline-block">{{data.cmdApprovalNo}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-md-6" *ngIf="data.cmdApprovalNo!=''">
+                            <p>CMD Approval Documnet :</p>
+                            <div class="attach-file">
+                                <a (click)="openFile(data.cmdApprovalDocument)" style="cursor: pointer;" title="Download"><i
+                                        class="las color-black la-paperclip"></i>CMD Approval doc </a>
+                                <a (click)="openFile(data.cmdApprovalDocument)" style="cursor: pointer;" target=_blank><i
+                                        class="las la-download red"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Resume :</p>
+                            <div class="attach-file">
+                                <a (click)="openFile(data.resume)" style="cursor: pointer;" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Resume doc </a>
+                                <a (click)="openFile(data.resume)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="testScoreVisible">
+                        <hr>
+                        <h6 class="red">Test Score</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Test Completion Date</th>
+                                        <th class="text-center">Score Obtained</th>
+                                        <th class="text-center">Aptitude</th>
+                                        <th class="text-center">Reading/Planning Excercise</th>
+                                        <th class="text-center">Written Excercise/Emotional Maturity</th>
+                                        <th class="text-center">Technical</th>
+                                        <th>Test Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of testResults">
+                                        <td>{{data.testCompletionDate}}</td>
+                                        <td class="text-center">{{data.scoreObtained}}</td>
+                                        <td class="text-center">{{data.apptitude}}</td>
+                                        <td class="text-center">{{data.readingExercise}}</td>
+                                        <td class="text-center">{{data.writtenExercise}}</td>
+                                        <td class="text-center">{{data.technical}}</td>
+                                        <td>{{data.testResult}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree">
+                        Documents
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="border-box mb-2 mt-2 p-3" *ngFor="let data of submittedDocumentArrayList">
+                        <h6 class="mt-0">{{data.doumentTypName}}</h6>
+                        <div class="uploadDocList" *ngFor="let rec of data.documents">
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <label class="grey">{{rec.doumentName}}</label>
+                                    <div class="attach-file" *ngIf="rec.isUploaded">
+                                        <a *ngIf="rec.documentPath!=''" (click)="openFile(rec.documentPath)" style="cursor: pointer;"
+                                            title="Download"><i class="las color-black la-paperclip"></i>Document</a>
+                                        <a *ngIf="rec.documentPath==''" href="javascript:void(0)"
+                                            (click)="downLoadPDF(rec.doumentNameId)" title="Download"><i
+                                                class="las color-black la-paperclip"></i>Document</a>
+                                        <a *ngIf="rec.documentPath!=''" (click)="openFile(rec.documentPath)" style="cursor: pointer;"><i
+                                                class="las la-download red"></i></a>
+                                        <a *ngIf="rec.documentPath==''" href="javascript:void(0)"
+                                            (click)="downLoadPDF(rec.doumentNameId)"><i
+                                                class="las la-download red"></i></a>
+                                    </div>
+                                    <div class="attach-file" *ngIf="!rec.isUploaded">
+                                        <a href="javascript:void(0)" title="Download"><i
+                                                class="las color-black la-paperclip"></i>NA</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="grey">Document Verification</label>
+                                    <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                        [disabled]="isVisible==true?false:true" [searchable]="false" [clearable]="false"
+                                        [(ngModel)]="rec.approvalStatus" (change)="onClickDocVerification()">
+                                        <!-- [disabled]="rec.disabledField" -->
+                                        <ng-option [value]="6">NA</ng-option> <!-- Added By Anif on 07-12-2022 -->
+                                        <ng-option [value]="1">Pending</ng-option>
+                                        <ng-option [value]="3">Verified</ng-option>
+                                        <!-- <ng-option [value]="2">Need Clarification</ng-option> -->
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="grey">Remarks</label>
+                                    <p><input type="text" class="form-control" placeholder=""
+                                            [disabled]="isVisible==true?false:true" [(ngModel)]="rec.approvalRemarks">
+                                    </p>
+                                    <!-- [disabled]="rec.disabledField" -->
+                                </div>
+                                <!--histroy button-->
+                                <div class="col-md-1"
+                                    *ngIf=" (rec.doumentNameId!=21 && rec.doumentNameId!=22 && rec.doumentNameId!=23 && rec.doumentNameId!=24 && rec.doumentNameId!=17 && rec.doumentNameId!=26 && rec.doumentNameId!=39)">
+                                    <label class="grey"></label>
+                                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                        data-target="#myModal2" (click)="omclickHistroyDoc(rec)"><i
+                                            style="margin-top: 16px;" class="las la-times-circle"></i></a>
+
+                                </div>
+                                <div class="col-md-1"
+                                    *ngIf="(rec.doumentNameId==21 || rec.doumentNameId==22 || rec.doumentNameId==17 || rec.doumentNameId==23 ||rec.doumentNameId==24) && rec.isUploaded">
+                                    <label class="grey"></label>
+                                    <a class="dropdown-item" href="javascript:void(0)"
+                                        (click)="onClickViewUpdateDetails(rec)"><i style="margin-top: 16px;"
+                                            class="las la-times-circle"></i></a>
+
+                                </div>
+                                <!--edit button-->
+                                <div class="col-md-1"
+                                    *ngIf=" (rec.doumentNameId!=21 && rec.doumentNameId!=22 && rec.doumentNameId!=23 && rec.doumentNameId!=17 && rec.doumentNameId!=24 && rec.doumentNameId!=26 && rec.doumentNameId!=39)">
+                                    <label class="grey"></label>
+                                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                        data-target="#myModal" (click)="omclickEditDoc(rec)"><i
+                                            style="margin-top: 16px;" class="las la-pen"></i></a>
+                                    <!-- [disabled]="rec.disabledField" -->
+                                </div>
+                                <div class="col-md-1"
+                                    *ngIf="(rec.doumentNameId==21 || rec.doumentNameId==22 || rec.doumentNameId==17 || rec.doumentNameId==24 || rec.doumentNameId==23) && rec.isUploaded ">
+                                    <label class="grey"></label>
+                                    <a class="dropdown-item" href="javascript:void(0)"
+                                        (click)="omclickEditJoiningDoc(rec)" title="Edit"><i style="margin-top: 16px;"
+                                            class="las la-pen"></i></a>
+                                    <!-- [disabled]="rec.disabledField" -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="red" *ngIf="isVisible">Additional Documents:</h6>
+                    <div class="row" *ngIf="isVisible">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Any Additional Document Required?</label>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input name="radio" value="1" id="radio1" (click)="changeAdditionDocument('1')"
+                                        type="radio">
+                                    <label for="radio1">Yes</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input name="radio" value="2" id="radio2" type="radio"
+                                        (click)="changeAdditionDocument('2')">
+                                    <label for="radio2">No</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block" style="visibility: hidden;">
+                                    <input name="radio" value="3" class="radio3" id="radio3" type="radio"
+                                        (click)="changeAdditionDocument('3')">
+                                    <label for="radio2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive" *ngIf="additionalAttachment.length>0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Document Type</th>
+                                    <th>Document Particular</th>
+                                    <th>Document Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of additionalAttachment">
+                                    <td>{{data.doumentTypName}}</td>
+                                    <td>{{data.doumentParticularName}}</td>
+                                    <td>{{data.doumentName}}</td>
+                                    <td class="text-center"><a href="javascript:void(0)"
+                                            (click)="removeAdditionalAttachment(data.offerDocumentCollectionDocumentId)"
+                                            class="row-btn"><i class="las la-trash-alt"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" *ngIf="isAdditionalDocumentReq">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Document Type</label>
+                                <ng-select bindLabel="attachmentDocumentTypeName" class="documentType"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="selectedDocumentType"
+                                    (change)="changeDocumentType($event)">
+                                    <ng-option [value]="rec.attachmentDocumentTypeId" *ngFor="let rec of documentTypes">
+                                        {{rec.attachmentDocumentTypeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Document Particular</label>
+                                <ng-select class="" bindLabel="attachmentDocumentParticularName"
+                                    class="documentParticular" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="selectedDocumentParticular"
+                                    (change)="changeDocumentParticular($event)">
+                                    <ng-option [value]="rec.attachmentDocumentParticularId"
+                                        *ngFor="let rec of documentParticularList">
+                                        {{rec.attachmentDocumentParticularName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Document Name</label>
+                                <ng-select class="" bindLabel="attachmentDocumentName" class="documentName"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="selectedDocumentName">
+                                    <ng-option [value]="rec.attachmentDocumentNameId"
+                                        *ngFor="let rec of documentNameList">
+                                        {{rec.attachmentDocumentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 text-right" *ngIf="isAdditionalDocumentReq">
+                        <button type="button" class="btn btn-sm btn-black ml-1" (click)="addAdditionalAttachment()"><i
+                                class="las la-plus"></i> Add
+                            More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isVisible">
+        <h6 class="red">Take Action:</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Proceed for joining?</label>
+                    <div>
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="4" id="radio4" type="radio"
+                                (click)="onClickProcedForJoining('1')">
+                            <label for="radio4">Yes</label>
+                        </div>
+
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="5" id="radio5" type="radio"
+                                (click)="onClickProcedForJoining('2')">
+                            <label for="radio5">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-t-4">
+        <h6 class="red">Additional Remarks:</h6>
+        <div *ngFor="let data of submittedAdditionalRemarksDetails">
+            <div class="media mb-3" *ngIf="data.reamrks!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body" >
+                    <h6 class="mt-0">{{data.createdByName}} <span></span></h6>
+                    {{data.reamrks}}
+                </div>
+            </div>
+            <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{documentData?.candidateFullName}} <span></span></h6>
+                    {{data.reamrksReply}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="isVisible">
+            <label for="">Remarks</label>
+            <textarea id="" class="form-control" [(ngModel)]="additionalRemarks"></textarea>
+        </div>
+    </div>
+
+    <!-- <div class="m-t-4" *ngIf="isVisible"> removed by Sayandeep
+        <label>Enable Modification<span class="required">*</span></label>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="switch"><input type="checkbox" [ngModel]="enableModify"
+                            (ngModelChange)="enableModify = $event">
+                        <div class="slider round">
+                            <span class="on">Yes</span><span class="off">No</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div> ---------------------Jagadish told to remove this enable modification for Htlogin-->
+    <div class="mt-4 text-right" *ngIf="isVisible">
+        <button type="button " class="btn btn-black" data-toggle="modal" data-target="#confirmPopup">Submit</button>
+        <button type="button" (click)="onReset()" class="btn btn-primary ml-1">Cancel</button>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                    correctly.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="submitData()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="printFamilyDetailsDiv" style="display: none;">
+    <app-pdffamilydetailsform [familyDetailsRecord]="familyDetailsData"></app-pdffamilydetailsform>
+</div>
+
+<div id="printJoiningReport" style="display: none;">
+    <app-pdfjoiningreportform [inductionRecord]="joiningReportData"></app-pdfjoiningreportform>
+</div>
+<div id="printAccidentInsurancePolicy" style="display: none;">
+    <app-pdfpersonalaccidentinsuranceform [accidentInsurancePolicyRecord]="accidentInsurancePolicyData">
+    </app-pdfpersonalaccidentinsuranceform>
+</div>
+<div id="printSEBIDisclosure" style="display: none;">
+    <app-pdfsebiinitialdisclosureform [sebiDisclosureRecord]="SEBIDisclosureData"></app-pdfsebiinitialdisclosureform>
+</div>
+<div id="printerdivApplicationForm" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+<div id="printerdivInterviewAssessment" style="display: none;">
+    <app-pdfinterviewassessment [assessmentRecords]="assessmentData"></app-pdfinterviewassessment>
+</div>
+<div id="printerdivApplicationForm" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+
+<!-- Edit Document Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 170px;">Document Type</th>
+                                <th style="width: 170px;">Document Particular</th>
+                                <th>Document Name</th>
+                                <th>File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{documentTypeEdit}}</td>
+                                <td>{{documentParticularEdit}}</td>
+                                <td>{{documentNameEdit}}</td>
+                                <td data-th="Upload">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile"
+                                            accept="application/pdf"
+                                            (change)="onAttachmentFileChange($event.target.files)">
+                                        <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2" (click)="onUpdate()">Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">History</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <!-- <th style="width: 170px;">Created Date And Time:</th> -->
+                                <th style="width: 170px;">Modified Date:</th>
+                                <th style="width: 170px;">Modified By:</th>
+                                <!-- <th *ngIf="isModifiedForHistroy" style="width: 170px;">Modified Date And Time:</th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{createdOnForHistroy}}</td>
+                                <!-- <td *ngIf="modifiedForHistroy =='0'">N/A</td> -->
+                                <td *ngIf="modifiedForHistroy !='0'">{{modifiedForHistroy}}</td>
+                                <!-- <td *ngIf="isModifiedForHistroy">{{ModifiedOnForHistory}}</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- Edit Candidate Joining Form (Family Details Start) Adde By Anif on 01-12-2022 -->
+<div class="modal fade" id="familyDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Candidate Family Details</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Name<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder="" disabled autocomplete="off"
+                                [(ngModel)]="objFamilyDetailsForm.fullName">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <div class="input-group datepicker date">
+                                <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                    placeholder="DOB" autocomplete="off" disabled #dob
+                                    [(ngModel)]="objFamilyDetailsForm.dob">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Blood Group</label>
+                            <ng-select bindLabel="bloodGroupName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="objFamilyDetailsForm.bloodGroupId">
+                                <ng-option [value]="rec.bloodGroupId" *ngFor="let rec of bloodGroups">
+                                    {{rec.bloodGroupName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <h6>Residential Address (At Present)</h6>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label>Address<span class="required">*</span></label>
+                            <input type="text" class="form-control"
+                                [(ngModel)]="objFamilyDetailsForm.residentialAddress"
+                                (change)="onChangeAddressAndPin()">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Pin<span class="required">*</span></label>
+                            <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                                [(ngModel)]="objFamilyDetailsForm.residentialPin" (change)="onChangeAddressAndPin()">
+                        </div>
+                    </div>
+                </div>
+                <h6>Permanent Address</h6>
+                <div class="row-form">
+                    <div class="col">
+                        <label class="checkbox_label">Same as Residential Address
+                            <input type="checkbox" (change)="onChangeSameAs($event)"
+                                [ngModel]="getSameAsResidentialStatus(objFamilyDetailsForm.sameAsResidential)">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label>Address<span class="required">*</span></label>
+                            <input type="text" class="form-control" [(ngModel)]="objFamilyDetailsForm.permanentAddress"
+                                (change)="onChangeAddressAndPin()">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Pin<span class="required">*</span></label>
+                            <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                                [(ngModel)]="objFamilyDetailsForm.permanentPin" (change)="onChangeAddressAndPin()">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email<span class="required">*</span></label>
+                            <input type="text" class="form-control" [(ngModel)]="objFamilyDetailsForm.emailId">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Phone No.<span class="required">*</span></label>
+                            <input type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="10"
+                                [(ngModel)]="objFamilyDetailsForm.phoneNo">
+                        </div>
+                    </div>
+                </div>
+                <h6>Family Members <span class="grey text-capitalize font-weight-normal"><small>(Please mention the name
+                            of your
+                            Father, Mother, Spouse, Children.)</small></span></h6>
+                <table class="table table-bordered rwd-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th style="width: 160px;">Relationship</th>
+                            <th style="width: 160px;">Date of Birth</th>
+                            <th *ngIf="!fieldReadOnly || !disableOnEditFamilyDetailsForm" style="width: 40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let fmDetails of familyMembersDetailsArrayNew;let i=index;">
+                            <td data-th="Name">
+                                <input type="text" class="form-control" [(ngModel)]="fmDetails.familyName">
+                            </td>
+                            <td data-th="Relatioship">
+                                <ng-select bindLabel="name" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="fmDetails.familyRelationShip"
+                                    (change)="onChangeRelationShip(fmDetails)">
+                                    <ng-option [value]="rec.relationshipId" *ngFor="let rec of relationshipList">
+                                        {{rec.relationshipName}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td data-th="Date of Birth">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="datepicker{{i}}"
+                                        placeholder="From Date" [(ngModel)]="fmDetails.familyDOB" #familyDOB>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" class="row-btn"
+                                    (click)="onAddFamilyMembers(i,fmDetails)">+</a>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let fmDetails of familyMembersDetailsArray;let i=index;">
+                            <ng-container *ngIf="!fmDetails.isDelete">
+                                <td data-th="Name">
+                                    <input type="text" class="form-control" [(ngModel)]="fmDetails.familyName"
+                                        [readonly]="fmDetails.isReadOnly">
+                                </td>
+                                <td data-th="Relatioship">
+                                    <ng-select bindLabel="name" [placeholder]="'Select'" [appendTo]="'body'"
+                                        [multiple]="false" [searchable]="false" [clearable]="false"
+                                        [readonly]="fmDetails.isReadOnly" [(ngModel)]="fmDetails.familyRelationShip"
+                                        (change)="onChangeRelationShip(fmDetails)">
+                                        <ng-option [value]="rec.relationshipId" *ngFor="let rec of relationshipList">
+                                            {{rec.relationshipName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </td>
+                                <td data-th="Date of Birth">
+                                    <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepicker"
+                                            id="datepicker{{i}}" placeholder="From Date"
+                                            [readonly]="fmDetails.isReadOnly" [(ngModel)]="fmDetails.familyDOB"
+                                            #familyDOB>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2"><i
+                                                    class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td *ngIf="(fmDetails.isReadOnly && !fieldReadOnly) || (fmDetails.isReadOnly && !disableOnEditFamilyDetailsForm)"
+                                    class="text-center"><a href="javascript:void(0)" class="row-btn"
+                                        (click)="onClickDeleteFamilyMembers(i,fmDetails)"><i
+                                            class="las la-trash-alt"></i></a>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Date<span class="required">*</span></label>
+                            <div class="input-group datepiker date">
+                                <input type="text" class="form-control pull-right datepiker" id="" disabled
+                                    placeholder="From Date" [(ngModel)]="objFamilyDetailsForm.date">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Anif 21-11-2022 -->
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2"
+                    (click)="onUpdateFamilyDetails()">Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Changed Details Candidate Joining Form (Family Details ) Start added by anif on 01-12-2022-->
+<div class="modal fade" id="joiningFormFamilyDetailsUpdateDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Family Details Update Details</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="accordion1" class="myaccordion">
+                    <div class="card" *ngFor="let data of joiningFormFamilyDetailsUpdateList; let i=index ">
+                        <!-- <div class="card-header" id="heading{{data.salaryFitmentDetailsId}}"> -->
+                        <div class="card-header" id="heading{{i}}">
+                            <h6 class="d-flex align-items-center justify-content-start">
+                                <button class="header-btn btn btn-link text-left" data-toggle="collapse"
+                                    attr.data-target="#collapse{{i}}" aria-expanded="false"
+                                    attr.aria-controls="collapse{{i}}"><span>
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                    Family Form Update Details -{{i+1}} Modified By : {{data.modifiedBy}} on :
+                                    {{data.modifiedDate}}
+                                </button>
+                            </h6>
+                        </div>
+                        <div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}"
+                            data-parent="#accordion1">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3" *ngIf="data.oldBloodGroupName!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Blood Group</b></label>
+                                            {{data.oldBloodGroupName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.newBloodGroupName!=''">
+                                        <div class="form-group">
+                                            <label> <b> New Bllod Group </b></label>
+                                            {{data.newBloodGroupName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldResidentialAddress!=''">
+                                        <div class="form-group">
+                                            <label> <b>Old Residential Address </b></label>
+                                            {{data.oldResidentialAddress}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newResidentialAddress!=''">
+                                        <div class="form-group">
+                                            <label> <b>New Residential Address </b></label>
+                                            {{data.newResidentialAddress}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldResidentialPin!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Residential Pin </b></label>
+                                            {{data.oldResidentialPin}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newResidentialPin!=''">
+                                        <div class="form-group">
+                                            <label><b>New Residential Pin </b></label>
+                                            {{data.newResidentialPin}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldPermanentAddress!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Permanent Address </b></label>
+                                            {{data.oldPermanentAddress}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newPermanentAddress!=''">
+                                        <div class="form-group">
+                                            <label><b>New Permanent Address </b></label>
+                                            {{data.newPermanentAddress}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldPermanentPin!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Permanent Pin </b></label>
+                                            {{data.oldPermanentPin}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newPermanentPin!=''">
+                                        <div class="form-group">
+                                            <label><b>New Permanent Pin </b></label>
+                                            {{data.newPermanentPin}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldEmail!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Email </b></label>
+                                            {{data.oldEmail}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newEmail!=''">
+                                        <div class="form-group">
+                                            <label><b>New Email </b></label>
+                                            {{data.newEmail}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldPhoneNo!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Phone </b></label>
+                                            {{data.oldPhoneNo}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newPhoneNo!=''">
+                                        <div class="form-group">
+                                            <label><b>New Phone </b></label>
+                                            {{data.newPhoneNo}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div>
+                                <table class="table table-bordered rwd-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Family Member Name</th>
+                                            <th>Relation Ship</th>
+                                            <th>DOB</th>
+                                            <th>Deleted</th>
+                                            <th>New</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let rec of data.familyMemberUpdateDetailsData;let i=index;">
+                                            <td>{{rec.familyName}}</td>
+                                            <td>{{rec.familyRelationShipName}}</td>
+                                            <td>{{rec.familyDOB}}</td>
+                                            <td>{{getFamilymemberDeleteStatus(rec.isDelete)}} </td>
+                                            <td>{{getFamilymemberNewStatus(rec.isNew)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Changed Details Candidate Joining Form (Family Details ) End-->
+
+<!-- Edit Candidate Joining Form (Accident Policy Start) Adde By Anif on 01-12-2022 -->
+<div class="modal fade" id="accidentPolicyDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Personal Accident Insurance Policy</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name of Nominee<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objAccidentPolicyForm.acidentalPolicyNominee">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Relationship<span class="required">*</span></label>
+                        <ng-select bindLabel="name" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="false" [clearable]="false"
+                            [(ngModel)]="objAccidentPolicyForm.acidentalPolicyNomineeRelationShip">
+                            <ng-option [value]="rec.relationshipId" *ngFor="let rec of relationshipList">
+                                {{rec.relationshipName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Full Address<span class="required">*</span></label>
+                            <textarea class="form-control"
+                                [(ngModel)]="objAccidentPolicyForm.acidentalPolicyNomineeAddress"></textarea>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning">
+                        As the person to whom is to be paid any sum that may become due under the policy of insurance
+                        under
+                        which I am covered. in the event of my death in circumstences giving rise to be valid
+                        claim thereunder as on death and I further agree that a discharge of my company by the said
+                        nominee
+                        shall be deemed to be a suficient and binding discharge to the company.
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder="" disabled
+                                [(ngModel)]="objAccidentPolicyForm.acidentalPolicyName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Anif 21-11-2022 -->
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2"
+                    (click)="onUpdateAccidentPolicyForm()">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Edit Candidate Joining Form (Accident Policy End) Adde By Anif on 01-12-2022 -->
+<!-- Edit Candidate Joining Form (Joining Report Form) Adde By Sayandeep on 03-02-2023 -->
+<div class="modal fade" id="joiningReportModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">JOINING REPORT</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-inline">
+                            <label for="staticEmail2" class="mr-2 mb-2">With reference to your letter dated</label>
+                            <input type="text" class="form-control mb-2" disabled
+                                [(ngModel)]="objJoiningReportForm.joiningLetterDate" #joiningLetterDate>
+                            <label for="staticEmail2" class="mx-2 mb-2">, regarding my appointment as</label>
+                            <input type="text" class="form-control mb-2" disabled
+                                [(ngModel)]="objJoiningReportForm.joiningLetterDesignationName">
+                        </div>
+                        <div class="form-inline">
+                            <label for="staticEmail2" class="mr-2 mb-2">this is to confirm that I have joined today</label>
+                            <div class="input-group datepiker date mb-2">
+                                <input type="text" class="form-control pull-right datepiker" disabled
+                                     id="" placeholder="From Date"
+                                    (change)="onChangeJoiningDate()" [(ngModel)]="objJoiningReportForm.joiningDate" #JoiningDate>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Date<span class="required">*</span></label>
+                                    <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepiker" disabled
+                                             id="" placeholder="From Date"
+                                            [(ngModel)]="objJoiningReportForm.signatureDate" #SignatureDate>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Place<span class="required">*</span></label>
+                                    <input type="text" class="form-control" placeholder=""
+                                        [(ngModel)]="objJoiningReportForm.signaturePlace">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Anif 21-11-2022 -->
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2"
+                    (click)="onUpdateJoiningReportForm()">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Edit Candidate Joining Form (Joining Report Form) Adde By Sayandeep on 03-02-2023 -->
+
+<!-- Changed Details Candidate Joining Form (Accident Insurance Policy) Start added by anif on 01-12-2022-->
+<div class="modal fade" id="accidentInsurancePolicyUpdateDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Accident Insurance Policy Update Details</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="accordion2" class="myaccordion">
+                    <div class="card" *ngFor="let data of accidentInsurancePolicyUpdateDetailsList; let i=index ">
+                        <div class="card-header" id="heading{{i}}">
+                            <h6 class="d-flex align-items-center justify-content-start">
+                                <button class="header-btn btn btn-link text-left" data-toggle="collapse"
+                                    attr.data-target="#collapse{{i}}" aria-expanded="false"
+                                    attr.aria-controls="collapse{{i}}"><span>
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                    Insurance Form Update Details -{{i+1}} Modified By : {{data.modifiedBy}} on :
+                                    {{data.modifiedDate}}
+                                </button>
+                            </h6>
+                        </div>
+                        <div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}"
+                            data-parent="#accordion2">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3" *ngIf="data.oldAccidentPolicyNominee!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Nominee Name</b></label>
+                                            {{data.oldAccidentPolicyNominee}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.newAccidentPolicyNominee!=''">
+                                        <div class="form-group">
+                                            <label> <b> New Nominee Name </b></label>
+                                            {{data.newAccidentPolicyNominee}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldAccidentPloicyRelationShipName!=''">
+                                        <div class="form-group">
+                                            <label> <b>Old Nominee Relationship </b></label>
+                                            {{data.oldAccidentPloicyRelationShipName}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newAccidentPloicyRelationShipName!=''">
+                                        <div class="form-group">
+                                            <label> <b>New Nominee Relationship </b></label>
+                                            {{data.newAccidentPloicyRelationShipName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldAccidentPolicyNomineeAddress!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Nominee Address </b></label>
+                                            {{data.oldAccidentPolicyNomineeAddress}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newAccidentPolicyNomineeAddress!=''">
+                                        <div class="form-group">
+                                            <label><b>New Nominee Address </b></label>
+                                            {{data.newAccidentPolicyNomineeAddress}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Changed Details Candidate Joining Form (Accident Insurance Policy ) End-->
+
+<div class="modal fade" id="joiningreportformUpdateDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Joining Report Form Update Details</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="accordion2" class="myaccordion">
+                    <div class="card" *ngFor="let data of joiningformreportList; let i=index ">
+                        <div class="card-header" id="heading{{i}}">
+                            <h6 class="d-flex align-items-center justify-content-start">
+                                
+                                    Joining Report Form Update Details : Modified By : {{data.modifiedBy}} on :
+                                    {{data.modifiedDate}}
+                                
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mrfppfUpdateDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">MRF PPF Update Details</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="accordion2" class="myaccordion">
+                    <div class="card" *ngFor="let data of mrfppflist; let i=index ">
+                        <div class="card-header" id="heading{{i}}">
+                            <h6 class="d-flex align-items-center justify-content-start">
+                                
+                                    MRF PPF Update Details : Modified By : {{data.modifiedBy}} on :
+                                    {{data.modifiedDate}}
+                                
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Candidate Joining Form (SEBI Disclosure Start) Adde By Anif on 01-12-2022 -->
+<div class="modal fade" id="sebiDisclosureModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">SEBI Initial Disclosuer</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objSEBIDisclosureForm.sebiName">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Employee No.<span class="required">*</span></label>
+                            <input type="text" class="form-control" disabled
+                                [(ngModel)]="objSEBIDisclosureForm.sebiEmployeeNo">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Designation<span class="required">*</span></label>
+                            <input type="text" class="form-control" disabled
+                                [(ngModel)]="objSEBIDisclosureForm.sebiDesignation">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Department<span class="required">*</span></label>
+                            <input type="text" class="form-control" disabled
+                                [(ngModel)]="objSEBIDisclosureForm.sebiDepartment">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>PAN<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objSEBIDisclosureForm.sebiPanNo">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Phone/Mobile No.<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objSEBIDisclosureForm.sebiMobileNo" maxlength="10"
+                                (keypress)="numberOnly($event)">
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label>The names of educational institutions from which Designated Person have
+                                graduated<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objSEBIDisclosureForm.sebiInstitute">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Past Employer (If Applicable)<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objSEBIDisclosureForm.sebiPastEmployer">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>No of Securities held as on {{todayDate}}<span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder=""
+                                [(ngModel)]="objSEBIDisclosureForm.sebiNoOfSecurity" (keypress)="numberOnly($event)">
+                        </div>
+                    </div>
+                </div>
+
+                <h6>B. Details of Immediate Relatives, if any :</h6>
+                <div class="alert alert-warning">
+                    “Immediate relative” means a spouse of a person, and includes parent, sibling, and child of such
+                    person or
+                    of the spouse, any of whom is either dependent financially on such person, or consults such person
+                    in taking
+                    decisions relating to trading in securities.
+                </div>
+                <table class="table table-bordered rwd-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th style="width: 140px;">PAN</th>
+                            <th style="width: 140px;">Phone/Mobile No.</th>
+                            <th style="width: 220px;">No of Securities held by my Immediate Relatives as on
+                                {{todayDate}}</th>
+                            <th *ngIf="!fieldReadOnly || !disableOnEditSebiDisclosureForm" style="width: 40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let irDetails of immediateRelativesArray;let i=index;">
+                            <ng-container *ngIf="!irDetails.isDelete">
+                                <td data-th="Name">
+                                    <input type="text" class="form-control" [readonly]="irDetails.isReadOnly"
+                                        [(ngModel)]="irDetails.imidiateRelativesName">
+                                </td>
+                                <td data-th="PAN">
+                                    <input type="text" class="form-control" [readonly]="irDetails.isReadOnly"
+                                        [(ngModel)]="irDetails.imidiateRelativesPAN">
+                                </td>
+                                <td data-th="Phone/Mobile No.">
+                                    <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                                        [readonly]="irDetails.isReadOnly"
+                                        [(ngModel)]="irDetails.imidiateRelativesPhone">
+                                </td>
+                                <td data-th="No of Securities held by my Immediate Relatives as on 01.04.2021">
+                                    <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                                        [readonly]="irDetails.isReadOnly"
+                                        [(ngModel)]="irDetails.imidiateRelativesNoofSecurity">
+                                </td>
+                                <td *ngIf="(!irDetails.isReadOnly && fieldReadOnly) || (!irDetails.isReadOnly)"
+                                    class="text-center">
+                                    <a href="javascript:void(0)" class="row-btn"
+                                        (click)="onAddImmediatRelatives(i,irDetails)">+</a>
+                                </td>
+                                <td *ngIf="(irDetails.isReadOnly && !fieldReadOnly) || (irDetails.isReadOnly)"
+                                    class="text-center"><a href="javascript:void(0)" class="row-btn"
+                                        (click)="onClickDeleteImmediateRelatives(i,irDetails)"><i
+                                            class="las la-trash-alt"></i></a>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6>C. Person with whom Designated Person shares a material financial relationship:</h6>
+                <table class="table table-bordered rwd-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th style="width: 140px;">PAN</th>
+                            <th style="width: 140px;">Phone/Mobile No.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-th="Name">
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="objSEBIDisclosureForm.sebiDesigName">
+                            </td>
+                            <td data-th="PAN">
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="objSEBIDisclosureForm.sebiDesigPanNo">
+                            </td>
+                            <td data-th="Phone/Mobile No.">
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="objSEBIDisclosureForm.sebiDesigMobileNo"
+                                    (keypress)="numberOnly($event)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-warning">
+                    “Material financial relationship” shall mean a relationship in which one person is a recipient of
+                    any kind
+                    of payment such as by way of a loan or gift during the immediately preceding twelve months,
+                    equivalent to at
+                    least 25% of such payer’s annual income but shall exclude relationships in which the payment is
+                    based on
+                    arm’s length transactions.
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <!-- Anif 21-11-2022 -->
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2"
+                    (click)="onUpdateSEBIDisclosure()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Candidate Joining Form (SEBI Disclosure End) Adde By Anif on 01-12-2022 -->
+<!-- Changed Details Candidate Joining Form (Family Details ) Start added by anif on 01-12-2022-->
+<div class="modal fade" id="sebiUpdateHistoryDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">SEBI Initial Disclosure Update Details</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="accordion3" class="myaccordion">
+                    <div class="card" *ngFor="let data of sebiInitialDisclosureUpdateHistoryList; let i=index ">
+                        <!-- <div class="card-header" id="heading{{data.salaryFitmentDetailsId}}"> -->
+                        <div class="card-header" id="heading{{i}}">
+                            <h6 class="d-flex align-items-center justify-content-start">
+                                <button class="header-btn btn btn-link text-left" data-toggle="collapse"
+                                    attr.data-target="#collapse{{i}}" aria-expanded="false"
+                                    attr.aria-controls="collapse{{i}}"><span>
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                    SEBI Update Details -{{i+1}} Modified By : {{data.modifiedBy}} on :
+                                    {{data.modifiedDate}}
+                                </button>
+                            </h6>
+                        </div>
+                        <div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}"
+                            data-parent="#accordion3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3" *ngIf="data.oldSEBIName!=''">
+                                        <div class="form-group">
+                                            <label><b>Old SEBI Name</b></label>
+                                            {{data.oldSEBIName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.newSEBIName!=''">
+                                        <div class="form-group">
+                                            <label> <b> New SEBI Name </b></label>
+                                            {{data.newSEBIName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIPanNo!=''">
+                                        <div class="form-group">
+                                            <label> <b>Old SEBI PAN No </b></label>
+                                            {{data.oldSEBIPanNo}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIPanNo!=''">
+                                        <div class="form-group">
+                                            <label> <b>New SEBI PAN No </b></label>
+                                            {{data.newSEBIPanNo}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIMobileNo!=''">
+                                        <div class="form-group">
+                                            <label><b>Old SEBI Mobile No </b></label>
+                                            {{data.oldSEBIMobileNo}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIMobileNo!=''">
+                                        <div class="form-group">
+                                            <label><b>New SEBI Mobile No </b></label>
+                                            {{data.newSEBIMobileNo}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIInstitute!=''">
+                                        <div class="form-group">
+                                            <label><b>Old SEBI Institute </b></label>
+                                            {{data.oldSEBIInstitute}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIInstitute!=''">
+                                        <div class="form-group">
+                                            <label><b>New SEBI Institute </b></label>
+                                            {{data.newSEBIInstitute}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIPastEmplpoyer!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Past Employer </b></label>
+                                            {{data.oldSEBIPastEmplpoyer}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIPastEmplpoyer!=''">
+                                        <div class="form-group">
+                                            <label><b>New Past Employer </b></label>
+                                            {{data.newSEBIPastEmplpoyer}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBINoOfSecurity!=''">
+                                        <div class="form-group">
+                                            <label><b>Old No Of Security </b></label>
+                                            {{data.oldSEBINoOfSecurity}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBINoOfSecurity!=''">
+                                        <div class="form-group">
+                                            <label><b>New No Of Security </b></label>
+                                            {{data.newSEBINoOfSecurity}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIDesigName!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Desig Name </b></label>
+                                            {{data.oldSEBIDesigName}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIDesigName!=''">
+                                        <div class="form-group">
+                                            <label><b>New Desig Name </b></label>
+                                            {{data.newSEBIDesigName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIDesigPanNo!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Desig PAN </b></label>
+                                            {{data.oldSEBIDesigPanNo}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIDesigPanNo!=''">
+                                        <div class="form-group">
+                                            <label><b>New Desig PAN </b></label>
+                                            {{data.newSEBIDesigPanNo}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="data.oldSEBIDesigPhoneNo!=''">
+                                        <div class="form-group">
+                                            <label><b>Old Desig Mobile </b></label>
+                                            {{data.oldSEBIDesigPhoneNo}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" *ngIf="data.newSEBIDesigPhoneNo!=''">
+                                        <div class="form-group">
+                                            <label><b>New Desig Mobile </b></label>
+                                            {{data.newSEBIDesigPhoneNo}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div>
+                                <table class="table table-bordered rwd-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Relative Name</th>
+                                            <th>Relative PAN</th>
+                                            <th>Relative Mobile</th>
+                                            <th>No of Security</th>
+                                            <th>Deleted</th>
+                                            <th>New</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let rec of data.sebiImmediativeRelativeData;let i=index;">
+                                            <td>{{rec.immediateRelativeName}}</td>
+                                            <td>{{rec.immediativeRelativePan}}</td>
+                                            <td>{{rec.immediativeRelativePhone}}</td>
+                                            <td>{{rec.imidiateRelativesNoofSecurity}}</td>
+                                            <td>{{getFamilymemberDeleteStatus(rec.isDelete)}} </td>
+                                            <td>{{getFamilymemberNewStatus(rec.isNew)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Changed Details Candidate Joining Form (Family Details ) End-->

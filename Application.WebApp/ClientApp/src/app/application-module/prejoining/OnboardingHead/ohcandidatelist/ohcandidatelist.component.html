@@ -1,0 +1,298 @@
+<div class="content-box">
+    <!-- Tab -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a [ngClass]="parentActiveTab=='Individual'?'nav-link active':'nav-link'" id="secondtab" data-toggle="tab"
+                href="#tabTwo" role="tab" aria-controls="tabTwo" aria-selected="false"
+                (click)="onClickIndividual()">Individual</a>
+        </li>
+        <li class="nav-item">
+            <a [ngClass]="parentActiveTab=='Batch'?'nav-link active':'nav-link'" id="thirdtab" data-toggle="tab"
+                href="#tabThree" role="tab" aria-controls="tabThree" aria-selected="false"
+                (click)="onClickScheduledBatchTab()">Batch</a>
+        </li>
+    </ul>
+
+    <!-- Tab Section Start -->
+    <div class="tab-content mt-3" id="myTabContent">
+        <!-- tab one Start-->
+        <div [ngClass]="parentActiveTab=='Individual'?'tab-pane fade show active':'tab-pane fade'" id="tabTwo"
+            role="tabpanel" aria-labelledby="secondtab">
+
+            <form [formGroup]="searchformScheduledIndividual" (ngSubmit)="scheduleSearchIndividualSubmit()">
+                <div class="filter-sec mb-3">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!--  style="display: none;" -->
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="verticalId" (change)="changeVertical('SI')">
+                                    <ng-option [value]="1">Corporate</ng-option>
+                                    <ng-option [value]="2">Plant</ng-option>
+                                    <ng-option [value]="3">Sales and Marketing</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="functionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-md-4">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="onClickScheduledIndividualReset()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table id="dataTable4" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <!-- <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAllIndividualScheduled"
+                                        [(ngModel)]="selectAllScheduledIndividual"
+                                        (change)="onCheckScheduledIndividualSelectAll($event)">
+                                    <label class="chk" for="chkAllIndividualScheduled"></label>
+                                </div>
+                            </th> -->
+                            <th>Cand. ID</th>
+                            <th>Candidate Name</th>
+                            <th>Designation</th>
+                            <th>Pos. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Qualification</th>
+                            <th>Exp.</th>
+                            <th>Cur. Location</th>
+                            <th>D.O.J</th>
+                            <th>M.O.J</th>
+                            <th>Monthly Gross</th>
+                            <th>Remarks</th>
+                            <th>Document Status</th>
+                            <th>Hiring Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of scheduledIndividually;">
+                            <!--  -->
+                            <!-- <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{data.candidateNo}}"
+                                        [ngModel]="getScheduleIndividualEnableStatus(data)"
+                                        (change)="onCheckRowWiseScheduleIndividualList(data,$event)">
+                                    <label class="chk" for="{{data.candidateNo}}"></label>
+                                </div>
+                            </td> -->
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.emailId}}</td>
+                            <td>{{data.contact}}</td>
+                            <td>{{data.courseName}} {{data.streamName}}</td>
+                            <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                            <td>{{data.communicationAddress}} , {{data.communicationStateName}} <br>
+                                </td>  <!-- {{data.communicationPin}} -->
+                            <td>{{data.dateofJoining}}</td>
+                            <td>{{data.modeofJoiningName}}</td>
+                            <td>{{data.monthlyGross}}</td>
+                            <td>{{data.remarks}}
+                            </td>
+                            <td>
+                                {{data.docApprovalStatus}}
+                                <a *ngIf="data.onboardingManagerNotApproveDoc!=' '" href="javascript:void(0)"
+                                    class="red" data-toggle="popover" [attr.data-content]="data.popoverContent"
+                                    rel="popover" data-placement="left" data-trigger="hover"><i
+                                        class="fa fa-info-circle"></i></a>
+                            </td>
+                            <td>{{data.hiringStatusName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a class="dropdown-item" *ngIf="data.hiringStatusId!=55"
+                                            href="javascript:void(0)"
+                                            (click)="onClickViewDocument(data,'Individual')"><i
+                                                class="las la-folder-open"></i>
+                                            View Document</a>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Tab One End -->
+
+        <!-- Tab Two start -->
+
+        <div [ngClass]="parentActiveTab=='Batch'?'tab-pane fade show active':'tab-pane fade'" id="tabThree"
+            role="tabpanel" aria-labelledby="thirdtab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchformScheduledBatchWise" (ngSubmit)="scheduleSearchBatchSubmit()">
+                <div class="filter-sec mb-3">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Date of Joining</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="fromdatepicker" placeholder="From Date" #fromDateScheduledBatch
+                                                formControlName="dtofJoiningFrom" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #toDateScheduledBatch
+                                                formControlName="dtofJoiningTo" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Batch ID</label>
+                                <input type="text" class="form-control" formControlName="batchNo">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- style="display: none;" -->
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="verticalId" (change)="changeVertical('SB')">
+                                    <!-- <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option> -->
+                                    <ng-option [value]="1">Corporate</ng-option>
+                                    <ng-option [value]="2">Plant</ng-option>
+                                    <ng-option [value]="3">Sales and Marketing</ng-option>
+
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-md-4">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="onClickScheduledBatchReset()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+
+            <div class="table-responsive">
+                <table id="dataTable5" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Batch ID</th>
+                            <th class="text-center">Total Candidates</th>
+                            <th>Date of Joining</th>
+                            <th>Mode of joining</th>
+                            <th>Accommodation Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of scheduledBatchWise">
+                            <td><a href="javascript:void(0)" class="red">{{data.batchNo}}</a></td>
+                            <td class="text-center">{{data.totalCandidates}}</td>
+                            <td>{{data.dateofJoining}}</td>
+                            <td>{{data.modeofJoiningName}}</td>
+                            <td>{{data.accomadationStatus}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            (click)="onClickViewCandidate(data,'ocscheduled','Batch')"><i
+                                                class="las la-reply"></i>
+                                            View Candidate</a>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- Tab two end -->
+
+
+    </div>
+
+
+</div>
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

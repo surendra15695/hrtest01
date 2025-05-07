@@ -1,0 +1,227 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" routerLink="/app/career/medical-reimbursement-list" class="back-btn"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Claim Medical Reimbursement</h1>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Name<span class="required">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="candidateName" readonly>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Location <span class="required">*</span><small class="grey">(City/Town where medical test was taken)</small></label>
+                <input type="text" class="form-control" [(ngModel)]="testLocation" [readonly]="IsReadOnly">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Date of Joining<span class="required">*</span></label>
+                <div class="input-group datepiker date">
+                    <input type="text" class="form-control pull-right datepiker" id="datepicker"
+                        placeholder="DD/MM/YYYY" [(ngModel)]="joiningDate" #candidateJoiningdate readonly>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Total Amount<span class="required">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="totalAmount"  disabled="numberOnly($event)"
+                    [readonly]="IsReadOnly"> <!--  text-right -->  <!-- billTotalAmount -->
+            </div>
+        </div>
+    </div>
+    <div>
+        <h6 class="red">Medical Bill Details:</h6>
+        <div class="form-row" *ngIf="!IsReadOnly">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Bill No.<span class="required">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="objBillDetails.billNo">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Bill Date<span class="required">*</span></label>
+                    <!-- <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right" id="datepicker" placeholder="DD/MM/YYYY"
+                        [(ngModel)]="objBillDetails.billDate" #billDate>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div> -->
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                            placeholder="Bill Date" autocomplete="off" [(ngModel)]="objBillDetails.billDate" #billDate>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Amount<span class="required">*</span></label>
+                    <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                        [(ngModel)]="objBillDetails.amount"> <!-- text-right -->
+                </div>
+            </div>
+            <div class="col-md-2 mt-md-4">
+                <button type="button" class="btn btn-sm btn-black" (click)="onClickAddReimbursementDetails()">+
+                    Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">Sl. No.</th>
+                    <th>Bill No.</th>
+                    <th>Bill Date</th>
+                    <th class="text-right">Amount</th>
+                    <th *ngIf="!IsReadOnly" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bd of billDetailsArray;let i=index;">
+                    <td>{{i+1}}</td>
+                    <td>{{bd.billNo}}</td>
+                    <td>{{bd.billDate}}</td>
+                    <td class="text-right">{{bd.amount}}</td>
+                    <td *ngIf="!IsReadOnly" class="text-center"><a href="javascript:void(0)" class="row-btn"
+                            (click)="onClickDelete(bd,i)"><i class="las la-trash-alt"></i></a> </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-right"><b>Total Amount</b></td>
+                    <td class="text-right"><b>{{totalAmount}}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-row">
+        <div class="col-md-4" *ngIf="!IsReadOnly">
+            <label for="">Upload All Bills<small class="grey">(PDF format only)</small><span
+                    class="required">*</span></label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                    (change)="onAttachmentFileChange($event.target.files)">
+                <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Today's Date</label>
+                <input type="text" class="form-control" [(ngModel)]="todaysDate" readonly>
+            </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="fileUploadArray.length>0">
+            <div class="form-group">
+                <label>Uploaded Document</label>
+                <div class="attach-file" *ngFor="let data of fileUploadArray">
+                    <a *ngIf="data.FilePath==''" [href]="data.PdfUrl" target="_blank" title="Download"><i
+                            class="las color-black la-paperclip"></i>{{data.FileName}} </a>
+                    <a *ngIf="data.FilePath!=''" (click)="openFile(data.FilePath)" style="cursor: pointer;"><i
+                            class="las la-download red"></i>{{data.FileName}}</a>
+
+                    <a href="javascript:void(0)" *ngIf="!IsReadOnly" class="row-btn" (click)="onClickRemove(data)"><i
+                            class="las la-trash-alt"></i></a>
+                    <!-- <div class="col-md-1 text-md-right mt-md-2">
+                        <a href="javascript:void(0)" class="row-btn" (click)="onClickRemove(data)"><i
+                                class="las la-trash-alt"></i></a>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="border-box mb-4 mt-2 p-3" *ngIf="fileUploadArray.length>0">
+            <h6 class="mt-0">Uploaded Document</h6>
+            <div class="uploadDocList" *ngFor="let data of fileUploadArray;let i=index;">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <label class="grey">{{data.doumentName}}</label>
+                        <div class="attach-file">
+                            <a *ngIf="data.FilePath==''" [href]="data.PdfUrl" target="_blank" title="Download"><i
+                                    class="las color-black la-paperclip">{{data.FileName}}</i></a>
+                            <a *ngIf="data.FilePath!=''" href="{{data.FilePath}}" target="_blank" title="Download"><i
+                                    class="las color-black la-paperclip">{{data.FileName}}</i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-md-right mt-md-2">
+                        <a href="javascript:void(0)" class="row-btn" (click)="onClickRemove(data)"><i
+                                class="las la-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- <div *ngIf="medicalReimbursementDetails?.approvalStatus != '0'">
+        <span class="red"><b>Remarks: </b></span><span>{{approvalRemarks}}</span>
+    </div> -->
+    <div class="col-12" *ngIf="!IsReadOnly">
+        <div class="form-group">
+            <label>Remarks</label>
+            <textarea class="form-control" id="" placeholder="Enter Remarks..."
+                [(ngModel)]="approvalRemarks"></textarea>
+        </div>
+    </div>
+    <div>
+        <div class="media mb-3" *ngFor="let item of ForPrintRemarks">
+            <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+            <div class="media-body">
+                <h6>{{item.printName}}</h6>               
+                {{item.printRemarks}}             
+            </div>
+        </div>
+    </div>
+    <div class="mt-4" *ngIf="!IsReadOnly">
+        <button type="button" class="btn btn-black" (click)="submitData()">Submit</button>
+        <button type="button" class="btn btn-primary ml-1" (click)="onClickCancel()">Cancel</button>
+    </div>
+</div>
+
+<!-- Modal -->
+
+ 
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to continue.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onSubmitMedicalReimBursementDetails()" >Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="printMedicalReimbursementForzip" style="display: none;">
+    <app-pdfmedicalreimbursement-forzip [medicalReimbursementRecord]="medicalReimbursementData"></app-pdfmedicalreimbursement-forzip>
+</div>
+
+<div id="printMedicalReimbursement" style="display: none;">
+    <app-pdfmedicalreimbursement [medicalReimbursementRecord]="medicalReimbursementForPDF"></app-pdfmedicalreimbursement>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

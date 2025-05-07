@@ -1,0 +1,152 @@
+<div class="content-box m-b-15 m-t-10">    
+    <div class="page-title-area pb-2 mb-2">
+        <h4 class="f-l">Filters</h4>            
+    </div>   
+    
+    <!-- Fiter section start -->
+    <div class="filter-sec mb-3">
+        <form [formGroup]="filterForm" (ngSubmit)="onFilter()" autocomplete="off">
+            <div class="form-row m-t-10">    
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Date</label>
+                      <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                            placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+      
+                    </div>
+                </div>            
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Requisition No.</label>
+                        <input type="text" class="form-control" formControlName="RequisitionNo" name="RequisitionNo" placeholder="Enter requisition no." />
+                    </div>
+                </div>  
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Hiring Status</label>
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                        [multiple]="false" [searchable]="true" [clearable]="false" #HiringStatusId formControlName="HiringStatusId">
+                            <ng-option [value]="0">All </ng-option>
+                            <ng-option [value]="1">Submitted </ng-option>
+                            <ng-option [value]="2">Send to Hiring Manager</ng-option>
+                            <ng-option [value]="3">Shortlisted</ng-option>
+                            <ng-option [value]="4">Rejected</ng-option>
+                            <ng-option [value]="5">Test Scheduled</ng-option>
+                            <ng-option [value]="6">Test Cleared</ng-option>
+                            <ng-option [value]="7">Test Failed</ng-option>
+                            <ng-option [value]="8">1st Round Interview Scheduled</ng-option>
+                            <ng-option [value]="9">1st Round Interview Cleared</ng-option>
+                            <ng-option [value]="10">1st Round Interview Rejected</ng-option>
+                            <ng-option [value]="11">2nd Round Interview Scheduled</ng-option>
+                            <ng-option [value]="12">2nd Round Interview Cleared</ng-option>
+                            <ng-option [value]="13">2nd Round Interview Rejected</ng-option>
+                            <ng-option [value]="29">Selected</ng-option>
+                            <ng-option [value]="32">Document Collection</ng-option>
+                            <ng-option [value]="32">Document Submitted</ng-option>
+                        </ng-select>
+                    </div>
+                </div> 
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Source</label>
+                        <select class="selectpicker form-control" formControlName="SourceChannelId" #SourceChannleId title='Select'>
+                            <option [value]="0">All</option>
+                            <option [value]="2">Career Site </option>
+                            <option [value]="3">Internal Employee</option>
+                            <option [value]="4">Referred</option>
+                            <option [value]="5">Vendor</option>
+                        </select>
+                    </div>
+                </div>                                                                                                                                                                                                                                                                                                  
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-2"><i class="las la-sync-alt"></i> Reset</button>
+                </div>       
+            </div>
+        </form>
+    </div>
+    <!-- Fiter section End -->
+                
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>                   
+                    <th>Candidate Id</th>
+                    <th>Candidate Name</th>
+                    <th>Age</th>
+                    <th>Highest Qualification</th>
+                    <th>Course</th>
+                    <th>Stream</th>
+                    <th>Experience</th>
+                    <th>Present Company</th>
+                    <th>Designation</th>
+                    <th>MRF REC/EMP History</th>
+                    <th>Relatives</th>
+                    <th>Source</th>
+                    <th>Candidate Owner</th>
+                    <th>Hiring Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of candidates" class="tr_row" [ngClass]="data.clarificationCount>0?'tr_row table-warning':'tr_row'">                   
+                    <td>{{data.candidateNo}}</td>
+                    <td><a href="javascript:void(0)"
+                            (click)="gotoCandidateAction(data.candidateId,data.relativeStatus,data.childRelationshipId,data.cmdUpdateStatus)"
+                            class="red">{{data.prefixName}} {{data.fullName}}</a></td>
+                    <td>{{data.age}}</td>
+                    <td>{{data.qualificationName}}</td>
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.streamName}}</td>
+                    <td>{{data.experienceYear}} Years {{data.experienceMonth}} Months</td>
+                    <td>{{data.currentEmployer}}</td>
+                    <td>{{data.currentDesignation}}</td>
+                    <td>{{data.previousAppliedName}}</td>
+                    <td *ngIf="data.relativeStatus==1">
+                        Yes
+                    </td>
+                    <td *ngIf="data.relativeStatus==0">
+                        No
+                    </td>
+                    <td>{{data.sourceChannelName}}
+                        <a *ngIf="data.sourceChannelId==4" href="javascript:void(0)" class="red" data-toggle="popover"
+                            [attr.data-content]="data.popoverContent" rel="popover" data-placement="left"
+                            data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+                    </td>
+                    <td>{{data.candidateOwner}}</td>
+                    <!-- <td>{{data.applicationCount>0?'Filled':'Not Filled'}}</td> -->
+                    <td>{{data.hiringStatusName}}</td>    
+                    <td></td>               
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Export</button>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,511 @@
+<form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="content-box m-b-15 m-t-10">
+        <div class="page-title-area pb-2 mb-2">
+            <!-- <a href="#" class="back-btn"><i class="las la-arrow-circle-left"></i></a> -->
+            <h1 class="f-l">Update Profile</h1>
+        </div>
+        <h6 class="red">General information</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name<span class="required">*</span></label>
+                    <div class="form-row">
+                        <div class="col-3">
+                            <div class="dropdown bootstrap-select form-control">
+                                <ng-select bindLabel="prefixName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="PrefixId">
+                                    <ng-option [value]="rec.prefixId" *ngFor="let rec of prefix">
+                                        {{rec.prefixName}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="saveForm.controls['PrefixId'].touched && !saveForm.controls['PrefixId'].valid">
+                                    <span
+                                        *ngIf="saveForm.controls['PrefixId'].hasError('required') || saveForm.controls['PrefixId']==undefined ">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" formControlName="FullName" name="FullName"
+                                placeholder="Name as per Aadhar card">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['FullName'].touched && !saveForm.controls['FullName'].valid">
+                                <span *ngIf="saveForm.controls['FullName'].hasError('required') ">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Gender<span class="required">*</span></label>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input formControlName="GenderId" name="GenderId" value="1" #radio1 id="radio1" type="radio"
+                            [checked]="selectedGenderId==1?true:false">
+                        <label for="radio1">Male</label>
+                    </div>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input formControlName="GenderId" name="GenderId" value="2" #radio2 id="radio2" type="radio"
+                            [checked]="selectedGenderId==2?true:false">
+                        <label for="radio2">Female</label>
+                    </div>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input formControlName="GenderId" name="GenderId" value="3" #radio3 id="radio3" type="radio"
+                            [checked]="selectedGenderId==3?true:false">
+                        <label for="radio3">Others</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Date of Birth<span class="required">*</span></label>
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right datepicker" formControlName="DOB" name="DOB"
+                            placeholder="dd-mm-yyyy">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                    <p class="error-msg" *ngIf="saveForm.controls['DOB'].touched && !saveForm.controls['DOB'].valid">
+                        <span *ngIf="saveForm.controls['DOB'].hasError('required') ">Required</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="text" (keypress)="keyPress($event)" disabled id="txtAge" maxlength="2"
+                        class="form-control" formControlName="Age">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Email ID<span class="required">*</span></label>
+                    <input type="text" class="form-control" name="EmailId" formControlName="EmailId"
+                        placeholder="Enter email" />
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['EmailId'].touched && !saveForm.controls['EmailId'].valid">
+                        <span *ngIf="saveForm.controls['EmailId'].hasError('required') ">Required</span>
+                        <span *ngIf="saveForm.controls['EmailId'].hasError('pattern') ">Invalid data</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Phone No.<span class="required">*</span></label>
+                    <input (keypress)="keyPress($event)" maxlength="10" type="text" class="form-control"
+                        formControlName="ContactNo" placeholder="Eg:9800123456">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['ContactNo'].touched && !saveForm.controls['ContactNo'].valid">
+                        <span *ngIf="saveForm.controls['ContactNo'].hasError('required') ">Required
+                            no.</span>
+                        <span *ngIf="saveForm.controls['ContactNo'].hasError('pattern') ">Should be 10 digit</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Aadhar No.<span class="required">*</span></label>
+                    <input type="text" (keypress)="keyPress($event)" class="form-control" formControlName="AadharNo"
+                        maxlength="12" placeholder="Eg:123412341234">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['AadharNo'].touched && !saveForm.controls['AadharNo'].valid">
+                        <span *ngIf="saveForm.controls['AadharNo'].hasError('required') ">Required</span>
+                        <span *ngIf="saveForm.controls['AadharNo'].hasError('pattern') ">Should be 12 digit</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Mother Tongue<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="languageName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="MotherTongueId">
+                            <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                                {{rec.languageName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg"
+                            *ngIf="saveForm.controls['MotherTongueId'].touched && !saveForm.controls['MotherTongueId'].valid">
+                            <span
+                                *ngIf="saveForm.controls['MotherTongueId'].hasError('required') || saveForm.controls['MotherTongueId']==undefined ">Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-2">
+                <div class="form-group">
+                    <label>Languages Known<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="languageName" [placeholder]="'Select'" [appendTo]="'body'" 
+                            [multiple]="true" [searchable]="true" [clearable]="false" formControlName="LanguageIds"
+                            (change)="changeLanguageKnown()">
+                            <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                                {{rec.languageName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg"
+                            *ngIf="saveForm.controls['LanguageIds'].touched && !saveForm.controls['LanguageIds'].valid">
+                            <span *ngIf="saveForm.controls['LanguageIds'].hasError('required') || saveForm.controls['LanguageIds']==undefined ">Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>-->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Languages Known<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select class="selectpicker form-control md-size-list" multiple title="Select"
+                            formControlName="LanguageIds" tabindex="-98">
+                            <option *ngFor="let rec of languages" [ngValue]="rec.languageId">
+                                {{rec.languageName}}
+                            </option>
+                        </select>
+                        <p class="error-msg"
+                            *ngIf="saveForm.controls['LanguageIds'].touched && !saveForm.controls['LanguageIds'].valid">
+                            <span
+                                *ngIf="saveForm.controls['LanguageIds'].hasError('required') || saveForm.controls['LanguageIds']==undefined ">Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Highest Qualification<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="qualificationName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false"
+                            (change)="changeQualification($event)" formControlName="QualificationId">
+                            <ng-option [value]="rec.qualificationId" *ngFor="let rec of qualifications">
+                                {{rec.qualificationName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgqualificationid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Course<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="courseName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" (change)="changeCourse($event)"
+                            formControlName="CourseId">
+                            <ng-option [value]="rec.courseId" *ngFor="let rec of courses">
+                                {{rec.courseName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgcourseid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Stream<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="streamName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="StreamId">
+                            <ng-option [value]="rec.streamId" *ngFor="let rec of streams">
+                                {{rec.streamName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgstreamid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Percentage<span class="required">*</span></label>
+                    <input type="text" appTwoDigitDecimaNumber maxlength="5" class="form-control"
+                        formControlName="MarksPercentage" placeholder="CGPA to be conv. to %">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['MarksPercentage'].touched && !saveForm.controls['MarksPercentage'].valid">
+                        <span *ngIf="saveForm.controls['MarksPercentage'].hasError('required') ">Required</span>
+                        <span *ngIf="saveForm.controls['MarksPercentage'].hasError('pattern') ">Invalid data</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Year of Completion<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="yearsName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="true" [clearable]="false" formControlName="CompletionYear">
+                            <ng-option [value]="rec.yearsId" *ngFor="let rec of CompletionYear">
+                                {{rec.yearsName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg mscompletionyearid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Qualification Type<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="qualificationTypeName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="QualificationTypeId">
+                            <ng-option [value]="rec.qualificationTypeId" *ngFor="let rec of qualificationType">
+                                {{rec.qualificationTypeName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgqualificationtypeid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Total Experience <span class="required">*</span></label>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="dropdown bootstrap-select form-control">
+                                <ng-select bindLabel="yearsName" [placeholder]="'YY'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="ExperienceYear" (change)="changeExperience()">
+                                    <ng-option [value]="rec.yearsId" *ngFor="let rec of experiences">
+                                        {{rec.yearsName}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg msgyearid" style="display: none;">
+                                    <span>Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="dropdown bootstrap-select form-control">
+                                <ng-select bindLabel="monthId" [placeholder]="'MM'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="ExperienceMonth" (change)="changeExperience()">
+                                    <ng-option [value]="rec.monthId" *ngFor="let rec of Months">
+                                        {{rec.monthId}}
+                                    </ng-option>
+                                </ng-select>
+                                <p class="error-msg msgmonthid" style="display: none;">
+                                    <span>Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Current CTC(PA)<span class="required">*</span></label>
+                    <input type="text" (keypress)="keyPress($event)" formControlName="CurrentCTC" class="form-control"
+                        placeholder="Enter CTC in INR">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['CurrentCTC'].touched && !saveForm.controls['CurrentCTC'].valid">
+                        <span *ngIf="saveForm.controls['CurrentCTC'].hasError('required') ">Required</span>
+                        <span *ngIf="saveForm.controls['CurrentCTC'].hasError('pattern') ">Invalid data</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Current Employer<span class="required">*</span></label>
+                    <input type="text" formControlName="CurrentEmployer" class="form-control"
+                        placeholder="Employer Name">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['CurrentEmployer'].touched && !saveForm.controls['CurrentEmployer'].valid">
+                        <span *ngIf="saveForm.controls['CurrentEmployer'].hasError('required') ">Required</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Designation<span class="required">*</span></label>
+                    <input type="text" formControlName="CurrentDesignation" class="form-control"
+                        placeholder="Enter Designation">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['CurrentDesignation'].touched && !saveForm.controls['CurrentDesignation'].valid">
+                        <span *ngIf="saveForm.controls['CurrentDesignation'].hasError('required') ">Required</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Domain<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="DomainId"
+                            (change)="changeDomain($event)">
+                            <ng-option [value]="rec.domainId" *ngFor="let rec of domain">
+                                {{rec.domainName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgdomainid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Sub-Domain<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="SubDomainId">
+                            <ng-option [value]="rec.domainId" *ngFor="let rec of subdomain">
+                                {{rec.domainName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgsubdomainid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Current Location<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <ng-select bindLabel="stateName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="true" [clearable]="false" formControlName="StateId">
+                            <ng-option [value]="rec.stateId" *ngFor="let rec of State">
+                                {{rec.stateName}}
+                            </ng-option>
+                        </ng-select>
+                        <p class="error-msg msgstateid" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Any Previous Application History in MRF<span class="required">*</span></label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="dropdown bootstrap-select form-control">
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" formControlName="PreviousApplied">
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="swichLabel">Any Relative Working in MRF<span class="required">*</span></label>
+                    <label class="switch">
+                        <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" formControlName="RelativeStatus"
+                            (change)="changeRelativeStatus($event)">
+                            <ng-option [value]="1">Yes</ng-option>
+                            <ng-option [value]="0">No</ng-option>
+                        </ng-select>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="!isRelative">
+                <div class="form-group">
+                    <label>Relative Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" [disabled]="isRelative" formControlName="RelativeName"
+                        placeholder="Enter Name">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['RelativeName'].touched && !saveForm.controls['RelativeName'].valid">
+                        <span *ngIf="saveForm.controls['RelativeName'].hasError('required') ">Required</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="!isRelative">
+                <div class="form-group">
+                    <label>Relative's Mobile No.<span class="required">*</span></label>
+                    <input type="text" class="form-control" [disabled]="isRelative" formControlName="RelativeContactNo"
+                        (keypress)="keyPress($event)" maxlength="10" placeholder="Eg:9800123456">
+                    <p class="error-msg"
+                        *ngIf="saveForm.controls['RelativeContactNo'].touched && !saveForm.controls['RelativeContactNo'].valid">
+                        <span *ngIf="saveForm.controls['RelativeContactNo'].hasError('required') ">Required</span>
+                        <span *ngIf="saveForm.controls['RelativeContactNo'].hasError('pattern') ">Invalid contact
+                            no.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Attach Resume <span class="required">*</span></label>
+                <div class="custom-file">
+                    <!-- <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                        (change)="handleUpload($event)">
+                    <label class="custom-file-label" for="customFile" #candidateResumeImport>Choose file</label> -->
+                    <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                        (change)="onFileChange($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #candidateResumeImport>Choose file</label>
+                    <p class="error-msg msgfile" style="display: none;">
+                        <span>Required</span>
+                    </p>
+                </div>
+                <div class="col-md-6 attach-file" *ngIf="isResume">
+                    <a (click)="openFile(resume)" style="cursor: pointer;" title="Download"><i
+                            class="las color-black la-paperclip"></i>Resume doc </a>
+                    <a (click)="openFile(resume)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                </div>
+
+            </div>
+        </div>
+        <div class="my-3" style="display: none;">
+            <span class="red">Aadhar Disclaimer:</span>
+            <span></span>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-black">Update</button>
+
+        </div>
+
+    </div>
+</form>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please read the following instructions carefully. </h6>
+                <h6 class="conComment text-center">1. Check your email Id and correct if any changes here. </h6>
+                <h6 class="conComment text-center">2. Use the login credentials(User Id) sent to your email Id for
+                    future login to the portal. </h6>
+                <div class="mt-4 text-center">
+                    <!-- <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button> -->
+                    <button type="button" class="btn btn-primary ml-2" (click)="closePopUp()">I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<!-- Anif -->

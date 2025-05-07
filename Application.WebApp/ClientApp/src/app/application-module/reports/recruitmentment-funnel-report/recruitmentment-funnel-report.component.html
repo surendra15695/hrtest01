@@ -1,0 +1,81 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Recruitment Funnel</h1>
+    </div>
+    <div class="filter-sec mb-3">
+        <form [formGroup]="filterForm" (ngSubmit)="onFilter()" autocomplete="off">
+            <div class="form-row m-t-10">    
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Date</label>
+                      <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                            placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-2"><i class="las la-sync-alt"></i> Reset</button>
+                </div>   
+            </div>
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Month - Year</th>
+                    <th>No of Requisition</th>
+                    <th>Total Position Requested</th>
+                    <th>Submitted</th>
+                    <th>Shortlisted</th>
+                    <th>Selected</th>
+                    <th>Offered</th>
+                    <th>Declined after Offer</th>
+                    <th>Joined</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of recruitmentFunnelList">
+                    <td style="text-align: center;">{{data.serialNumber}}</td>
+                    <td style="text-align: center;">{{data.monthYear}}</td>
+                    <td style="text-align: center;">{{data.noOfRequisitions}}</td>
+                    <td style="text-align: center;">{{data.totalPositionsRequested}}</td>
+                    <td style="text-align: center;">{{data.submitted}}</td>
+                    <td style="text-align: center;">{{data.shortlisted}}</td>
+                    <td style="text-align: center;">{{data.selected}}</td>
+                    <td style="text-align: center;">{{data.offered}}</td>
+                    <td style="text-align: center;">{{data.offerDecline}}</td>
+                    <td style="text-align: center;">{{data.joined}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,440 @@
+<div class="content-box">
+
+    <h6 class="red">All Candidates</h6>
+    <!-- Fiter section start -->
+    <form [formGroup]="searchFormHtCandidateList" (ngSubmit)="onSearchCandidateList()">
+        <div class="filter-sec mb-3">
+            <div class="form-row m-t-10">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Date of Joining</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="datepicker"
+                                        placeholder="From Date" formControlName="dtofJoiningFrom" #dtofJoiningFrom>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="datepicker1"
+                                        placeholder="To Date" formControlName="dtofJoiningTo" #dtofJoiningTo>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Candidate ID</label>
+                        <input type="text" class="form-control" formControlName="candidateNo">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Candidate Name</label>
+                        <input type="text" class="form-control" formControlName="name">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Pos. Location</label>
+                        <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="locationId">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationNo}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Hiring Status</label>
+                        <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" formControlName="hiringStatus">
+                            <ng-option [value]="0">All </ng-option>
+                            <ng-option [value]="43">Offer Accepted</ng-option>
+                            <ng-option [value]="44">Joining Date Confirmed</ng-option>
+                            <ng-option [value]="45">Joining Scheduled</ng-option>
+                            <ng-option [value]="46">Onboarding Allocated</ng-option>
+                            <ng-option [value]="47">Onboarding Scheduled</ng-option>
+                            <ng-option [value]="48">Welcome Send</ng-option>
+                            <ng-option [value]="49">Welcome Declined</ng-option>
+                            <ng-option [value]="50">Welcome Acknowledged</ng-option>
+                            <ng-option [value]="51">Joinining Acknowledge</ng-option>
+                            <ng-option [value]="52">Onboarding Complete</ng-option>
+                            <ng-option [value]="53">Docs Verified Ok-Hiring</ng-option>
+                            <ng-option [value]="54">Employee No Updated</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="onClickResetClick()"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Fiter section End -->
+
+    <div class="text-right my-2" *ngIf="callngIfFunction?showBtnReassignCandidate():false">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#reassignCandidate" (click)="btnClickReassignCandidate()">Reassign Candidate</button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <input type="checkbox" id="chkAll" [(ngModel)]="selectAll"
+                                (change)="onCheckSelectAll($event)">
+                            <label class="chk" for="chkAll"></label>
+                        </div>
+                    </th>
+                    <th>Cand. ID</th>
+                    <th>Cand. Name</th>
+                    <th>Designation</th>
+                    <th>Pos. Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>D.O.J</th>
+                    <th>M.O.J</th>
+                    <th>BVG Status</th>
+                    <th>onboarding Manager</th>
+                    <th>Joining Checklist Status</th>
+                    <th>Hiring Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of reassignHiringCandidateList;let i=index;">
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)"
+                                (change)="onCheckRowWise(data,$event,i)">
+                            <label class="chk" for="{{i}}"></label>
+                        </div>
+                    </td>
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.candidateFullName}}</td>
+                    <td>{{data.designationName}}</td>
+                    <td>{{data.locationName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.dateofJoining}}</td>
+                    <td>{{data.modeofJoining}}</td>
+                    <td>{{data.bvgReportStatus}}</td>
+                    <td>{{data.onBoardingManagerName}}</td>
+                    <td>{{data.joiningCheckListStatus}}</td>
+                    <td>{{data.hiringStatusName}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <!-- <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#releaseAssessmentModal"
+                                (click)="onClickReleaseAssment(data,'Candidate')"><i
+                                        class="las la-check-circle"></i> Release Assessment</a>
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="onClicViewAssessment(data)"><i class="las la-clipboard-list"></i> View Assesment</a>
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="onClickCandiateAssessmentSummary(data)"><i class="las la-clipboard-list"></i>Assessment Summary</a>
+                             -->
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)"
+                                    href="javascript:void(0)" (click)="onClickVerifyDocument(data)"><i
+                                        class="las la-folder-open"></i>Verify Documents</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" (click)="onClickJoiningCheckList(data)"><i class="las la-tasks"></i>Joining
+                                    Checklist</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId>52 && data.hiringStatusId !=62"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#updateEmployeeNoModal"
+                                    (click)="onClickUpdateEmployeeNo(data)"><i class="las la-pen"></i> Update Employee
+                                    No</a> <!--*ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56"-->
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=54 && data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#updateJoiningDateModal"
+                                    (click)="onClickUpdateJoningDate(data)"><i class="las la-pen"></i> Update Joining
+                                    Date</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#reassignCandidate"
+                                    (click)="onClickReassignCandidate(data)"><i class="las la-reply"></i>Reassign
+                                    Candidate </a>
+                                <!-- <a class="dropdown-item" hhref="javascript:void(0)"><i
+                                        class="las la-times-circle"></i>Reject</a> -->
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                                    (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'candidatelist')"><i
+                                        class="las la-times-circle"></i>Declined</a>
+
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=4"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#rejectModal"
+                                    (click)="openModalForReject(data.candidateId,'candidatelist')"><i
+                                        class="las la-times-circle"></i>Reject</a>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+<!-- Sayandeep -->
+<!-- Reassign Modal -->
+<!-- Modal -->
+<div class="modal fade" id="reassignCandidate" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Reassign Candidate</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Reassign To Hiring Team<span class="required">*</span></label>
+                    <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                        [searchable]="false" [clearable]="false" [(ngModel)]="hiringTeamId" name="employeeName">
+                        <ng-option [value]="rec.autoUserId" *ngFor="let rec of onBoardingManagerList">
+                            {{rec.employeeName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" (click)="oncancelreassign()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onReassignCandidateSave()">Save</button>
+                <!-- [disabled]="saveForm.invalid" -->
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+
+
+<!-- Update Joining Date Modal -->
+<div class="modal fade" id="updateJoiningDateModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Joining Date</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>New Date</label>
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                placeholder="From Date" autocomplete="off" [(ngModel)]="joiningDate" #dateOfJoining>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" (click)="oncancelJoiningDate()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onUpdateJoiningDate()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+
+
+<!-- Update Employee No Modal -->
+<div class="modal fade" id="updateEmployeeNoModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Employee No</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Employee No</label>
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control" placeholder="Employee No" autocomplete="off"
+                                [(ngModel)]="employeeNo" 
+                                (keypress)="numberOnly($event)"><!--[disabled]="disableEmployeeNoField"-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm"
+                    (click)="onUpdateEmployeeNo()">Submit</button><!--*ngIf="!disableEmployeeNoField"-->
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- Release Assessment Modal -->
+<div class="modal fade" id="releaseAssessmentModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Release Assessment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <p class="d-inline-block grey">{{assessmentAssignReleaseType}} ID:</p>
+                    <p class="d-inline-block">{{assessmentAssignRealeaseNo}}</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Training Title</th>
+                                <th>Assessment</th>
+                                <th>Training Type</th>
+                                <th class="text-center">Assign</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let aarl of assessmentAssignReleaseList;let i=index;">
+                                <td>{{aarl.traingTitle}}</td>
+                                <td>{{aarl.assessmentName}}</td>
+                                <td>{{aarl.assessmentTypeName}}</td>
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="{{aarl.candidateInductionScheduleDetailsId}}"
+                                            (change)="onCheckAssign($event,aarl)" [ngModel]="getAssignedStatus(aarl)">
+                                        <label class="chk" for="{{aarl.candidateInductionScheduleDetailsId}}"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onClickRelease()">Release</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- Reject Modal  -->
+<div class="modal fade" id="rejectModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionNameReject}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="rejectremarks"
+                                #DeclineRemarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="ForRejectCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- Decline Modal -->
+<div class="modal fade" id="declineModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionName}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="declineremarks"
+                                #DeclineRemarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

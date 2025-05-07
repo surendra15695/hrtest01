@@ -1,0 +1,57 @@
+<div>
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Document Map Details</h1>
+    </div>
+    <div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Vertical:</p>
+                <p class="d-inline-block">
+                    {{gradeWiseDocumentMapList[0]?.verticalName}}</p>
+
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function:</p>
+                <p class="d-inline-block"> {{gradeWiseDocumentMapList[0]?.functionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade:</p>
+                <p class="d-inline-block"> {{gradeWiseDocumentMapList[0]?.gradeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Document Type:</p>
+                <p class="d-inline-block"> {{gradeWiseDocumentMapList[0]?.attachmentDocumentTypeName}}
+                </p>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Document Particular:</p>
+                <p class="d-inline-block">
+                    {{gradeWiseDocumentMapList[0]?.attachmentDocumentParticularName}}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center">Sl. No.</th>
+                    <th class="text-center">Attachment Document Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of gradewiseDocMapDetailsList; let i = index;">
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="text-center">{{data.attachmentDocumentName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

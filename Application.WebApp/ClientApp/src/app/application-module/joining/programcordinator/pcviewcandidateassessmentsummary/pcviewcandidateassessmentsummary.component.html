@@ -1,0 +1,90 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" (click)="onClickBack()"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Employee No: {{allCandidateAssessmentSummary[0]?.empNo}}</h1>
+            </div>
+        </div>   
+    </div>
+    <div class="d-flex align-items-center justify-content-between">
+        <h6 class="red">Assessment Summary</h6>
+        <p><b class="red">Note:</b> 60% and above is successful completion.</p>
+    </div>
+    <table #table1>
+    <div class="table-responsive my-2">
+        <table class="table table-bordered" #table1>
+            <thead>
+                <tr>
+                    <th class="text-center">Sl No.</th>
+                    <th>Name of Trainee</th>
+                    <th>EMP. No.</th>
+                    <th class="text-center">Age</th>
+                    <th>Qualification</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Grade</th>
+                    <th>Pos. Location</th>
+                    <th>Work Area</th>
+                    <th>Date of Joining</th>
+                    <th>Training Location</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let data of allCandidateAssessmentSummary;let i=index">
+              <td class="text-center">{{i+1}}</td>
+              <td>{{data.candidateFullName}}</td>
+              <td>{{data.empNo}}</td>
+              <td class="text-center">{{data.age}}</td>
+              <td>{{data.qualificationName}}</td>
+              <td>{{data.functionName}}</td>
+              <td>{{data.departmentName}}</td>
+              <td>{{data.designationName}}</td>
+              <td>{{data.gradeName}}</td>
+              <td>{{data.locationName}}</td>
+              <!--<td><textarea >{{data.candidateAssessmentSummaryDetails[0].workArea}}</textarea></td>-->
+            <td><input type="text" style="min-width:150px;" class="form-control" [(ngModel)]="data.workAreaName"><p [hidden]="true">{{data.workAreaName}}</p></td>
+              <td>{{data.dateofJoining}}</td>
+              <td>{{data.traingLocationName}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-responsive my-2" *ngIf="allCandidateAssessmentSummary.length>0">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th [attr.colspan]="requiredColSpan" class="text-center">Evaluation score with Remarks</th>
+                </tr>
+                <tr>
+                    <th *ngFor="let header of assessmentHeaderArray" class="text-center">{{header.assessmentname}}</th>
+                </tr>
+            </thead>
+            <tr>
+                <td *ngFor="let header of assessmentHeaderArray">
+                    <span *ngIf="header.showTextField">
+                      <input type="text" class="form-control" #evaluationremarks [(ngModel)]="header.assessmentRemarks" (change)="onChangeRemarks(header,evaluationremarks.value)">
+                      <p [hidden]="true">{{evaluationremarks.value}}</p>
+                      <!-- ------added by Sayandeep for excel download -->
+                    </span>
+                    <span *ngIf="!header.showTextField">
+                        {{getPercentValue(header)}}
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </table>
+    <div class="mt-4"  *ngIf="allCandidateAssessmentSummary.length>0">
+        <button type="button" class="btn btn-black" (click)="onClickSubmit()">Submit</button>
+        <button type="button" class="btn btn-primary ml-1" (click)="onCancelClick()">Cancel</button>&nbsp;
+        <div class="attach-file">
+            <a href="javascript:void(0)" title="Download" (click)="onFileDownloadaftersubmit()">Download</a>
+            <a href="javascript:void(0)" (click)="onFileDownloadaftersubmit()"><i class="las la-download red"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

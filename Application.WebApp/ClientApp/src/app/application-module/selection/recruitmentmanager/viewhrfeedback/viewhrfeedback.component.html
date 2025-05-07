@@ -1,0 +1,58 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Interview HR Feedback</h1>
+    </div>
+    <div *ngFor="let rec of feedbackRecords">
+        <div class="form-row mb-2">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate Name:</p>
+                <p class="d-inline-block red">{{rec.fullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Position:</p>
+                <p class="d-inline-block red">{{rec.positionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Interview Name:</p>
+                <p class="d-inline-block red">{{rec.interviewName}}</p>
+            </div>
+        </div>
+        <div *ngFor="let data of rec.assessmentList">
+            <div class="row">
+                <div class="col-md-12">
+                    <label><b>1. Any history of existing medical ilness / accident for self or parents. If yes, give
+                            details</b></label>
+                    <p>
+                        Ans. {{data.medicalDetails}}
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <label><b>2. Anual income pd parents - Please give details of financial condition</b></label>
+                    <p>
+                        Ans. {{data.parentIncomeDetails}}
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <label><b>3. Do candidate have any plan for higher studies?</b></label>
+                    <p>
+                        Ans. {{data.dependentDetails}}
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <label><b>4. Is Candidate family dependent on his / her income? If yes, give details</b></label>
+                    <p>
+                        Ans. {{data.higherStudiesDetails}}
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <label><b>5. What is candidate understanding of job profile or role</b></label>
+                    <p>
+                        Ans. {{data.underStandingDetails}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

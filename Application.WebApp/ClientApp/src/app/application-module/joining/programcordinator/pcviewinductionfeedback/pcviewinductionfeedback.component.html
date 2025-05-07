@@ -1,0 +1,87 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <a href="javascript:void(0)" class="back-btn" (click)="onClickBack()"><i
+                                class="las la-arrow-circle-left"></i></a>
+                        <h1 class="f-l">View Feedback</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-md-2">
+                    <p class="d-inline-block grey">Employee No:</p>
+                    <p class="d-inline-block">{{EmpNo}}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="d-inline-block grey">Employee Name:</p>
+                    <p class="d-inline-block">{{candidateName}}</p>
+                </div>
+            </div>
+
+            <div id="accordion" class="myaccordion">
+                <div class="card" *ngFor="let data of feedbackFormatedDetails">
+                    <div class="card-header" id="headingOne">
+                        <h2>
+                            <button
+                                class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                aria-controls="collapseOne">
+                                {{data.feedBackName}}
+                                <span>
+                                    <i class="fa fa-minus"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>SL. No</th>
+                                            <th>Induction Training Feedback</th>
+                                            <th align="center" style="text-align:center;">Rating</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let rec of data.feedBackQuestionDataDetailsCandidate;let i=index;">
+                                            <td>{{i+1}}</td>
+                                            <td>{{rec.feedBackQuestion}}</td>
+                                            <td *ngIf="rec.feedBackQuestionTypeId==1" align="center">{{rec.feedBackAnswer}}</td>
+                                            <td *ngIf="rec.feedBackQuestionTypeId==2" align="center">{{rec.feedBackAnswer=="Y"?"YES":"NO"}}</td>
+                                            <td *ngIf="rec.feedBackQuestionTypeId==3" align="center">{{rec.feedBackAnswer}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="alert alert-warning">
+                                <div class="row">
+                                    <div class="col"><b>Overall Rating</b></div>
+                                    <div class="col text-right"><b>{{data.feedBackAvg}}</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- <div class="alert alert-warning">
+                <div class="row">
+                    <div class="col"><b>Overall Rating</b></div>
+                    <div class="col text-right"><b>4.5</b></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

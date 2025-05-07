@@ -1,0 +1,175 @@
+<div class="content-box m-b-15 m-t-10" *ngIf="candidateWelcomeAcknowledgementDetails[0]?.hiringStatusId < 48">
+    <div class="page-title-area pb-2 mb-2">
+      <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+        <div>
+          <h1 class="f-l">Joining Acknowledgement is not initiated yet.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="content-box m-b-15 m-t-10" *ngIf="candidateWelcomeAcknowledgementDetails[0]?.swcMailingStatus>=50">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l" style="color: rgb(9, 173, 9);">Your Acceptance Will Be Communicated To Concerned</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-box m-b-15 m-t-10" *ngIf="candidateWelcomeAcknowledgementDetails[0]?.swcMailingStatus==49">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l" style="color: red;">Your Declined Will Be Communicated To Concerned</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-box m-b-15 m-t-10" *ngIf="(candidateWelcomeAcknowledgementDetails[0]?.swcMailingStatus <=48) && (candidateWelcomeAcknowledgementDetails[0]?.hiringStatusId >= 48)">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Joining Acknowledgement</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate ID:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.candidateNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Location:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.locationName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.functionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Department:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.departmentName}}</p>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Position:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.designationName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.gradeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Date of Joining:</p>
+                <p class="d-inline-block">{{candidateWelcomeAcknowledgementDetails[0]?.dateOfJoining}}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <form [formGroup]="saveWelcomeAcknowledgementForm">
+        <div>
+            <h6 class="red">Take Action</h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Acknowledgement</label>
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="50" id="radio1" type="radio"
+                                (change)="onChangeAcknowledgementType('A')"
+                                [checked]="candidateWelcomeAcknowledgementDetails[0]?.swcMailingStatus===50"
+                                [disabled]="readonly">
+                            <label for="radio1">Accept</label>
+                        </div>
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="49" id="radio2" type="radio"
+                                (change)="onChangeAcknowledgementType('D')"
+                                [checked]="candidateWelcomeAcknowledgementDetails[0]?.swcMailingStatus===49"
+                                [disabled]="readonly">
+                            <label for="radio2">Decline</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Remarks</label>
+                        <textarea name="" id="" class="form-control" placeholder="Enter remarks"
+                            formControlName="remarks" [readonly]="readonly"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4" *ngIf="!readonly">
+            <button type="button " class="btn btn-black" (click)="onClickFinalSubmit('Y')">Submit</button>
+            <button type="button " class="btn btn-primary ml-1">Cancel</button>
+        </div>
+    </form>
+
+    <!-- Onboarding Coordinator Remarks -->
+    <div class="mt-4">
+        <h6 class="red">Remarks:</h6>
+        <div class="media mb-3">
+            <img class="mr-3" src="images/user-icon-2.png" alt="">
+            <div class="media-body" *ngFor="let data of coordinatorRemarks">
+              <!-- <p class="my-0"><b> Name : <span>"TEST Name"</span></b></p> -->
+              {{candidateWelcomeAcknowledgementDetails[0]?.remarks}}
+            </div>
+        </div>
+
+        <!-- <div class="row" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Enter reply comment..."
+                        [(ngModel)]="additionalRemarks"></textarea>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr> 
+                    <th>Remarks For</th>
+                    <th>Remarks By</th>
+                    <th>Date</th>
+                    <th>Remarks</th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rec of candidateremarksList">
+                    <td>{{rec.statusName}}</td>
+                    <td>{{rec.empName}}</td> 
+                    <td>{{rec.createdOn}}</td> 
+                    <td>{{rec.remarks}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>
+
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                    correctly.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="onClickFinalSubmit('N')">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onClickFinalSubmit('Y')">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

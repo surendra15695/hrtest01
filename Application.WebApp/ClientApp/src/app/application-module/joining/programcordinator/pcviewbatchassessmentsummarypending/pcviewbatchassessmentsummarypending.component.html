@@ -1,0 +1,51 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" (click)="onClickBack()"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Batch ID: {{batchNo}}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between">
+        <h6 class="red">Assessment Pending List</h6>
+    </div>
+    <div class="table-responsive my-2">
+        <table class="table table-bordered" #table1>
+            <thead>
+                <tr>
+                    <th  style="position: sticky; min-width: 100px; max-width: 100px; z-index: 9; left:0; background-color: #efefef;" rowspan="2" class="text-center">Sl No.</th>
+                    <th style="position: sticky; min-width: 100px; max-width: 100px; z-index: 9; left:100px;; background-color: #efefef;" rowspan="2">EMP. No.</th>
+                    <th style="position: sticky; min-width: 100px; max-width: 120px; z-index: 9; left:200px; background-color: #efefef;" rowspan="2">Name of Trainee</th>
+                </tr>
+                <tr>
+                    <th *ngFor="let header of assessmentHeaderArray" class="text-center"style="min-width:150px;">{{header.assessmentName}}</th>
+                </tr>
+            </thead>            
+            <tr *ngFor="let data of allCandidateAssessmentSummaryPending;let i=index">
+                <td style="position: sticky; min-width: 100px; max-width: 100px; z-index: 9; left:0; background-color: #fff;" class="text-center">{{i+1}}</td>
+                <td style="position: sticky; min-width: 100px; max-width: 150px; z-index: 9; left: 100px; background-color:#fff;">{{data.empNo}}</td>
+                <td style="position: sticky; min-width: 100px; max-width: 150px; z-index: 9; left: 200px; background-color: #fff;">{{data.candidateFullName}}</td>
+                <td class="text-center" *ngFor="let header of assessmentHeaderArray">
+                    
+                    <span>
+                        {{getAssessmentValue(data.candidateId,header)}}
+                    </span>
+                </td>
+            </tr>            
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <div class="attach-file">
+            <a href="javascript:void(0)" title="Download" (click)="onFileDownloadaftersubmit()">Download</a>
+            <a href="javascript:void(0)" (click)="onFileDownloadaftersubmit()"><i class="las la-download red"></i></a>
+        </div>
+    </div>
+
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

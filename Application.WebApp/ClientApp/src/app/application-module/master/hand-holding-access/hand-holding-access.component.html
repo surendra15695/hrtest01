@@ -1,0 +1,320 @@
+<div class="page-title-area pb-2 mb-2">
+    <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+      <div *ngIf="showheading">
+        <h1 class="f-l">HandHolding Access Role wise user</h1>
+      </div>
+      <div *ngIf="showadd">
+        <a href="javascript:void(0)" (click)="onClickAddNew()" class="btn btn-primary btn-sm"><i class="las la-plus"></i>
+          Add New Mapping</a>
+      </div>
+    </div>
+</div>
+<div class="table-responsive" *ngIf="showUserRoleList">
+    <table id="dataTable1" class="table table-striped" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>RoleId</th>
+          <th>RoleName</th>
+          <th>EmployeeName</th>
+          <th>VerticalName</th>
+          <th>LocationName</th>
+          <th>FunctionName</th>
+          <th>AreaName</th>
+          <th>Status</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of DataTable; let i = index;">
+            <td>{{item.roleId}}</td>
+            <td>{{item.roleName}}</td>
+            <td>{{item.employeeName}}</td>
+            <td>{{item.verticalName}}</td>
+            <td>{{item.locationName}}</td>
+            <td>{{item.functionName}}</td>
+            <td>{{item.areaName}}</td>
+            <td class="green" *ngIf="item.isActive==true">Active</td>
+            <td class="red" *ngIf="item.isActive==false">Inactive</td>
+            <td class="text-center">
+              <div class="row-dropdown">
+                <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" (click)="onEdit(item)" href="#" data-toggle="modal" data-target="#myModal"><i
+                      class="las la-pen"></i> Edit</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="content" *ngIf="!showUserRoleList">
+    <div class="alert alert-warning">
+      <p>
+        <span style="color:red;">Note:</span>
+         Please Select Function after Location</p>
+    </div>
+    <div class="content-box m-b-15 m-t-10">
+        <div class="page-title-area pb-2 mb-2">
+          <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+          <h1 class="f-l">{{mapingText}}</h1>
+        </div>
+        <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>User Role</label>
+                  <ng-select bindLabel="userrole" class="ddltestvenue" (change)="onChangeUserRole($event)"
+                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                    formControlName="roleId" [clearable]="false">
+                    <ng-option [value]="rec.roleId" *ngFor="let rec of RoleList">
+                      {{rec.roleName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>User</label>
+                  <ng-select formControlName="AutoUserId" bindLabel="userName" [placeholder]="'Select'"
+                    (change)="onChangeUser()" [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false">
+                    <ng-option [value]="rec.autoUserId" *ngFor="let rec of trainingInchargeList;">
+                      {{rec.employeeName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+                <div style="float: right;">
+                <button type="button" (click)="onClickshow()" class="btn btn-primary ml-2" data-toggle="modal" data-target="#shareWithCandidateModal">show</button>
+              </div>
+              </div>
+              <div class="col-md-3" *ngIf="showVertical">
+                <div class="form-group">
+                  <label>Vertical</label>
+                  <ng-select formControlName="verticalId" bindLabel="verticalName" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false"
+                    (change)="onChangeVertical()">
+                    <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList;">
+                      {{rec.verticalName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+                <!-- <div style="float: right;">
+                <button type="button" (click)="onClickshowLocation()" class="btn btn-primary ml-2" data-toggle="modal" data-target="#LocationModal">show</button>
+              </div> -->
+              </div>
+              <div class="col-md-3" >
+                <div class="form-group">
+                  <label>Location</label>
+                  <ng-select formControlName="locationId" bindLabel="LocationName" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false"
+                    (change)="changeLocation($event)">
+                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations;">
+                      {{rec.locationOffice}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+                <div style="float: right;">
+                <button type="button" (click)="onClickshowLocation()" class="btn btn-primary ml-2" data-toggle="modal" data-target="#LocationModal">show</button>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="showfunction">
+                <div class="form-group">
+                  <label>Functions</label>
+                  <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true"
+                    [searchable]="true" [clearable]="false" formControlName="functionId" (change)="changeFunction($event)">
+                    <ng-option [value]="rec.functionId" *ngFor="let rec of newarray">
+                      {{rec.functionName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+                <div style="float: right;">
+                <button type="button" (click)="onClickshowFunction()" class="btn btn-primary ml-2" data-toggle="modal" data-target="#FunctionModal">show</button>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="showarea">
+                <div class="form-group">
+                  <label>Areas</label>
+                  <!-- <ng-select bindLabel="areaName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true"
+                    [searchable]="true" [clearable]="false" formControlName="areaId" (change)="changeArea($event)">
+                    <ng-option [value]="rec.subAreaId" *ngFor="let rec of newarea">
+                      {{rec.subAreaName}}
+                    </ng-option>
+                  </ng-select> -->
+                  <input type="text" class="form-control" formControlName="areaId" [(ngModel)]="areaName">
+                </div>
+                <!-- <div style="float: right;">
+                <button type="button" (click)="onClickshowArea()" class="btn btn-primary ml-2" data-toggle="modal" data-target="#AreaModal">show</button>
+                </div> -->
+              </div>
+
+              <div class="col-sm-3" *ngIf="showarea">
+                <div class="form-group">
+                  <label style="color: white;">Add</label>
+                  <a href="javascript:void(0)" class="btn btn-black btn-sm" (click)="onAddArea()"><i class="las la-plus"></i>
+                    Add</a>
+                </div>
+              </div>
+              <div class="col-sm-3" *ngIf="showarea && areaArray.length>0">
+                <table class="table table-bordered rwd-table">
+                  <thead>
+                    <tr>
+                      <th width="20%">SL. No</th>
+                  <th>Area</th>
+                  <th width="10%"></th></tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let area of areaArray; let i=index;">
+                      <td width="20%">{{i+1}}.</td>
+                      <td>{{area}}</td>
+                      <td style="width: 10%;text-align: right;"><a href="javascript:void(0)" (click)="onDeleteArea(area)" class="row-btn"><i
+                        class="las la-trash-alt"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label class="swichLabel">Active</label>
+                  <label class="switch">
+                    <input type="checkbox" id="togBtn" name="togBtn" formControlName="IsActive" name="IsActive" />
+                    <div class="slider round">
+                      <!--ADDED HTML -->
+                      <span class="on">Yes</span><span class="off">No</span>
+                      <!--END-->
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-black btn-sm">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+    </div>
+    
+</div>
+<div class="modal fade" id="shareWithCandidateModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+              <h4 class="modal-title">Selected Users</h4>
+          </div>
+          <!-- <form [formGroup]="shareInductionScheduleWithCandidateForm" (ngSubmit)="btnShareInductionWithCandidate()"
+              autocomplete="off"> -->
+          <div class="modal-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered mb-0">
+                      <thead>
+                          <tr>
+                              <th>Selected Users</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let i of arrayuser;">
+                              <td>{{i}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="LocationModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+              <h4 class="modal-title">Selected Locations</h4>
+          </div>
+          <!-- <form [formGroup]="shareInductionScheduleWithCandidateForm" (ngSubmit)="btnShareInductionWithCandidate()"
+              autocomplete="off"> -->
+          <div class="modal-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered mb-0">
+                      <thead>
+                          <tr>
+                              <th>Selected Locations</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let i of arrayLocation;">
+                              <td>{{i}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="FunctionModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+              <h4 class="modal-title">Selected Functions</h4>
+          </div>
+          <!-- <form [formGroup]="shareInductionScheduleWithCandidateForm" (ngSubmit)="btnShareInductionWithCandidate()"
+              autocomplete="off"> -->
+          <div class="modal-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered mb-0">
+                      <thead>
+                          <tr>
+                              <th>Selected Functions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let rec of newarrayfunction;">
+                              <td>{{rec}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="AreaModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+              <h4 class="modal-title">Selected Area</h4>
+          </div>
+          <!-- <form [formGroup]="shareInductionScheduleWithCandidateForm" (ngSubmit)="btnShareInductionWithCandidate()"
+              autocomplete="off"> -->
+          <div class="modal-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered mb-0">
+                      <thead>
+                          <tr>
+                              <th>Selected Area</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let i of arrayArea;">
+                              <td>{{i}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

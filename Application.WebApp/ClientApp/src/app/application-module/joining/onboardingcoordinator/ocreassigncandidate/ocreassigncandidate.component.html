@@ -1,0 +1,683 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10" *ngIf="!showNewAddSection">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <a href="javascript:void(0)" (click)="backTo()" class="back-btn"><i
+                                class="las la-arrow-circle-left"></i></a>
+                        <h1 class="f-l">Reassign Candidate</h1>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h6 class="red">Candidate Info:</h6>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Candidate ID:</p>
+                        <p class="d-inline-block">{{candidateInfo?.candidateNo}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Employee ID:</p>
+                        <p class="d-inline-block">{{EmpNo}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Candidate/Employee Name:</p>
+                        <p class="d-inline-block">{{candidateInfo?.candidateFullName}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Joining Date:</p>
+                        <p class="d-inline-block">{{candidateInfo?.fromDate}}</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!-- <div class="col-md-3">
+                        <p class="d-inline-block grey">Last Training Date:</p>
+                        <p class="d-inline-block"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="d-inline-block grey">Training Completed:</p>
+                        <p class="d-inline-block"></p>
+                    </div> -->
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Batch ID:</p>
+                        <p class="d-inline-block">{{batchNo}}</p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div>
+                <h6 class="red">Reassign Training:</h6>
+                <div class="form-row" *ngIf="showBatchSection">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Vertical</label>
+                            <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false" [(ngModel)]="verticalId"
+                                (change)="changeVertical('CL')">
+                                <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                    {{rec.verticalName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Select Batch</label>
+                            <ng-select bindLabel="batchNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="selectedBatchId"
+                                (change)="onChageBatch()">
+                                <ng-option [value]="rec.batchId" *ngFor="let rec of batchs">
+                                    {{rec.batchNo}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="mt-4" style="float: right;">
+                        <button type="button" class="btn btn-black btn-sm" (click)="OnClickAddNewSchedule()"><i
+                                class="las la-plus"></i> Add New
+                            Schedule</button>
+                    </div>
+                </div>
+                <!-- <div style="float: right;">
+                    
+                </div> -->
+            </div>
+            <!-- Start Accordian Panel -->
+            <div id="accordion" class="myaccordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2>
+                            <button
+                                class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                aria-controls="collapseOne">
+                                Assign Induction Schedule
+                                <span>
+                                    <i class="fa fa-minus"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div>
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        <p class="grey">Batch No:</p>
+                                        <p>{{batchNo}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="grey">Reporting Venue:</p>
+                                        <p>{{reportingVenueReassign?.venueName}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="grey">Address:</p>
+                                        <p>{{reportingVenueReassign?.reprtingVenueAddress}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="dataTable1" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Assign
+                                            </th>
+                                            <th>Training Title</th>
+                                            <th>Date</th>
+                                            <th>From Time</th>
+                                            <th>To Time</th>
+                                            <th>Details of Session</th>
+                                            <th>Trainer</th>
+                                            <!-- <th>Mode</th> -->
+                                            <th>Location</th>
+                                            <th>Venue</th>
+                                            <th>Coordinator</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of reassignInductionDetails;let i=index">
+                                            <td align="center">
+                                                <div class="form-check">
+                                                    <input type="checkbox" id="{{i}}"
+                                                        (change)="onCheckDetails($event,data)">
+                                                    <label class="chk" for="{{i}}"></label>
+                                                </div>
+                                            </td>
+                                            <td>{{data.traingTitle}}</td>
+                                            <td>{{data.dateFrom}}-{{data.dateTo}}</td>
+                                            <td>{{data.timeFrom}}</td>
+                                            <td>{{data.timeTo}}</td>
+                                            <td>{{data.detailsofSession}}</td>
+                                            <td>{{data.trainerName}}</td>
+                                            <!-- <td>Personal</td> -->
+                                            <td>{{data.locationName}}</td>
+                                            <td>{{data.inductionVenueName}}</td>
+                                            <td>{{data.trainingCoOrdinatorName}}</td>
+                                            <td>{{data.remarks}}</td>
+                                            <td>
+                                                <a *ngIf="!data.isActive && data.isNewReassigned"
+                                                    href="javascript:void(0)" class="row-btn" data-toggle="modal"
+                                                    data-target="#confirmPopup" (click)="onClickScheduleDelete(data)"><i
+                                                        class="las la-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="grey">Note: Please click on the check boxes to assign training.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="accordion2" class="myaccordion">
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2>
+                            <button
+                                class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                Fill Accommodation Details
+                                <span>
+                                    <i class="fa fa-minus"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingThree"
+                        data-parent="#accordion2">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Location</th>
+                                                <th>Date</th>
+                                                <th>Accommodation Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of fillAccommodationDetails">
+                                                <td>{{data.locationName}}</td>
+                                                <td>{{data.dateFrom}} - {{data.dateTo}}</td>
+                                                <td><input type="text" [(ngModel)]="data.accommodation"
+                                                        class="form-control"></td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="accordion3" class="myaccordion">
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2>
+                            <button
+                                class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                Reporting Venue
+                                <span>
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion3">
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Venue</label> <!-- By Anif on 21-02-2023 -->
+                                        <ng-select bindLabel="reportingVenueName" [placeholder]="'Select'"
+                                            [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                            [clearable]="false" [(ngModel)]="reportingInductionVenue">
+                                            <ng-option [value]="rec.reportingVenueId"
+                                                *ngFor="let rec of reportingInductionVenueList">
+                                                {{rec.reportingVenueName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <textarea class="form-control"
+                                            [(ngModel)]="reportingInductionVenueAddres"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="button" class="btn btn-black" (click)="onClickSubmit()">Submit</button>
+                <button type="button" class="btn btn-primary ml-1">Reset</button>
+            </div>
+        </div>
+
+        <!-- Add new schedule -->
+
+
+
+        <div *ngIf="showNewAddSection">
+            <div class="page-title-area pb-2 mb-2">
+                <!-- By Anif on 21-02-2023 -->
+                <a class="back-btn" (click)="onClickBack()"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Reassign Candidate</h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th
+                                style="min-width: 220px; max-width: 220px; position: sticky; left: 0; z-index: 9; background: #efefef;">
+                                Training Title</th>
+                            <th
+                                style="min-width: 154px; max-width: 154px; position: sticky; left: 220px; z-index: 9; background: #efefef;">
+                                From Date</th>
+                            <th
+                                style="min-width: 154px; max-width: 154px; position: sticky; left: 374px; z-index: 9; background: #efefef;">
+                                To Date</th>
+                            <th style="min-width: 110px;">From Time</th>
+                            <th style="min-width: 110px;">To Time</th>
+                            <!-- <th style="width: 260px;" *ngIf="isForBatch">Candidates</th> -->
+                            <th style="min-width: 260px;">Details of sessions</th>
+                            <th style="min-width: 160px;">{{trainerTypename}}</th>
+                            <th style="min-width: 100px;">Mode</th>
+                            <th>Is External</th>
+                            <th style="min-width: 160px;">Location</th>
+                            <th style="min-width: 160px;">Venue</th>
+                            <th style="min-width: 160px;">Coordinator</th>
+                            <th style="min-width: 280px;">Remarks</th>
+                            <th class="text-center" style="min-width: 80px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of inductionScheduleDetailsList">
+                            <td
+                                style="min-width: 220px; max-width: 220px; position: sticky; left: 0; z-index: 9; background: #efefef;">
+                                <ng-select bindLabel="trainingTittle" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    [(ngModel)]="data.trainingTittleId" (change)="getTrainingTittleName(data)">
+                                    <ng-option [value]="rec.trainingTittleId" *ngFor="let rec of trainingTittleList">
+                                        {{rec.trainingTittleName}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <!-- <td>{{data.dateFrom}}-{{data.dateTo}}</td> -->
+                            <td
+                                style="min-width: 154px; max-width: 154px; position: sticky; left: 220px; z-index: 9; background: #efefef;">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate autocomplete="off"
+                                        [(ngModel)]="data.dateFrom">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td
+                                style="min-width: 154px; max-width: 154px; position: sticky; left: 374px; z-index: 9; background: #efefef;">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate autocomplete="off" [(ngModel)]="data.dateTo">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group timepik date">
+                                    <input id="timepicker1" type="time" class="form-control input-small timepik"
+                                        placeholder="H:M" [(ngModel)]="data.timeFrom" [readonly]="data.readOnly">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group timepik date">
+                                    <input id="timepicker2" type="time" class="form-control input-small timepik"
+                                        placeholder="H:M" [(ngModel)]="data.timeTo" [readonly]="data.readOnly">
+                                </div>
+                            </td>
+                            <!-- <td *ngIf="isForBatch" style="width: 260px;">                                
+                                <select class="selectpicker form-control md-size-list" multiple title="Select"
+                                    tabindex="-98" [(ngModel)]="data.batchCandidateIds">
+                                    <option *ngFor="let rec of batchWiseCandidateList" [ngValue]="rec.candidateId">
+                                        {{rec.fullName}}
+                                    </option>
+                                </select>
+                            </td> -->
+                            <td>
+                                <input type="text" class="form-control" placeholder="Enter Details"
+                                    [(ngModel)]="data.detailsofSession" [readonly]="data.readOnly">
+                            </td>
+                            <td>
+                                <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    [(ngModel)]="data.trainer" [readonly]="data.readOnly"
+                                    (change)="onChangePersonTomeet(data)">
+                                    <ng-option [value]="rec.autoUserId" *ngFor="let rec of roleWiseUser">
+                                        {{rec.employeeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <ng-select bindLabel="inductionModeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    [(ngModel)]="data.inductionMode" [readonly]="data.readOnly">
+                                    <ng-option [value]="rec.inductionModeId" *ngFor="let rec of inductionModes">
+                                        {{rec.inductionModeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td> <input type="checkbox" [(ngModel)]="data.isExternal" class="externalLocation"
+                                    (change)="onChangeCheckbox($event,data)"></td>
+                            <td>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="locationID"
+                                    [disabled]="disabledField || locationReadonly" (change)="onChangeLocation(data)">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of combinedLocation">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <ng-select bindLabel="inductionVenueName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    [(ngModel)]="data.inductionVenue" [readonly]="data.readOnly"
+                                    (change)="onChangeVenue(data)">
+                                    <ng-option [value]="rec.inductionVenueId" *ngFor="let rec of locationwiseVenue">
+                                        {{rec.inductionVenueName}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    [(ngModel)]="coordinatorID" [disabled]="disabledField || coordinatorReadonly"
+                                    (change)="onChangeCoordinator()">
+                                    <!-- <ng-option [value]="rec.autoUserId" *ngFor="let rec of onBoardingCoordinatorList">
+                                        {{rec.employeeName}}
+                                    </ng-option> -->
+                                    <ng-option [value]="rec.autoUserId" *ngFor="let rec of trainingInchargeList">
+                                        {{rec.employeeName}}
+                                    </ng-option> <!-- By Anif on 21-02-2023 -->
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Enter Details"
+                                    [readonly]="data.readOnly" [(ngModel)]="data.remarks">
+                            </td>
+                            <td class="text-center"><a href="javascript:void(0)" class="row-btn"
+                                    (click)="onClickAddIcon(data)">+</a> </td>
+                        </tr>
+                        <tr *ngFor="let data of inductionScheduleDetailsNonEditableList">
+                            <td
+                                style="min-width: 220px; max-width: 220px; position: sticky; left: 0; z-index: 9; background: #efefef;">
+                                {{data.traingTitle}}</td>
+                            <td
+                                style="min-width: 154px; max-width: 154px; position: sticky; left: 220px; z-index: 9; background: #efefef;">
+                                {{data.dateFrom}} </td>
+                            <td
+                                style="min-width: 154px; max-width: 154px; position: sticky; left: 374px; z-index: 9; background: #efefef;">
+                                {{data.dateTo}}</td>
+                            <td>{{data.readOnly?(data.IsEditMode?getFormatedTime(data.timeFrom):data.timeFrom):getFormatedTime(data.timeFrom)}}
+                            </td>
+                            <td>{{data.readOnly?(data.IsEditMode?getFormatedTime(data.timeTo):data.timeTo):getFormatedTime(data.timeTo)}}
+                            </td>
+                            <td *ngIf="isForBatch">
+                                <a href="javascript:vpoid(0)" data-toggle="modal" data-target="#candidatelistpreview"
+                                    (click)="onClickCandidateList(data.batchCandidateIds)">Candidate
+                                    List</a>
+                            </td>
+                            <td>{{data.detailsofSession}}</td>
+                            <td>{{data.trainerName}}</td>
+                            <td>{{getInductionModeName(data.inductionMode)}}</td>
+                            <td>{{data.isExternal==true?"External":"Internal"}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.inductionVenueName}}</td>
+                            <td>{{data.inductionCoOrdinatorName}}</td>
+                            <td>{{data.remarks}}</td>
+                            <td class="text-center" style="min-width: 80px;"><a href="javascript:void(0)"
+                                    class="row-btn" (click)="onClickDelete(data)"><i class="las la-trash-alt"></i></a>
+                                <a href="javascript:void(0)" class="row-btn" data-toggle="modal"
+                                    data-target="#editScheduleModal" (click)="onClickEditSchedule(data)"><i
+                                        class="las la-pen"></i></a> <!-- By Anif on 21-02-2023 -->
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4" *ngIf="!disabledField">
+                <button type="button" class="btn btn-primary" (click)="onFinalSubmit()">Submit</button>
+                <button type="button" class="btn btn-secondary ml-2" (click)="onFinalReset()"><i
+                        class="las la-sync-alt"></i>
+                    Reset</button>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+<!-- Edit Schedule Modal  by anif on 21-02-2023-->
+<div class="modal fade" id="editScheduleModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Edit Schedule</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Training Tittle</label>
+                            <!-- <input type="text" class="form-control" [(ngModel)]="objEditSchedule.TrainingTittle"> -->
+                            <ng-select bindLabel="trainingTittle" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="objEditSchedule.TrainingTittleId"
+                                (change)="getTrainingTittleNameForEdit()">
+                                <!-- [disabled]="objEditSchedule.templateId!=0" -->
+                                <ng-option [value]="rec.trainingTittleId" *ngFor="let rec of trainingTittleList">
+                                    {{rec.trainingTittleName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>From Date</label>
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepickerform" id="fromdatepicker"
+                                placeholder="From Date" #fromDateEdit autocomplete="off"
+                                [(ngModel)]="objEditSchedule.FromDate">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>To Date</label>
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepickertoedit" id="todatepicker"
+                                placeholder="To Date" #toDateEdit autocomplete="off"
+                                [(ngModel)]="objEditSchedule.ToDate">
+                            <!-- formControlName="toDate" -->
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>From Time</label>
+                        <div class="input-group">
+                            <input id="timepicker3" type="time" class="form-control input-small" placeholder="H:M"
+                                [(ngModel)]="objEditSchedule.FromTime">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>To Time</label>
+                        <div class="input-group">
+                            <input type="time" class="form-control input-small" placeholder="H:M" id="timepicker4"
+                                [(ngModel)]="objEditSchedule.ToTime">
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="isForBatch">
+                        <div class="form-group">
+                            <label>Candidates</label>
+                            <select class="selectpicker form-control md-size-list" multiple title="Select"
+                                tabindex="-98" [(ngModel)]="objEditSchedule.BatchCandidateIds">
+                                <option *ngFor="let rec of batchWiseCandidateList" [ngValue]="rec.candidateId">
+                                    {{rec.fullName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Session Details</label>
+                            <input type="text" class="form-control" [(ngModel)]="objEditSchedule.SessionDetails">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>{{trainerTypename}}</label>
+                            <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="objEditSchedule.Trainer">
+                                <ng-option [value]="rec.autoUserId" *ngFor="let rec of roleWiseUser">
+                                    {{rec.employeeName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Mode</label>
+                            <ng-select bindLabel="inductionModeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="objEditSchedule.Mode">
+                                <ng-option [value]="rec.inductionModeId" *ngFor="let rec of inductionModes">
+                                    {{rec.inductionModeName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                Is External </label>
+                            <input type="checkbox" [(ngModel)]="objEditSchedule.IsExternal"
+                                (change)="onChangePopupCheckbox($event)">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Location</label>
+                            <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="objEditSchedule.Location" (change)="onChangeEditLocation()">
+                                <!-- <ng-option [value]="rec.locationId" *ngFor="let rec of locations"> -->
+                                <ng-option [value]="rec.locationId" *ngFor="let rec of combinedLocation">
+                                    {{rec.locationOffice}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Venue</label>
+                            <ng-select bindLabel="inductionVenueName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="objEditSchedule.Venue" (change)="onChangeVenueOnEdit()">
+                                <ng-option [value]="rec.inductionVenueId" *ngFor="let rec of locationwiseVenue">
+                                    {{rec.inductionVenueName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Coordinator</label>
+                            <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="objEditSchedule.Coordinator">
+                                <!-- formControlName="onBordingCoordinatorId" -->
+                                <!-- <ng-option [value]="rec.autoUserId" *ngFor="let rec of onBoardingCoordinatorList"> -->
+                                <ng-option [value]="rec.autoUserId" *ngFor="let rec of trainingInchargeList">
+                                    {{rec.employeeName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <input type="text" class="form-control" [(ngModel)]="objEditSchedule.Remarks">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-black btn-sm" (click)="onPopupSubmit()">Submit</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- End Edit Schedule Modal  -->
+
+<!--Confirmation Modal Start-->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to delete?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onDeleteConfirm()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Confirmation Modal End -->
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<!-- arghya ,date-26/08 -->

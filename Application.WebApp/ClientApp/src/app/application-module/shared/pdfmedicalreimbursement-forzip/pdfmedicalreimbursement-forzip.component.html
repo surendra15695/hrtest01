@@ -1,0 +1,123 @@
+<div class='book'>
+    <!--A4 page start-->
+    <div style='width: 74px; text-align: center; margin: 0 auto;'>
+        <img src='https://mrfhrportaldocumentstrg.blob.core.windows.net/signatureupload/logo.png'
+        style='width: 100%; text-align: center;' alt=''>
+    </div>
+    <h2 style='text-align: center;'>PRE – EMPLOYMENT MEDICAL REIMBURSEMENT</h2>
+
+    <div style='margin: 10px 0;'>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; text-align: right;'><b>Date:</b> {{today | date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- <div>
+        <label>NAME &nbsp; &nbsp; &nbsp; &nbsp;:</label>&nbsp<label>{{medicalReimbursementRecord?.candidateFullName}}</label>
+        <br/>
+        <label>LOCATION &nbsp; :</label>&nbsp;<label>{{medicalReimbursementRecord?.location}}</label> <h6>(city/town where medical test was
+            taken)</h6> 
+        <br/>
+        <label>DATE OF JOINING  &nbsp;  :</label>&nbsp;<label>{{medicalReimbursementRecord?.dateofJoining}}</label>
+    </div> -->
+    <div style='margin: 10px 0;'>
+        <table>
+            <tr >
+                <td>NAME</td>
+                 <!-- <td width="20" style='padding: 3px 5px; width: 20px;'>:</td> -->
+                <td>:{{medicalReimbursementRecord?.candidateFullName}}</td>
+            </tr>
+            <tr >
+                <td >LOCATION <h6>(city/town where medical test was
+                        taken)</h6></td>
+                 <!-- <td width="20" style='padding: 3px 5px;width: 20px;'>:</td> -->
+                <td >:{{medicalReimbursementRecord?.location}}</td>
+            </tr>
+            <tr >
+                <td >DATE OF JOINING</td>
+                <!-- <td width="20" style='padding: 3px 5px;width: 20px;'>:</td>  -->
+                <td>:{{medicalReimbursementRecord?.dateofJoining}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div style="margin-bottom: 15px;">
+
+    <p >Please arrange to reimburse a sum of Rs.<span style="text-decoration: underline;">{{medicalReimbursementRecord?.totalAmount}}</span>/- being the
+        pre-employment medical expenses incurred by me as per details given below.</p>
+    </div>
+<br/>
+    <table border='1' cellpadding='1' cellspacing='1'
+       >
+        <thead>
+            <tr>
+                <th style='border:1px solid #000; padding: 3px 5px;'>S. No.</th>
+                <th style='border:1px solid #000; padding: 3px 5px;'>Bill No.</th>
+                <th style='border:1px solid #000; padding: 3px 5px;'>Date</th>
+                <th style='border:1px solid #000; padding: 3px 5px; text-align: right;'>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of this.medicalReimbursementRecord?.employeeReimbursementDetails;let i=index;">
+                <td style='border:1px solid #000; padding: 3px 5px; width: 40px;'>{{i+1}}</td>
+                <td style='border:1px solid #000; padding: 3px 5px;'>{{data.billNo}}</td>
+                <td style='border:1px solid #000; padding: 3px 5px;'>{{data.billDate}}</td>
+                <td style='border:1px solid #000; padding: 3px 5px; text-align: right;'>{{data.amount}}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style='border:1px solid #000; padding: 3px 5px; text-align: right;'><b>Total Amount</b>
+                </td>
+                <td style='border:1px solid #000; padding: 3px 5px; text-align: right;'>
+                    <b>{{medicalReimbursementRecord?.totalAmount}}</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <p style="margin-top: 30px;">Rupees (Write total amount in words)
+        ______________________________________________________________________________________</p> -->
+
+        <!-- <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tbody>
+                <tr style="vertical-align: top;">
+                    <td style="width: 50px;">Rupees:</td>
+                    <td>
+                         <p style="margin: 0; text-transform: capitalize;">two thousand</p> 
+                        <p style="margin: 0; text-transform: capitalize;">{{medicalReimbursementRecord?.totalAmount |
+                            numberToWords}}</p>
+                        <p style="margin: 0; line-height: 5px;">
+                            -----------------------------------------------------------------------------------------------------------------------------
+                        </p>
+                        <p style="margin: 0;text-align: center;">(Write total amount in words)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+        <div>
+            <label>Rupees:</label>
+            <!-- <p style="margin: 0; text-transform: capitalize;">two thousand</p>  -->
+            <p style="margin: 0; text-transform: capitalize;">{{medicalReimbursementRecord?.totalAmount |
+                numberToWords}}</p>
+            <p style="margin: 0; line-height: 5px;">
+                -----------------------------------------------------------------------------------------------------------------------------
+            </p>
+            <p style="margin: 0;text-align: center;">(Write total amount in words)</p>
+        </div>
+
+    <table style='width: 100%;border-collapse: collapse; border-spacing: 0px; text-align: left; margin: 40px 0 0 0;'>
+        <tbody>
+            <tr>
+                <td style='width: 50%; padding: 3px 5px; text-align: right;'>
+                    <img width='100' style='text-align:right'
+                    src="https://hrportaldocumentstorage.blob.core.windows.net/hrdocument/Signature.jpg" alt="">
+                    </td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px; text-align: right;'>SIGNATURE</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

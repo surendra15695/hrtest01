@@ -1,0 +1,134 @@
+<div class="content">
+    
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Fill Accommodation Details</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <form autocomplete="off"><!--[formGroup]="saveForm" (ngSubmit)="onSubmit()"-->
+                <div class="page-title-area pb-2 mb-2">
+                    <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                        <div>
+                            <h1 class="f-l">New Assessment</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Section Start -->
+                <div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Assessment Type</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue" name="AssessmentTypeID" [(ngModel)]="AssessmentTypeID" [disabled]="isAssigned==true? 'false':'true'" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                    <ng-option [value]="rec.assessmentTypeId" *ngFor="let rec of AssessmentTypeList">
+                                        {{rec.assessmentTypeName}}
+                                    </ng-option>
+                                </ng-select> 
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Assessment Name</label>
+                                <input type="text" class="form-control" name="AssessmentName" [disabled]="isAssigned==true? 'false':'true'" [(ngModel)]="AssessmentName" placeholder="Enter assessment mame" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="AssessmentTypeID!=2">
+                    <div class="NoCSS">
+                        <h6 class="text-uppercase">Assessment Questionnaire</h6>
+    
+                        <div *ngFor="let parent of QuestionnaireList; let i=index">                        
+                            <div class="question-box mb-4 mt-2 pt-3">
+                                <div class="px-3">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label>Question Name</label>
+                                                <input type="text" class="form-control" [name]="'qName_'+i" [(ngModel)]="parent.QuestionName" placeholder="Enter question" (keypress)="isQuestionValidation(parent.QuestionName)" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Question Type</label>                                           
+                                                <ng-select bindLabel="venueName" class="ddltestvenue" [name]="'qType_'+i" [(ngModel)]="parent.QuestionType" (change)="onChangeQuestionType($event, i)" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                                    <ng-option [value]="record.assessmentQuestionTypeId" *ngFor="let record of AssmntQuestionTypList">
+                                                        {{record.assessmentQuestionType}}
+                                                    </ng-option>
+                                                </ng-select> 
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <!-- START: Multiple Choice Question -->
+                                    <div class="table-responsive" [attr.id]="'MulDiv_'+i" *ngIf="parent.QuestionType==1 || parent.QuestionType==3">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Option</th>
+                                                    <th style="width: 120px;">Define Answer</th>
+                                                    <th style="width: 40px;" *ngIf="isAssigned"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td *ngIf="isAssigned"><input type="text" class="form-control" name="Option" [(ngModel)]="Option" placeholder="Enter option"></td>
+                                                    <td *ngIf="isAssigned">                                                   
+                                                        <ng-select bindLabel="venueName" class="ddltestvenue" name="DefineAnswer" [(ngModel)]="DefineAnswer" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                                            <ng-option [value]="rec.id" *ngFor="let rec of DefineAnsList">
+                                                                {{rec.text}}
+                                                            </ng-option>
+                                                        </ng-select> 
+                                                    </td>
+                                                    <td class="text-center" *ngIf="isAssigned"><a href="javascript:void(0)" (click)="AddOption(i,parent)" class="row-btn">+</a> </td>
+                                                </tr>
+                                                <tr *ngFor="let option of parent.OptionList; let j=index">
+                                                    <td>{{option.OptionName}}</td>
+                                                    <td>
+                                                        {{option.OptionAnswer}}
+                                                    </td>
+                                                    <td class="text-center" *ngIf="isAssigned"><a href="javascript:void(0)" (click)="DeleteOption(i, j,option)" class="row-btn"><i class="las la-trash-alt"></i></a> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: Multiple Choice Question -->
+    
+                                    <!-- START: Descriptive Question -->
+                                    <!--<div  class="col-md-12" [attr.id]="'DesDiv_'+i" *ngIf="parent.QuestionType==3">
+                                        <div class="form-group">
+                                            <label>Answer</label>
+                                            <input type="text" class="form-control" [name]="'answer_'+i" [(ngModel)]="parent.DesAnswer" placeholder="Enter answer" />
+                                        </div>
+                                    </div>-->
+                                    <!-- <div class="col-md-12" [attr.id]="'DesDiv_'+i" style="display:none">
+                                        <div class="form-group">
+                                            <label>Answer</label>
+                                            <input type="text" class="form-control" [name]="'answer_'+i" [(ngModel)]="parent.DesAnswer" placeholder="Enter answer" />
+                                        </div>
+                                    </div> -->
+                                    <!-- END: Descriptive Question -->
+                                </div>                            
+                                <div class="sec-delete text-center" *ngIf="isAssigned">
+                                    <button type="button" (click)="DeleteQuestion(i)" class="btn btn-link red"><i class="las la-trash-alt"></i> Delete</button>
+                                </div>
+                            </div>                                               
+                        </div>                   
+    
+                        <div class="text-center" *ngIf="isAssigned">
+                            <button type="button" (click)="AddQuestion()"  class="btn btn-secondary btn-sm ml-1"><i class="las la-plus"></i> Add Question</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4"><!--[disabled]="saveForm.invalid"-->
+                    <button type="button" (click)="onSubmit()" class="btn btn-black mr-1" *ngIf="isAssigned">Submit</button>
+                    <!-- <button type="button" class="btn btn-secondary mr-1">Save as Draft</button> -->
+                    <button type="button" (click)="onClickCancel()" class="btn btn-primary" *ngIf="isAssigned">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

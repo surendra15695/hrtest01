@@ -1,0 +1,128 @@
+<div class="content-box">
+  <div class="page-title-area pb-2 mb-2">
+    <a href="javascript:void(0)" (click)="onClickBack()"  class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+    <h1 class="f-l">Reimbursement Details</h1>
+  </div>
+  <div class="mb-4">
+    <h6 class="red">Employee Details</h6>
+    <div class="form-row">
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Employee ID:</p>
+        <p class="d-inline-block">{{objHrrelocation.empNo}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Employee Name:</p>
+        <p class="d-inline-block">{{objHrrelocation.candidateFullName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Vertical:</p>
+        <p class="d-inline-block">{{objHrrelocation.verticalName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Post Location:</p>
+        <p class="d-inline-block">{{objHrrelocation.locationName}}</p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Function:</p>
+        <p class="d-inline-block">{{objHrrelocation.functionName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Department:</p>
+        <p class="d-inline-block">{{objHrrelocation.departmentName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Designation:</p>
+        <p class="d-inline-block">{{objHrrelocation.designationName}}</p>
+      </div>
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Grade:</p>
+        <p class="d-inline-block">{{objHrrelocation.gradeName}}</p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-3">
+        <p class="d-inline-block grey">Amount:</p>
+        <p class="d-inline-block">{{objHrrelocation.amount}}</p>
+      </div>
+    </div>
+  </div>
+  <!--<div class="mb-3">
+    <h6 class="red">Travel Details</h6>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="width: 50px;">Sl. No.</th>
+            <th>Journey Type</th>
+            <th>Journey Date</th>
+            <th>Reporting Location</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Mode of Travel</th>
+            <th class="text-right">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let jd of journeyDetailsArray;let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{getJourneyTypeName(jd.journeyTypeId)}}</td>
+            <td>{{jd.journeyDate}}</td>
+            <td>{{jd.reportingLocation}}</td>
+            <th>{{jd.from}}</th>
+            <th>{{jd.to}}</th>
+            <th>{{getTravelModename(jd.travelModeId)}}</th>
+            <td class="text-right">{{jd.claimAmount}}</td>
+          </tr>
+          <tr>
+            <td colspan="7" class="text-right"><b>Total Amount</b></td>
+            <td class="text-right"><b>{{totalAmount}}</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>-->
+  <div>
+    <h6 class="red">Uploaded Bill</h6>
+    <div class="attach-file" >
+      <a (click)="openFile(document)" style="cursor: pointer;" title="Download" ><i class="las color-black la-paperclip"></i>{{doc}} </a>
+      <a (click)="openFile(document)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+    </div>
+    <hr>
+  </div>
+  <!--<div *ngIf="!IsReadOnly">
+    <h6 class="red">Take Action</h6>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Action<span class="required">*</span></label>
+          <div class="rdio rdio-primary d-inline-block">
+            <input name="radio" value="1" id="radio1" type="radio" (change)="onChangeRadioValue('A')" checked="">
+            <label for="radio1">Accept</label>
+          </div>
+          <div class="rdio rdio-primary d-inline-block">
+            <input name="radio" value="2" id="radio2" type="radio" (change)="onChangeRadioValue('R')">
+            <label for="radio2">Reject</label>
+          </div>
+          <div class="rdio rdio-primary d-inline-block">
+            <input name="radio" value="3" id="radio3" type="radio" (change)="onChangeRadioValue('S')">
+            <label for="radio3">Send Back to Candidate</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label>Remarks</label>
+          <textarea class="form-control" id="" placeholder="Enter Remarks..."
+                    [(ngModel)]="claimRemarks"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  <!--<div class="mt-4" *ngIf="!IsReadOnly">
+      <button type="button" class="btn btn-black" (click)="onSubmitClaim()">Submit</button>
+      <button type="button" class="btn btn-primary ml-2" (click)="onCancelClick()">Cancel</button>
+    </div>
+  </div>-->
+ 

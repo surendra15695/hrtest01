@@ -1,0 +1,164 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l" *ngIf="btnVisible">Generate Management Approval</h1>
+        <h1 class="f-l" *ngIf="!btnVisible">View Management Approval</h1>
+    </div>
+
+    <div>
+        <h6 class="red text-center">Approval For Appoinment</h6>
+        <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="">From</label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!btnVisible" [(ngModel)]="FromData" (ngModelChange)="changeFromData($event)">
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="">To</label>
+                    <input type="text" class="form-control" placeholder="" [disabled]="!btnVisible" [(ngModel)]="ToData" (ngModelChange)="changeToData($event)">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="">Date</label>
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right"  [disabled]="true" id="" #fromDate autocomplete="off" placeholder="Date" [ngModel]="managementApprovalData?.date">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea class="form-control" name="" id="" [disabled]="!btnVisible" placeholder="" [(ngModel)]="topNote" (ngModelChange)="changeTopNote($event)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Interview Panel</th>
+                        <th>Name of the candidate</th>
+                        <th style="min-width: 120px;">Source</th>
+                        <th>Position & Dept.</th>
+                        <th>Location</th>
+                        <th>Grade</th>
+                        <th>Qualification</th>
+                        <th>Experience</th>
+                        <th class="text-right">Present CTC</th>
+                        <th class="text-right">Proposed Basic salary P.M.</th>
+                        <th class="text-right">Proposed CTC</th>
+                        <th>Replacement / New Approval</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of managementApprovalData?.managementApprovalCandidates">
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.interViewPanel" (ngModelChange)="data.interViewPanel=$event"></td>
+                        <td>{{data.name}}</td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.source" (ngModelChange)="data.source=$event"></td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.position" (ngModelChange)="data.position=$event"></td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.location" (ngModelChange)="data.location=$event"></td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.grade" (ngModelChange)="data.grade=$event"></td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.qualification" (ngModelChange)="data.qualification=$event"></td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.experience" (ngModelChange)="data.experience=$event"></td>
+                        <td class="text-right"><input type="text" class="form-control" placeholder="" (keypress)="keyPress($event)" [(ngModel)]="data.presentCTC" (ngModelChange)="data.presentCTC=$event"></td>
+                        <td class="text-right"><input type="text" class="form-control" placeholder="" (keypress)="keyPress($event)" [(ngModel)]="data.proposedBasic" (ngModelChange)="data.proposedBasic=$event"></td>
+                        <td class="text-right"><input type="text" class="form-control" placeholder="" (keypress)="keyPress($event)" [(ngModel)]="data.proposedCTC" (ngModelChange)="data.proposedCTC=$event"></td>
+                        <td><input type="text" class="form-control" placeholder="" [(ngModel)]="data.reporNew" (ngModelChange)="data.reporNew=$event"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Note</label>
+                    <textarea class="form-control" [disabled]="!btnVisible" name="" id="" placeholder="" [(ngModel)]="bottomNote" (ngModelChange)="changeBottomNote($event)"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <h6 class="red">Signature Needed:</h6>
+            <div class="row">
+                <div class="col-md-2" *ngFor="let data of signatureFrom; let i=index">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control pull-right" id="" placeholder="" disabled [value]="data.signatureFromText">
+                            <div class="input-group-append" (click)="removeSignatureFrom(i)">
+                                <span class="input-group-text pointer red" id="basic-addon2"><i class="las la-trash-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="btnVisible">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control pull-right" id="" placeholder="" [(ngModel)]="signatureFromText">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="btnVisible">
+                    <button type="button" class="btn btn-sm btn-black" (click)="addSignatureFrom()"><i class="las la-plus"></i> Add</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" *ngFor="let data of signatureTo; let i=index">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control pull-right" id="" placeholder="" disabled [value]="data.signatureToText">
+                            <div class="input-group-append" (click)="removeSignatureTo(i)">
+                                <span class="input-group-text pointer red" id="basic-addon2"><i class="las la-trash-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="btnVisible">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control pull-right" id="" placeholder="" [(ngModel)]="signatureToText">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="btnVisible">
+                    <button type="button" class="btn btn-sm btn-black" (click)="addSignatureTo()"><i class="las la-plus"></i> Add</button>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+    <div class="mt-4 text-right">
+        <a (click)="openFile(approvedDocument)" style="cursor: pointer;"  *ngIf="approvedDocument!=''" ><button type="button" class="btn btn-black" ><i class="las la-download"></i> Download</button></a>
+        <button type="button" class="btn btn-black ml-1" *ngIf="btnPDFVisible" (click)="convertPdf()"><i class="las la-print"></i> Print</button>
+        <button type="button" class="btn btn-black ml-1" *ngIf="btnVisible" data-toggle="modal" [attr.data-target]="'#'+dataTarget" (click)="onSubmit()">Submit</button>
+    </div>
+</div>
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to continue.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="submitData()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div #htmlContent style="display: none;">
+<app-pdfmanagementapproval [candidateIds] = "selectedCandidateIds" [approvalId]="approvalId" [requisitionDetailId]="requisitionDetailId"></app-pdfmanagementapproval>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

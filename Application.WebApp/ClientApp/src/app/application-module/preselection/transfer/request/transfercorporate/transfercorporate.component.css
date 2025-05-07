@@ -1,0 +1,3 @@
+.table-striped thead tr th,.table-striped tbody tr td{
+    white-space: nowrap;
+}

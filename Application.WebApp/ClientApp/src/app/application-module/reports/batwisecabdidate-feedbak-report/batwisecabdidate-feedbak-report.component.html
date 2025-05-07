@@ -1,0 +1,139 @@
+
+
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a class="back-btn" (click)="onClickBack()"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">View candidate</h1>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <h5 class="f-l">Batch No</h5>
+                    <input type="text"  [(ngModel)]="batchNo" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+        </div>
+    </div>
+    <br>
+
+    <div class="table-responsive" style=" max-height: calc(100vh - 300px);">
+        <table  class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial No.</th>
+                    <!-- <th> No.</th> -->
+                    <th>Candidate No</th>
+                    <th>Candidate Name</th>
+                    <th>Employee No</th>
+                    <th>Vertical Name</th>
+                    <th>Location Office</th>
+                    <th>Grade</th>
+                    <th>Department</th>
+                    <th style="text-align: center;"  >Action</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of viewcandidateList; let i=index;">
+                    <td>{{i+1}}</td>
+                    <!-- <td>{{data.candidateId}}</td> -->
+                    <td>{{data.candidateNo}}</td>
+                     <td>{{data.fullName}}</td> 
+                     <td>{{data.empployeeNo}}</td> 
+                     <td>{{data.verticalName}}</td> 
+                     <td>{{data.locationOffice}}</td> 
+                     <td>{{data.gradeName}}</td> 
+                     <td>{{data.departmentName}}</td> 
+                     <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                    class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                x-placement="bottom-end">
+                                <a class="dropdown-item" *ngIf="data.candidateId != 0" href="javascript:void(0)"
+                                (click)="onClickViewfeedback(data)"><i
+                                class="las la-reply"></i>
+                            View Feedback </a>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+
+
+
+
+
+<!-- 
+
+
+
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a class="back-btn" (click)="backTo()"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">view Feedback</h1>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Candidate ID</label>
+                    <input type="text"  [(ngModel)]="CandidateNo" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+           
+        </div>
+       
+    </div>
+    <br>
+
+    <div class="table-responsive" style=" max-height: calc(100vh - 300px);">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="min-width: 260px;">Question Type</th>
+                    <th style="min-width: 160px;">Question Name</th>
+                    <th style="min-width: 100px;">Given Answer</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of viewfeedbackList">
+                    <td>{{data.question_Type}}</td>
+                     <td>{{data.question_Name}}</td> 
+                     <td>{{data.given_Answer}}</td> 
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+   
+    <div>
+        <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Export</button>
+        </div>
+        <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+            <p style="font-size: 20px; color: white">Loading...</p>
+        </ngx-spinner>
+   
+</div>
+
+
+
+ -->
+

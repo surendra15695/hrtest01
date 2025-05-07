@@ -1,0 +1,203 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Candidate Report</h1>
+    </div>
+
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Req No</label>
+                        <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo
+                            placeholder="Enter requisition no." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Hiring Status</label>
+                        <ng-select class="selectpicker" bindLabel="statusName" class="ddltestvenue" formControlName="hiringStatusId" #verticalId
+                            name="hiringStatusId" [placeholder]="'All'" [appendTo]="'body'"
+                            [multiple]="true" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.statusId" *ngFor="let rec of statuses">
+                                {{rec.statusName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Source Channel</label>
+                        <ng-select class="selectpicker" bindLabel="locationNo" formControlName="sourceChannelId" #sourceChannelId name="sourceChannelId"
+                            [placeholder]="'All'" [appendTo]="'body'" [multiple]="true" [searchable]="true" 
+                            [clearable]="false">
+                            <ng-option [value]="0">All</ng-option>
+                            <ng-option [value]="1">HR</ng-option>
+                            <ng-option [value]="2">Career Site </ng-option>
+                            <ng-option [value]="3">Internal Employee</ng-option>
+                            <ng-option [value]="4">Referred</ng-option>
+                            <ng-option [value]="5">Vendor</ng-option>
+                            <ng-option [value]="6">Job Portal</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                            class="las la-sync-alt"></i>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Requisition No.</th>
+                    <th>Candidate No.</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Age</th>
+                    <th>Email Id</th>
+                    <th>Contact No.</th>
+                    <th>Aadhar No.</th>
+                    <th>Mother Tongue</th>
+                    <th>Language Known</th>
+                    <th>Qualification</th>
+                    <th>Course</th>
+                    <th>Stream</th>
+                    <th>Percentage Marks</th>
+                    <th>Completion Year</th>
+                    <th>Qualification Type</th>
+                    <th>Eperience</th>
+                    <th>Current CTC</th>
+                    <th>Current Employer</th>
+                    <th>Current Designation</th>
+                    <th>Domain</th>
+                    <th>Sub Domain</th>
+                    <th>State</th>
+                    <th>Relative Status</th>
+                    <th>Relative Name</th>
+                    <th>Relative Contact No.</th>
+                    <th>Source</th>
+                    <th>Candidate Owner</th>
+                    <th>Hiring Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataList">
+                    <td>{{data.requisitionNo}}</td>
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.fullName}}</td>
+                    <td>{{data.genderName}}</td>
+                    <td>{{data.dob}}</td>  
+                    <td>{{data.age}}</td>                  
+                    <td>{{data.emailId}}</td>
+                    <td>{{data.contactNo}}</td>
+                    <td>{{data.aadharNo}}</td>
+                    <td>{{data.motherTongueName}}</td>
+                    <td>{{data.languageNames}}</td>
+                    <td>{{data.qualificationName}}</td>
+                    <td>{{data.courseName}}</td>  
+                    <td>{{data.streamName}}</td>                  
+                    <td>{{data.marksPercentage}}</td>
+                    <td>{{data.completionYear}}</td>
+                    <td>{{data.qualificationTypeName}}</td>
+                    <td>{{data.experienceYear}}Y {{data.experienceMonth}}M</td>
+                    <td>{{data.currentCTC}}</td>
+                    <td>{{data.currentEmployer}}</td>
+                    <td>{{data.currentDesignation}}</td>
+                    <td>{{data.domainName}}</td>  
+                    <td>{{data.subDomainName}}</td>                  
+                    <td>{{data.stateName}}</td>
+                    <td>{{data.relativeStatusName}}</td>
+                    <td>{{data.relativeName}}</td>
+                    <td>{{data.relativeConatctNo}}</td>
+                    <td>{{data.sourceChannelName}}</td>
+                    <td>{{data.candidateOwner}} {{data.referalEmpNo}} {{data.referalDesignation}} {{data.referalGrade}}</td>
+                    <td>{{data.hiringStatusName}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="exportTable" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Requisition No.</th>
+                        <th>Candidate No.</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>DOB</th>
+                        <th>Age</th>
+                        <th>Email Id</th>
+                        <th>Contact No.</th>
+                        <th>Aadhar No.</th>
+                        <th>Mother Tongue</th>
+                        <th>Language Known</th>
+                        <th>Qualification</th>
+                        <th>Course</th>
+                        <th>Stream</th>
+                        <th>Percentage Marks</th>
+                        <th>Completion Year</th>
+                        <th>Qualification Type</th>
+                        <th>Eperience</th>
+                        <th>Current CTC</th>
+                        <th>Current Employer</th>
+                        <th>Current Designation</th>
+                        <th>Domain</th>
+                        <th>Sub Domain</th>
+                        <th>State</th>
+                        <th>Relative Status</th>
+                        <th>Relative Name</th>
+                        <th>Relative Contact No.</th>
+                        <th>Source</th>
+                        <th>Candidate Owner</th>
+                        <th>Hiring Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataList">
+                        <td>{{data.requisitionNo}}</td>
+                        <td>{{data.candidateNo}}</td>
+                        <td>{{data.fullName}}</td>
+                        <td>{{data.genderName}}</td>
+                        <td>{{data.dob}}</td>  
+                        <td>{{data.age}}</td>                  
+                        <td>{{data.emailId}}</td>
+                        <td>{{data.contactNo}}</td>
+                        <td>{{data.aadharNo}}</td>
+                        <td>{{data.motherTongueName}}</td>
+                        <td>{{data.languageNames}}</td>
+                        <td>{{data.qualificationName}}</td>
+                        <td>{{data.courseName}}</td>  
+                        <td>{{data.streamName}}</td>                  
+                        <td>{{data.marksPercentage}}</td>
+                        <td>{{data.completionYear}}</td>
+                        <td>{{data.qualificationTypeName}}</td>
+                        <td>{{data.experienceYear}}Y {{data.experienceMonth}}M</td>
+                        <td>{{data.currentCTC}}</td>
+                        <td>{{data.currentEmployer}}</td>
+                        <td>{{data.currentDesignation}}</td>
+                        <td>{{data.domainName}}</td>  
+                        <td>{{data.subDomainName}}</td>                  
+                        <td>{{data.stateName}}</td>
+                        <td>{{data.relativeStatusName}}</td>
+                        <td>{{data.relativeName}}</td>
+                        <td>{{data.relativeConatctNo}}</td>
+                        <td>{{data.sourceChannelName}}</td>
+                        <td>{{data.candidateOwner}} {{data.referalEmpNo}} {{data.referalDesignation}} {{data.referalGrade}}</td>
+                        <td>{{data.hiringStatusName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

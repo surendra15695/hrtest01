@@ -1,0 +1,400 @@
+<div class="content-box">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <!--<li class="nav-item">
+      <a class="nav-link active" id="firsttab" data-toggle="tab" href="#tabOne" role="tab" aria-controls="home"
+          aria-selected="true" (click)="onClickPendingTab()">Pending</a>
+  </li>-->
+    <li class="nav-item">
+      <a [ngClass]="activeTabNameShow=='Pending'?'nav-link active':'nav-link'" id="firsttab" data-toggle="tab"
+         href="#tabOne" role="tab" aria-controls="home" aria-selected="true"
+         (click)="onClickPendingTab()">Pending</a>
+    </li>
+    <!--<li class="nav-item">
+    <a class="nav-link" id="secondtab" data-toggle="tab" href="#tabTwo" role="tab" aria-controls="profile"
+       aria-selected="false" (click)="onClickProcessedTab()">Processed</a>
+  </li>-->
+    <li class="nav-item">
+      <a [ngClass]="activeTabNameShow=='Processed'?'nav-link active':'nav-link'" id="secondtab" data-toggle="tab"
+         href="#tabTwo" role="tab" aria-controls="profile" aria-selected="false"
+         (click)="onClickProcessedTab()">Processed</a>
+    </li>
+  </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div [ngClass]="activeTabNameShow=='Pending'?'tab-pane fade show active':'tab-pane fade'" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <div class="filter-sec">
+                <form [formGroup]="searchFormTravelReimbursement" (ngSubmit)="onSearchTravelReimbursement()">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Date of Joining</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right" id="datepicker"
+                                                placeholder="From Date" formControlName="dtofJoiningFrom"
+                                                #dtofJoiningFrom>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right" id="datepicker1"
+                                                placeholder="To Date" formControlName="dtofJoiningTo" #dtofJoiningTo>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Employee ID</label>
+                                <input type="text" class="form-control" formControlName="empNo">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Employee Name</label>
+                                <input type="text" class="form-control" formControlName="name">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="location">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="function" (change)="onChangeFunction()">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <ng-select bindLabel="departmentName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="department">
+                                    <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                                        {{rec.departmentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-10 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="onResetClickPending()"><i class="las la-sync-alt"></i> Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row my-2" *ngIf="callngIfFunction?showActionButton():false">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-rounded btn-outline-warning btn-sm" data-toggle="modal"
+                        data-target="#myModal" (click)="onClickSendBackToCandidate()"><i class="las la-share"></i> Send
+                        back to candidate</button>
+                    <button type="button" class="btn btn-rounded btn-outline-success btn-sm ml-1" data-toggle="modal"
+                        data-target="#myModal" (click)="onClickApprove()"><i class="las la-check"></i> Approve</button>
+                    <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+                        data-target="#myModal" (click)="onClickReject()"><i class="las la-times"></i> Reject</button>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <a type="button" class="btn btn-rounded btn-outline-primary btn-sm" href="javascript:void(0)" (click)="downloadAllDocuments()"
+                    ><i
+                            class="las la-download"></i> Download Forms</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAll_pending" [(ngModel)]="selectAll_pending"
+                                        (change)="onCheckSelectAll_pending($event)">
+                                    <label class="chk" for="chkAll_pending"></label>
+                                </div>
+                            </th>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Designation</th>
+                            <th>Post. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Place of induction</th>
+                            <th>Date of induction</th>
+                            <th class="text-right">Total amount</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of travelReimbursementList;let i=index;">
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)"
+                                        (change)="onCheckRowWise(data,$event,i)">
+                                    <label class="chk" for="{{i}}"></label>
+                                </div>
+                            </td>
+                            <td>{{data.empNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.placeofInductionDesc}}</td>
+                            <td>{{data.dateofInduction | date: 'dd/MM/yyyy'}}</td>
+                            <td class="text-right">{{data.totalAmount}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                        <a class="dropdown-item" (click)="openFile(data.documentPathForPDF)" style="cursor: pointer;"><i class="las la-download"></i> Download
+                                            Form</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            (click)="onClickViewDetails(data, 'Pending')"><i class="las la-file"></i> View
+                                            Details</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div [ngClass]="activeTabNameShow=='Processed'?'tab-pane fade show active':'tab-pane fade'" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <div class="filter-sec mb-3">
+                <form [formGroup]="searchFormTravelReimbursement" (ngSubmit)="onSearchTravelReimbursementProcessed()">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Date of Joining</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right" id="datepicker"
+                                                placeholder="From Date" formControlName="dtofJoiningFrom"
+                                                #dtofJoiningFrom>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right" id="datepicker1"
+                                                placeholder="To Date" formControlName="dtofJoiningTo" #dtofJoiningTo>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Employee ID</label>
+                                <input type="text" class="form-control" formControlName="empNo">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Employee Name</label>
+                                <input type="text" class="form-control" formControlName="name">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="location">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="function" (change)="onChangeFunction()">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <ng-select bindLabel="departmentName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="department">
+                                    <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                                        {{rec.departmentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-10 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="onResetClickProcessed()"><i class="las la-sync-alt"></i> Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="col-md-12 text-right mb-2">
+                <a type="button" class="btn btn-rounded btn-outline-primary btn-sm" href="javascript:void(0)" (click)="downloadAllDocuments()"
+                ><i class="las la-download"></i> Download Forms</a>
+            </div> -->
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAll_processed" [(ngModel)]="selectAll_processed"
+                                        (change)="onCheckSelectAll_Processed($event)">
+                                    <label class="chk" for="chkAll_processed"></label>
+                                </div>
+                            </th>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Designation</th>
+                            <th>Post. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Place of induction</th>
+                            <th>Date of induction</th>
+                            <th class="text-right">Claim amount</th>
+                            <!-- <th class="text-right">Reimbursed amount</th> -->
+                            <th>Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of travelReimbursementProcessedList;let i=index;">
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{data.candidateId}}" [ngModel]="getEnableStatus(data)"
+                                        (change)="onCheckRowWiseProcessed(data,$event,i)">
+                                    <label class="chk" for="{{data.candidateId}}"></label>
+                                </div>
+                            </td>
+                            <td>{{data.empNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.placeofInductionDesc}}</td>
+                            <td>{{data.dateofInduction | date: 'dd/MM/yyyy'}}</td>
+                            <td class="text-right">{{data.totalAmount}}</td>
+                            <!-- <td class="text-right">1800.00</td> -->
+                            <td class="green">{{data.statusName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                        <a class="dropdown-item" (click)="openFile(data.documentPathForPDF)" style="cursor: pointer;"><i class="las la-download"></i> Download
+                                            Form</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            (click)="onClickViewDetails(data, 'Processed')"><i class="las la-file"></i> View
+                                            Details</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">{{popupText}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Reason<span class="required">*</span></label>
+                            <textarea class="form-control" placeholder="" [(ngModel)]="claimRemarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onSubmitClaim()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="printTravelReimbursementDiv" style="display: none;">
+    <app-pdftravelreimbursement [travelReimbursementRecord]="travelReimbursementData"></app-pdftravelreimbursement>
+</div>
+<div id="printTravelReimbursementDivforzip" style="display: none;">
+    <app-pdftravelreimbursement-forzip [travelReimbursementRecord]="travelReimbursementData"></app-pdftravelreimbursement-forzip>
+</div>

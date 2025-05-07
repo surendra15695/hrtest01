@@ -1,0 +1,161 @@
+<div class="content-box" *ngIf="showUserRoleList">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">User Role Master</h1>
+            </div>
+            <div>
+                <a href="javascript:void(0)" (click)="onClickAddNew()" class="btn btn-primary btn-sm"><i
+                        class="las la-plus"></i> Add New Mapping</a>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="searchForm" (ngSubmit)="filter()">
+        <div class="filter-sec">
+            <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Vertical</label>
+                    <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                        [searchable]="false" [clearable]="false" formControlName="VerticalId"
+                        (change)="OnchangeVertical()">
+                        <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                            {{rec.verticalName}}
+                        </ng-option>
+                </ng-select>
+                </div>              
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Location</label>
+                    <ng-select bindLabel="LocationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                        [multiple]="false" [searchable]="true" [clearable]="false" formControlName="LocationId"
+                        >
+                        <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                            {{rec.locationOffice}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Function</label>
+                    <ng-select bindLabel="FunctionName" [placeholder]="'Select'" [appendTo]="'body'"
+                        [multiple]="false" [searchable]="true" [clearable]="false" formControlName="FunctionId">
+                        <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                            {{rec.functionName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3 mt-4">
+                <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>
+                    Filter</button>
+                <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                        class="las la-sync-alt"></i>
+                    Reset</button>
+            </div>
+        </div>
+
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 60px;">Sl. No.</th>
+                    <th class="text-center">Vertical</th>
+                    <th class="text-center">Location</th>
+                    <th class="text-center">Function</th>
+                    <th style="text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr >
+                    <td class="text-center">1</td>
+                    <td class="text-center">Plant</td>
+                    <td class="text-center">Ahmedabad</td>
+                    <td class="text-center">Func</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="onClickEdit(data)"><i
+                                    class="las la-pen"></i> Edit</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="content" *ngIf="!showUserRoleList">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">{{mapingText}}</h1>
+            </div>
+            <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Requestor</label>
+                                <ng-select bindLabel="requestor" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false" formControlName="requestorId"
+                                    >
+                                    <ng-option [value]="rec.locationId" *ngFor="">
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select formControlName="verticalId" bindLabel="VerticalName" [placeholder]="'Select'"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false" formControlName="verticalId" (change)="changeVertical()">
+                                <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals;">
+                                    {{rec.verticalName}}
+                                </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false" formControlName="locationId"
+                                    >
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false" formControlName="functionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-black btn-sm" [disabled]="saveForm.invalid">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

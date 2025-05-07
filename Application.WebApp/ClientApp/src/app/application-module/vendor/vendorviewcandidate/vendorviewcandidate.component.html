@@ -1,0 +1,122 @@
+<div class="content-box m-b-15 m-t-10" *ngFor="let data of candidates">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Candidate Details</h1>
+    </div>
+    <div class="candidate-info-header mb-4">
+        <div>
+            <h6 class="red d-inline-block mt-1">{{data.prefixName}} {{data.fullName}}</h6>
+            <span> {{data.emailId}}</span>
+        </div>
+        <div class="pb-1">
+            <span class="mr-3"><i class="las la-mobile"></i> {{data.contactNo}}</span><span><i [class]="data.genderName=='Male'?'las la-male':'las la-female'"></i> {{data.genderName}}</span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Age :</p>
+            <p class="d-inline-block">{{data.age}}Yrs</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Aadhar No. :</p>
+            <p class="d-inline-block">{{data.aadharNo}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Mother Tongue :</p>
+            <p class="d-inline-block">{{data.motherTongueName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Languages Known :</p>
+            <p class="d-inline-block">{{data.languageNames}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Highest Qualification :</p>
+            <p class="d-inline-block">{{data.qualificationName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Course :</p>
+            <p class="d-inline-block">{{data.courseName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Stream :</p>
+            <p class="d-inline-block">{{data.streamName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Percentage :</p>
+            <p class="d-inline-block">{{data.marksPercentage}}%</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Year of Completion :</p>
+            <p class="d-inline-block">{{data.completionYear}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Qualification Type :</p>
+            <p class="d-inline-block">{{data.qualificationTypeName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Total Experience :</p>
+            <p class="d-inline-block">{{data.experienceYear}}years {{data.experienceMonth}} months</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Current CTC :</p>
+            <p class="d-inline-block">{{data.currentCTC}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Current Employer :</p>
+            <p class="d-inline-block">{{data.currentEmployer}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Designation :</p>
+            <p class="d-inline-block">{{data.currentDesignation}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Domain :</p>
+            <p class="d-inline-block">{{data.domainName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Sub-Domain :</p>
+            <p class="d-inline-block">{{data.subDomainName}}</p>
+        </div>
+    </div>
+    <div class="form-row">        
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Current Location :</p>
+            <p class="d-inline-block">{{data.stateName}}</p>
+        </div>
+        <div class="col-md-6">
+            <p class="d-inline-block grey">Any Previous Application History in MRF :</p>
+            <p class="d-inline-block">{{data.previousAppliedName}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Any relative Working on MRF :</p>
+            <p class="d-inline-block">{{data.relativeStatusName}}</p>
+        </div>
+        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+            <p class="d-inline-block grey">Relative Name :</p>
+            <p class="d-inline-block">{{data.relativeName}}</p>
+        </div>
+        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+            <p class="d-inline-block grey">Relative Contact No :</p>
+            <p class="d-inline-block">{{data.relativeContactNo}}</p>
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="col-md-6">
+            <p>Resume :</p>
+            <div class="attach-file">
+                <a (click)="openFile(data.resume)" style="cursor: pointer;" title="Download"><i class="las color-black la-paperclip"></i>Resume doc </a>
+                <a (click)="openFile(data.resume)" style="cursor: pointer;" ><i class="las la-download red"></i></a>
+            </div>
+        </div>
+    </div>
+    <div>
+</div>

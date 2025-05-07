@@ -1,0 +1,130 @@
+<!-- <div class="mrf-logo">
+  <img src="assets/images/MRF_logo.jpg" alt="">
+  <p class="mt-2 mb-5">HUMAN RESOURCES</p>
+</div> -->
+<!-- <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form_area">
+    <div class="form-group">
+      <label for="">User Name</label>
+      <input type="text" id="validationCustomUsername" autocomplete="off"
+             formControlName="userId" aria-describedby="inputGroupPrepend" required>
+      <div class="invalid-feedback">
+        Please enter User ID.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Password</label>
+      <input type="password" formControlName="password" id="validationCustomPassword"
+             aria-describedby="inputGroupPrepend" required>
+      <div class="invalid-feedback">
+        Please enter Password.
+      </div>
+    </div>
+    <button type="button" class="btn login-btn" type="submit">Login</button>
+    <a href="javascript:void(0)" class="text-center my-4 d-block forgot_password" (click)="ForgotPassword()">Forgot password?</a>
+    <p class="my-2 text-center">Don't have an account yet? <a routerLink="/createaccount" class="red">Create Account.</a></p>
+  </div>
+</form> -->
+<div class="login-new">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7 login_bg">
+        <img src="assets/images/banner.jpg" alt="">
+        <!-- <p>MRF CONNECT</p> -->
+      </div>
+      <div class="col-md-5 login-card">
+        <div *ngIf="showLoginSection">
+          <form class="login-form needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="brand-login text-center">
+              <img src="assets/images/logo_1.png" alt="logo">
+            </div>
+            <div class="l-tagline">
+              <img src="assets/images/mrf-connect.svg" alt="logo">
+            </div>
+            <div class="form-group">
+              <input class="form-control" type="text" required="" placeholder="User ID" id="validationCustomUsername"
+                autocomplete="off" formControlName="userId" aria-describedby="inputGroupPrepend" required>
+              <div class="invalid-feedback">
+                Please enter User ID.
+              </div>
+            </div>
+            <div class="form-group">
+              <input class="form-control" [type]="hidePassword? 'password':'text'" formControlName="password"
+                id="validationCustomPassword" aria-describedby="inputGroupPrepend" required placeholder="Password">
+              <i [class]="!hidePassword ? 'fa fa-fw field-icon toggle-password fa-eye pass-blind-icon' :'fa fa-fw field-icon toggle-password fa-eye-slash pass-blind-icon'"
+                id="togglePassword" (click)="onShowHidePassword()"></i>
+              <div class="invalid-feedback">
+                Please enter Password.
+              </div>
+            </div>
+
+            <div class="form-group pt-2">
+              <button class="btn btn-primary btn-block" type="submit">Login</button>
+            </div>
+            <div class="l-footer-info">
+              <a href="javascript:void(0)" (click)="ForgotPassword()">Forgot Password?</a>
+              <p>Don’t have an account yet ? <a href="javascript:void(0)" routerLink="/auth/createaccount">Create
+                  Account</a></p>
+              <p>By logging in you agree and accept the
+                <a href="javascript:void(0)">Terms & Conditions</a> defined herein for this HR Portal
+              </p>
+              <p class="my-3">If you face any issues please write us on <a routerLink="javascript:void(0)"
+                  class="red">recruiter2.dahej@mrfmail.com</a></p>
+            </div>
+          </form>
+        </div>
+        <!-- OTP Details   *ngIf="!firstDivShow"    {{LoginDeatils.emailId}}-->
+        <div *ngIf="!showLoginSection">
+
+          <div class="brand-login text-center">
+            <img src="assets/images/logo_1.png" alt="logo">
+          </div>
+          <div class="l-tagline">
+            <img src="assets/images/mrf-connect.svg" alt="logo">
+          </div>
+
+          <div class="otp-container">
+            <h5 class="mt-4" style="font-weight: bold;">OTP VERIFICATION</h5>
+            <p class="padding mt-2">Enter OTP received your email address</p>
+            <p>{{OTPDetails.userOTP?.userEmail}}</p>
+            <div class="otp-inputs p-d-flex p-flex-row p-align-center p-justify-center">
+              <input #otpInput1 type="text" [(ngModel)]="otp[0]" pInputText class="otp-digit" maxlength="1"
+                (input)="moveToNextInput($event, otpInput2)" />
+              <input #otpInput2 type="text" [(ngModel)]="otp[1]" pInputText class="otp-digit" maxlength="1"
+                (input)="moveToNextInput($event, otpInput3)" />
+              <input #otpInput3 type="text" [(ngModel)]="otp[2]" pInputText class="otp-digit" maxlength="1"
+                (input)="moveToNextInput($event, otpInput4)" />
+              <input #otpInput4 type="text" [(ngModel)]="otp[3]" pInputText class="otp-digit" maxlength="1" />
+              <!-- <p-toast></p-toast>
+      <ngx-spinner type="ball-scale-multiple"></ngx-spinner> -->
+            </div>
+            <p class="OTP-msg text-danger text-decoration-underline mb-4">Didn't receive OTP?
+              <a href="javascript:void(0)" (click)="resendOTP()" class="fw-bold text-danger">Resend</a>
+            </p>
+
+            <button (click)="VerifyOTP()" class="mt-3 submitBtn mr-2 btn">Verify OTP</button>
+            <button (click)="cancelClick()" class="mt-3 submitBtn btn">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+<!-- <p class="text-center terms-text ">
+  By logging in you agree and accept the <br /><a href="#">Terms & Conditions</a>
+  defined herein for this
+  HR Portal
+</p> -->
+
+
+
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

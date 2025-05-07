@@ -1,0 +1,760 @@
+<div class="content-box m-b-15 m-t-10">
+
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Candidate Management</h1>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="formSubmit()">
+
+        <div class="filter-sec mb-3">
+            <div class="form-row m-t-10">
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>Candidate ID</label>
+                        <input type="text" class="form-control" formControlName="candidateNo" #candidateId>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Candidate Name</label>
+                        <input type="text" class="form-control" formControlName="name">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Request No.</label>
+                        <input type="text" class="form-control" formControlName="requisitionNo">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="verticalId"
+                            (change)="changeVertical()">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="locationId"
+                            (change)="changeLocation()">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- <div class="form-group">
+                        <label>Grade</label>
+                        <ng-select bindLabel="gradeName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="false" [clearable]="false" formControlName="gradeId">
+                            <ng-option [value]="rec.gradeId" *ngFor="let rec of grades">
+                                {{rec.gradeName}}
+                            </ng-option>
+                        </ng-select>
+                    </div> -->
+                    <label>Joining Date</label>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="input-group datepiker date">
+                                <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                    placeholder="From Date" formControlName='dtofJoiningFrom' #dateOfJoiningFrom
+                                    autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group datepiker date">
+                                <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                    placeholder="To Date" #dateOfJoiningTo formControlName="dtofJoiningTo"
+                                    autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Document Status</label>
+                        <ng-select bindLabel="approvalListName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="rmdocApprovalStatusId">
+                            <ng-option [value]="rec.approvalListId" *ngFor="let rec of documentStatus">
+                                {{rec.approvalListName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Pre Emp. Medical</label>
+                        <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" formControlName="preEmployeeMedicalStatus">
+                            <ng-option [value]="0">All </ng-option>
+                            <ng-option [value]="5">Send to Com.Doctor</ng-option>
+                            <ng-option [value]="6">Doc. Certified Fit</ng-option>
+                            <ng-option [value]="7">Doc. Certified Unfit</ng-option>
+                            <ng-option [value]="2">Need Clarification</ng-option>
+                            <!-- <ng-option [value]="3">Pending </ng-option> -->
+                            <ng-option [value]="1">Rec. Ver. Pending </ng-option>
+                            <ng-option [value]="4">Rec. Verified</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Hiring Status</label>
+                        <ng-select bindLabel="hiringStatusId" class="ddltestvenue" formControlName="hiringStatus"
+                            #hiringStatusId name="hiringStatusId" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.hiringStatusId" *ngFor="let rec of candidateLists">
+                                {{rec.hiringStatusName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2 mt-md-4 text-right">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                        Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <div class="text-right my-2">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            *ngIf="callngIfFunction?showSendToCompanyDoctor():false" (click)="sendAllCheckedToDoctor()"
+            data-target="#myModal"><i class="las la-share"></i> Send to
+            Company Doctor</button>
+        <!-- <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            *ngIf="showBtnSendToCompanyDoctor" (click)="sendAllCheckedToDoctor()"
+            data-target="#myModal"><i class="las la-share"></i> Send to
+            Company Doctor</button> -->
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            *ngIf="callngIfFunction?showBGVRepoirtRequired():false" (click)="sendAllCheeckedForBGVreport()"
+            data-target="#myModal1"><i class="las la-share"></i>BGV Report Required</button>
+
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            *ngIf="callngIfFunction?uploadBGVRepoirtRequired():false" (click)="onClickBulkUplodBGVReport()"
+            data-target="#myModal2"><i class="las la-share"></i>Upload BGV Report</button>
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1"
+            *ngIf="callngIfFunction?showBtnJoiningConfirmation():false" data-toggle="modal"
+            data-target="#joiningConfirmationModal" (click)="onClickJoiningConfirmation()"><i class="las la-share"></i>
+            Joining Confirmation</button>
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1"
+            *ngIf="callngIfFunction?showBtnUpdateJoiningDate():false" data-toggle="modal"
+            data-target="#updatejoiningDateModal" (click)="onClickUpdateJoiningDate()"><i class="las la-share"></i>
+            Update Joining Date</button>
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            data-target="#sendtoOnboardingModal" *ngIf="callngIfFunction?showBtnSendToOnboarding():false"
+            (click)="sendAllCheckedToOnboarding()"><i class="las la-share"></i> Send to
+            Onboarding</button> <!--  -->
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            data-target="#sendtoOnboardingModal" *ngIf="callngIfFunction?showBtnResendToOnboarding():false"
+            (click)="resendAllCheckedToOnboarding()"><i class="las la-share"></i> Resend to
+            Onboarding</button> <!--  -->
+
+
+    </div>
+
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <input type="checkbox" id="ani" [(ngModel)]="selectAll" (change)="onCheckSelectAll($event)">
+                            <label class="chk" for="ani"></label>
+                        </div>
+                    </th>
+                    <th>Cand. ID</th>
+                    <th>Candidate Name</th>
+                    <th>Req.No.</th>
+                    <!-- <th>Onboarding Manager Id</th> -->
+                    <th>Vertical</th>
+                    <th>Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Grade</th>
+                    <th>Document Status</th>
+                    <th>Pre Emp. Medical</th>
+                    <th>BGV Report</th>
+                    <!-- <th>Monthly Gross</th> -->
+                    <th>Joining Date</th>
+                    <th>Joining Date Status</th>
+                    <th>Hiring Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of pendingCandidateList;let i=index;">
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)"
+                                (change)="onCheckRowWise(data,$event,i)">
+                            <label class="chk" for="{{i}}"></label>
+                        </div>
+                    </td>
+                    <td>{{data.candidateNo}}</td>
+                    <td><a href="javascript:void(0)"
+                            (click)="gotoCandidateAction(data.candidateId,data.relativeStatus,data.childRelationshipId,data.cmdUpdateStatus,data.requisitionDetailId)"
+                            class="red">
+                            {{data.candidateFullName}}</a></td>
+                    <td>{{data.requisitionNo}}</td>
+                    <!-- <td class="text-center">{{data.onBoardingManager}}</td> -->
+                    <td class="text-center">{{data.verticalName}}</td>
+                    <td>{{data.locationName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.designationName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.reportingManagerDocApprovalStatus}}
+                        <!--  <a *ngIf="data.recruitmentManagerNotApproveDoc!=' '" href="javascript:void(0)" class="red"
+                            data-toggle="popover" [attr.data-content]="data.popoverContent" rel="popover"
+                            data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a> -->
+                        <a *ngIf="data.recruitmentManagerNotApproveDoc!=' ' && data.recruitmentManagerNotApproveDoc!=null"
+                            href="javascript:void(0)" class="red" data-toggle="popover"
+                            [attr.data-content]="data.popoverContent" rel="popover" data-placement="left"
+                            data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+                    </td> <!-- docApprovalStatus -->
+                    <td>{{data.preEmployeeMedicalStatus}}</td>
+                    <td>{{data.bvgReportStatus}}</td>
+                    <!-- <td>{{data.monthlyGross}}</td> -->
+                    <td>{{data.dateOfJoining}}</td>
+                    <td>{{data.joiningDateStatus}}</td>
+                    <td>{{data.hiringStatusName}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <!-- <a *ngIf="data.hiringStatusId>=43 && data.medicalDocumentDoctorApprovalId==0 && data.preEmployeeMedicaStatuslId==3 && data.medicalDocumentCollectionId>0" -->
+                                <a *ngIf="data.hiringStatusId>=43 && data.hiringStatusId!=55 && data.preEmployeeMedicaStatuslId==4"
+                                    class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#myModal" (click)="onSendSingleToDoctor(data)"><i
+                                        class="las la-share"></i>Send to Comp.
+                                    Doctor</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId>=33"
+                                    (click)="gotoViewDocuments(data.candidateId,data.requisitionDetailId)"
+                                    href="javascript:void(0)"><i class="las la-folder-open"></i>View Document</a>
+                                <!-- <a *ngIf="data.hiringStatusId>='43' && data.preEmployeeMedicaStatuslId>='1'" -->
+                                <a *ngIf="data.hiringStatusId>=43 && data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.bvgReportStatus!='Uploaded'"
+                                    class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#myModal1" (click)="onClickSingleBGVReportRequired(data)"><i
+                                        class="las la-file-alt"></i>BGV
+                                    Report Require</a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.bvgReportStatus=='Required' && data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    (click)="onClickUplodBGVReport(data)" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#myModal2"><i class="las la-upload"></i>Upload BGV Report</a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.hiringStatusId>=43 && data.hiringStatusId<45"
+                                    href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#joiningConfirmationModal" (click)="onJoiningConfirmation(data)"><i
+                                        class="las la-pen"></i>Joining
+                                    Confirmation</a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.hiringStatusId>44"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#updatejoiningDateModal"
+                                    (click)="onChangeJoiningDate(data)"><i class="las la-pen"></i>Update Joining
+                                    Date</a>
+                                <!-- *ngIf="data.hiringStatusId==43 && data.medicalDocumentDoctorApprovalId>0" -->
+                                <a class="dropdown-item"
+                                    *ngIf="data.onBoardingManager==null && data.hiringStatusId==44 && data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#sendtoOnboardingModal"
+                                    (click)="onSendSingleToOnboarding(data,'S')"><i class="las la-pen"></i>Send to
+                                    Onboarding</a> <!-- *ngIf="data.hiringStatusId==44" -->
+
+                                <a class="dropdown-item"
+                                    *ngIf="data.onBoardingManager!=null && data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#sendtoOnboardingModal"
+                                    (click)="onSendSingleToOnboarding(data,'R')"><i class="las la-pen"></i>Resend to
+                                    Onboarding</a>
+                                <!-- arg -->
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" (click)="onClickJoiningCheckList(data)"><i
+                                        class="las la-pen"></i>Joining
+                                    Checklist</a>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i
+                                        class="las la-times-circle"></i>Reject</a> -->
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.hiringStatusId!=31"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#releaseModal"
+                                    (click)="openModalPopupreleaseCandidate(56,data.candidateId,'CandidateManagement')"><i
+                                        class="las la-share"></i>Release</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55 && data.hiringStatusId!=56"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                                    (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'CandidateManagement')"><i
+                                        class="las la-times-circle"></i>Declined</a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.hiringStatusId==55 || data.hiringStatusId==56 || data.hiringStatusId==31"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#callBackModal"
+                                    (click)="openModalPopupCallBack(56,data.candidateId,'CandidateManagement',data)"><i
+                                        class="las la-reply"></i>Call back</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<!-- Send Company Doctor Popup -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Send To Company Doctor</h4>
+            </div>
+            <form [formGroup]="saveform" (ngSubmit)="finalSendToDoctor()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Select Doctor<span class="required">*</span></label>
+                        <select class="selectpicker form-control" title='Select' formControlName="doctors"
+                            name="doctors">
+                            <option *ngFor="let rec of doctorsList" [value]="rec.doctorsId">{{rec.doctorsName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="onClickCancel()"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveform.invalid"
+                        id="send">Send</button>
+                    <!-- [disabled]="saveForm.invalid" -->
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- BGV Report Required Popup -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">BGV Report Requirement</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Candidate ID</th>
+                                <th>Candidate Name</th>
+                                <th>Grade</th>
+                                <th style="width: 120px;">Report Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let rl of bGVReportRequiredCandidateCheckList">
+                                <td>{{rl.CandidateNo}}</td>
+                                <td>{{rl.CandidateName}}</td>
+                                <td>{{rl.Grade}}</td>
+                                <td>
+                                    <div>
+                                        <label class="switch mb-0 d-block"><input type="checkbox" id="togBtn"
+                                                (change)="onchange($event,rl)" [(ngModel)]="rl.BVGReportApplicable">
+                                            <div class="slider round">
+                                                <span class="on">Yes</span>
+                                                <span class="off">No</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onSubmitBGVReportRequird()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Upload BGV Report Modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Upload BGV Report</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="">Upload <span class="grey"><small>(PDF format only)</small></span><span
+                            class="required">*</span></label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                            (change)="onAttachmentFileChange($event.target.files)">
+                        <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onUploadReport()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Added on 09/12/2021 as per requirement -->
+
+
+<!-- Joining confirmation modal -->
+<!-- Modal -->
+<div class="modal fade" id="joiningConfirmationModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Confirm Joining Date</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:80px;">Cand. ID</th>
+                                <th>Cand. Name</th>
+                                <th style="width: 120px;">Date of Joining</th>
+                                <th style="width: 120px;">Mode of Joining</th>
+                                <th style="width:90px;">Position Code</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let jccl of joiningConfirmationCandidateList; let i=index">
+                                <td>{{jccl.CandidateNo}}</td>
+                                <td>{{jccl.CandidateName}}</td>
+                                <td>
+                                    <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepicker"
+                                            id="datepicker{{i}}" placeholder="From Date" autocomplete="off"
+                                            [(ngModel)]="jccl.DateofJoining"
+                                            (ngModelChange)="jccl.DateofJoining = $event" #dateOfJoining>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2"><i
+                                                    class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <ng-select bindLabel="modeofJoiningName" [placeholder]="'Select'"
+                                        id="modeofJoining{{i}}" [appendTo]="'body'" [multiple]="false"
+                                        [searchable]="false" [clearable]="false" [(ngModel)]="jccl.ModeofJoining"
+                                        name="ModeofJoining">
+                                        <ng-option [value]="rec.modeofJoiningId" *ngFor="let rec of modeOfJoiningList">
+                                            {{rec.modeofJoiningName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </td>
+                                <td><input type="text" class="form-control" [(ngModel)]="jccl.PositionCode"
+                                        id="positioncode{{i}}"></td>
+                                <td><input type="text" class="form-control" [(ngModel)]="jccl.Remarks"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onConfirmJoiningDate()">Submit</button>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Update Joining Date modal after send to onboarding -->
+<!-- Modal -->
+<div class="modal fade" id="updatejoiningDateModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Joining Date</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:150px;">Cand. ID</th>
+                                <th>Cand. Name</th>
+                                <th style="width: 120px;">Date of Joining</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let jccl of joiningConfirmationCandidateList; let i=index">
+                                <td>{{jccl.CandidateNo}}</td>
+                                <td>{{jccl.CandidateName}}</td>
+                                <td>
+                                    <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepicker"
+                                            id="datepicker{{i}}" placeholder="From Date" autocomplete="off"
+                                            [(ngModel)]="jccl.DateofJoining"
+                                            (ngModelChange)="jccl.DateofJoining = $event" #dateOfJoining>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2"><i
+                                                    class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onSubmitUpdateJoiningDate()">Submit</button>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Onboarding Manager Popup -->
+
+<!-- Modal -->
+<div class="modal fade" id="sendtoOnboardingModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Send Candidate To Onboarding Team</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Onboarding Manager<span class="required">*</span></label>
+                    <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                        [searchable]="false" [clearable]="false" [(ngModel)]="OnBoardingManager"
+                        name="OnBoardingManager">
+                        <ng-option [value]="rec.autoUserId" *ngFor="let rec of onBoardingManagerList">
+                            {{rec.employeeName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onSendToOnboardingTeam()">Submit</button>
+                <!-- [disabled]="saveForm.invalid" -->
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+
+<!-- Decline Modal -->
+<div class="modal fade" id="declineModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionName}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="declineremarks"
+                                #DeclineRemarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- End Decline Modal -->
+
+
+
+
+
+<!-- Start Release Modal -->
+<div class="modal fade" id="releaseModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionName}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="releaseremarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="releaseCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- End Release Modal -->
+
+<!-- Start Call Back Modal  -->
+
+<div class="modal fade" id="callBackModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionName}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>From which stage you want to process the candidate</label>
+                            <div class="rdio rdio-primary d-inline-block">
+                                <input name="callbackradio" value="1" id="radio3" type="radio"
+                                    (change)="onChangeCandidateStage('I')">
+                                <!--  [checked]="objCallbackHistoryInsert.isFromBeginning==true" -->
+                                <label for="radio3">Initial</label>
+                            </div>
+                            <div class="rdio rdio-primary d-inline-block">
+                                <input name="callbackradio" value="0" id="radio4" type="radio"
+                                    (change)="onChangeCandidateStage('L')">
+                                <!-- [checked]="objCallbackHistoryInsert.isFromBeginning==0" -->
+                                <label for="radio4">Last</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="callbackremarks"
+                                #DeclineRemarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="callBackCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- End Call back Modal-->
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

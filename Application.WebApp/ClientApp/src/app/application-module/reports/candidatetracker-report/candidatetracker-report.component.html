@@ -1,0 +1,172 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">Candidate Tracker Report</h1>
+  </div>
+
+  <form [formGroup]="filterForm" (ngSubmit)="fromSubmit()">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Req No</label>
+            <input type="text" class="form-control" formControlName="requisitionNo"
+                   #requisitionNo autocomplete="off">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Vertical</label>
+            <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId
+                       (change)="changeVertical()" name="verticalId" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals"
+                         (change)="changeVertical()">
+                {{rec.verticalName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Function</label>
+            <ng-select bindLabel="functionName" class="ddltestvenue" formControlName="locationId"
+                       #locationId name="locationId" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                {{rec.functionName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <!--<div class="col-sm-2">
+          <div class="form-group">
+            <label>Allocated Auto UserId</label>
+            <ng-select bindLabel="allocatedautouseridName" class="ddltestvenue" formControlName="allocatedAutoUserIdId"
+                       #locationId name="allocatedAutoUserId" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.allocatedAutoUserId" *ngFor="let rec of allocatedAutoUserIds">
+                {{rec.allocatedAutoUserId}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>-->
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Hiring Status</label>
+            <ng-select bindLabel="hiringStatusId" class="ddltestvenue" formControlName="hiringStatusId"
+                       #hiringStatusId name="hiringStatusId" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false" >
+              <ng-option [value]="rec.hiringStatusId" *ngFor="let rec of candidateLists">
+                {{rec.hiringStatusId}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+       
+        <div class="col-sm-12 text-right">
+          <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1">
+            <i class="las la-sync-alt"></i>Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Requisition DetailId</th>
+          <th>Requisition No</th>
+          <th>EmpNo</th>
+          <th>Full Name</th>
+          <th>Location Office</th>
+          <th>Department Name</th>
+          <th>Grade Name</th>
+          <th>Source Channel Name</th>
+          <th>EmailId</th>
+          <th>Contact No</th>
+          <th>Qualification</th>
+          <th>Management Status</th>
+          <th>Joining Date</th>
+          <th>Joining Status</th>
+          <th>Hiring StatusId</th>
+          <th>Allocated Auto UserId</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of candidates">
+          <td>{{data.requisitionDetailId}}</td>
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.empNo}}</td>
+          <td>{{data.fullName}}</td>
+          <td>{{data.locationOffice}}</td>
+          <td>{{data.departmentName}}</td>
+          <td>{{data.gradeName}}</td>
+          <td>{{data.sourceChannelName}}</td>
+          <td>{{data.emailId}}</td>
+          <td>{{data.contactNo}}</td>
+          <td>{{data.qualification}}</td>
+          <td>{{data.managementStatus}}</td>
+          <td>{{data.joiningDate}}</td>
+          <td>{{data.joiningStatus}}</td>
+          <td>{{data.hiringStatusId}}</td>
+          <td>{{data.allocatedAutoUserId}}</td>w
+        </tr>
+      </tbody>
+    </table>
+    <div id="exportTable" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Requisition DetailId</th>
+            <th>Requisition No</th>
+            <th>EmpNo</th>
+            <th>Full Name</th>
+            <th>Location Office</th>
+            <th>Department Name</th>
+            <th>Grade Name</th>
+            <th>Source Channel Name</th>
+            <th>EmailId</th>
+            <th>Contact No</th>
+            <th>Qualification</th>
+            <th>Management Status</th>
+            <th>Joining Date</th>
+            <th>Joining Status</th>
+            <th>Hiring StatusId</th>
+            <th>Allocated Auto UserId</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of candidates">
+            <td>{{data.requisitionDetailId}}</td>
+            <td>{{data.requisitionNo}}</td>
+            <td>{{data.empNo}}</td>
+            <td>{{data.fullName}}</td>
+            <td>{{data.locationOffice}}</td>
+            <td>{{data.departmentName}}</td>
+            <td>{{data.gradeName}}</td>
+            <td>{{data.sourceChannelName}}</td>
+            <td>{{data.emailId}}</td>
+            <td>{{data.contactNo}}</td>
+            <td>{{data.qualification}}</td>
+            <td>{{data.managementStatus}}</td>
+            <td>{{data.joiningDate}}</td>
+            <td>{{data.joiningStatus}}</td>
+            <td>{{data.hiringStatusId}}</td>
+            <td>{{data.allocatedAutoUserId}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,67 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" (click)="onClickBack()"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Candidate Evaluate Assesment</h1>
+            </div>
+        </div>
+    </div>
+    <div class="mb-4">
+        <div class="form-row">
+            <div class="col-md-2">
+                <p class="d-inline-block grey">Employee No:</p>
+                <p class="d-inline-block">{{evaluateAssessmentListBatch?.candidateNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Date of Joining:</p>
+                <p class="d-inline-block">{{evaluateAssessmentListBatch?.dateofJoining}}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="d-inline-block grey">Total Assessment:</p>
+                <p class="d-inline-block">{{evaluateAssessmentListBatch?.totalAssignment}}</p>
+            </div>
+            <div class="col-md-5">
+                <p class="d-inline-block grey">Assessment Status:</p>
+                <p class="d-inline-block">{{evaluateAssessmentListBatch?.assessmentStatus}}</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h6 class="red">Assessment List</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Training Title</th>
+                        <th>Training Type</th>
+                        <th>Assessment Name</th>
+                        <th class="text-center">Assigned on</th>
+                        <th>Status</th>
+                        <th class="text-center">Download</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of evaluateAssessmentDetails">
+                        <td>{{data.traingTitle}}</td>
+                        <td>{{data.assessmentTypeName}}</td>
+                        <td>{{data.assessmentName}}</td>
+                        <td class="text-center">{{data.assignedOn}}</td>
+                        <td>{{data.status}}</td>
+                        <td *ngIf="data.assessmentTypeId=='1'" class="text-center"><a href="javascript:void(0)"></a></td>
+                        <td *ngIf="data.assessmentTypeId=='2'" class="text-center"><a href="javascript:void(0)"
+                                class="btn btn-secondary btn-rounded btn-sm" (click)="onFileDownloadFormat()">Download</a></td>
+                        <td *ngIf="data.status!='Evaluation Complete' && data.assessmentTypeId=='1' && data.evaluatebutton "
+                            class="text-center"><a href="javascript:void(0)" class="btn btn-primary btn-rounded btn-sm"
+                                (click)="onClickEvaluate(data)">Evaluate</a></td>     <!-- && data.assessmentStatus=='All Assessment Complete' -->
+                        <td *ngIf="data.assessmentTypeId=='2' && data.evaluatebutton" class="text-center"><a href="javascript:void(0)"
+                                class="btn btn-primary btn-rounded btn-sm"
+                                (click)="onClickEvaluationUplaod(data)">Upload</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Filters</h1>
+    </div>
+
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId (change)="changeVertical()"
+                         name="verticalId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>                        
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="locationId" #locationId 
+                        name="locationId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>                        
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" name="functionId" formControlName="functionId" #functionId 
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select> 
+                    </div>
+                </div>
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()"  class="btn btn-secondary btn-sm ml-2"><i class="las la-sync-alt"></i> Reset</button>
+                  </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Vertical</th>
+                    <th>Function</th>
+                    <th>Location</th>
+                    <th>SAP Man Power</th>
+                    <th>Digital Man Power</th>
+                    <th>Varience</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of sapVarianceList">
+                    <td>{{data.verticalName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.locationOffice}}</td>
+                    <td>{{data.sapManPower}}</td>
+                    <td>{{data.digitalManPower}}</td>
+                    <td>{{data.varience}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="exportTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Vertical</th>
+                    <th>Function</th>
+                    <th>Location</th>
+                    <th>SAP Man Power</th>
+                    <th>Digital Man Power</th>
+                    <th>Varience</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of sapVarianceList">
+                    <td>{{data.verticalName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.locationOffice}}</td>
+                    <td>{{data.sapManPower}}</td>
+                    <td>{{data.digitalManPower}}</td>
+                    <td>{{data.variance}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

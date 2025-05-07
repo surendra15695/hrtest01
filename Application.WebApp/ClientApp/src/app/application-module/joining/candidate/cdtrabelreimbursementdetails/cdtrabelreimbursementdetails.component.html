@@ -1,0 +1,249 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+      <div>
+        <a href="javascript:void(0)" routerLink="/app/career/travel-reimbursement-list" class="back-btn">
+          <i class="las la-arrow-circle-left"></i>
+        </a>
+        <h1 class="f-l">Claim Travel Reimbursement</h1>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" disabled [(ngModel)]="candidateName">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Designation</label>
+        <input type="text" class="form-control" disabled [(ngModel)]="designationName">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Grade</label>
+        <input type="text" class="form-control" disabled [(ngModel)]="gradeName">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Date of Induction</label>
+        <input type="text" class="form-control" [(ngModel)]="dateOfInduction" disabled>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="form-group">
+        <label>Place of Induction</label>
+        <input type="text" class="form-control" [(ngModel)]="placeOfInduction" disabled>
+      </div>
+    </div>
+  </div>
+  <div class="mb-4">
+    <h6 class="red">Travel Details:</h6>
+    <table class="table table-bordered rwd-table">
+      <thead>
+        <tr>
+          <th style="min-width: 140px;">Journey Type</th>
+          <!-- <th>Date</th> -->
+          <th>Reporting Location</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Mode of Travel</th>
+          <th>Amount</th>
+          <th *ngIf="(candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2') && mode=='Edit'"
+              class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jd of journeyDetailsArray;let i=index;">
+          <td data-th="Journey Type" *ngIf="!jd.isReadOnly">
+            <ng-select bindLabel="JourneyTypeName" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false" [(ngModel)]="jd.journeyTypeId">
+              <ng-option [value]="rec.JourneyTypeId" *ngFor="let rec of journeyTypeList">
+                {{rec.JourneyTypeName}}
+              </ng-option>
+              <!-- <ng-option [value]="1">Onward Journey</ng-option>
+              <ng-option [value]="2">Return Journey</ng-option> -->
+            </ng-select>
+          </td>
+          <td *ngIf="jd.isReadOnly">
+            {{getJourneyTypeName(jd.journeyTypeId)}}
+          </td>
+          <!-- <td data-th="Date" *ngIf="!jd.isReadOnly">
+              <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepiker" id="datepicker" placeholder="From Date"
+                      [(ngModel)]="jd.journeyDate" #journeyDate>
+                  <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                  </div>
+              </div>
+          </td>
+          <td *ngIf="jd.isReadOnly">{{jd.journeyDate}}</td> -->
+          <td data-th="Reporting Location" *ngIf="!jd.isReadOnly">
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="jd.reportingLocation">
+          </td>
+          <td *ngIf="jd.isReadOnly">{{jd.reportingLocation}}</td>
+          <td data-th="From" *ngIf="!jd.isReadOnly">
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="jd.from">
+          </td>
+          <td *ngIf="jd.isReadOnly">{{jd.from}}</td>
+          <td data-th="To" *ngIf="!jd.isReadOnly">
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="jd.to">
+          </td>
+          <td *ngIf="jd.isReadOnly">{{jd.to}}</td>
+          <td data-th="Mode of Travel" *ngIf="!jd.isReadOnly">
+            <ng-select bindLabel="TravelModeName" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false" [(ngModel)]="jd.travelModeId">
+              <ng-option [value]="rec.TravelModeId" *ngFor="let rec of modeOfJourney">
+                {{rec.TravelModeName}}
+              </ng-option>
+            </ng-select>
+          </td>
+          <td *ngIf="jd.isReadOnly">{{getTravelModename(jd.travelModeId)}}</td>
+          <td data-th="Amount" *ngIf="!jd.isReadOnly">
+            <input type="text" class="form-control" placeholder=""
+                   (keypress)="numberOnly($event)" [(ngModel)]="jd.claimAmount">    <!-- text-right -->
+          </td>
+          <td *ngIf="jd.isReadOnly">{{jd.claimAmount}}</td>
+          <td class="text-center"
+              *ngIf="!jd.isReadOnly && (candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2')">
+            <a href="javascript:void(0)" class="row-btn" (click)="onClickAddJourneyDetails(jd)">
+              <i class="las la-plus"></i>
+            </a>
+          </td>
+          <td *ngIf="jd.isReadOnly && (candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2') && mode=='Edit'"
+              class="text-center">
+            <a href="javascript:void(0)" class="row-btn" (click)="onClickDelete(i)">
+              <i class="las la-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h6 class="red">Upload document(s) as proof:</h6>
+
+    <table class="table table-bordered rwd-table">
+      <thead>
+        <tr>
+          <th>Journey Type</th>
+          <th>Ticket / Pass / Bill</th>
+          <th>Upload</th>
+          <th *ngIf="(candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2') && mode=='Edit'"
+              class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ja of travelAttachementDetailsArray;let i=index;">
+          <td data-th="Journey Type" *ngIf="!ja.isReadOnly">
+            <ng-select bindLabel="JourneyTypeName" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false" [(ngModel)]="ja.journeyTypeId">
+              <ng-option [value]="rec.JourneyTypeId" *ngFor="let rec of journeyTypeList">
+                {{rec.JourneyTypeName}}
+              </ng-option>
+            </ng-select>
+          </td>
+          <td *ngIf="ja.isReadOnly">
+            {{getJourneyTypeName(ja.journeyTypeId)}}
+          </td>
+          <td data-th="Ticket / Pass / Bill" *ngIf="!ja.isReadOnly">
+            <ng-select bindLabel="TicketName" [placeholder]="'Select'" [appendTo]="'body'"
+                       [multiple]="false" [searchable]="false" [clearable]="false" [(ngModel)]="ja.ticketId">
+              <ng-option [value]="rec.TicketId" *ngFor="let rec of billType">
+                {{rec.TicketName}}
+              </ng-option>
+            </ng-select>
+          </td>
+          <td *ngIf="ja.isReadOnly">{{getBillTypeName(ja.ticketId)}}</td>
+          <td data-th="Upload" *ngIf="!ja.isReadOnly">
+            <div *ngIf="!ja.isReadOnly" class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                     (change)="onAttachmentFileChange($event.target.files,ja)">
+              <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+            </div>
+          </td>
+          <!-- <td *ngIf="ja.isReadOnly">{{ja.attachmentFile}} </td> -->
+          <td *ngIf="ja.isReadOnly && ja.attachmentLink==''">
+            <a [href]="ja.BlobURL" target="_blank">{{ja.attachmentFile}}</a>
+          </td>
+          <td *ngIf="ja.isReadOnly && ja.attachmentLink!=''">
+            <a (click)="openFile(ja.attachmentLink)" style="cursor: pointer;">{{ja.attachmentFile}}</a>
+          </td>
+          <td *ngIf="!ja.isReadOnly && (candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2')"
+              class="text-center">
+            <a href="javascript:void(0)" class="row-btn"
+               (click)="onClickAddJourneyAttachement(ja)"><i class="las la-plus"></i></a>
+          </td>
+          <td *ngIf="ja.isReadOnly && (candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2') && mode=='Edit'"
+              class="text-center">
+            <a href="javascript:void(0)" class="row-btn"
+               (click)="onClickDeleteAttachement(i)"><i class="las la-trash-alt"></i></a>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <!-- <div *ngIf="candidateTravelReimbursementList?.approvalStatus != '0'">
+        <span class="red"><b>Remarks: </b></span><span>{{approvalRemarks}}</span>
+    </div> -->
+    <div class="col-12">
+      <div class="form-group">
+        <label>Remarks</label>
+        <textarea class="form-control" id="" placeholder="Enter Remarks..."
+                  [(ngModel)]="approvalRemarks"></textarea>
+      </div>
+    </div>
+    <div></div>
+
+    <span class="red"><b>NB:</b></span><span class="grey font-italic">
+      You are requested to submit the proof for
+      reimbursement. Scanned copy of the return journey should be attached. Otherwise we shall process only onward journey
+      tickets for reimbursement.
+    </span>
+  </div>
+  <div>
+    <div class="media mb-3" *ngFor="let item of ForPrintRemarks">
+      <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+      <div class="media-body">
+        <h6>{{item.printName}}</h6>
+        {{item.printRemarks}}
+      </div>
+    </div>
+  </div>
+  <div class="mt-4"
+       *ngIf="candidateTravelReimbursementList?.approvalStatus=='0' || candidateTravelReimbursementList?.approvalStatus=='2' && mode=='Edit'">
+    <button type="button" class="btn btn-black" (click)="onClickSubmit()">Submit</button>
+    <button type="button" class="btn btn-primary ml-1" (click)="onClickCancel()">Cancel</button>
+  </div>
+</div>
+<div class="modal fade" id="confirmPopup" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+        <h6 class="conComment text-center">Are you sure you want to continue.</h6>
+        <div class="mt-4 text-center">
+          <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-black ml-2" (click)="onSubmitJoiningTravelReimBursementDetails()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="printtravelReimbursementForzip" style="display: none;">
+  <app-pdftravelreimbursement-forzip [travelReimbursementRecord]="travelReimbursementData"></app-pdftravelreimbursement-forzip>
+</div>
+<div id="printJoiningTravelReimbursementDiv" style="display: none;">
+  <app-pdftravelreimbursement [travelReimbursementRecord]="joiningTravelReimbursementForPDF"></app-pdftravelreimbursement>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

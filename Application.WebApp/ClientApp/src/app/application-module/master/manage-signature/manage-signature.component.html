@@ -1,0 +1,117 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">Manage Employee Signature</h1>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="createForm()" data-target="#myModal"><i class="las la-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>  
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Employee Name</th>
+                            <th>Signature</th>
+                            <th>Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of allSignatureList; let i = index;">
+                            <td>{{i+1}}</td>
+                            <td>{{item.employeeName}}</td>
+                            <td><a href="{{item.filename}}" target="_blank">Signature</a></td>
+                            <td class="green" *ngIf="item.isActive==true">Active</td>
+                            <td class="red" *ngIf="item.isActive==false">Inactive</td>                                                         
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#" data-toggle="modal" (click)="onEdit(item)" data-target="#myModal"><i class="las la-pen"></i> Edit</a>
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>                                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title" *ngIf="Operation=='add'">Add Signature</h4>
+                <h4 class="modal-title" *ngIf="Operation=='edit'">Edit Signature</h4>
+                <!-- <h4 class="modal-title">Edit Trainer</h4> -->
+            </div>
+            <form [formGroup]="saveForm" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Employee Name</label>
+                                <ng-select  class="ddltestvenue" [placeholder]="'Select'" (change)="onChangeEmployee($event)"
+                                formControlName="EmployeeNo" name="EmployeeNo" [readonly]="isEdit"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false" >
+                                    <ng-option [value]="rec.empNo" *ngFor="let rec of employeeList">
+                                         {{rec.employeeName}}
+                                    </ng-option>
+                                    
+                                </ng-select>                               
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Signature</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" accept="image/png, image/jpeg"
+                                    (change)="onFileChange($event.target.files)">
+                                       <label class="custom-file-label" for="customFile" #uploadPDFimport>Choose file</label>
+                                       <p class="error-msg msgfile" style="display: none;"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="swichLabel">Active</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="togBtn" name="togBtn" name="IsActive" formControlName="IsActive"/>
+                                    <div class="slider round">
+                                        <!--ADDED HTML -->
+                                            <span class="on">Yes</span><span class="off">No</span>
+                                        <!--END-->
+                                    </div>
+                                </label>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="onClickCancel()" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" (click)="onSubmit()">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+

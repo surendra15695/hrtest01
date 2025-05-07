@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "enableIvy": false,
+  "importHelpers": true,
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "types": []
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts"
+  ]
+}

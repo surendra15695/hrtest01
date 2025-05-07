@@ -1,0 +1,791 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" (click)="backButton()"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Handholding Forms
+
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{empName}}</p>
+            </div>
+            <!-- <div class="col-md-3">
+                <p class="d-inline-block grey">Approver:</p>
+                <p class="d-inline-block">{{approver}}</p>
+            </div> -->
+        </div>
+
+        <hr>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card">
+            <div class="card-header" id="headingSev">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseSev" aria-expanded="false"
+                        aria-controls="collapseSev">
+                        Assesment Evaluation 
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseSev" class="collapse" aria-labelledby="headingSev" data-parent="#accordion">
+                <div class="card-body">
+                    <div *ngIf="candiddateAssementDetails.length ==0">
+                        <h4 style="color: red;">Assesment Evaluation Is not Completed Yet</h4>
+                    </div>
+                    <div *ngIf="candiddateAssementDetails.length >0">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Assesment Name</th>
+                                        <th>Training Title </th>
+                                        <th>Training Assesment Type</th>
+                                        <th>Assigned On </th>
+                                        <th>Score</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of candiddateAssementDetails">
+                                        <td>{{data.assessmentName}}</td>
+                                        <td>{{data.traingTitle}}</td>
+                                        <td>{{data.assessmentTypeName}}</td>
+                                        <td>{{data.assignedOn}}</td>
+                                        <td class="text-center">{{data.score}}</td>
+                                        <td>{{data.status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><b>Assessment Score (Average)</b></td>
+                                        <td></td>
+                                        <td class="text-center"><b>{{candidateAssessmentDataList?.totalScore}}</b></td>
+                                        <td colspan="2"></td>
+                                        <td></td>
+                                      </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingEit">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseEit" aria-expanded="false"
+                        aria-controls="collapseEit">
+                        Induction Feedback 
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseEit" class="collapse" aria-labelledby="headingEit" data-parent="#accordion">
+                <div class="card-body">
+                    <div *ngIf="candidateFeedbackDetailData.length ==0">
+                        <h4 style="color: red;">Induction Feedback Is not given Yet</h4>
+                    </div>
+                    <div *ngIf="candidateFeedbackDetailData.length >0">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Training Title</th>
+                                        <th>Assigned On </th>
+                                        <th>OverAll Rating</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of candidateFeedbackDetailData">
+                                        <td>{{data.traingTitle}}</td>
+                                        <td>{{data.releaseDate}}</td>
+                                        <td>{{data.overallRating}}</td>
+                                        <td>{{getFeedbackStatus(data.feedbackStatusId,data.feedbackbutton)}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="jsrLength > 0">
+            <div class="card-header" id="headingOne">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                        aria-controls="collapseOne">
+                        Job Shadow Review
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="custom-list-item">
+                        <strong>Please comment on employee's perspective about job(nature of work, envirnment, culture
+                            etc.)</strong>
+                        <p>{{jreviewData.question1Reason}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Please comment on employee's ability to observe, learn and apply critical tacit
+                            knowledge, skills & behaviors</strong>
+                        <p>{{jreviewData.question2Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Please summarize the expectations set for employee</strong>
+                        <p>{{jreviewData.question3Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Please comment how well employee has understood his role and expectations of the
+                            organization</strong>
+                        <p>{{jreviewData.question4Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Employee's ability to handle job independently</strong>
+                        <p>{{jreviewData.question5Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Please mention the strengths observed</strong>
+                        <p>{{jreviewData.question6Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Please mention the development areas identified</strong>
+                        <p>{{jreviewData.question7Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Please summarize the support given to employee on development areas</strong>
+                        <p>{{jreviewData.question8Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Action Recommended:Job allocation/Extend for 1 month</strong>
+                        <p>{{jreviewData.question9StatusName}}</p>
+                    </div>
+                </div>
+
+                <div style="border-top:1px solid rgba(0,0,0,.125);padding: 10px 15px">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span><strong>Evaluated By:</strong></span><span>{{jreviewData.reviewer}}</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span><strong>Approved By:</strong></span><span>{{jreviewData.approvedBy}}</span>
+                        </div>
+                    </div>
+                    <!-- <p>Evaluated By: {{jreviewData.reviewer}}</p>
+                    <p>Approved By: {{jreviewData.approvedBy}}</p> -->
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="hrfLength > 0">
+            <div class="card-header" id="headingTwo">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                        aria-controls="collapseTwo">
+                        HR Feedback
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="custom-list-item">
+                        <h6 class="red">Tell them something you like about their work:</h6>
+                        <strong>The best part of your work is</strong>
+                        <p>{{hfData.question1Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>You did really well or achievement is </strong>
+                        <p>{{hfData.question2Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <h6 class="red">Ask them something about their work:</h6>
+                        <strong>Do you have adequate support(tools/system)to manage your work better</strong>
+                        <p>{{hfData.question3Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Do you have role clarity and expected out-put from the job</strong>
+                        <p>{{hfData.question4Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Do you have any concerns/Grievance/Satisfaction points in your job</strong>
+                        <p>{{hfData.question5Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <h6 class="red">Give a suggestion for improvement:</h6>
+                        <strong>One thing to improve your work is</strong>
+                        <p>{{hfData.question6Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>I think your next steps should be </strong>
+                        <p>{{hfData.question7Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <h6 class="red">Any specific training to be imparted:</h6>
+                        <p>{{hfData.question8Answer}}</p>
+                    </div>
+                    <div style="border-top:1px solid rgba(0,0,0,.125);padding: 10px 15px">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span><strong>Evaluated By:</strong></span><span>{{hfData.reviewer}}</span>
+                            </div>
+                        
+                        </div>
+                        <!-- <p>Evaluated By: {{jreviewData.reviewer}}</p>
+                        <p>Approved By: {{jreviewData.approvedBy}}</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="lrLength > 0">
+            <div class="card-header" id="headingFour">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                        aria-controls="collapseFour">
+                        Listen Review
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="custom-list-item">
+                        <strong>How do you find your work engaging? How can we improve it?</strong>
+                        <p>{{lreviewData.question1Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>How are the additional support you expect to excel in your work?</strong>
+                        <p>{{lreviewData.question2Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>What are the challenges in the work envirnment?</strong>
+                        <p>{{lreviewData.question3Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Any training area/tolls to improve your work?</strong>
+                        <p>{{lreviewData.question4Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Any grievances(observed/explained)</strong>
+                        <p>{{lreviewData.question5Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Any critical incident/achievements to be noted(Positive/Negative)</strong>
+                        <p>{{lreviewData.question6Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Status on points of last listening process(if any)</strong>
+                        <p>{{lreviewData.question7Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Observed Strength, if any(with specific example)</strong>
+                        <p>{{lreviewData.question8Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Overall are for improvement, if any(with specific example)</strong>
+                        <p>{{lreviewData.question9Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Any specific action plan based on the current listening</strong>
+                        <p>{{lreviewData.question10Answer}}</p>
+                    </div>
+                    <div style="border-top:1px solid rgba(0,0,0,.125);padding: 10px 15px">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span><strong>Evaluated By:</strong></span><span>{{lreviewData.reviewer}}</span>
+                            </div>
+                        
+                        </div>
+                        <!-- <p>Evaluated By: {{jreviewData.reviewer}}</p>
+                        <p>Approved By: {{jreviewData.approvedBy}}</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="hreviewData != null">
+            <div class="card-header" id="headingFive">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
+                        aria-controls="collapseFive">
+                        Half Yearly Review
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="custom-list-item">
+                        <strong>Areas worked and any specific activities done</strong>
+                        <p>{{hreviewData.question1Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Feedback on performance</strong>
+                        <p>{{hreviewData.question2Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Area</th>
+                                        <th>Rating</th>
+                                        <th width="55%">Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of halfYearlyReviewQuestions">
+                                        <td>
+                                            <p>{{data.reviewQuestion}}</p>
+                                        </td>
+                                        <td>
+                                            {{data.rating}}
+                                        </td>
+                                        <td>
+                                            {{data.reviewComments}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Area of strength noticed/observed</strong>
+                        <p>{{hreviewData.question3Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Areas of develoment/improvement</strong>
+                        <p>{{hreviewData.question4Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Action plans for areas of develoment/improvement</strong>
+                        <p>{{hreviewData.question5Answer}}</p>
+                    </div>
+
+                    <div style="border-top:1px solid rgba(0,0,0,.125);padding: 10px 15px">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span><strong>Evaluated By:</strong></span><span>{{hreviewData.reviewer}}</span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <span><strong>Approved By:</strong></span><span>{{hreviewData.approver}}</span>
+                            </div>
+                        </div>
+                        <!-- <p>Evaluated By: {{jreviewData.reviewer}}</p>
+                        <p>Approved By: {{jreviewData.approvedBy}}</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="hrrLength > 0">
+            <div class="card-header" id="headingThree">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree">
+                        HR Review
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="custom-list-item">
+                        <strong>How did the induction and plant training help the employee to perform the job
+                        </strong>
+                        <p>{{hrRData.question1Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Does the employee has relevant tools to perform the job
+                        </strong>
+                        <p>{{hrRData.question2Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>What are the interpersonal issues/difficulties while performing duties
+                        </strong>
+                        <p>{{hrRData.question3Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>What support does the employee need from organizaton
+                        </strong>
+                        <p>{{hrRData.question4Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Is he recognized/appreciated during the last 6 months? Please clarify with one instance
+                        </strong>
+                        <p>{{hrRData.question5Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Overall comments on employee's working with MRF
+                        </strong>
+                        <p>{{hrRData.question6Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Any support is requested/needed
+                        </strong>
+                        <p>{{hrRData.question7Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Any specific action plan</strong>
+                        <p>{{hrRData.question8Answer}}</p>
+                    </div>
+                    <div style="border-top:1px solid rgba(0,0,0,.125);padding: 10px 15px">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span><strong>Evaluated By:</strong></span><span>{{hrRData.reviewer}}</span>
+                            </div>
+                            
+                        </div>
+                        <!-- <p>Evaluated By: {{jreviewData.reviewer}}</p>
+                        <p>Approved By: {{jreviewData.approvedBy}}</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="creviewData != null">
+            <div class="card-header" id="headingSix">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseSix" aria-expanded="false"
+                        aria-controls="collapseSix">
+                        Confirmation Review
+                        <span>
+                            <i class="fa fa-plus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- <div class="custom-list-item">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Assignments/Tasks Undertaken </th>
+                                        <th>Rating</th>
+                                        <th width="55%">Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of AssignmentsArray">
+                                        <td>{{data.assignments}}</td>
+                                        <td>{{data.rating}}</td>
+                                        <td>{{data.assignmentComments}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="custom-list-item">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Area</th>
+                                        <th>Rating</th>
+                                        <th width="55%">Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of confirmationReviewQuestions">
+                                        <td>
+                                            <p>{{data.reviewQuestion}}</p>
+                                        </td>
+                                        <td>
+                                            {{data.rating}}
+                                        </td>
+                                        <td>
+                                            {{data.reviewComments}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Feedback of Performance</strong>
+                        <p>{{creviewData.question1Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Special Assignments/Noteworthy Acievements</strong>
+                        <p>{{creviewData.question2Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Exceptions for next 12 months</strong>
+                        <p>{{creviewData.question3Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Area of stregth noticed/observed</strong>
+                        <p>{{creviewData.question4Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Area of development/improvement/training needs</strong>
+                        <p>{{creviewData.question5Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Action plans for areas of development/improvement</strong>
+                        <p>{{creviewData.question6Answer}}</p>
+                    </div>
+                    <div class="custom-list-item">
+                        <strong>Confirm/ Extend Probation for 3 Month/ Extend Probation for 6 Months/ Do Not
+                            Confirm</strong>
+                        <p>{{creviewData.confirmStatusName}}</p>
+                    </div> -->
+                    
+                    <div style="margin-bottom: 10px;">
+                        <table cellspacing="0" cellpadding="0"
+                            style='width: 100%; border-collapse: collapse; border-spacing: 0px; border:1px solid #000; text-align: left;'>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" style='border:1px solid #000; padding: 2px 3px;'>
+                                        <h6 style="font-style: italic; margin: 0;">
+                                            A. List down all the assignments and tasks undertaken by the probationer during the
+                                            period of review. These should
+                                            include projects, routine jobs & tasks
+                                        </h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style='border:1px solid #000; padding: 2px 3px;' width="7%">S.No.</th>
+                                    <th style='border:1px solid #000; padding: 2px 3px;' width="40%">ASSIGNMENTS / TASKS UNDERTAKEN</th>
+                                    <th style='border:1px solid #000; padding: 2px 3px;'  width="9%">RATING</th>
+                                    <th style='border:1px solid #000; padding: 2px 3px;' width="34%">COMMENTS</th>
+                                </tr>
+                                <tr *ngFor="let data of AssignmentsArray;let i=index">
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>{{i+1}}</td>
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>{{data.assignments}}</td>
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>{{data.rating}}</td>
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>{{data.assignmentComments}}</td>
+                                </tr>
+                            
+                                
+                            </tbody>
+            
+                        </table>
+                    </div>
+            
+                 <div style="margin-bottom: 10px; page-break-inside: auto; page-break-after: always;">
+                        <table cellspacing="0" cellpadding="0"
+                            style='width: 100%; border-collapse: collapse; border-spacing: 0px; border:1px solid #000; text-align: left;'>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" style='border:1px solid #000; padding: 2px 3px;'>
+                                        <h6 style="font-style: italic; margin: 0;">
+                                            B. Based on relevant facts and probationer's strengths or development areas, give your
+                                            rating on each of the areas listed below:
+                                        </h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style='border:1px solid #000; padding: 2px 3px;' width="52%">FACTORS</th>
+                                    <th style='border:1px solid #000; padding: 2px 3px;' width="10%">RATING</th>
+                                    <th style='border:1px solid #000; padding: 2px 3px;' width="38%">SUPPORTING FACTS</th>
+                                </tr>
+                                <tr *ngFor="let data of confirmationReviewQuestions;">
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>
+                                       {{data.reviewQuestion}} 
+                                    </td>
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>{{data.rating}}</td>
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>{{data.reviewComments}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            
+                    <div style="margin-bottom: 5px; page-break-inside: avoid;">
+                        <div style='border:1px solid #000; padding: 2px 3px;  min-height: 60px;'>
+                            <p style="margin: 0;"><b>SPECIAL ASSIGNMENTS / NOTE WORTHY ACHIEVEMENTS</b></p>
+                            <p style="margin: 0;">{{creviewData.question2Answer}}</p>
+                        </div>
+                    </div>
+            
+                    <div style="margin-bottom: 5px; page-break-inside: avoid;">
+                        <div style='border:1px solid #000; padding: 2px 3px;  min-height: 60px;'>
+                            <p style="margin: 0;"><b>TRAINING NEEDS</b></p>
+                            <p style="margin: 0;">{{creviewData?.question5Answer}}</p>
+                        </div>
+                    </div>
+            
+                    <div style="margin-bottom: 5px; page-break-inside: avoid;">
+                        <div style='border:1px solid #000; padding: 2px 3px;'>
+                            <p style="margin: 0; margin-bottom: 8px;"><b>SUPERIOR'S REVIEW / RECOMMENDATION</b></p>
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody>
+                                    <tr>
+                                        <td style='padding: 5px;'>
+                                            <input type="checkbox" disabled="true" id="" *ngIf="creviewData?.confirmStatus==1" name="" checked>
+                                            <input type="checkbox" disabled="true" id="" *ngIf="creviewData?.confirmStatus!=1" name="">
+                                            <label for="vehicle1">CONFIRM</label><br>
+                                        </td>
+                                        <td style='padding: 5px;'>
+                                            <input type="checkbox" disabled="true" *ngIf="creviewData?.confirmStatus==2 || creviewData?.confirmStatus==3" id="" name="" checked>
+                                            <input type="checkbox" disabled="true" id="" *ngIf="creviewData?.confirmStatus!=2 || creviewData?.confirmStatus!=3" name="">
+                                            <label for="vehicle1">EXTEND PROBATION</label><br>
+                                        </td>
+                                        <td style='padding: 5px;'>
+                                            <input type="checkbox" disabled="true" *ngIf="creviewData?.confirmStatus ==4" id="" name="" checked>
+                                            <input type="checkbox" disabled="true" *ngIf="creviewData?.confirmStatus !=4" id="" name="">
+                                            <label for="vehicle1">Do NOT CONFIRM</label><br>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p *ngIf="creviewData?.confirmStatus==1 || creviewData?.confirmStatus==4"><b>IF EXTENSION IS RECOMMENDED, UPTO<span style="text-decoration: underline; margin-left: 5px;"></span></b></p>
+                            <p *ngIf="creviewData?.confirmStatus==2"><b>IF EXTENSION IS RECOMMENDED, UPTO<span style="text-decoration: underline; margin-left: 5px;">3
+                                            Months</span></b></p>
+            
+                            <p *ngIf="creviewData?.confirmStatus==3"><b>IF EXTENSION IS RECOMMENDED, UPTO<span style="text-decoration: underline; margin-left: 5px;">6
+                                Months</span></b></p>
+                            <table
+                                style='width: 100%;border-collapse: collapse; border-spacing: 0px; text-align: left; margin: 20px 0 0 0;'>
+                                <tbody>
+                                    <tr>
+                                        <td style='width: 33.33%; padding: 3px 5px; vertical-align: bottom;'>{{creviewData?.reviewer}}</td>
+                                        <td style='width: 33.33%; padding: 3px 5px; vertical-align: bottom; text-align: center;'>
+                                            {{creviewData?.reviewerReviewOn}}</td>
+                                        <td style='width: 33.33%; padding: 3px 5px; text-align: right;'><img
+                                            [src]="creviewData?.reviewerSign"
+                                            alt=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td style='width: 33.33%; padding: 3px 5px;'><b>Name</b></td>
+                                        <td style='width: 33.33%; padding: 3px 5px; text-align: center;'><b>Date</b></td>
+                                        <td style='width: 33.33%; padding: 3px 5px; text-align: right;'><b>Signature</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            
+                    <div style="margin-bottom: 5px; page-break-inside: avoid;">
+                        <table style='width: 100%;border-collapse: collapse; border-spacing: 0px; text-align: left; margin: 0;'>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" style='border:1px solid #000; padding: 2px 3px;'>
+                                        <h6 style="margin: 0; text-align: center;">RECOMMENDATION</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>
+                                        <p style="text-align: center;text-decoration: underline;"><b>HEAD OF THE DEPARTMENT</b></p>
+                                        <table cellspacing="0" cellpadding="0" border="0" style="margin-top: 30px; width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style='width: 60%; padding: 3px 5px;'>
+                                                        <img style="width: 120px;"
+                                                        [src]="creviewData?.hodReviewerSign"
+                                                        alt="">
+                                                        <p>{{creviewData?.hodReviewerName}}</p>
+                                                    </td>
+                                                    <td style='width: 40%; padding: 3px 5px; text-align: right;'>
+                                                        {{creviewData?.hodRemarksOn}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='width: 60%; padding: 3px 5px;'><b>Name & Signature</b></td>
+                                                    <td style='width: 40%; padding: 3px 5px; text-align: right;'><b>Date</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+            
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>
+                                        <p style="text-align: center;text-decoration: underline;"><b>HEAD OF PLANT HR</b></p>
+                                        <table cellspacing="0" cellpadding="0" border="0" style="margin-top: 30px; width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style='width: 60%; padding: 3px 5px;'><img style="width: 120px;"
+                                                        [src]="creviewData?.hrHeadReviewerSign"
+                                                        alt="">
+                                                    <p>{{creviewData?.hrHeadReviewerName}}</p>
+                                                    </td>
+                                                    <td style='width: 40%; padding: 3px 5px; text-align: right;'>
+                                                        {{creviewData?.headPlantHrRemarksOn}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='width: 60%; padding: 3px 5px;'><b>Name & Signature</b></td>
+                                                    <td style='width: 40%; padding: 3px 5px; text-align: right;'><b>Date</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+            
+                                    <td style='border:1px solid #000; padding: 2px 3px;'>
+                                        <p style="text-align: center;text-decoration: underline;"><b>PLANT HEAD</b></p>
+                                        <table cellspacing="0" cellpadding="0" border="0" style="margin-top: 30px; width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style='width: 60%; padding: 3px 5px;'><img style="width: 120px;"
+                                                        [src]="creviewData?.plantHeadReviewerSign"
+                                                        alt="">
+                                                    <p>{{creviewData?.plantHeadReviewerName}}</p>
+                                                    </td>
+                                                    <td style='width: 40%; padding: 3px 5px; text-align: right;'>
+                                                        {{creviewData?.plantHeadRemarksOn}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style='width: 60%; padding: 3px 5px;'><b>Name & Signature</b></td>
+                                                    <td style='width: 40%; padding: 3px 5px; text-align: right;'><b>Date</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            
+                    <div style="margin-bottom: 5px; page-break-inside: avoid;">
+                        <div style='border:1px solid #000; padding: 2px 3px;  min-height: 60px;'>
+                            <div style="margin-bottom: 30px;">
+                                <p style="margin: 0;"><b>REVIEW/ACTION FORM HR & S DEPARTMENT</b></p>
+                                <p style="margin: 0;">Sample text</p>
+                            </div>
+                            <p style="margin: 0; text-align: right;"><b>HR & S DEPARTMENT</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="button" class="btn btn-secondary" (click)="onclickDownloadPdf()">Download As Pdf</button>
+           
+        </div>
+    </div>
+</div>
+
+<div id="printerdiv" style="display: none;">
+    <app-pdfallhandholdingforms [pdfvalues]="reviewDataForPdf"></app-pdfallhandholdingforms>
+</div>

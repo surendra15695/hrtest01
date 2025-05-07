@@ -1,0 +1,110 @@
+<div>
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 *ngIf="!isEdit" class="f-l">New Document Mapping</h1>
+        <h1 *ngIf="isEdit" class="f-l">Edit Document Mapping</h1>
+    </div>
+    <!-- <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off"> -->
+    <!-- <h6 class="red">General information</h6> -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Vertical</label>
+                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="false" [clearable]="false" (change)="changeVertical()"
+                    [(ngModel)]="objAddEditGradewiseDocMapping.verticalId" [disabled]="isEdit">
+                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                        {{rec.verticalName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Function</label>
+                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="true" [clearable]="false" [(ngModel)]="objAddEditGradewiseDocMapping.functionId" [disabled]="isEdit">
+                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                        {{rec.functionName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Grade</label>
+                <ng-select bindLabel="gradeName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="true" [clearable]="false" [(ngModel)]="objAddEditGradewiseDocMapping.gradeId" [disabled]="isEdit">
+                    <ng-option [value]="rec.gradeId" *ngFor="let rec of gradeList">
+                        {{rec.gradeName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Doc Type</label>
+                <ng-select bindLabel="docType" class="ddlDocType" (change)="onChangeDocType($event)"
+                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                    [clearable]="false" [(ngModel)]="objAddEditGradewiseDocMapping.attachmentDocumentTypeId" [disabled]="isEdit">
+                    <ng-option [value]="rec.attachmentDocumentTypeId" *ngFor="let rec of DocTypeList">
+                        {{rec.attachmentDocumentTypeName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Doc Particular</label>
+                <ng-select bindLabel="docParticular" class="ddldcoparticular" [placeholder]="'Select'"
+                    [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false"
+                    (change)="onChangeDocParticular($event)"
+                    [(ngModel)]="objAddEditGradewiseDocMapping.attachmentDocumentPerticularId" [disabled]="isEdit">
+                    <ng-option [value]="rec.attachmentDocumentParticularId" *ngFor="let rec of DocParticularList">
+                        {{rec.attachmentDocumentParticularName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Doc Name</label>
+                <ng-select bindLabel="docName" class="ddldocname" [placeholder]="'Select'" [appendTo]="'body'"
+                    [multiple]="true" [searchable]="true" [clearable]="false"
+                    [(ngModel)]="objAddEditGradewiseDocMapping.attachmentDocNameId">
+                    <ng-option [value]="rec.attachmentDocumentNameId" *ngFor="let rec of DocNameList">
+                        {{rec.attachmentDocumentName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="swichLabel">Active</label>
+                <label class="switch">
+                    <input type="checkbox" id="togBtn" name="togBtn"
+                        [(ngModel)]="objAddEditGradewiseDocMapping.isActive" name="IsActive" />
+                    <div class="slider round">
+                        <!--ADDED HTML -->
+                        <span class="on">Yes</span><span class="off">No</span>
+                        <!--END-->
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="button" class="btn btn-black" (click)="onSubmit()">Submit</button>
+        <button type="button" (click)="onClickCancel()" class="btn btn-primary ml-2">Cancel</button>
+    </div>
+    <!-- </form> -->
+</div>
+
+
+<!-- for showing loader -->
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

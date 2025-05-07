@@ -1,0 +1,467 @@
+<form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="content-box m-b-15 m-t-10">
+        <div class="page-title-area pb-2 mb-2">
+            <a href="javascript:void(0)" class="back-btn"><i class="las la-arrow-circle-left" (click)="gotoCandidateList()"></i></a>
+            <h1 class="f-l">Update Profile</h1>
+        </div>
+        <h6 class="red">General information</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name<span class="required">*</span></label>
+                    <div class="form-row">
+                        <div class="col-3">
+                            <div class="dropdown bootstrap-select form-control">
+                                <select class="selectpicker" formControlName="PrefixId" disabled title="Select" tabindex="-98">
+                                    <option *ngFor="let pre of prefix" [ngValue]="pre.prefixId">
+                                        {{pre.prefixName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" disabled formControlName="FullName" name="FullName"
+                                placeholder="Name as per Aadhar card">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Gender<span class="required">*</span></label>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input formControlName="GenderId" name="GenderId" disabled value="1" id="radio1" type="radio"
+                            [checked]="selectedGenderId==1?true:false">
+                        <label for="radio1">Male</label>
+                    </div>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input formControlName="GenderId" name="GenderId" disabled value="2" id="radio2" type="radio"
+                            [checked]="selectedGenderId==2?true:false">
+                        <label for="radio2">Female</label>
+                    </div>
+                    <div class="rdio rdio-primary d-inline-block">
+                        <input formControlName="GenderId" name="GenderId" disabled value="3" id="radio3" type="radio"
+                            [checked]="selectedGenderId==3?true:false">
+                        <label for="radio3">Others</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right datepicker" disabled formControlName="DOB" name="DOB"
+                            placeholder="From Date">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="text" disabled maxlength="2" class="form-control" id="txtAge" formControlName="Age">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Email ID<span class="required">*</span></label>
+                    <input type="text" class="form-control" name="EmailId" disabled formControlName="EmailId"
+                        placeholder="Enter email" />
+                    <span class="text-danger m-t-5"
+                        *ngIf="submitted===true && !saveForm.controls['EmailId'].valid && !saveForm.controls['EmailId'].touched">
+                        <span *ngIf="saveForm.controls['EmailId'].hasError('pattern')">
+                            Email not valid.
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Phone No.<span class="required">*</span></label>
+                    <input (keypress)="keyPress($event)" maxlength="10" disabled type="text" class="form-control"
+                        formControlName="ContactNo" placeholder="Eg:9800123456">
+                    <span class="text-danger m-t-5"
+                        *ngIf="submitted===true && !saveForm.controls['ContactNo'].valid && !saveForm.controls['ContactNo'].touched">
+                        <span *ngIf="saveForm.controls['ContactNo'].hasError('minlength')">Invalid contact
+                            number.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Aadhar No.<span class="required">*</span></label>
+                    <input type="text" (keypress)="keyPress($event)" disabled class="form-control"
+                        formControlName="AadharNo" maxlength="12" placeholder="Eg:1234/12345/12345">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Mother Tongue<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select class="selectpicker form-control" title="Select" disabled formControlName="MotherTongueId"
+                            tabindex="-98">
+                            <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                                {{lang.languageName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Languages Known<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select class="selectpicker form-control selectpickermulti" disabled multiple title="Select"
+                            formControlName="LanguageIds" tabindex="-98">
+                            <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                                {{lang.languageName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Highest Qualification<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select formControlName="QualificationId" disabled class="selectpicker form-control" title="Select"
+                            tabindex="-98" (change)="changeQualification()">
+                            <option *ngFor="let q of qualifications" [ngValue]="q.qualificationId">
+                                {{q.qualificationName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Course<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select formControlName="CourseId" disabled class="selectpicker form-control" title="Select" #CourseId
+                            tabindex="-98" (change)="changeCourse()">
+                            <option *ngFor="let c of courses" [ngValue]="c.courseId">
+                                {{c.courseName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Stream<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select formControlName="StreamId" disabled #StreamId class="selectpicker form-control" title="Select"
+                            tabindex="-98">
+                            <option *ngFor="let s of streams" [ngValue]="s.streamId">
+                                {{s.streamName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Percentage<span class="required">*</span></label>
+                    <input type="text" disabled appTwoDigitDecimaNumber maxlength="5" class="form-control"
+                        formControlName="MarksPercentage" placeholder="CGPA to be conv. to %">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Year of Completion<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select class="selectpicker form-control" disabled formControlName="CompletionYear" title="Select"
+                            tabindex="-98">
+                            <option *ngFor="let y of CompletionYear" [ngValue]="y.yearsId">
+                                {{y.yearsName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Qualification Type<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select class="selectpicker form-control" disabled formControlName="QualificationTypeId" title="Select"
+                            tabindex="-98">
+                            <option *ngFor="let qual of qualificationType" [ngValue]="qual.qualificationTypeId">
+                                {{qual.qualificationTypeName}}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Total Experience <span class="required">*</span></label>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="dropdown bootstrap-select form-control">
+                                <select formControlName="ExperienceYear" disabled class="selectpicker form-control" title='Year'>
+                                    <option *ngFor="let rec of experiences" [ngValue]="rec.yearsId">
+                                        {{rec.yearsName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="dropdown bootstrap-select form-control">
+                                <select formControlName="ExperienceMonth" disabled class="selectpicker form-control"
+                                    title='Month'>
+                                    <option *ngFor="let rec of Months" [ngValue]="rec.monthId">
+                                        {{rec.monthId}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Current CTC<span class="required">*</span></label>
+                    <input type="text"  (keypress)="keyPress($event)" disabled formControlName="CurrentCTC" class="form-control" placeholder="CTC in INR">
+                    
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Current Employer<span class="required">*</span></label>
+                    <input type="text" formControlName="CurrentEmployer" disabled class="form-control"
+                        placeholder="Employer Name">
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Designation<span class="required">*</span></label>
+                    <input type="text" formControlName="CurrentDesignation" disabled class="form-control"
+                        placeholder="Enter Designation">
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Domain<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select formControlName="DomainId" disabled name="DomainId" #DomainId class="selectpicker form-control domains domainid" title="Select"
+                            tabindex="-98" (change)="changeDomain()">
+                            <option [ngValue]="0">Select</option>
+                            <option *ngFor="let d of domain" [ngValue]="d.domainId">
+                                {{d.domainName}}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isExperience">
+                <div class="form-group">
+                    <label>Sub-Domain<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select formControlName="SubDomainId" disabled class="selectpicker form-control domains" title="Select"
+                            tabindex="-98">
+                            <option [ngValue]="0">Select</option>
+                            <option *ngFor="let sd of subdomain" [ngValue]="sd.domainId">
+                                {{sd.domainName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Current Location<span class="required">*</span></label>
+                    <div class="dropdown bootstrap-select form-control">
+                        <select formControlName="StateId" disabled class="selectpicker" title="Select">
+                            <option *ngFor="let s of State" [ngValue]="s.stateId">
+                                {{s.stateName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Any Previous Application History in MRF<span class="required">*</span></label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="dropdown bootstrap-select form-control">
+                                <select formControlName="PreviousApplied" disabled class="selectpicker form-control"
+                                    title="Select" tabindex="-98">
+                                    <option [ngValue]="1">Yes</option>
+                                    <option [ngValue]="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Any Relative Working in MRF<span class="required">*</span></label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select formControlName="RelativeStatus" disabled name="RelativeStatus" #RelativeStatus
+                                class="selectpicker form-control" title="Select" tabindex="-98"
+                                (change)="changeRelativeStatus()">
+                                <option [ngValue]="1">Yes</option>
+                                <option [ngValue]="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-4" *ngIf="!isRelative">
+                <div class="form-group">
+                    <label>Relative Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" disabled formControlName="RelativeName"
+                        placeholder="Enter Name">
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="!isRelative">
+                <div class="form-group">
+                    <label>Relative's Mobile No.<span class="required">*</span></label>
+                    <input type="text" class="form-control" disabled formControlName="RelativeContactNo"
+                        (keypress)="keyPress($event)" maxlength="10" placeholder="Eg:9800123456">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" *ngIf="!isRelationshipStatus">
+                <div class="form-group">
+                    <label class="swichLabel">How do you know the candidate?<span class="required">*</span></label>
+                    <label class="switch1">
+                        <select formControlName="ParentRelationshipId" disabled name="ParentRelationshipId" #ParentRelationshipId
+                            class="selectpicker form-control parentrelation" title="Select" tabindex="-98" (change)="changeRelationship()">
+                            <option [ngValue]="1">Relation</option>
+                            <option [ngValue]="5">Friend</option>
+                            <option [ngValue]="6">Referred by Dealer/Vendor</option>
+                            <option [ngValue]="7">Other Source</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="!isCloseRelationship">
+                <div class="form-group">
+                    <label>Relation Details</label>
+                    <select formControlName="ChildRelationshipId" disabled name="ChildRelationshipId" #ChildRelationshipId
+                            class="selectpicker form-control childrelation" title="Select" tabindex="-98">
+                            <option [ngValue]="2">Spouse</option>
+                            <option [ngValue]="3">Parent</option>
+                            <option [ngValue]="4">Child</option>
+                            <option [ngValue]="8">Grand Parent</option>
+                            <option [ngValue]="9">Grand Child</option>
+                            <option [ngValue]="10">Brother</option>
+                            <option [ngValue]="11">Sister</option>
+                            <option [ngValue]="12">First Aunt</option>
+                            <option [ngValue]="13">First Uncle</option>
+                            <option [ngValue]="14">Niece</option>
+                            <option [ngValue]="15">Nephew</option>
+                            <option [ngValue]="16">First Cousin</option>
+                            <option [ngValue]="17">Mother-In-Law</option>
+                            <option [ngValue]="18">Father-In-Law</option>
+                            <option [ngValue]="19">Son-In-Law</option>
+                            <option [ngValue]="20">Daughter-In-Law</option>
+                            <option [ngValue]="21">Others</option>
+                        </select>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="!isOtherRelationship">
+                <div class="form-group">
+                    <label>Please provides the details of relationship/familarity<span class="required">*</span></label>
+                    <input type="text" class="form-control" disabled formControlName="RelationshipNotes"
+                    placeholder="">
+                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>CMD Approval Required<span class="required">*</span></label>
+                    <select formControlName="CMDApprovalRequired"  name="CMDApprovalRequired" #CMDApprovalRequired
+                        class="selectpicker form-control" title="Select" tabindex="-98"
+                        (change)="changeCMDApprovalRequired()">
+                        <option [value]="1">Yes</option>
+                        <option [value]="0">No</option>
+                    </select>
+                    <p class="error-msg msgcmdrequired" style="display: none;">
+                        <span>Required</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isApprovalRequired">
+                <!-- <div class="form-group">
+                    <label>CMD Approval Status<span class="required">*</span></label>
+                    <select formControlName="CMDApprovalStatus"  name="CMDApprovalStatus" #CMDApprovalStatus
+                        class="selectpicker form-control ddlstatus" title="Select" tabindex="-98"
+                        (change)="changeCMDApprovalStatus()">
+                        <option [value]="1">Yes</option>
+                        <option selected [value]="0">No</option>
+                    </select>
+                </div> -->
+            </div>
+            <div class="col-md-2" *ngIf="isApprovalRequired">
+                <div class="form-group">
+                    <label>CMD Approval No<span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="CMDApprovalNo" maxlength="10"
+                        placeholder="Eg:9800123456">
+                    <p class="error-msg msgcmdno" style="display: none;">
+                        <span>Required</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="isApprovalRequired">
+                <div class="form-group">
+                    <label>CMD Approval Document<span class="required">*</span></label>
+                    <div class="custom-file">
+                        <!-- <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                            (change)="handleUpload($event)">
+                        <label class="custom-file-label" for="customFile" #candidateResumeImport>Choose file</label> -->
+                        <input type="file" class="custom-file-input"  id="customFile" accept="application/pdf"
+                            (change)="onFileChange($event.target.files)">
+                        <label class="custom-file-label" for="customFile" #cmdDocumentImport>Choose file</label>
+                        <p class="error-msg msgcmdfile" style="display: none;">
+                            <span>Required</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-3" style="display: none;">
+            <span class="red">Aadhar Disclaimer:</span>
+            <span></span>
+        </div>
+
+        <div class="mt-4" *ngIf="idbtnHide">
+            <button type="submit" class="btn btn-black">Update</button>
+
+        </div>
+
+    </div>
+</form>
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

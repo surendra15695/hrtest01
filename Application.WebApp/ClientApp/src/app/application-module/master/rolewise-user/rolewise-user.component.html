@@ -1,0 +1,60 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">User Role Mapping</h1>
+                    </div>
+                    <!-- <div>
+                        <button type="button" (click)="createForm()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><i class="las la-plus"></i> Add New</button>
+                    </div> -->
+                </div>
+            </div>
+           <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="swichLabel">User Role</label>
+                            <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="RoleId" name="RoleId" (change)="onChangeUserRole($event)" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                <ng-option [value]="rec.roleId" *ngFor="let rec of RoleList">
+                                    {{rec.roleName}}
+                                </ng-option>
+                            </ng-select>                            
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="swichLabel">Vertical</label>
+                            <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="VerticalId" name="VerticalId" (change)="onChangeVertical($event)" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                                    {{rec.verticalName}}
+                                </ng-option>
+                            </ng-select>                            
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>User</label>
+                            <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="AutoUserId" name="AutoUserId" [(ngModel)]="SelectedUserList" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false">
+                                <ng-option [value]="rec.autoUserId" *ngFor="let rec of UserList">
+                                    {{rec.userName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>                   
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-black btn-sm" [disabled]="saveForm.invalid">Submit</button>                        
+                    </div>
+                </div>          
+           </form>
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->
+

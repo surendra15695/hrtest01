@@ -1,0 +1,578 @@
+<div class="content-box">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="firsttab" data-toggle="tab" href="#tabOne" role="tab" aria-controls="home"
+                aria-selected="true" (click)="onClickPendingTab()">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="secondtab" data-toggle="tab" href="#tabTwo" role="tab" aria-controls="profile"
+                aria-selected="false" (click)="onClickAllocatedTab()">Allocated</a>
+        </li>
+    </ul>
+    <!-- Tab Section Start -->
+    <div class="tab-content mt-3" id="myTabContent">
+        <!-- tab One Start-->
+        <div class="tab-pane fade show active" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchformPending" (ngSubmit)="pendingFormSubmit()">
+                <div class="filter-sec">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Joining Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="fromdatepicker" placeholder="From Date" #fromDatePending
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #toDatePending
+                                                formControlName="toDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="name">
+                            </div>
+                        </div>
+                        <!--  <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="verticalId" (change)="changeVertical()" [readonly]="true">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="functionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="pendingResetClick()"><i
+                                    class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+            <div class="text-right my-2">
+                <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                    data-target="#myModal" *ngIf="callngIfFunction?showAllocateCandidateButton():false"
+                    (click)="allocateAllCandidate()">Allocate Candidate</button>
+            </div>
+
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAllPending" [(ngModel)]="selectAllPending"
+                                        (change)="onCheckSelectAllPending($event)">
+                                    <label class="chk" for="chkAllPending"></label>
+                                </div>
+                            </th>
+                            <th>Cand. ID</th>
+                            <th>Candidate Name</th>
+                            <th>Designation</th>
+                            <th>Pos. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Qualification</th>
+                            <th>Exp.</th>
+                            <th>Cur. Location</th>
+                            <th>D.O.J</th>
+                            <th>M.O.J</th>
+                            <th>Monthly Gross</th>
+                            <th>Remarks</th>
+                            <th>Document Status</th>
+                            <th>Hiring Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of salesAndMarketingAllocationPendingList;let i=index;">
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{i}}" [ngModel]="getPendingEnableStatus(data)"
+                                        (change)="onCheckRowWisePending(data,$event,i)">
+                                    <label class="chk" for="{{i}}"></label>
+                                </div>
+                            </td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.emailId}}</td>
+                            <td>{{data.contact}}</td>
+                            <td>{{data.courseName}} {{data.streamName}}</td>
+                            <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                            <td>{{data.communicationAddress}} , {{data.communicationStateName}} <br>
+                            </td> <!-- {{data.communicationPin}} -->
+                            <td>{{data.dateofJoining}}</td>
+                            <td>{{data.modeofJoiningName}}</td>
+                            <td>{{data.monthlyGross}}</td>
+                            <td>{{data.remarks}}</td>
+                            <td>
+                                {{(data.onboardingManagerNotApproveDoc==' ' ||data.onboardingManagerNotApproveDoc==''
+                                )?"Completed":"Pending"}}
+                                <a *ngIf="data.onboardingManagerNotApproveDoc!=' '" href="javascript:void(0)"
+                                    class="red" data-toggle="popover" [attr.data-content]="data.popoverContent"
+                                    rel="popover" data-placement="left" data-trigger="hover"><i
+                                        class="fa fa-info-circle"></i></a>
+                            </td>
+                            <td>{{data.hiringStatusName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a *ngIf="data.checked && data.hiringStatusId!=55" class="dropdown-item"
+                                            href="javascript:void(0)" data-toggle="modal" data-target="#myModal"
+                                            (click)="onAllocateSingleCandidate(data)"><i class="las la-sitemap"></i>
+                                            Allocate Candidate</a>
+                                        <!-- data.hiringStatusId=='32' && -->
+                                        <a *ngIf="data.dateofJoining!='' && data.hiringStatusId!=55"
+                                            class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                            data-target="#updateJoiningDateModal"
+                                            (click)="onClickUpdateJoningDate(data)"><i class="las la-pen"></i> Update
+                                            Joining
+                                            Date</a>
+                                        <a class="dropdown-item" *ngIf="data.hiringStatusId!=55"
+                                            href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                                            (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'Pending')"><i
+                                                class="las la-times-circle"></i>
+                                            Declined</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- tab One End-->
+
+        <!-- tab two Start-->
+        <div class="tab-pane fade" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchformAllocated" (ngSubmit)="allocatedFormSubmit()">
+                <div class="filter-sec">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Joining Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="fromdatepicker" placeholder="From Date" #fromDateAllocated
+                                                formControlName="fromDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="todatepicker" placeholder="To Date" #toDateAllocated
+                                                formControlName="toDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="name">
+                            </div>
+                        </div>
+                        <!--    <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="verticalId" (change)="changeVerticalAllocated()" [readonly]="true">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Pos. Location</label>
+                                <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="locationId">
+                                    <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                        {{rec.locationOffice}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="functionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-black btn-sm" (click)="allocatedFormSubmit()"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="allocatedResetClick()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+            <div class="text-right my-2">
+                <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                    data-target="#myModalEdit" *ngIf="callngIfFunction?showReallocateCandidateButton():false"
+                    (click)="reallocateAllCandidate()">Reallocate Candidate</button>
+            </div>
+
+
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAllAllocated" [(ngModel)]="selectAllAllocated"
+                                        (change)="onCheckSelectAllAllocated($event)">
+                                    <label class="chk" for="chkAllAllocated"></label>
+                                </div>
+                            </th>
+                            <th>Cand. ID</th>
+                            <th>Candidate Name</th>
+                            <th>Designation</th>
+                            <th>Pos. Location</th>
+                            <th>Function</th>
+                            <th>Department</th>
+                            <th>Grade</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Qualification</th>
+                            <th>Exp.</th>
+                            <th>Cur. Location</th>
+                            <th>D.O.J</th>
+                            <th>M.O.J</th>
+                            <th>Monthly Gross</th>
+                            <th>Remarks</th>
+                            <th>Document Status</th>
+                            <th>Allocated To</th>
+                            <th>Hiring Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of salesAndMarketingAllocationAllocatedList;">
+                            <!-- let i=index; -->
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{data.candidateId}}"
+                                        [ngModel]="getEnableStatusAllocated(data)"
+                                        (change)="onCheckRowWiseAllocated(data,$event)">
+                                    <label class="chk" for="{{data.candidateId}}"></label>
+                                </div>
+                            </td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.designationName}}</td>
+                            <td>{{data.locationName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <td>{{data.gradeName}}</td>
+                            <td>{{data.emailId}}</td>
+                            <td>{{data.contact}}</td>
+                            <td>{{data.courseName}} {{data.streamName}}</td>
+                            <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                            <td>{{data.communicationAddress}} , {{data.communicationStateName}} <br>
+                            </td> <!-- {{data.communicationPin}} -->
+                            <td>{{data.dateofJoining}}</td>
+                            <td>{{data.modeofJoiningName}}</td>
+                            <td>{{data.monthlyGross}}</td>
+                            <td>{{data.remarks}}</td>
+                            <td>
+                                {{(data.onboardingManagerNotApproveDoc==' ' ||data.onboardingManagerNotApproveDoc==''
+                                )?"Completed":"Pending"}}
+                                <a *ngIf="data.onboardingManagerNotApproveDoc!=' '" href="javascript:void(0)"
+                                    class="red" data-toggle="popover" [attr.data-content]="data.popoverContent"
+                                    rel="popover" data-placement="left" data-trigger="hover"><i
+                                        class="fa fa-info-circle"></i></a>
+                            </td>
+                            <td>{{data.onBoardingCoordinatorName}}</td>
+                            <td>{{data.hiringStatusName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a *ngIf="data.checked && data.hiringStatusId!=55" class="dropdown-item"
+                                            href="javascript:void(0)" data-toggle="modal" data-target="#myModalEdit"
+                                            (click)="onReallocateSingleCandidate(data)"><i class="las la-sitemap"></i>
+                                            Reallocate Candidate</a>
+                                        <!-- <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i
+                                                class="las la-sitemap"></i> Allocate Candidate</a> -->
+                                        <a *ngIf="data.dateofJoining!='' && data.hiringStatusId!=55"
+                                            class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                            data-target="#updateJoiningDateModal"
+                                            (click)="onClickUpdateJoningDate(data)"><i class="las la-pen"></i> Update
+                                            Joining
+                                            Date</a>
+                                        <a class="dropdown-item" *ngIf="data.hiringStatusId!=55"
+                                            href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                                            (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'Allocation')"><i
+                                                class="las la-times-circle"></i>
+                                            Declined</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- tab two end-->
+    </div>
+    <!-- Tab Section end -->
+</div>
+
+<!-- Allocate Modal -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Allocate Candidate</h4>
+            </div>
+            <form [formGroup]="saveform" (ngSubmit)="onAllocateCandidateToCoordinator()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Onboarding Coordinator<span class="required">*</span></label>
+                        <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="onBoardingCoordinator">
+                            <ng-option [value]="rec.autoUserId" *ngFor="let rec of onBoardingCoordinatorList">
+                                {{rec.employeeName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        (click)="onClickCancel()">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveform.invalid"
+                        id="send">Allocate</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+<!-- Reallocate Modal -->
+<!-- Modal -->
+<div class="modal fade" id="myModalEdit" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Reallocate Candidate</h4>
+            </div>
+            <form [formGroup]="saveformEdit" (ngSubmit)="onReallocateCandidateToCoordinator()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Onboarding Coordinator<span class="required">*</span></label>
+                        <ng-select bindLabel="employeeName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="onBoardingCoordinator">
+                            <ng-option [value]="rec.autoUserId" *ngFor="let rec of onBoardingCoordinatorList">
+                                {{rec.employeeName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        (click)="onClickReallocatrCancel()">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveformEdit.invalid"
+                        id="send">Reallocate</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Update Joining Date Modal -->
+<div class="modal fade" id="updateJoiningDateModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Joining Date</h4>
+            </div>
+            <!-- <form [formGroup]="updateJoiningDateForm" (ngSubmit)="onAllocateCandidateToCoordinator()" autocomplete="off"> -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Date</label>
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                placeholder="From Date" autocomplete="off" [(ngModel)]="joiningDate" #dateOfJoining>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Mode of Joining</label>
+                            <ng-select bindLabel="modeofJoiningName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="modeofJoiningId">
+                                <ng-option [value]="rec.modeofJoiningId" *ngFor="let rec of modeOfJoiningList">
+                                    {{rec.modeofJoiningName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                    (click)="onClickUpdateJoiningDateCancel()">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onUpdateJoiningDate()">Submit</button>
+
+            </div>
+            <!-- </form> -->
+
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+<div class="modal fade" id="declineModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionName}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="declineremarks"
+                                #DeclineRemarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

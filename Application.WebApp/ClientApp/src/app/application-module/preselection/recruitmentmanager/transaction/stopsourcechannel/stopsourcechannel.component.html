@@ -1,0 +1,431 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)"  (click)="gotoRMRequisitionList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Request Details</h1>
+    </div>
+    <div *ngFor="let data of requisitionLists">
+        <div class="d-flex align-items-center mb-2">
+            <div class="col-md-4 col-sm-8">
+                <div class="d-flex align-items-center">
+                    <div class="icon_empSearch">
+                        <img src="assets/images/expart-icon.png" alt="">
+                    </div>
+                    <div class="position">
+                        <h5 class="red mt-1 mb-1">{{data.functionName}}</h5>
+                        <p class="font-weight-bold">{{data.requisitionNo}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <span class="badge badge-pill badge-success">Approved</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Requested On :</p>
+                <p class="d-inline-block">{{data.createdOn}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Requested Type :</p>
+                <p class="d-inline-block">{{data.requisitionType}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Department Name :</p>
+                <p class="d-inline-block">{{data.departmentName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Position :</p>
+                <p class="d-inline-block">{{data.positionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Location :</p>
+                <p class="d-inline-block">{{data.locationNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Number of Position :</p>
+                <p class="d-inline-block">{{data.requestCount}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade :</p>
+                <p class="d-inline-block">{{data.gradeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Job Type :</p>
+                <p class="d-inline-block">{{data.jobTypeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Target Date:</p>
+                <p class="d-inline-block">{{data.targetDate}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-auto">
+            <label class="d-inline-block">Hiring Manager : </label>
+            <select class="selectpicker w-auto hiringManager" 
+            title="Select" [(ngModel)]="selectedHiringManagerId" >      <!-- (change)="onHiringManagerChange()" not implemented in ts so removed -->
+                <option *ngFor="let data of hiringManagers" [ngValue]="data">
+                    {{data.empName}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-auto">
+            <label class="d-inline-block">Selection Guide : </label>
+            <select class="selectpicker w-auto selectionGuide" 
+            title="Select" [(ngModel)]="selectedSelectionGuideId"
+                (change)="onSelectionGuideChange()">
+                <option *ngFor="let data of selectionGuides" [ngValue]="data">
+                    {{data.selectionGuideName}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div *ngIf="showSourceChannel">
+
+        <div class="mb-4">
+            <p class="grey">Details :</p>
+            <p class="displayData">
+                {{description}}
+            </p>
+        </div>
+        <div>
+            <h6>Interview Workflow</h6>
+        </div>
+
+        <!-- <div class="form-row">
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">HR
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">Prelims 1
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">Prelims 2
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">Prelims 3
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">Final Interview
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">Functional Head
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">Head of HR
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">External Consultant
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">MD
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">VCMD
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-3 mb-2">
+            <label class="checkbox_label">CMD
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+    </div> -->
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="step-root my-3">
+                    <div class="step-container">
+                        <ul class="progressbar">
+                            <li [class]="i==0?'active':'noactive'"
+                                *ngFor="let data of interviewnames ; let i = index;">{{data.interviewName}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <h6>Sourcing Channels</h6>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-2 col-sm-3">
+                <div class="form-group">
+                    <label class="swichLabel">HR</label>
+                    <label class="switch"><input type="checkbox" [checked]="hrCheck" id="togBtn1" (change)="enableCheckBox($event,'1')">
+                        <div class="slider round">
+                            <!--ADDED HTML --><span class="on">Yes</span><span class="off">No</span>
+                            <!--END-->
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="form-group">
+                    <label class="swichLabel">External</label>
+                    <label class="switch"><input type="checkbox" id="togBtn2" [checked]="externalCheck" (change)="enableCheckBox($event,'2')">
+                        <div class="slider round">
+                            <!--ADDED HTML --><span class="on">Yes</span><span class="off">No</span>
+                            <!--END-->
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="form-group">
+                    <label class="swichLabel">Internal</label>
+                    <label class="switch"><input type="checkbox" id="togBtn3" [checked]="internalCheck" (change)="enableCheckBox($event,'3')">
+                        <div class="slider round">
+                            <!--ADDED HTML --><span class="on">Yes</span><span class="off">No</span>
+                            <!--END-->
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="form-group">
+                    <label class="swichLabel">Referral</label>
+                    <label class="switch"><input type="checkbox" id="togBtn4" [checked]="referralCheck" (change)="enableCheckBox($event,'4')">
+                        <div class="slider round">
+                            <!--ADDED HTML --><span class="on">Yes</span><span class="off">No</span>
+                            <!--END-->
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <label class="d-inline-block">Vendor :</label>
+                <!-- <select class="selectpicker w-50" title='Select' multiple data-live-search="true"
+                data-selected-text-format="count > 2">
+                <option value="0">Vendor 1</option>
+                <option value="0">Vendor 1</option>
+                <option value="0">Sample vendor</option>
+                <option value="0">Sample another vendor</option>
+            </select> -->
+                <select class="selectpicker" title="Select" multiple [(ngModel)]="selectedVendor"
+                    (change)="changeselectedVendor()">
+                    <option *ngFor="let vendor of vendors" [ngValue]="vendor.vendorId">
+                        {{vendor.vendorName}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
+
+
+        <div>
+            <h6>Select Criteria</h6>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped select-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-center" style="width: 80px;">JD</th>
+                        <th class="text-center" style="width: 140px;">Restricted JD</th>
+                        <th class="text-center" style="width: 110px;">Salary</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyfeature">
+                    <tr>
+                        <td class="sourceHead SourceChannel_1">
+                            HR
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="1_1" class="chkchannel1"
+                                    [disabled]="isSourceChannel1Disable" [checked]="chk_1_1Check">
+                                <label class="chk" for="1_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="1_2" class="chkchannel1"
+                                    [disabled]="isSourceChannel1Disable" [checked]="chk_1_2Check">
+                                <label class="chk" for="1_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="1_3" class="chkchannel1"
+                                    [disabled]="isSourceChannel1Disable"  [checked]="chk_1_3Check">
+                                <label class="chk" for="1_3"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtchannel1" [(ngModel)]="txtchannel1" [disabled]="isSourceChannel1Disable">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sourceHead SourceChannel_2">
+                            External
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="2_1" class="chkchannel2"
+                                    [disabled]="isSourceChannel2Disable"  [checked]="chk_2_1Check">
+                                <label class="chk" for="2_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="2_2" class="chkchannel2"
+                                    [disabled]="isSourceChannel2Disable"  [checked]="chk_2_2Check">
+                                <label class="chk" for="2_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="2_3" class="chkchannel2"
+                                    [disabled]="isSourceChannel2Disable"  [checked]="chk_2_3Check">
+                                <label class="chk" for="2_3"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtchannel2" [(ngModel)]="txtchannel2" [disabled]="isSourceChannel2Disable">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sourceHead SourceChannel_3">
+                            Internal
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="3_1" class="chkchannel3"
+                                    [disabled]="isSourceChannel3Disable"  [checked]="chk_3_1Check">
+                                <label class="chk" for="3_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="3_2" class="chkchannel3"
+                                    [disabled]="isSourceChannel3Disable"  [checked]="chk_3_2Check">
+                                <label class="chk" for="3_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="3_3" class="chkchannel3"
+                                    [disabled]="isSourceChannel3Disable"  [checked]="chk_3_3Check">
+                                <label class="chk" for="3_3"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtchannel3" [(ngModel)]="txtchannel3" [disabled]="isSourceChannel3Disable">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sourceHead SourceChannel_4">
+                            Referal
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="4_1" class="chkchannel4"
+                                    [disabled]="isSourceChannel4Disable"  [checked]="chk_4_1Check">
+                                <label class="chk" for="4_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="4_2" class="chkchannel4"
+                                    [disabled]="isSourceChannel4Disable"  [checked]="chk_4_2Check">
+                                <label class="chk" for="4_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="4_3" class="chkchannel4"
+                                    [disabled]="isSourceChannel4Disable"  [checked]="chk_4_3Check">
+                                <label class="chk" for="4_3"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtchannel4" [(ngModel)]="txtchannel4" [disabled]="isSourceChannel4Disable">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sourceHead SourceChannel_5">
+                            Vendor
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="5_1" class="chkchannel5"
+                                    [disabled]="isSourceChannel5Disable"  [checked]="chk_5_1Check">
+                                <label class="chk" for="5_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="5_2" class="chkchannel5"
+                                    [disabled]="isSourceChannel5Disable" [checked]="chk_5_2Check">
+                                <label class="chk" for="5_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="checkbox" id="5_3" class="chkchannel5"
+                                    [disabled]="isSourceChannel5Disable" [checked]="chk_5_3Check">
+                                <label class="chk" for="5_3"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtchannel5" [(ngModel)]="txtchannel5" [disabled]="isSourceChannel5Disable">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="my-3">
+            <button type="button" class="btn btn-primary" (click)="submitForm()"><i class="las la-save"></i>
+                Update </button>
+        </div>
+    </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

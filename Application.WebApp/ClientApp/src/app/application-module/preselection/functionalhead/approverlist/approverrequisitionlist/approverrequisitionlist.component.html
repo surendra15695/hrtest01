@@ -1,0 +1,292 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">All Positions</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Req No</label>
+                        <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo
+                            autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            (change)="changeVertical()" [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="verticalId" >  <!-- #verticalId -->
+                            <ng-option *ngFor="let rec of approverVerticalFunctionDepartment" [value]="rec.verticalId">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <div class="dropdown bootstrap-select form-control">
+                            <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false" formControlName="locationId"
+                                #locationId>
+                                <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                                    {{rec.locationNo}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label>IOM No.</label>
+                        <input type="text" class="form-control" formControlName="iOMNo" #iOMNo autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="dropdown bootstrap-select form-control">
+                            <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                formControlName="requisitionApprovalStatus" #requisitionApprovalStatus>
+                                <ng-option *ngFor="let rec of statuses" [value]="rec.statusId">
+                                    {{rec.statusName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right">
+
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                        Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+    <div class="table-responsive">
+
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Req No</th>
+                    <th>Req History No</th>
+                    <th>Request Type</th>
+                    <th>Requested By</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>IOM</th>
+                    <th>Position</th>
+                    <th>Grade</th>
+                    <th>Approved</th>
+                    <th>Requested</th>
+                    <th>Hold</th>
+                    <th>Type</th>
+                    <th>Target</th>
+                    <th>JD</th>
+                    <th style="text-align: center;">Approval</th>
+                    <th>Approval Status</th>
+                    <th>Requisition Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of requisitionLists">
+                    <td><a href="javascript:void(0)" (click)="onClickRequisitionNo(data)" data-toggle="modal"
+                            data-target="#requisitionDetails" class="red">{{data.requisitionNo}}</a></td>
+                    <td>{{data.requisitionHistoryNo}}</td>
+                    <td>{{data.requisitionType}}</td>
+                    <td>{{data.createdByUserName}}</td>
+                    <td>{{data.locationNo}}</td>
+                    <td>{{data.createdOn}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.iomNo}}</td>
+                    <td>{{data.positionName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.approveCount}}</td>
+                    <td>{{data.requestCount}}</td>
+                    <td>{{data.holdCount}}</td>
+                    <td>{{data.jobTypeName}}</td>
+                    <td>{{data.targetDate}}</td>
+                    <td>{{data.jobDescriptionName}}</td>
+                    <td class="text-center"><img src="{{data.approvalStatusIcon}}" alt="Send For Approval" /></td>
+                    <td>{{data.approvalStatus}}</td>
+                    <td>{{data.rmProcessStatus}}</td>
+                    <!-- <td *ngIf="data.requisitionProcessStatusId!=1">In Progress</td> -->
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton">
+                                <a *ngIf="data.requisitionApprovalStatusId==1 && data.onHold == false" class="dropdown-item"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#myModal" id="closeModal"
+                                    #closeModal
+                                    (click)="openApproveRejectModal(data.requisitionDetailHistoryId,data.positionName)"><i
+                                        class="las la-check-square"></i> Take
+                                    Action</a>
+                                <a class="dropdown-item"
+                                    *ngIf="data.requisitionApprovalStatusId>1 && data.requisitionApprovalStatusId<=3 && data.onHold == false"
+                                    href="javascript:void(0)" (click)="gotoCandidateList(data.requisitionDetailId)"><i
+                                        class="las la-check-square"></i> View Candidate</a>
+                                <a *ngIf="data.onHold == false" class="dropdown-item" (click)="openFile(data.managementApprovalDocument)" style="cursor: pointer;"><i
+                                        class="las la-file-pdf"></i>
+                                    View IOM</a>
+                                <a *ngIf="data.onHold == false" class="dropdown-item" (click)="DownloadJD(data.jdDocument,data.jobDescriptionName)"
+                                    href="javascript:void(0)"><i class="las la-file-pdf"></i>
+                                    View JD</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <form [formGroup]="saveform">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Position</label>
+                                <h6 class="red m-0">{{positionName}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control txtrejectremarks" formControlName="Remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" (click)="reject()">Reject</button>
+                    <button type="submit" class="btn btn-black btn-sm" (click)="approve()">Approve</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<!-- Modal -->
+<div class="modal fade" id="requisitionDetails" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Request Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped dataTable">
+                        <thead>
+                            <tr>
+                                <th>Req No</th>
+                                <th>Requested By</th>
+                                <th>Location</th>
+                                <th>Date</th>
+                                <th>Function</th>
+                                <th>Department</th>
+                                <th>IOM</th>
+                                <th>Position</th>
+                                <th>Grade</th>
+                                <th>Approved</th>
+                                <th>Requested</th>
+                                <th>Hold</th>
+                                <th>Type</th>
+                                <th>Target</th>
+                                <th>JD</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of requisitionDetailsArrayPopup; let i=index">
+                                <td>{{data.requisitionNo}}</td>
+                                <td>{{data.createdByUserName}}</td>
+                                <td>{{data.locationNo}}</td>
+                                <td>{{data.createdOn}}</td>
+                                <td>{{data.functionName}}</td>
+                                <td>{{data.departmentName}}</td>
+                                <td>{{data.iomNo}}</td>
+                                <td>{{data.positionName}}</td>
+                                <td>{{data.gradeName}}</td>
+                                <td>{{data.approveCount}}</td>
+                                <td>{{data.requestCount}}</td>
+                                <td>{{data.holdCount}}</td>
+                                <td>{{data.jobTypeName}}</td>
+                                <td>{{data.targetDate}}</td>
+                                <td>{{data.jobDescriptionName}}</td>
+                                <td>{{data.rmProcessStatus}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                <!-- <button type="button" class="btn btn-black btn-sm" (click)="onConfirmJoiningDate()">Submit</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal  end -->

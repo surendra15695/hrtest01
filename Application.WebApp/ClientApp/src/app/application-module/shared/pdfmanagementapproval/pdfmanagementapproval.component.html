@@ -1,0 +1,219 @@
+<div style="padding-bottom:100px;">
+  <div style="text-align: center;">
+    <h3 style="font-size:18px; font-family: Arial, Helvetica, sans-serif;">APPROVAL FOR APPOINTMENT</h3>
+  </div>
+  <table width="100%;">
+    <tr>
+      <td style="font-size:13px; font-family: Arial, Helvetica, sans-serif;">From: {{FromData}}</td>
+      <td style="font-size:13px; font-family: Arial, Helvetica, sans-serif;" align="center">To: {{ToData}}</td>
+      <td style="font-size:13px; font-family: Arial, Helvetica, sans-serif;" align="right">Date: {{updatedDated}}</td>
+    </tr>
+  </table>
+  <div style="padding-top: 10px; padding-bottom: 10px;">
+    <p style="font-size:13px; font-family: Arial, Helvetica, sans-serif;">{{topNote}}</p>
+  </div>
+  <table width="100%" style="border: 1px solid #ccc; border-bottom: none; border-spacing: 0;">
+    <thead>
+      <tr>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Sl.No</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Interview Panel</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Name of the candidate</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Source</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding:2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Position &amp; Department</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Location</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Grade</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Qual.</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Exp.</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Sl.No</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Proposed Basic Salary P.m</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Proposed CTC</th>
+        <th
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Replacement /
+          New Approval
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of managementApprovalData?.managementApprovalCandidates; let i=index">
+        <td align="center"
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{i+1}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.interViewPanel}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.name}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.source}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.position}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.location}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.grade}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.qualification}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.experience}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.presentCTC}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.proposedBasic}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.proposedCTC}}</td>
+        <td
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          {{data.reporNew}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td align="center"
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+          Note</td>
+        <td colspan="12"
+          style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <table>
+    <tr>
+      <td style="font-size:13px; font-family: Arial, Helvetica, sans-serif; padding-top: 20px;">
+        <h3 style="font-size: 13px;">Vacancy Status as on {{updatedDated}}</h3>
+      </td>
+    </tr>
+  </table>
+  <table width="100%" align="right">
+
+    <tr>
+      <td>
+        <table width="100%" align="right" style="border: 1px solid #ccc; border-bottom: none;border-spacing: 0;">
+          <tr>
+            <td>
+              <table>
+
+              </table>
+            </td>
+          </tr>
+          <thead>
+            <tr>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Location</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Function</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Approved</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Availabel as on <br />12.07.2021</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding:2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Vacancies</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                In this<br />approval</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Earlier approval<br />and yet to join</th>
+              <th
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                Yet to fill</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of managementApprovalData?.managementApprovalVacancy; let i=index">
+              <td align="center"
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.plant}}</td>
+              <td align="center"
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.function}}</td>
+              <td
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.approved}}</td>
+              <td
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.availableasOn}}</td>
+              <td
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.vacancies}}</td>
+              <td
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.inThisApproval}}</td>
+              <td
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.earlierApprovalYettoJoin}}</td>
+              <td
+                style="border-bottom:1px solid #ccc;border-right:1px solid #ccc; padding: 2px;font-size:13px; font-family: Arial, Helvetica, sans-serif;">
+                {{data.yetToFill}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <div style="padding-top: 20px;">
+    <div style="display: inline-block; min-width: 180px; text-align: center; margin-right: 50px;"  *ngFor="let data of signatureFrom; let i=index">
+      <img src="">
+      <div
+        style="border-top: 1px solid #ccc;font-size:13px; font-family: Arial, Helvetica, sans-serif; padding-top: 5px;">
+        {{data.signatureFromText}}
+      </div>
+    </div>
+    
+  </div>
+  <div style="padding-top: 30px; float: right;">
+    <div style="display: inline-block; min-width: 180px; text-align: center; margin-right: 50px;"  *ngFor="let data of signatureTo; let i=index">
+      <img src="">
+      <div
+        style="border-top: 1px solid #ccc;font-size:13px; font-family: Arial, Helvetica, sans-serif; padding-top: 5px;">
+        {{data.signatureToText}}
+      </div>
+    </div>
+  </div>
+
+
+</div>

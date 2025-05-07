@@ -1,0 +1,117 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">All Positions</h1>
+    </div>
+
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()" autocomplete="off">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Req No</label>
+                        <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo placeholder="Enter requisition no." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId (change)="changeVertical()" name="verticalId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>                        
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="locationId" #locationId name="locationId" [placeholder]="'Select'" 
+                        [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationNo}}
+                            </ng-option>
+                        </ng-select>                        
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="functionId" name="functionId" [placeholder]="'Select'" 
+                        [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>                        
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group">                                   
+                                    <ng-month-picker [displayFormat]="'MMM YYYY'" [valueFormat]="'MM/YYYY'" name="FromDate" formControlName="FromDate"></ng-month-picker>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">                                  
+                                    <ng-month-picker [displayFormat]="'MMM YYYY'" [valueFormat]="'MM/YYYY'" name="ToDate" formControlName="ToDate"></ng-month-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br />
+
+    <div class="table-responsive">
+        <table class="table table-striped" id="Source_Channel_Wise_Report">
+            <thead>
+                <tr *ngIf="sourceChannelHeaders.length != 0">
+                    <th>Month</th>
+                    <th *ngFor="let record of sourceChannelHeaders">{{record}}</th>
+                    <th>Grand Toatal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of sourceChannelLists; let i=index;">
+                    <td *ngIf="item.Month==1">January</td>
+                    <td *ngIf="item.Month==2">February</td>
+                    <td *ngIf="item.Month==3">March</td>
+                    <td *ngIf="item.Month==4">April</td>
+                    <td *ngIf="item.Month==5">may</td>
+                    <td *ngIf="item.Month==6">June</td>
+                    <td *ngIf="item.Month==7">July</td>
+                    <td *ngIf="item.Month==8">August</td>
+                    <td *ngIf="item.Month==9">September</td>
+                    <td *ngIf="item.Month==10">October</td>
+                    <td *ngIf="item.Month==11">November</td>
+                    <td *ngIf="item.Month==12">December</td>
+                                      
+                    <td *ngFor="let record of sourceChannelHeaders">{{returnHeaderValue(i, record)}}</td>
+
+                    <td>{{item.GrandTotalByMonth}}</td>                  
+                </tr>
+                <tr *ngIf="sourceChannelHeaders.length != 0">
+                    <td style="font-size: medium;">Grand Total</td>
+                    <td *ngFor="let value of grandTotalByHeader">{{value}}</td>                   
+                    <td>{{grandTotal}}</td>
+                </tr>
+            </tbody>
+        </table>       
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

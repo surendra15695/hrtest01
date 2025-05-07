@@ -1,0 +1,147 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="gotoHalfYearlyReviewList()" class="back-btn"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Half Yearly Review</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{empName}}</p>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+    <div>
+        <div class="form-group">
+            <label>Areas worked and any specific activities done </label>
+            <textarea class="form-control" placeholder="Write here..." [(ngModel)]="Question1Answer" name="Question1Answer"
+               [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Feedback on performance</label>
+            <textarea class="form-control" placeholder="Write here..." [(ngModel)]="Question2Answer" name="Question2Answer"
+                [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="rating-scale bg-primary-light mb-4">
+            <h6 class="black">Rating Scale:</h6>
+            <div class="d-flex flex-wrap justify-content-between">
+               <div class="scale-list"><span class="badge bg-success">5</span><p>Exceptional Performance</p></div>
+               <div class="scale-list"><span class="badge bg-light-green">4</span><p>Exceeds Performance</p></div>
+               <div class="scale-list"><span class="badge bg-light-yellow">3</span><p>Meet Requirements</p></div>
+               <div class="scale-list"><span class="badge bg-orange">2</span><p>Meets Minimum Requirements</p></div>
+               <div class="scale-list"><span class="badge bg-danger">1</span><p>Below Minimum Requirements</p></div>
+            </div>
+            
+           </div>
+        <p>Please give your rating (5 - highest to 1 - lowest) on each of the ares listed below</p>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Rating</th>
+                        <th width="55%">Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of ReviewQuestions">
+                        <td>
+                            <p>{{data.reviewQuestion}}</p>
+                        </td>
+                        <td style="width: 100px;">
+                            <ng-select  [placeholder]="'Select'" [appendTo]="'body'" [(ngModel)]="data.rating" [disabled]="disableAll==true?true:null"
+                            [multiple]="false" [searchable]="false" [clearable]="false">
+                            <!-- <ng-option [value]="0"></ng-option> -->
+                            <ng-option [value]="5">5</ng-option>
+                            <ng-option [value]="4">4</ng-option>
+                            <ng-option [value]="3">3</ng-option>
+                            <ng-option [value]="2">2</ng-option>
+                            <ng-option [value]="1">1</ng-option>
+                        </ng-select>
+                            <!-- <input type="text" class="form-control" [(ngModel)]="data.rating" 
+                            (keypress)="allownumbers($event)" [attr.disabled]="disableAll==true?true:null"> -->
+                        </td>
+                        <td>
+                            <textarea class="form-control" [attr.disabled]="disableAll==true?true:null" placeholder="Enter Comments" [(ngModel)]="data.reviewComments" 
+                            ></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <label>Area of strength noticed/observed</label>
+            <textarea class="form-control" placeholder="Write here..." [(ngModel)]="Question3Answer" name="Question3Answer"
+                [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Areas of develoment/improvement </label>
+            <textarea class="form-control" placeholder="Write here..." [(ngModel)]="Question4Answer" name="Question4Answer"
+                [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Action plans for areas of develoment/improvement </label>
+            <textarea class="form-control" placeholder="Write here..." [(ngModel)]="Question5Answer" name="Question5Answer"
+                [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+        
+        <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of remarksDetails">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+        <div class="form-group">
+            <label>Remarks </label>
+            <textarea class="form-control" placeholder="Write here..." [(ngModel)]="Remarks" name="Remarks"
+                [attr.disabled]="disableAll==true?true:null"></textarea>
+        </div>
+
+        <!-- <div class="mt-4" *ngIf="!showButton">
+            <button type="submit" class="btn btn-black" (click)="onSubmit()">Submit</button>
+        </div> -->
+        <div class="mt-4" *ngIf="!showButton">
+            <button type="button" data-target="#confirmPopup" data-toggle="modal" class="btn btn-black">Submit</button>
+        
+            <button type="button " class="btn btn-secondary" (click)="saveasDraftFormat()">Save as Draft</button>
+        </div>
+    </div>
+
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to continue?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onSubmit()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

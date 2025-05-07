@@ -1,0 +1,237 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotomycampusCalendar()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+                
+                    <h1 class="f-l">My Calender - View Candidate</h1>
+                
+    </div>
+    
+    <div class="tab-content mt-3" id="myTabContent">
+        <div [ngClass]="pendingActiveDivClass" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <div class="filter-sec">
+                <!-- <form [formGroup]="searchpendingform" (ngSubmit)="fromPendingSubmit()"> -->
+                    <div class="form-row m-t-10">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Id</label>
+                                <input type="text" class="form-control" formControlName="candidateId">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName">
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Highest Qualification</label>
+                                <ng-select bindLabel="interviewName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="interviewId">
+                                    <ng-option [value]="rec.interviewId" *ngFor="let rec of interviews">
+                                        {{rec.interviewName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Course</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" formControlName="interviewTypeId">
+                                    <ng-option [value]="0">All</ng-option>
+                                    <ng-option [value]="1">Offline</ng-option>
+                                    <ng-option [value]="2">Online</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Stream</label>
+                                <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="true" [clearable]="false" formControlName="hiringStatusId">
+                                    <ng-option [value]="0">All</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Marks% </label>
+                                <ng-select bindLabel="venueName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="true" [clearable]="false"
+                                    formControlName="venueId">
+                                    <ng-option [value]="rec.venueId" *ngFor="let rec of venues">
+                                        {{rec.venueName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 mt-md-4 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"(click)= resetPendingForm() ><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+
+                    </div>
+                <!-- </form> -->
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Candidate Id</th>
+                            <th>Candidate Name</th>
+                            <th>Age</th>
+                            <th>Highest Qualification</th>
+                            <th>Course</th>
+                            <th>Stream</th>
+                            <th>Marks(%)</th>
+                            <th>Institue Name</th>
+                            <th>Institue Location</th>
+                            <th>Application Form Status</th>
+                            <th>Assesment Status</th>
+                            <th>Hiring Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of interviews;">
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.fullName}}</td>
+                            <td>{{data.age}}</td>
+                            <td>{{data.highestqualificationName}}</td>
+                            <td>{{data.courseName}}</td>
+                            <td>{{data.stream}}</td>
+                            <td>{{data.marks}}</td>
+                            <td>{{data.instituteName}}</td>
+                            <td>{{data.instititeLocation}}</td>
+                            <td>{{data.apllicationStatus}}</td>
+                            <td>{{data.assesmentStatus}}</td>
+                            <td>{{data.statusName}}
+                                <a
+                                    href="javascript:void(0)" class="red" data-toggle="popover"
+                                    [attr.data-content]="data.popoverContent" rel="popover" data-placement="left"
+                                    data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+                            </td>
+                            
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                        <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                            <a class="dropdown-item" data-toggle="modal"
+                                            data-target="#interviewDetails" (click)="onclickInterviewDetails(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-check-square"></i>Interview Details</a>
+                                            <a class="dropdown-item" (click)="viewapplicationform(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-download"></i>View/Download Application Form</a>
+
+                                            <a class="dropdown-item" *ngIf="isVisibleStageGetAssesment"
+                                             (click)="gotoStageGetAssesment(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-download"></i>View/Download Stage Gate Assesment</a>
+
+                                            <a class="dropdown-item"  (click)="gotoIndividualAssessment(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-download"></i>View/Download Assesment</a>
+                                            <a class="dropdown-item" (click)="gotoInterviewHRFeedback(data.candidateId)"
+                                            href="javascript:void(0)"><i class="las la-download"></i>View/Download HR Feedback</a>
+                                    </div>
+                                   
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" #closeActionModal class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">{{modalHeader}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control txtRemarks" placeholder="" [(ngModel)]="Remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-black btn-sm" (click)="actionFormSubmit()">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal  end -->
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div id="printerdiv" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+<div class="modal fade zoom-in" id="interviewDetails" role="dialog">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="interviewDetails" class="close" data-dismiss="modal">
+            <i class="las la-times"></i>
+          </button>
+          <h4 class="modal-title">Interview Details</h4>
+        </div>
+        <div class="modal-body">
+  
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th>Round</th>
+                  <th>Interview Date </th>
+  
+                  <th>Panel Member</th>
+                  <th>Status</th>
+                  <th>Assesment Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of interviewDetailsData;">
+                  <td>{{data.functionName}}</td>
+                  <td>{{data.roundName}}</td>
+                  <td>{{data.interviewDate}}</td>
+  
+                  <td>{{data.pannelMemberName}}</td>
+                  <td>{{data.status}}</td>
+                  <td>{{data.assesmentstatus}}</td>
+  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+    <!-- </form> -->
+  </div>

@@ -1,0 +1,188 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoTravelReimbursementList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Reimbursement Details</h1>
+        <div style='float: right;'>
+            <a type="button" class="btn btn-primary btn-sm" (click)="openFile(travelReimbursement.documentPathForPDF)" style="cursor: pointer;">Download</a>
+        </div>
+    </div>
+    <h6 class="red">Requisition Info</h6>
+    <div>
+        <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Candidate ID:</p>
+            <p class="d-inline-block red">{{candidateNo}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Candidate Name:</p>
+            <p class="d-inline-block">{{travelReimbursement.fullName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Test Date:</p>
+            <p class="d-inline-block">{{travelReimbursement.testDate}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Place:</p>
+            <p class="d-inline-block">{{travelReimbursement.venueName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Function:</p>
+            <p class="d-inline-block">{{travelReimbursement.functionName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Position:</p>
+            <p class="d-inline-block">{{travelReimbursement.positionName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Email ID:</p>
+            <p class="d-inline-block">{{travelReimbursement.emailId}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Mobile No.:</p>
+            <p class="d-inline-block">{{travelReimbursement.contactNo}}</p>
+        </div>
+        <div class="col-md-9">
+            <p class="d-inline-block grey">Communication Address:</p>
+            <p class="d-inline-block">{{travelReimbursement.communicationAddress}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <p class="d-inline-block grey">State:</p>
+            <p class="d-inline-block">{{travelReimbursement.stateName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">PIN:</p>
+            <p class="d-inline-block">{{travelReimbursement.pinCode}}</p>
+        </div>
+    </div>
+    </div>
+    <h6 class="red">Journey Details:</h6>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2">Journey Type</th>
+                    <th rowspan="2" style="min-width: 120px;width: 120px; max-width: 120px;">Date</th>
+                    <th colspan="2" class="text-center">Travel Details</th>
+                    <th rowspan="2" style="min-width: 160px;">Mode of Travel</th>
+                    <th rowspan="2" style="min-width: 100px;">Amount</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="min-width: 160px;">From</th>
+                    <th class="text-center" style="min-width: 160px;">To</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of journeyAddedDataArray">
+                    <td>{{data.journeyTypeName}}</td>
+                    <td>{{data.journeyDate}}</td>
+                    <td class="text-center">{{data.journeySource}}</td>
+                    <td class="text-center">{{data.journeyDestination}}</td>
+                    <td>{{data.travelModeName}}</td>
+                    <td>{{data.claimAmount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h6 class="red">Bank Account Details:</h6>
+    <div class="form-row">
+        <div class="col-md-6">
+            <p class="d-inline-block grey">Name as per your bank records:</p>
+            <p class="d-inline-block">{{travelReimbursement.bankAccountName}}</p>
+        </div>
+        <div class="col-md-6">
+            <p class="d-inline-block grey">Bank Account Number:</p>
+            <p class="d-inline-block">{{travelReimbursement.bankAccountNumber}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6">
+            <p class="d-inline-block grey">Name of the bank:</p>
+            <p class="d-inline-block">{{travelReimbursement.bankName}}</p>
+        </div>
+        <div class="col-md-6">
+            <p class="d-inline-block grey">11 Digit NEFT / IFSC code number of the bank brunch:</p>
+            <p class="d-inline-block">{{travelReimbursement.ifsc}}</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-12">
+            <p class="d-inline-block grey">Bank Branch & Address:</p>
+            <p class="d-inline-block">{{travelReimbursement.bankBranch}}</p>
+        </div>
+    </div>
+    <h6 class="red">Uploaded Document(s) as Proof:</h6>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tbody>
+                <tr  *ngFor="let data of journeyAddedAttachmentArray">
+                    <td>{{data.journeyTypeName}}</td>
+                    <td>{{data.ticketName}}</td>
+                    <td>
+                        <div class="attach-file">
+                            <a (click)="openFile(data.attachmentLink)" style="cursor: pointer;" title="Download"><i class="las color-black la-paperclip"></i>Sample_document.pdf </a>
+                            <a (click)="openFile(data.attachmentLink)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h6 class="red">Bank Details:</h6>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>{{travelReimbursement.bankStatementName}}</td>
+                    <td>
+                        <div class="attach-file">
+                            <a (click)="openFile(BankStatementDocument)" style="cursor: pointer;" title="Download"><i class="las color-black la-paperclip"></i>Sample_document.pdf </a>
+                            <a (click)="openFile(BankStatementDocument)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="row" *ngIf="actionVisible">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Action<span class="required">*</span></label>
+                <div class="rdio rdio-primary d-inline-block">
+                    <input name="radio" [value]="5" id="radio1" (click)="changeClaimStatus(5)" [ngModel]="ClaimStatusId" type="radio" checked="">
+                    <label for="radio1">Accept</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                    <input name="radio" [value]="4" id="radio2" (click)="changeClaimStatus(4)" [ngModel]="ClaimStatusId" type="radio">
+                    <label for="radio2">Reject</label>
+                </div>
+                <div class="rdio rdio-primary d-inline-block">
+                    <input name="radio" [value]="2" id="radio3" (click)="changeClaimStatus(2)" [ngModel]="ClaimStatusId" type="radio">
+                    <label for="radio3">Send Back to Candidate</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control txtremarks" id="" placeholder="Enter Remarks..." [(ngModel)]="Remarks"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4" *ngIf="actionVisible">
+        <button type="button" class="btn btn-black" (click)="actionFormSubmit()">Submit</button>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div id="printTestTravelReimbursement" style="display: none;">
+    <app-pdftesttravelreimbursement [interviewTravelReimbursementRecord]="testTravelReimbursementDataForPDF">
+    </app-pdftesttravelreimbursement>
+</div>

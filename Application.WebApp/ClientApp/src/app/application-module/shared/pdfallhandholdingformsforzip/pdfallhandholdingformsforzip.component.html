@@ -1,0 +1,316 @@
+<div style="width: 730px; word-break: break-word; font-size: 13px;">
+    <div style='width: 74px; text-align: center; margin: 0 auto;'>
+        <img src='https://mrfhrportaldocumentstrg.blob.core.windows.net/signatureupload/logo.png'
+        style='width: 100%; text-align: center;' alt=''>
+    </div>
+
+    <div style='margin-top: 10px;' *ngIf="pdfvalues.jreviewData !=null">
+        <h3 style="font-size: 16px; color: #ed1c24;">Job Shadow Review</h3>
+        <div>
+            <strong>Please comment on employee's perspective about job(nature of work, envirnment, culture
+                etc.): </strong>
+            <p>{{pdfvalues?.jreviewData?.question1Reason}}</p>
+        </div>
+        <div >
+            <strong>Please comment on employee's ability to observe, learn and apply critical tacit
+                knowledge, skills & behaviors</strong>
+            <p>{{pdfvalues?.jreviewData?.question2Answer}}</p>
+        </div>
+        <div >
+            <strong>Please summarize the expectations set for employee</strong>
+            <p>{{pdfvalues?.jreviewData?.question3Answer}}</p>
+        </div>
+        <div >
+            <strong>Please comment how well employee has understood his role and expectations of the
+                organization</strong>
+            <p>{{pdfvalues?.jreviewData?.question4Answer}}</p>
+        </div>
+        <div >
+            <strong>Employee's ability to handle job independently</strong>
+            <p>{{pdfvalues?.jreviewData?.question5Answer}}</p>
+        </div>
+        <div >
+            <strong>Please mention the strengths observed</strong>
+            <p>{{pdfvalues?.jreviewData?.question6Answer}}</p>
+        </div>
+        <div >
+            <strong>Please mention the development areas identified</strong>
+            <p>{{pdfvalues?.jreviewData?.question7Answer}}</p>
+        </div>
+        <div>
+            <strong>Please summarize the support given to employee on development areas</strong>
+            <p>{{pdfvalues?.jreviewData?.question8Answer}}</p>
+        </div>
+        <div >
+            <strong>Action Recommended:Job allocation/Extend for 1 month</strong>
+            <p>{{pdfvalues?.jreviewData?.question9StatusName}}</p>
+        </div>
+    </div>
+
+    <div style='margin-top: 10px;' *ngIf="pdfvalues.hfData !=null">
+        <h3 style="font-size: 16px;color: #ed1c24;">Hr Feedback</h3>
+        <div >
+            <div >
+                <h6 class="red">Tell them something you like about their work:</h6>
+                <strong>The best part of your work is</strong>
+                <p>{{pdfvalues.hfData.question1Answer}}</p>
+            </div>
+            <div >
+                <strong>You did really well or achievement is </strong>
+                <p>{{pdfvalues.hfData.question2Answer}}</p>
+            </div>
+            <div >
+                <h6 class="red">Ask them something about their work:</h6>
+                <strong>Do you have adequate support(tools/system)to manage your work better</strong>
+                <p>{{pdfvalues.hfData.question3Answer}}</p>
+            </div>
+            <div>
+                <strong>Do you have role clarity and expected out-put from the job</strong>
+                <p>{{pdfvalues.hfData.question4Answer}}</p>
+            </div>
+            <div >
+                <strong>Do you have any concerns/Grievance/Satisfaction points in your job</strong>
+                <p>{{pdfvalues.hfData.question5Answer}}</p>
+            </div>
+            <div>
+                <h6 class="red">Give a suggestion for improvement:</h6>
+                <strong>One thing to improve your work is</strong>
+                <p>{{pdfvalues.hfData.question6Answer}}</p>
+            </div>
+            <div >
+                <strong>I think your next steps should be </strong>
+                <p>{{pdfvalues.hfData.question7Answer}}</p>
+            </div>
+            <div >
+                <h6 class="red">Any specific training to be imparted:</h6>
+                <p>{{pdfvalues.hfData.question8Answer}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div style=' margin-top: 10px;' *ngIf="pdfvalues.hrRData !=null">
+        <h3 style="font-size: 16px;color: #ed1c24;">Hr Review</h3>
+        <div >
+            <div>
+                <strong>How did the induction and plant training help the employee to perform the job
+                </strong>
+                <p>{{pdfvalues.hrRData.question1Answer}}</p>
+            </div>
+            <div >
+                <strong>Does the employee has relevant tools to perform the job
+                </strong>
+                <p>{{pdfvalues.hrRData.question2Answer}}</p>
+            </div>
+            <div >
+                <strong>What are the interpersonal issues/difficulties while performing duties
+                </strong>
+                <p>{{pdfvalues.hrRData.question3Answer}}</p>
+            </div>
+            <div>
+                <strong>What support does the employee need from organizaton
+                </strong>
+                <p>{{pdfvalues.hrRData.question4Answer}}</p>
+            </div>
+            <div>
+                <strong>Is he recognized/appreciated during the last 6 months? Please clarify with one instance
+                </strong>
+                <p>{{pdfvalues.hrRData.question5Answer}}</p>
+            </div>
+            <div>
+                <strong>Overall comments on employee's working with MRF
+                </strong>
+                <p>{{pdfvalues.hrRData.question6Answer}}</p>
+            </div>
+            <div>
+                <strong>Any support is requested/needed
+                </strong>
+                <p>{{pdfvalues.hrRData.question7Answer}}</p>
+            </div>
+            <div>
+                <strong>Any specific action plan</strong>
+                <p>{{pdfvalues.hrRData.question8Answer}}</p>
+            </div>
+        </div>
+    </div>
+    <div style=' margin-top: 10px;' *ngIf="pdfvalues.lreviewData !=null">
+        <h2 style='margin-bottom: 8px; font-size: 16px;color: #ed1c24;'>Listen Review</h2>
+        <div>
+            <div >
+                <strong>How do you find your work engaging? How can we improve it?</strong>
+                <p>{{pdfvalues.lreviewData.question1Answer}}</p>
+            </div>
+            <div >
+                <strong>How are the additional support you expect to excel in your work?</strong>
+                <p>{{pdfvalues.lreviewData.question2Answer}}</p>
+            </div>
+            <div>
+                <strong>What are the challenges in the work envirnment?</strong>
+                <p>{{pdfvalues.lreviewData.question3Answer}}</p>
+            </div>
+            <div>
+                <strong>Any training area/tolls to improve your work?</strong>
+                <p>{{pdfvalues.lreviewData.question4Answer}}</p>
+            </div>
+            <div >
+                <strong>Any grievances(observed/explained)</strong>
+                <p>{{pdfvalues.lreviewData.question5Answer}}</p>
+            </div>
+            <div>
+                <strong>Any critical incident/achievements to be noted(Positive/Negative)</strong>
+                <p>{{pdfvalues.lreviewData.question6Answer}}</p>
+            </div>
+            <div>
+                <strong>Status on points of last listening process(if any)</strong>
+                <p>{{pdfvalues.lreviewData.question7Answer}}</p>
+            </div>
+            <div>
+                <strong>Observed Strength, if any(with specific example)</strong>
+                <p>{{pdfvalues.lreviewData.question8Answer}}</p>
+            </div>
+            <div>
+                <strong>Overall are for improvement, if any(with specific example)</strong>
+                <p>{{pdfvalues.lreviewData.question9Answer}}</p>
+            </div>
+            <div>
+                <strong>Any specific action plan based on the current listening</strong>
+                <p>{{pdfvalues.lreviewData.question10Answer}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div style=' margin-top: 10px;' *ngIf="pdfvalues.hreviewData !=null">
+        <h2 style='margin-bottom: 8px; font-size: 16px;color: #ed1c24;'>Half Yearly Review</h2>
+        <div>
+            <div >
+                <strong>Areas worked and any specific activities done</strong>
+                <p>{{pdfvalues.hreviewData.question1Answer}}</p>
+            </div>
+            <div >
+                <strong>Feedback on performance</strong>
+                <p>{{pdfvalues.hreviewData.question2Answer}}</p>
+            </div>
+            <div >
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Area</th>
+                                <th width="10%">Rating</th>
+                                <th width="55%">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of pdfvalues.halfYearlyReviewQuestions">
+                                <td>
+                                    <p>{{data.reviewQuestion}}</p>
+                                </td>
+                                <td>
+                                    {{data.rating}}
+                                </td>
+                                <td>
+                                    {{data.reviewComments}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <strong>Area of strength noticed/observed</strong>
+                <p>{{pdfvalues.hreviewData.question3Answer}}</p>
+            </div>
+            <div>
+                <strong>Areas of develoment/improvement</strong>
+                <p>{{pdfvalues.hreviewData.question4Answer}}</p>
+            </div>
+            <div >
+                <strong>Action plans for areas of develoment/improvement</strong>
+                <p>{{pdfvalues.hreviewData.question5Answer}}</p>
+            </div>
+
+        </div>
+    </div>
+
+     <div style='margin-top: 10px;' *ngIf="pdfvalues.creviewData !=null">
+        <h2 style='margin-bottom: 8px; font-size: 16px;color: #ed1c24;'>Confirmation Review</h2>
+        <div>
+            <div class="card-body">
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Assignments/Tasks Undertaken </th>
+                                    <th width="10%">Rating</th>
+                                    <th width="50%">Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of pdfvalues.AssignmentsArray">
+                                    <td>{{data.assignments}}</td>
+                                    <td>{{data.rating}}</td>
+                                    <td>{{data.assignmentComments}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Area</th>
+                                    <th width="10%">Rating</th>
+                                    <th width="55%">Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of pdfvalues.confirmationReviewQuestions">
+                                    <td>
+                                        <p>{{data.reviewQuestion}}</p>
+                                    </td>
+                                    <td>
+                                        {{data.rating}}
+                                    </td>
+                                    <td>
+                                        {{data.reviewComments}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <strong>Feedback of Performance</strong>
+                    <p>{{pdfvalues.creviewData.question1Answer}}</p>
+                </div>
+                <div>
+                    <strong>Special Assignments/Noteworthy Acievements</strong>
+                    <p>{{pdfvalues.creviewData.question2Answer}}</p>
+                </div>
+                <div>
+                    <strong>Exceptions for next 12 months</strong>
+                    <p>{{pdfvalues.creviewData.question3Answer}}</p>
+                </div>
+                <div >
+                    <strong>Area of stregth noticed/observed</strong>
+                    <p>{{pdfvalues.creviewData.question4Answer}}</p>
+                </div>
+                <div>
+                    <strong>Area of development/improvement/training needs</strong>
+                    <p>{{pdfvalues.creviewData.question5Answer}}</p>
+                </div>
+                <div >
+                    <strong>Action plans for areas of development/improvement</strong>
+                    <p>{{pdfvalues.creviewData.question6Answer}}</p>
+                </div>
+                <div>
+                    <strong>Confirm/ Extend Probation for 3 Month/ Extend Probation for 6 Months/ Do Not
+                        Confirm</strong>
+                    <p>{{pdfvalues.creviewData.confirmStatusName}}</p>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>

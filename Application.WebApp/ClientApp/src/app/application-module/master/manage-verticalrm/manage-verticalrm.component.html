@@ -1,0 +1,66 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                  <div>
+                    <!--kuntal-->
+                    <h1 class="f-l">Vertical Recruitment Manager</h1>
+                  </div>                    
+                </div>
+            </div>           
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">                    
+                    <h4 class="modal-title">Vertical - RM</h4>
+                </div>
+                <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Vertical</label>
+                                    <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="VerticalId" name="VerticalId" (change)="onChangeVertical($event)" 
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                        <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                                            {{rec.verticalName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                               
+                            </div>
+                            
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label>Recruitment Manager</label>
+                                    <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="AutoUserId" name="AutoUserId" [(ngModel)]="SelectedAutoUser" 
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false">
+                                        <ng-option [value]="rec.autoUserId" *ngFor="let rec of UserRoleList">
+                                            {{rec.employeeName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm"(click)="createForm()" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-black btn-sm" [disabled]="saveForm.invalid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->
+
+
+
+    
+

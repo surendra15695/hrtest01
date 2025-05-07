@@ -1,0 +1,488 @@
+<div class="container">
+    <div class="regist_form_container">
+        <!-- By Sayandeep on 05-08-2023 -->
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a> 
+        <h1 class="title">MRF Campus 2021 - 2022 Student Registration</h1>
+        <div class="inner-container">
+            <form name="saveForm" (ngSubmit)="onSubmit()" #f="ngForm" autocomplete="off">
+                
+                <div>
+                    <h6 class="text-uppercase">General Information</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name :</label>
+                                <input disabled type="text" class="form-control" [(ngModel)]="campusCandidate.FullName"
+                                    placeholder="Name as per aadhar card" name="FullName" #FullName="ngModel" required>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Gender :</label>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input disabled [(ngModel)]="campusCandidate.GenderId" #GenderId="ngModel" name="GenderId"
+                                        value="1" #radio1 id="radio1" type="radio"
+                                        [checked]="campusCandidate.GenderId==1?true:false">
+                                    <label for="radio1">Male</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input disabled [(ngModel)]="campusCandidate.GenderId" #GenderId="ngModel" name="GenderId"
+                                        value="2" #radio2 id="radio2" type="radio"
+                                        [checked]="campusCandidate.GenderId==2?true:false">
+                                    <label for="radio2">Female</label>
+                                </div>
+                                <div class="rdio rdio-primary d-inline-block">
+                                    <input disabled [(ngModel)]="campusCandidate.GenderId" #GenderId="ngModel" name="GenderId"
+                                        value="3" #radio3 id="radio3" type="radio"
+                                        [checked]="campusCandidate.GenderId==3?true:false">
+                                    <label for="radio3">Others</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Date of Birth :</label>
+                                <input disabled type="text" class="form-control" [(ngModel)]="campusCandidate.DOB"
+                                    placeholder="dd-mm-yyyy" name="DOB" #DOB="ngModel" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Age :</label>
+                                <input type="text" disabled maxlength="2" class="form-control" id="txtAge"
+                                    [(ngModel)]="campusCandidate.Age" name="Age" #Age="ngModel">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email ID :></label>
+                                <input disabled type="text" class="form-control" name="EmailId" #EmailId="ngModel"
+                                    [(ngModel)]="campusCandidate.EmailId" placeholder="Enter email" required />
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Phone No. :</label>
+                                <input disabled numbersOnly maxlength="10" type="text" class="form-control"
+                                    [(ngModel)]="campusCandidate.ContactNo" name="ContactNo" required
+                                    #ContactNo="ngModel" placeholder="Eg:9800123456">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Aadhar No. :</label>
+                                <input disabled type="text" numbersOnly class="form-control"
+                                    [(ngModel)]="campusCandidate.AadharNo" required #AadharNo="ngModel" name="AadharNo"
+                                    maxlength="12" placeholder="Eg:123412341234">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Home Town :</label>
+                                <input disabled type="text" class="form-control" [(ngModel)]="campusCandidate.HomeTown"
+                                    placeholder="Home Town" name="HomeTown" #HomeTown="ngModel" required>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Native State :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" name="NativeState" #NativeState="ngModel"
+                                    [(ngModel)]="campusCandidate.NativeState" required>
+                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                        {{rec.stateName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Present State :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false" name="PresentState" #PresentState="ngModel"
+                                    [(ngModel)]="campusCandidate.PresentState" required>
+                                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                        {{rec.stateName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Mother Tongue :</label>
+                                <div class="dropdown bootstrap-select form-control">
+                                    <ng-select disabled bindLabel="languageName" [placeholder]="'Select'" [appendTo]="'body'"
+                                        [multiple]="false" [searchable]="false" [clearable]="false"
+                                        [(ngModel)]="campusCandidate.MotherTongueId" name="MotherTongueId"
+                                        #MotherTongueId="ngModel" required>
+                                        <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                                            {{rec.languageName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Languages able to speak :</label>
+                                <div class="dropdown bootstrap-select form-control">
+                                    <ng-select disabled bindLabel="languageName" [placeholder]="'Select'" [appendTo]="'body'"
+                                        [multiple]="true" [searchable]="false" [clearable]="false"
+                                        #LanguageIds="ngModel" name="LanguageIds" required
+                                        [(ngModel)]="campusCandidate.LanguageIds" (change)="changeLanguageKnown()">
+                                        <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                                            {{rec.languageName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Height(CM) :</label>
+                                <input disabled type="text" class="form-control" [(ngModel)]="campusCandidate.Height" numbersOnly
+                                    placeholder="" #Height="ngModel" name="Height" required>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Weight(KG)  :</label>
+                                <input disabled type="text" class="form-control" [(ngModel)]="campusCandidate.Weight" numbersOnly
+                                    placeholder="" #Weight="ngModel" name="Weight" required>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label>Eye Sight Corrected :</label>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <ng-select disabled [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                            [searchable]="false" [clearable]="false"
+                                            [(ngModel)]="campusCandidate.EyeSightCorrected" name="EyeSightCorrected"
+                                            #EyeSightCorrected="ngModel" required>
+                                            <ng-option [value]="1">Yes</ng-option>
+                                            <ng-option [value]="0">No</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group normal">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Right :</div>
+                                        </div>
+                                        <input disabled type="text" class="form-control" id="" appTwoDigitDecimaNumber
+                                            [(ngModel)]="campusCandidate.EyeSightRight" #EyeSightRight="ngModel"
+                                            name="EyeSightRight">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group normal">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Left :</div>
+                                        </div>
+                                        <input disabled type="text" class="form-control" id="" appTwoDigitDecimaNumber
+                                            [(ngModel)]="campusCandidate.EyeSightLeft" name="EyeSightLeft"
+                                            #EyeSightLeft="ngModel">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Father’s Occupation :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.FatherOccupation" name="FatherOccupation"
+                                    #FatherOccupation="ngModel" required>
+                                    <ng-option [value]="rec.id" *ngFor="let rec of familyOccupations">
+                                        {{rec.name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Mother’s Occupation :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="MotherOccupation" #MotherOccupation="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.MotherOccupation" required>
+                                    <ng-option [value]="rec.id" *ngFor="let rec of motherOccupations">
+                                        {{rec.name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Disability :</label>
+                                <ng-select disabled [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="Disability" #Disability="ngModel" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.Disability" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Disability Details :</label>
+                                <textarea disabled class="form-control" placeholder="Enter details" name="DisabilityDetails"
+                                    #DisabilityDetails="ngModel"
+                                    [(ngModel)]="campusCandidate.DisabilityDetails"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Health Issues :</label>
+                                <ng-select disabled [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="HealthIssue" #HealthIssue="ngModel" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.HealthIssue" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Health Issue Details :</label>
+                                <textarea disabled class="form-control" placeholder="Enter details"
+                                    [(ngModel)]="campusCandidate.HealthIssueDetails" name="HealthIssueDetails"
+                                    #HealthIssueDetails="ngModel"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>How many siblings you have?</label>
+                                <input disabled type="text" class="form-control" placeholder="" numbersOnly
+                                    [(ngModel)]="campusCandidate.NoofSiblings" name="NoofSiblings"
+                                    #NoofSiblings="ngModel" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-uppercase">Academic Details</h6>
+                    <div class="table-responsive">
+                        <table id="dataTable1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Academic</th>
+                                    <th>Course Status</th>
+                                    <th>Year of Passing</th>
+                                    <th>Marks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of academic">
+                                    <td>{{data.academicdetail}}</td>
+                                    <td >{{data.courseStatusName}}</td>
+                                    <td>{{data.yearOfPassing}}</td>
+                                    <td>{{data.marks}}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="showotheracademic==true">
+                    <h6 class="text-uppercase">Other Academic Details</h6>
+                    <div class="table-responsive">
+                        <table id="dataTable1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Course Name</th>
+                                    <th>Course Status</th>
+                                    <th>Qualification Name</th>
+                                    <th>Specialization</th>
+                                    <th>Year of Passing</th>
+                                    <th>Marks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of otheracademic">
+                                    <td>{{data.courseName}}</td>
+                                    <td *ngIf="data.courseStatus=='2'">Completed</td>
+                                    <td *ngIf="data.courseStatus=='1'">pursuing</td>
+                                    <td>{{data.qualificationName}}</td>
+                                    <td>{{data.specalization}}</td>
+                                    <td>{{data.yearOfPassing}}</td>
+                                    <td>{{data.marks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-uppercase">Other Details</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Willing for 3 year commitment :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="YearsCommitments" #YearsCommitments="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.YearsCommitments" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Willing to work anywhere in India :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="AnyWhereinIndia" #AnyWhereinIndia="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.AnyWhereinIndia" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Do you have any Active Arrears/Backlogs (Highest Qualification)?<span class="required">*</span></label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="ActiveArrears" #ActiveArrears="ngModel"
+                                    [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.ActiveArrears" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && ActiveArrears.invalid) || (ActiveArrears.touched && ActiveArrears.invalid)">
+                                    <span *ngIf="ActiveArrears.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Most Preferred Benefit :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="MostPreferdBenifit" #MostPreferdBenifit="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.MostPreferdBenifit" required>
+                                    <ng-option [value]="1">Subsidized Canteen</ng-option>
+                                    <ng-option [value]="2">Travelling Facility</ng-option>
+                                    <ng-option [value]="3">Accommodation Facility</ng-option>
+                                    <ng-option [value]="4">Regulated Working Hours & 5day week</ng-option>
+                                    <ng-option [value]="5">Work From Home Facility</ng-option>
+                                    <ng-option [value]="6">Others</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Extra Curricular Activities<span class="required">*</span></label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true"
+                                    name="ExtraCurricularActivities" #ExtraCurricularActivities="ngModel"
+                                    [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="campusCandidate.ExtraCurricularActivities" required>
+                                    <ng-option [value]="rec.id" *ngFor="let rec of extracuricullar">
+                                        {{rec.name}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Job Type Priority<span class="required">*</span></label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="JobTypePriority" #JobTypePriority="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.JobTypePriority" required>
+                                    <ng-option [value]="1">Core manufacturing</ng-option>
+                                    <ng-option [value]="2">IT Job</ng-option>
+                                    <ng-option [value]="3">Other</ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && JobTypePriority.invalid) || (JobTypePriority.touched && JobTypePriority.invalid)">
+                                    <span *ngIf="JobTypePriority.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Critical factor which influence Job decision<span
+                                        class="required">*</span></label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="CriticalFactor" #CriticalFactor="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.CriticalFactor" required>
+                                    <ng-option [value]="1">Job Profile </ng-option>
+                                    <ng-option [value]="2">Job Security </ng-option>
+                                    <ng-option [value]="3">Career Growth </ng-option>
+                                    <ng-option [value]="4">Learning Opportunities </ng-option>
+                                    <ng-option [value]="5">Salary & Other benifits </ng-option>
+                                    <ng-option [value]="6">Other </ng-option>
+                                </ng-select>
+                                <p class="error-msg"
+                                    *ngIf="(f.submitted && CriticalFactor.invalid) || (CriticalFactor.touched && CriticalFactor.invalid)">
+                                    <span *ngIf="CriticalFactor.errors.required">Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Willing to work in rotational shift including Night Shift( only plants) &
+                                    stretched
+                                    working hours :</label>
+                                <ng-select disabled class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    name="WorkinginShift" #WorkinginShift="ngModel" [searchable]="false"
+                                    [clearable]="false" [(ngModel)]="campusCandidate.WorkinginShift" required>
+                                    <ng-option [value]="1">Yes</ng-option>
+                                    <ng-option [value]="0">No</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Upload Resume (Max size 80KB) <span class="required">*</span></label>
+                            <div class="custom-file"> -->
+                                <!-- <input type="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile"></label> -->
+                                <!-- <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                                    (change)="onFileChange($event.target.files)">
+                                <label class="custom-file-label" for="customFile" #candidateResumeImport>Choose
+                                    file</label>
+                                <p class="error-msg msgfile" style="display: none;">
+                                    <span>Required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+
+                <!-- <div class="mt-4 clearfix"> -->
+                    <!-- <button type="submit" class="btn btn-secondary"><i class="las la-angle-left"></i> Back</button> -->
+                    <!-- <button type="submit" class="btn btn-primary ml-1">Submit</button>
+                </div> -->
+            </form>
+        </div>
+
+    </div>
+</div>
+

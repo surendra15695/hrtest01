@@ -1,0 +1,304 @@
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">Induction Feedback Templates</h1>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm" (click)="newFeedback()"><i
+                                class="las la-plus"></i> Add New</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+                <!-- tab pill section Start -->
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-one-tab" (click)="onClickJoinerType('I')"
+                            data-toggle="pill" href="#pills-one" role="tab" aria-controls="pills-one"
+                            aria-selected="true">Individual Joiner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-two-tab" (click)="onClickJoinerType('B')" data-toggle="pill"
+                            href="#pills-two" role="tab" aria-controls="pills-two" aria-selected="false">Batch
+                            Joiner</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- pills one start -->
+                    <div class="tab-pane fade show active" id="pills-one" role="tabpanel"
+                        aria-labelledby="pills-one-tab">
+                        <!-- Individual Table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 60px;">Sl. No.</th>
+                                        <th>Feedback Name</th>
+                                        <th>Status</th>
+                                        <th>Created By</th>
+                                        <!-- <th>Days of Release</th>                                                       -->
+                                        <th>Modified on</th>
+                                        <th style="text-align: center;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of InductionFeedbackList; let i=index;">
+                                        <td class="text-center">{{i+1}}</td>
+                                        <td>{{item.feedBackName}}</td>
+                                        <td class="green" *ngIf="item.isActive==true && item.isEnabled ==false">Active</td>
+                                        <td class="red" *ngIf="item.isActive==false && item.isEnabled ==false">Inactive</td>
+                                        <td class="red" *ngIf="item.isEnabled ==true">Saved as draft</td>
+                                        <td>{{item.empName}}</td>
+                                        <!-- <td>112</td> -->
+                                        <td>{{item.modifiedOn}}</td>
+                                        <td class="text-center">
+                                            <div class="row-dropdown">
+                                                <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                                        class="las la-ellipsis-v"></i></button>
+                                                <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                                    aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                                    x-placement="bottom-end">
+                                                    <a *ngIf="!showCandidateAssign" class="dropdown-item"
+                                                        href="javascript: void(0)" (click)="onClickBatchAssign(item)"
+                                                        data-toggle="modal" data-target="#myModalTwo"><i
+                                                            class="las la-plus-circle"></i>
+                                                        Assign to Batch</a>
+                                                    <a *ngIf="showCandidateAssign" class="dropdown-item"
+                                                        href="javascript: void(0)"
+                                                        (click)="onClickCandidateAssign(item)" data-toggle="modal"
+                                                        data-target="#assignToCandidateModal"><i
+                                                            class="las la-plus-circle"></i>
+                                                        Assign to Individual</a>
+                                                    <a class="dropdown-item" href="javascript: void(0)"
+                                                        (click)="onClickScheduleRelease(item)" [hidden]="this.showScheduleRelease==false" data-toggle="modal"
+                                                        data-target="#myModalOne"><i class="las la-calendar"></i>
+                                                        Schedule Release</a>
+                                                    <a class="dropdown-item" href="javascript: void(0)"
+                                                        (click)="editFeedBackForm(item)"><i class="las la-pen"></i>
+                                                        Edit/View Feedback Form</a>
+                                                    <a class="dropdown-item" href="javascript: void(0)"
+                                                        data-toggle="modal" data-target="#confirmPopup"
+                                                        (click)="onClickDelete(item)"><i class="las la-trash-alt"></i>
+                                                        Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Individual Table End -->
+                    </div>
+                    <!-- pills one End -->
+                </div>
+                <!-- tab pill section Start -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->
+
+<div class="modal fade" id="myModalTwo" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Batch Assigning</h4>
+            </div>
+            <form [formGroup]="saveFormBatch" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><strong>FeedBack Name: </strong>{{FeedBackName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Batch Type</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                formControlName="vertical" (change)="getVerticalWiseBatch($event)">
+                                <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                    {{rec.verticalName}}
+                                </ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Traninging Title</label>
+                                <!-- <ng-select bindLabel="venueName" class="ddltestvenue"
+                                    formControlName="CandidateInductionScheduleDetailsId"
+                                    name="CandidateInductionScheduleDetailsId" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                    <ng-option [value]="rec.candidateInductionScheduleDetailsId"
+                                        *ngFor="let rec of InductionTrainingList">
+                                        {{rec.traingTitle}}
+                                    </ng-option>
+                                </ng-select> -->
+                                <ng-select bindLabel="trainingTittleId" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="trainingTittleId">
+                                    <ng-option [value]="rec.trainingTittleId"
+                                        *ngFor="let rec of trainingTittleListGetAll">
+                                        {{rec.trainingTittleName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="initializeBatchAssigning()"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm"
+                        [disabled]="saveFormBatch.invalid"  (click)="FeedBackAssignSave()" 
+                        >Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Assign to Candidate Modal -->
+<div class="modal fade" id="assignToCandidateModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Individual Assigning</h4>
+            </div>
+            <form [formGroup]="assessmentAssignSaveForm" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><strong>FeedBack Name: </strong>{{FeedBackName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Individual Type</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                formControlName="vertical" (change)="getVerticalWiseCandidate($event)">
+                                <ng-option [value]="rec.verticalId" *ngFor="let rec of Candidateverticals">
+                                    {{rec.verticalName}}
+                                </ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-6">
+                            <div class="form-group">-->
+                                <!--<label>Training Title</label>-->
+                                <!-- <ng-select bindLabel="traingTitle" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="CandidateInductionScheduleDetailsId">
+                                    <ng-option [value]="rec.candidateInductionScheduleDetailsId"
+                                        *ngFor="let rec of trainingTittleList">
+                                        {{rec.traingTitle}}
+                                    </ng-option>
+                                </ng-select> -->
+
+                                <!--<ng-select bindLabel="trainingTittleId" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                formControlName="trainingTittleId">
+                                <ng-option [value]="rec.trainingTittleId"
+                                    *ngFor="let rec of trainingTittleListGetAll">
+                                    {{rec.trainingTittleName}}
+                                </ng-option>
+                              </ng-select>-->
+                            <!--</div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        (click)="onClickCancel()">Cancel</button>
+                    <button type="submit" [disabled]="assessmentAssignSaveForm.invalid"  (click)="onSubmitAssignFeedback()"
+                        class="btn btn-black btn-sm">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- START: FeedBackScheduleSave -->
+<div class="modal fade" id="myModalOne" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Schedule Release </h4>
+            </div>
+            <form [formGroup]="saveFormSchRealease" (ngSubmit)="FeedBackScheduleSave()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><strong>FeedBack Name: </strong>{{FeedBackName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Days after induction start</label>
+                                <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                                    formControlName="NumberOfDays" name="NumberOfDays" placeholder="Enter days to start"
+                                    min="1" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="initializeSchRealease()"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm"
+                        [disabled]="saveFormSchRealease.invalid">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END: FeedBackScheduleSave -->
+
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure want to delete ?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="onClickConfirmatin('N')">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onClickConfirmatin('Y')">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->

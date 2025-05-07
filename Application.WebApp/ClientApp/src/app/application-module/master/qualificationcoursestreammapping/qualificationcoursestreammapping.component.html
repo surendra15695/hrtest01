@@ -1,0 +1,57 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">Qualification & Course Mapping</h1>
+                    </div>
+                    <div>
+                        <!-- <button type="button" (click)="createForm()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><i class="las la-plus"></i> Add New</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="swichLabel">Qualification</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" [placeholder]="'Select'" [appendTo]="'body'" (change)="onChangeQualification($event)" [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="SelectedQualification">
+                            <ng-option [value]="rec.qualificationId" *ngFor="let rec of QualificationList">
+                                {{rec.qualificationName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="swichLabel">Course</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" [placeholder]="'Select'" [appendTo]="'body'" (change)="onChangeCourse($event)" [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="SelectedCourse">
+                            <ng-option [value]="rec.courseId" *ngFor="let rec of CourseList">
+                                {{rec.courseName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Stream</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false" [(ngModel)]="SelectedStream">
+                            <ng-option [value]="rec.streamId" *ngFor="let rec of StreamList">
+                                {{rec.streamName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-black btn-sm" (click)="onSubmit()">Submit</button>                    
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

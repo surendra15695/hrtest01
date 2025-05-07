@@ -1,0 +1,96 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Evaluate Assesment</h1>
+            </div>
+        </div>   
+    </div>
+    <div>
+        <h6 class="red">{{trainingTittle}}</h6>        
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <!-- <th colspan="3">{{selectedObjectArray.assessmentQuestionAnswer}}</th> -->
+                        <th colspan="3">{{newarray[0]?.assessmentQuestionOrder}} .{{newarray[0]?.assessmentQuestionAnswer}}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 130px;">Employee ID</th>
+                        <th>Answer</th>
+                        <th style="width: 100px;">Evaluation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let data of newarray">
+                        <tr *ngFor="let rec of data.candidateEvaluationQuestionAnswer">
+                            <td>{{rec.candidateNo}}</td>
+                            <td>{{rec.assessmentAnswer}}</td>
+                            <!-- <td  [ngClass]="data.singleChoiseQuestionStatus == true ? 'green' : 'red'" *ngIf="selectedObjectArray[0]?.assessmentQuestionTypeId=='1'">{{getSingleChoiceAnswer(data.singleChoiseQuestionStatus)}}</td> -->
+                   <!-- By sayandeep    ---- <td  [ngClass]="data.correctAnswer == 1 ? 'green' : 'red'" *ngIf="newarray[0]?.assessmentQuestionTypeId=='1'">{{getSingleChoiceAnswer(data.singleChoiseQuestionStatus)}}</td> -->
+                            <!-- <td *ngIf="selectedObjectArray[0]?.assessmentQuestionTypeId!='1'">
+                                <label class="switch mb-0"><input type="checkbox" id="togBtn" [(ngModel)]="data.descreptiveQuestionStatus"
+                                    (change)="onChangeEvaluation($event,data)">
+                                    <div class="slider round">
+                                        <span class="on">Yes</span><span class="off">No</span>
+                                    </div>
+                                </label>
+                            </td> -->
+                            <td *ngIf="rec.assessmentQuestionTypeId=='2'">
+                                <label class="switch mb-0"><input type="checkbox" id="togBtn" [(ngModel)]="rec.correctAnswer"
+                                    (change)="onChangeEvaluation($event,rec)">
+                                    <div class="slider round">
+                                        <span class="on">Yes</span><span class="off">No</span>
+                                    </div>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="mt-4">
+        <div class="row">
+            <div class="col" *ngIf="selectedObjectIndex!='0'">
+                <button type="button" class="btn btn-primary" (click)="onClickPrevious()">Previous</button>
+            </div>
+            <div class="col text-right" *ngIf="(btnnext==true)&&(btnfinish==false)&&(selectedObjectIndex+1)>=0 && ((selectedObjectIndex+1)<=newarray.length)">
+                <button type="button" class="btn btn-black" (click)="onClickNext()">Next</button>
+            </div>
+            <div class="col text-right" *ngIf="(btnfinish==true)">
+                <button type="button" class="btn btn-black" (click)="onFinishEvaluation()">Show Score</button> 
+            </div>
+            <!-- <div class="col text-right" *ngIf="(btnfinish==true)">
+              <button type="button" data-target="#onSubmitEvaluationModal" data-toggle="modal" class="btn btn-black" (click)="onFinishEvaluation()">Submit</button>
+            </div> -->
+        </div>
+    </div>
+    <!--<div class="mt-4">
+        <div class="row">
+            <div class="col" *ngIf="showsubmit">
+                <button type="button" class="btn btn-black" (click)="onSubmitEvaluation()">Submit</button>
+            </div>
+        </div>
+    </div>-->
+</div>
+
+<div class="modal fade" id="onSubmitEvaluationModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+        <h6 class="conComment text-center">
+          Do you want to Evaluate Assessment ?
+        </h6>
+        <div class="mt-4 text-center">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                  (click)="onSubmitEvaluation()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

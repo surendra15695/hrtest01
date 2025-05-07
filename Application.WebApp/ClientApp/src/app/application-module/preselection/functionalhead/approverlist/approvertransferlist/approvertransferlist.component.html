@@ -1,0 +1,198 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">All Positions</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <select class="selectpicker ddlvertical" title='All' formControlName="verticalId" #verticalId
+                            (change)="changeVertical()">
+                            <option *ngFor="let rec of approverVerticalFunctionDepartment" [value]="rec.verticalId">
+                                {{rec.verticalName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <div class="dropdown bootstrap-select form-control">
+                            <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="locationId" #locationId>
+                                <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                                    {{rec.locationNo}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <input type="hidden" formControlName="approverAutoUserId" #approverAutoUserId/>
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Position Status</label>
+                        <select class="selectpicker" data-container="body" title="All" formControlName="replacementStatusId" #replacementStatusId>
+                            <option *ngFor="let replacementStatus of replacementStatuses" [value]="replacementStatus.statusId">
+                                {{replacementStatus.statusName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="selectpicker" title='Select' formControlName="transferApprovalStatus" #transferApprovalStatus>
+                            <option selected [value]="0">All</option>
+                            <option [ngValue]="1">Pending for Approal</option>
+                            <option [ngValue]="2">Auto Approved</option>
+                            <option [ngValue]="3">Approved</option>
+                            <option [ngValue]="4">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                        Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Requested By</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>EmpNo</th>
+                    <th>EmpName</th>
+                    <th>Designation</th>
+                    <th>Grade</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Against Requisition</th>
+                    <th>Position Status</th>
+                    <th>Replacement Position</th>
+                    <th>Replacement Grade</th>
+                    <th>Type</th>
+                    <th>Target</th>
+                    <th>JD</th>
+                    <th style="text-align: center;">Approval</th>
+                    <th>Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of transferLists">
+                <td>{{data.createdByUserName}}</td>
+                <td>{{data.oldLocationNo}}</td>
+                <td>{{data.createdOn}}</td>
+                <td>{{data.empNo}}</td>
+                <td>{{data.empName}}</td>
+                <td>{{data.designation}}</td>
+                <td>{{data.oldGradeName}}</td>
+                <td>{{data.oldFunctionName}}</td>
+                <td>{{data.oldDepartmentName}}</td>
+                <td>{{data.forRequisitionNo}}</td>
+                <td>{{data.replacementStatusName}}</td>
+                <td>{{data.positionName}}</td>
+                <td>{{data.gradeName}}</td>
+                <td>{{data.jobTypeName}}</td>
+                <td>{{data.targetDate}}</td>
+                <td>{{data.jobDescriptionName}}</td>
+                <td class="text-center"><img src="{{data.processStatusIcon}}" alt="Send For Approval" /></td>
+                <td>{{data.processStatus}}</td>
+                <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <a  class="dropdown-item"
+                                    href="javascript:void(0)" data-toggle="modal" data-target="#myModal" id="closeModal" #closeModal
+                                    (click)="openApproveRejectModal(data.transferDetailId)"><i
+                                        class="las la-check-square"></i> Take
+                                    Action</a>
+                                    <a class="dropdown-item" *ngIf="data.jobDescriptionId!=0" (click)="DownloadJD(data.jdDocument,data.jobDescriptionName)" href="javascript:void(0)"><i class="las la-file-pdf"></i>
+                                        View JD</a>
+                            </div>
+                        </div>
+                    </td>
+              </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <form [formGroup]="saveform">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control" formControlName="Remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" (click)="reject()">Reject</button>
+                    <button type="submit" class="btn btn-black btn-sm" (click)="approve()">Approve</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,379 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCalendar()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Fill Interview Assesment Form</h1>
+    </div>
+    <div class="form-row mb-2">
+        <!-- <div class="col-md-3">
+            <p class="d-inline-block grey">Position:</p>
+            <p class="d-inline-block red">{{positionName}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Interview Name:</p>
+            <p class="d-inline-block">{{interviewName}}</p>
+        </div> -->
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Interview Date:</p>
+            <p class="d-inline-block">{{interviewDate}}</p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="3" class="text-capitalize">Name</th>
+                    <th colspan="15" class="text-center">AREAS OF ASSESMENT</th>
+                    <th rowspan="3" class="text-capitalize" style="display: none;">Joining time required</th>
+                    <th rowspan="3" class="text-capitalize" style="display: none;">Salary (Take-home/Gross)</th>
+                    <th rowspan="3" class="text-capitalize" style="min-width: 100px; max-width: 100px;">Joining time
+                        required/ Salary/ Location preference</th>
+                    <th rowspan="3" class="text-capitalize" style="min-width: 200px; max-width: 200px;">Others comments
+                        if any</th>
+                    <th rowspan="3" class="text-capitalize" style="min-width: 120px; max-width: 100px;">Action</th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="text-capitalize" style="background-color: #ffc0c3;">Presonality (Turnout,
+                        Self-introduction, Poise, General
+                        Behaviour)</th>
+                    <th colspan="3" class="text-capitalize" style="background-color: #ffcb60;">Communication Oral
+                        communication, Command of English &
+                        Clarity of thought)</th>
+                    <th colspan="3" class="text-capitalize" style="background-color: #ffc0c3;">Subject / Job (Subject/
+                        Job knowledge, Areas of expertise/
+                        specialization)</th>
+                    <th colspan="3" class="text-capitalize" style="background-color: #ffcb60;">Aptitude for the position
+                    </th>
+                    <th colspan="3" class="text-capitalize" style="background-color: #ffc0c3;">Overall Rating</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="background-color: #ffc0c3;">A</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">B</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">C</th>
+                    <th class="text-center" style="background-color: #ffcb60;">A</th>
+                    <th class="text-center" style="background-color: #ffcb60;">B</th>
+                    <th class="text-center" style="background-color: #ffcb60;">C</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">A</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">B</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">C</th>
+                    <th class="text-center" style="background-color: #ffcb60;">A</th>
+                    <th class="text-center" style="background-color: #ffcb60;">B</th>
+                    <th class="text-center" style="background-color: #ffcb60;">C</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">A</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">B</th>
+                    <th class="text-center" style="background-color: #ffc0c3;">C</th>
+                </tr>
+            </thead>
+            <tbody style="border: 2px;border-color: black;">
+                <tr *ngFor="let data of assessmentList">
+                    <td>{{data.fullName}}</td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(3,'Personality',data.calendarId)"
+                                [disabled]="!isVisisble" name="Personality{{data.calendarId}}"
+                                [value]="personalidyScore" id="PersonalityRadio{{data.calendarId}}_1"
+                                [checked]="data.personalityScore==3?true:false">
+                            <label class="chk" for="PersonalityRadio{{data.calendarId}}_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(2,'Personality',data.calendarId)"
+                                [disabled]="!isVisisble" name="Personality{{data.calendarId}}"
+                                [value]="personalidyScore" id="PersonalityRadio{{data.calendarId}}_2"
+                                [checked]="data.personalityScore==2?true:false">
+                            <label class="chk" for="PersonalityRadio{{data.calendarId}}_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(1,'Personality',data.calendarId)"
+                                [disabled]="!isVisisble" name="Personality{{data.calendarId}}"
+                                [value]="personalidyScore" id="PersonalityRadio{{data.calendarId}}_3"
+                                [checked]="data.personalityScore==1?true:false">
+                            <label class="chk" for="PersonalityRadio{{data.calendarId}}_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffcb60;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(3,'Communication',data.calendarId)"
+                                [disabled]="!isVisisble" name="Communication{{data.calendarId}}" value="1"
+                                id="CommunicationRadio{{data.calendarId}}_1"
+                                [checked]="data.communicationScore==3?true:false">
+                            <label class="chk" for="CommunicationRadio{{data.calendarId}}_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffcb60;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(2,'Communication',data.calendarId)"
+                                [disabled]="!isVisisble" name="Communication{{data.calendarId}}" value="2"
+                                id="CommunicationRadio{{data.calendarId}}_2"
+                                [checked]="data.communicationScore==2?true:false">
+                            <label class="chk" for="CommunicationRadio{{data.calendarId}}_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffcb60;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(1,'Communication',data.calendarId)"
+                                [disabled]="!isVisisble" name="Communication{{data.calendarId}}" value="3"
+                                id="CommunicationRadio{{data.calendarId}}_3"
+                                [checked]="data.communicationScore==1?true:false">
+                            <label class="chk" for="CommunicationRadio{{data.calendarId}}_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(3,'Subject',data.calendarId)"
+                                [disabled]="!isVisisble" name="Subject{{data.calendarId}}" value="1"
+                                id="SubjectRadio{{data.calendarId}}_1" [checked]="data.subjectScore==3?true:false">
+                            <label class="chk" for="SubjectRadio{{data.calendarId}}_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(2,'Subject',data.calendarId)"
+                                [disabled]="!isVisisble" name="Subject{{data.calendarId}}" value="2"
+                                id="SubjectRadio{{data.calendarId}}_2" [checked]="data.subjectScore==2?true:false">
+                            <label class="chk" for="SubjectRadio{{data.calendarId}}_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(1,'Subject',data.calendarId)"
+                                [disabled]="!isVisisble" name="Subject{{data.calendarId}}" value="3"
+                                id="SubjectRadio{{data.calendarId}}_3" [checked]="data.subjectScore==1?true:false">
+                            <label class="chk" for="SubjectRadio{{data.calendarId}}_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffcb60;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(3,'Apptitude',data.calendarId)"
+                                [disabled]="!isVisisble" name="Apptitude{{data.calendarId}}" value="1"
+                                id="ApptitudeRadio{{data.calendarId}}_1" [checked]="data.apptitudeScore==3?true:false">
+                            <label class="chk" for="ApptitudeRadio{{data.calendarId}}_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffcb60;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(2,'Apptitude',data.calendarId)"
+                                [disabled]="!isVisisble" name="Apptitude{{data.calendarId}}" value="2"
+                                id="ApptitudeRadio{{data.calendarId}}_2" [checked]="data.apptitudeScore==2?true:false">
+                            <label class="chk" for="ApptitudeRadio{{data.calendarId}}_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffcb60;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(1,'Apptitude',data.calendarId)"
+                                [disabled]="!isVisisble" name="Apptitude{{data.calendarId}}" value="3"
+                                id="ApptitudeRadio{{data.calendarId}}_3" [checked]="data.apptitudeScore==1?true:false">
+                            <label class="chk" for="ApptitudeRadio{{data.calendarId}}_3"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(3,'Overall',data.calendarId)"
+                                [disabled]="!isVisisble" name="Overall{{data.calendarId}}" value="1"
+                                id="OverallRadio{{data.calendarId}}_1" [checked]="data.overallScore==3?true:false">
+                            <label class="chk" for="OverallRadio{{data.calendarId}}_1"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(2,'Overall',data.calendarId)"
+                                [disabled]="!isVisisble" name="Overall{{data.calendarId}}" value="2"
+                                id="OverallRadio{{data.calendarId}}_2" [checked]="data.overallScore==2?true:false">
+                            <label class="chk" for="OverallRadio{{data.calendarId}}_2"></label>
+                        </div>
+                    </td>
+                    <td class="text-center" style="background-color: #ffc0c3;">
+                        <div class="form-check">
+                            <input type="radio" (click)="updateScore(1,'Overall',data.calendarId)"
+                                [disabled]="!isVisisble" name="Overall{{data.calendarId}}" value="3"
+                                id="OverallRadio{{data.calendarId}}_3" [checked]="overallScore==1?true:false">
+                            <label class="chk" for="OverallRadio{{data.calendarId}}_3"></label>
+                        </div>
+                    </td>
+                    <td style="display: none;">
+                        <input type="text" numbersOnly class="form-control" [(ngModel)]="data.noticePeriod"
+                            [disabled]="!isVisisble" (change)="updateNoticePeriod($event,data.calendarId)">
+                    </td>
+                    <td style="display: none;">
+                        <input type="text" numbersOnly class="form-control" [(ngModel)]="data.expectedSalary"
+                            [disabled]="!isVisisble" (change)="updateSalary($event,data.calendarId)">
+                    </td>
+                    <td>
+                        <!-- <ng-select bindLabel="stateName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"  (change)="updateState($event,data.calendarId)"
+                            [(ngModel)]="data.stateId">
+                            <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                {{rec.stateName}}
+                            </ng-option>
+                        </ng-select> -->
+                        <input type="text" class="form-control" [(ngModel)]="data.preferredLocation"
+                            [disabled]="!isVisisble" (change)="updatePreferredLocation($event,data.calendarId)">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" [(ngModel)]="data.otherComments"
+                            [disabled]="!isVisisble" (change)="updateComments($event,data.calendarId)">
+                    </td>
+                    <td>
+                        <ng-select [placeholder]="'Select'" [appendTo]="'body'"
+                            (change)="updateActionStatus($event,data.calendarId)" [multiple]="false"
+                            [searchable]="false" [clearable]="false" [disabled]="!isVisisble"
+                            [(ngModel)]="data.actionStatus">
+                            <ng-option [value]="0">Choose</ng-option>
+                            <ng-option [value]="1">Selected</ng-option>
+                            <ng-option [value]="2">Hold</ng-option>
+                            <ng-option [value]="3">Referred to</ng-option>
+                            <ng-option [value]="4">Rejected</ng-option>
+                        </ng-select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Anif Added Start-->
+        <!-- <div class="row" style="display: none;">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Vertical</label>
+                    <ng-select bindLabel="ddlvertical" class="ddlvertical"
+                        [(ngModel)]="objSaveInterviewpanleMemberMapping.verticalId" name="VerticalId"
+                        (change)="onChangeVertical($event)" [placeholder]="'Select'" [appendTo]="'body'"
+                        [multiple]="false" [searchable]="false" [clearable]="false">
+                        <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                            {{rec.verticalName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Function</label>
+                    <ng-select bindLabel="ddlFunction" class="ddlFunction"
+                        [(ngModel)]="objSaveInterviewpanleMemberMapping.functionId" name="FunctionId"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" (change)="onChangeFunction($event)">
+                        <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                            {{rec.functionName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Department</label>
+                    <ng-select bindLabel="ddlDepartment" class="ddlDepartment"
+                        [(ngModel)]="objSaveInterviewpanleMemberMapping.departmentId" name="DepartmentId"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [disabled]="isEditMode">
+                        <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                            {{rec.departmentName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+
+        </div> -->
+        <!-- Anif Added End-->
+
+        <!-- By Sayandeepon 05-08-2023 -->
+        <div style='margin: 10px 0;'>
+            <table style='border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+                <tr valign='top'>
+                    <td style='padding: 3px 5px;'><b>Rating:</b></td>
+                    <td style='padding: 3px 5px;'>A = Good</td>
+                    <td style='padding: 3px 5px;'>B = Average</td>
+                    <td style='padding: 3px 5px;'>C = Below Average</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div class="mt-4" *ngIf="isVisisble">
+        <button type="button" class="btn btn-black" (click)="assessmentSubmit()">Submit</button>
+        <!-- <button type="button" class="btn btn-primary ml-1">Cancel</button> -->
+    </div>
+</div>
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Reffered</h4>
+
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Vertical</label>
+                            <ng-select bindLabel="ddlvertical" class="ddlvertical" name="VerticalId"
+                                [(ngModel)]="VerticalId" (change)="onChangeVertical($event)" [placeholder]="'Select'"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                                    {{rec.verticalName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Function</label>
+                            <ng-select bindLabel="ddlFunction" class="ddlFunction" name="FunctionId"
+                                [(ngModel)]="FunctionId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                [searchable]="false" [clearable]="false" (change)="onChangeFunction($event)">
+                                <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                                    {{rec.functionName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Department</label>
+                            <ng-select bindLabel="ddlDepartment" class="ddlDepartment" name="DepartmentId"
+                                [(ngModel)]="DepartmentId" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false">
+                                <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                                    {{rec.departmentName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Location <span class="required">*</span></label>
+
+                            <ng-select bindLabel="ddlLocation" class="ddlLocation" name="Location"
+                                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                [clearable]="false">
+                                <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                    {{rec.locationOffice}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                    (click)="RefferedCancel()">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" data-dismiss="modal"
+                    (click)="RefferedSubmit()">Submit</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

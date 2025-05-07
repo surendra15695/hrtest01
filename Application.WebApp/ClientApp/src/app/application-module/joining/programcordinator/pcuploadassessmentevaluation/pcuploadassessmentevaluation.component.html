@@ -1,0 +1,116 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" (click)="onClickBack()"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Upload Assesment</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h6 class="red">{{assessmentName}}</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Upload Result <span class="grey">(Excel format Only)</span><span
+                        class="required">*</span></label>
+                <!-- <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" accept="application/csv"
+                    (change)="onAttachmentFileChange($event.target.files)">
+                    <label class="custom-file-label" for="customFile" attachmentFileImport></label>
+                </div> -->
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/csv" id="customFile"
+                        (change)="onAttachmentFileChange($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-black mt-md-4" (click)="onClickFileSubmit()">Submit</button>
+
+            </div>
+        </div>
+        <div class="attach-file">
+            <a href="javascript:void(0)" title="Download" (click)="onFileDownload()">Download</a>
+            <a href="javascript:void(0)" (click)="onFileDownload()"><i class="las la-download red"></i></a>
+        </div>
+        <div class="table-responsive my-4">
+            <table id="dataTable1" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Evaluator Comments</th>
+                        <th class="text-center">Score (%)</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of successarray">
+                        <td>{{data.empNo}}</td>
+                        <td>{{data.empName}}</td>
+                        <td>{{data.evaluatorComments}}</td>
+                        <td class="text-center">{{data.score}}</td>
+                        <td>{{data.remarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="exportTableBatch" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Batch No</th>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Evaluator Comments</th>
+                        <th class="text-center">Score (%)</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of successarray">
+                        <td>{{data.batchNo}}</td>
+                        <td>{{data.empNo}}</td>
+                        <td>{{data.empName}}</td>
+                        <td>{{data.evaluatorComments}}</td>
+                        <td class="text-center">{{data.score}}</td>
+                        <td>{{data.remarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="exportTableIndividual" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Evaluator Comments</th>
+                        <th class="text-center">Score (%)</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of successarray">
+                        <td>{{data.empNo}}</td>
+                        <td>{{data.empName}}</td>
+                        <td>{{data.evaluatorComments}}</td>
+                        <td class="text-center">{{data.score}}</td>
+                        <td>{{data.remarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-start align-items-center">
+            <h6 class="red mr-1">Success report:</h6>
+            <div>
+                <div class="attach-file">
+                    <a href="javascript:void(0)" title="Download" (click)="onFileDownloadaftersubmit()">Download</a>
+                    <a href="javascript:void(0)" (click)="onFileDownloadaftersubmit()"><i
+                            class="las la-download red"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="button" class="btn btn-black" (click)="onClickSubmit()">Submit</button>
+        <button type="button" class="btn btn-primary ml-1" (click)="onClickCancel()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,165 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>  
+               <a  href="javascript:void(0)" class="back-btn" (click)="backButton()"><i class="las la-arrow-circle-left"></i></a>                                
+               <h1 class="f-l">Half Yearly Review Approval</h1>
+            </div>
+        </div>   
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{reviewData.empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{reviewData.fullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Reviewer:</p>
+                <p class="d-inline-block">{{reviewData.reviewer}}</p>
+            </div> 
+        </div>
+         
+        <hr>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2>
+              <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Review Details
+                <span>
+                  <i class="fa fa-minus"></i>
+                </span>
+              </button>
+            </h2>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+           <div class="card-body">
+             <div class="custom-list-item">
+                <strong>Areas worked and any specific activities done</strong>
+                <p>{{reviewData.question1Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Feedback on performance</strong>
+                 <p>{{reviewData.question2Answer}}</p>
+             </div>
+             <div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Area</th>
+                                <th>Rating</th>
+                                <th width="55%">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of ReviewQuestions">
+                                <td>
+                                    <p>{{data.reviewQuestion}}</p>
+                                </td>
+                                <td>
+                                    {{data.rating}}
+                                </td>
+                                <td>
+                                    {{data.reviewComments}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+             </div>
+             <div class="custom-list-item">
+                <strong>Area of strength noticed/observed</strong>
+                <p>{{reviewData.question3Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Areas of develoment/improvement</strong>
+                <p>{{reviewData.question4Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Action plans for areas of develoment/improvement</strong>
+                <p>{{reviewData.question5Answer}}</p>
+             </div>
+             
+            </div>
+            <div style="border-top:1px solid rgba(0,0,0,.125);padding: 10px 15px">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span><strong>Evaluated By:</strong></span><span>{{reviewData.reviewer}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span><strong>Approved By:</strong></span><span>{{reviewData.approver}}</span>
+                    </div>
+                </div>
+                <!-- <p>Evaluated By: {{jreviewData.reviewer}}</p>
+                <p>Approved By: {{jreviewData.approvedBy}}</p> -->
+            </div>
+          </div>
+        </div>
+    </div>  
+    <hr> 
+    <h6 class="red">Take Action:</h6>       
+    <div class="form-group">
+        <label>Action</label>
+        <div class="rdio rdio-primary mb-2 d-md-inline">
+            <input name="radio" id="radio1" type="radio" name="approvalStatusId" [value]="2" 
+            [(ngModel)]="approvalStatusId"  [checked]="selectedApprovalStatus=='2'?true:false"
+            [attr.disabled]="disableAll==true?true:null">
+            <label for="radio1">Approve</label>
+        </div>
+        <div class="rdio rdio-primary mb-2 d-md-inline">
+            <input name="radio" id="radio2" type="radio" name="approvalStatusId" [value]="3"
+             [(ngModel)]="approvalStatusId" [checked]="selectedApprovalStatus=='3'?true:false"
+             [attr.disabled]="disableAll==true?true:null">
+            <label for="radio2">Reject</label>
+        </div>  
+        <div class="rdio rdio-primary mb-2 d-md-inline">
+            <input name="radio" id="radio3" type="radio" name="approvalStatusId" [value]="4" 
+            [(ngModel)]="approvalStatusId"  [checked]="selectedApprovalStatus=='4'?true:false"
+            [attr.disabled]="disableAll==true?true:null">
+            <label for="radio3">Send back to AIC</label>
+        </div>                              
+    </div>
+    <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of remarksDetails">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+    <div class="form-group">
+        <label>Remarks</label>
+        <textarea class="form-control" placeholder="Write here..." [(ngModel)]="approvalRemarks" 
+        name="approvalRemarks"  [attr.disabled]="disableAll==true?true:null"></textarea>
+    </div>
+    <div class="mt-4" *ngIf="!showButton">
+        <button type="button" class="btn btn-black" data-target="#confirmPopup" data-toggle="modal">Submit</button>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to continue?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onSubmit()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

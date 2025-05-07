@@ -1,0 +1,286 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">All Positions</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Req No</label>
+                        <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo
+                            autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Rec. Year</label>
+                        <ng-select bindLabel="campusYearName" formControlName="campusYearId" [disabled]="showTable"
+                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false">
+                            <ng-option [value]="rec.campusYearId" *ngFor="let rec of campusYears">
+                                {{rec.campusYearName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" formControlName="verticalId" [disabled]="showTable"
+                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" (change)="changeVertical($event)">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" formControlName="functionId" [placeholder]="'Select'"
+                            [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Course</label>
+                        <ng-select bindLabel="courseName" formControlName="campusCourseId"
+                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" (change)="changeCourse($event)">
+                            <ng-option [value]="rec.campusCourseId" *ngFor="let rec of courses">
+                                {{rec.courseName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <ng-select bindLabel="courseName" formControlName="CampusCourseId" [disabled]="showTable"
+                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" (change)="changeCourse($event)">
+                            <ng-option [value]="rec.campusCourseId" *ngFor="let rec of courses">
+                                {{rec.courseName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div> -->
+                <div class="col-sm-12 text-right">
+
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>
+                        Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Req No</th>
+                    <th>Rec. Year</th>
+                    <th>Requested On</th>
+                    <th>Vertical</th>
+                    <th>Function</th>
+                    <th>Course</th>
+                    <th>Stream</th>
+                    <th>Inst. Category</th>
+                    <th style="text-align: center;">No. of Cand.</th>
+                    <th style="text-align: center;">Actual Selected</th>
+                    <th style="text-align: center;">Actual Joined</th>
+                    <th>Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of requisitionList">
+                    <td><a href="javascript:void(0)" class="red">{{data.requisitionNo}}</a></td>
+                    <td>{{data.campusYearName}}</td>
+                    <td>{{data.requestedOn}}</td>
+                    <td>{{data.verticalName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.streamName}}</td>
+                    <td>{{data.collegeCategoryName}}</td>
+                    <td>{{data.candidateCount}}</td>
+                    <td>{{data.candidateSelected}}</td>
+                    <td>{{data.candidateJoined}}</td>
+                    <!-- <td>{{data.statusName}}</td> -->
+                    <td *ngIf="data.candidateSelected==0">Planned</td>
+                    <td *ngIf="(data.candidateSelected>0) && (data.candidateSelected<data.candidateCount)">In Progress</td>
+                    <td *ngIf="(data.candidateSelected>=data.candidateCount)">Completed</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button data-boundary="window" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton">  
+                                <a class="dropdown-item" href="javascript:void(0)" *ngIf="data.candidateSelected>0"
+                                 (click)="gotoViewCandiate(data)"><i class="las la-check-square"></i>
+                                    View Candidates</a>                            
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                data-toggle="modal" *ngIf="data.candidateSelected==0"
+                                    data-target="#requisitionModal" (click)="openRequisitionModal(data)"><i class="las la-pen"></i>
+                                    Edit Requisition</a>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                data-toggle="modal"  *ngIf="data.candidateSelected==0"
+                                    data-target="#confirmPopup" (click)="openConfirmModal(data)"><i class="las la-trash-alt"></i>
+                                    Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="modal fade zoom-in" id="requisitionModal" role="dialog">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" (click)="closeRequisitionModal()" class="close"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Edit Requisition</h4>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Title<span class="required">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="CampusRequisitionTitle"
+                                    placeholder="Enter Venue">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Requisition Type<span class="required">*</span></label>
+                                <ng-select bindLabel="functionName" [(ngModel)]="CampusRequisitionTypeId"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false">
+                                    <ng-option [value]="1">Actual Requisition</ng-option>
+                                    <ng-option [value]="2">Dummy Requisition</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Function<span class="required">*</span></label>
+                                <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="CampusFunctionId">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of verticalFunctions">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>College Category<span class="required">*</span></label>
+                                <ng-select bindLabel="collegeCategoryName" [(ngModel)]="CampusCollegeCategory"
+                                    [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false">
+                                    <ng-option [value]="rec.collegeCategoryId"
+                                        *ngFor="let rec of collegeCategories">
+                                        {{rec.collegeCategoryName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>No. Of Candidate<span class="required">*</span></label>
+                                <input type="text" numbersOnly class="form-control"
+                                    [(ngModel)]="CampusCandidateCount">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- arg -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Rec.Year<span class="required">*</span></label>
+                                <ng-select bindLabel="campusYearName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="CampusRecruitmentYear">
+                                    <ng-option [value]="rec.campusYearId" *ngFor="let rec of campusYears">
+                                        {{rec.campusYearName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Course<span class="required">*</span></label>
+                                <ng-select bindLabel="courseName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="CampusCourseId">
+                                    <ng-option [value]="rec.campusCourseId" *ngFor="let rec of courses">
+                                        {{rec.courseName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">                           
+                           <div class="form-group">
+                                <label>Stream<span class="required">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="CampusRequisitionStream"
+                                    placeholder="Enter stream">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-black" (click)="onUpdate()">Submit
+                </button>
+                <button type="button" (click)="createForm()" class="btn btn-primary btn-sm"
+                data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to delete.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2"  (click)="onDelete()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,172 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">All Requisition Wise Flexi Positions</h1>
+  </div>
+  <form [formGroup]="searchform" (ngSubmit)="formSubmit('2')">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Vertical</label>
+            <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="verticalId"
+              #verticalId (change)="changeVertical()" name="verticalId" [placeholder]="'Select'" [appendTo]="'body'"
+              [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                {{rec.verticalName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Function</label>
+            <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" name="functionId"
+              formControlName="functionId" #functionId (change)="changeFunction()" [placeholder]="'Select'"
+              [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+              <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                {{rec.functionName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Location</label>
+            <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="locationId"
+              #locationId name="locationId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+              [searchable]="true" [clearable]="false">
+              <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                {{rec.locationOffice}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>Date</label>
+            <div class="form-row">
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                    placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="todatepicker" placeholder="To Date"
+                    #toDate formControlName="toDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Flexi Header</label>
+            <select class="selectpicker form-control" multiple title="Select" formControlName="headerId">
+              <option *ngFor="let rec of flexiHeaderList" [ngValue]="rec.reportHeaderId">
+                {{rec.reportHeaderName}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-3 mt-md-4">
+          <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+              class="las la-sync-alt"></i>Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive" *ngIf="flexiReportList.length >0">
+    <table id="dataTable1" class="table table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>Requisition No</th>
+          <th>Request Type</th>
+          <th>Requested By</th>
+          <th>Location</th>
+          <th>Function</th>
+          <th>Department</th>
+          <th>Position</th>
+          <th>Grade</th>
+          <th>Date</th>
+          <th>IOM No.</th>
+          <th>Approved</th>
+          <th>Requested</th>
+          <th>Hold</th>
+          <th>Closed</th>
+          <th>Type</th>
+          <th>Target</th>
+          <th>Total Candidate</th>
+          <th>JD</th>
+          <th>Requisition Status</th>
+          <th>Salary Range</th>
+          <th>Created On</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of flexiReportList">
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.requisitionType}}</td>
+          <td>{{data.requestedBy}}</td>
+          <td>{{data.locationOffice}}</td>
+          <td>{{data.functionName}}</td>
+          <td>{{data.departmentName}}</td>
+          <td>{{data.positionName}}</td>
+          <td>{{data.gradeName}}</td>
+          <td>{{data.date}}</td>
+          <td>{{data.iom}}</td>
+          <td>{{data.approved}}</td>
+          <td>{{data.requested}}</td>
+          <td>{{data.hold}}</td>
+          <td>{{data.closed}}</td>
+          <td>{{data.type}}</td>
+          <td>{{data.target}}</td>
+          <td>{{data.totalCandidate}}</td>
+          <td>{{data.jd}}</td>
+          <td>{{data.requisitionStatus}}</td>
+          <td>{{data.salaryRange}}</td>
+          <td>{{data.createdDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="exportTable" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Report HeaderId</th>
+            <th>Report HeaderName</th>
+            <th>CreatedOn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of flexiReportList">
+            <td>{{data.reportHeaderId}}</td>
+            <td>{{data.reportHeaderName}}</td>
+            <td>{{data.createdOn}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

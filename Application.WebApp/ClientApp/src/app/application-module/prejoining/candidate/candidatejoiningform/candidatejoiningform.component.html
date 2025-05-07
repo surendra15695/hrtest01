@@ -1,0 +1,747 @@
+<div class="content-box m-b-15 m-t-10" *ngIf="candidateJoiningFormDetailsList?.hiringStatusId<=49">
+    <!-- previous it was 47 -->
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Joining forms will be available once after the joining acknowledgement is done</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-box m-b-15 m-t-10" *ngIf="candidateJoiningFormDetailsList?.hiringStatusId>=50">
+    <!--  -->
+    <!-- previous it was 48 -->
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Fill Joining Form</h1>
+            </div>
+        </div>
+    </div>
+    <!-- Family Details Form -->
+    <div *ngIf="showFamilyDetailsSection">
+        <h6 class="red text-uppercase">Family Details</h6>
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="" disabled
+                        [(ngModel)]="objCandidateJoiningForm.fullName" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <!-- <input type="text" class="form-control" [(ngModel)]="objCandidateJoiningForm.name"> -->
+                    <div class="input-group datepicker date">
+                        <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                            placeholder="DOB" autocomplete="off" disabled [(ngModel)]="objCandidateJoiningForm.dob"
+                            #dob>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <!-- {{fieldReadOnly | json}}  {{disableOnEditFamilyDetailsForm | json}} -->
+                    <!-- <input type="text" class="form-control" disabled value="AB+"> -->
+                    <ng-select bindLabel="bloodGroupName" [placeholder]="'Select'" [appendTo]="'body'"
+                        [multiple]="false" [searchable]="false" [clearable]="false"
+                        [(ngModel)]="objCandidateJoiningForm.bloodGroupId"
+                        [disabled]="true"><!---fieldReadOnly && disableOnEditFamilyDetailsForm-->
+                        <ng-option [value]="rec.bloodGroupId" *ngFor="let rec of bloodGroups">
+                            {{rec.bloodGroupName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <h6>Residential Address (At Present)</h6>
+        <div class="form-row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label>Address<span class="required">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="objCandidateJoiningForm.residentialAddress"
+                        autocomplete="off" [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Pin<span class="required">*</span></label>
+                    <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                        [(ngModel)]="objCandidateJoiningForm.residentialPin" autocomplete="off"
+                        [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm">
+                </div>
+            </div>
+        </div>
+        <h6>Permanent Address</h6>
+        <div class="form-row">
+            <div class="col">
+                <label class="checkbox_label">Same as Residential Address
+                    <input type="checkbox" (change)="onChangeSameAs($event)"
+                        [ngModel]="getSameAsResidentialStatus(objCandidateJoiningForm.sameAsResidential)"
+                        [disabled]="fieldReadOnly && disableOnEditFamilyDetailsForm">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label>Address<span class="required">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="objCandidateJoiningForm.permanentAddress"
+                        [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Pin<span class="required">*</span></label>
+                    <input type="text" class="form-control" (keypress)="numberOnly($event)"
+                        [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm"
+                        [(ngModel)]="objCandidateJoiningForm.permanentPin" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Email<span class="required">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="objCandidateJoiningForm.emailId"
+                        [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Phone No.<span class="required">*</span></label>
+                    <input type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="10"
+                        [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm"
+                        [(ngModel)]="objCandidateJoiningForm.phoneNo">
+                </div>
+            </div>
+        </div>
+        <h6>Family Members <span class="grey text-capitalize font-weight-normal"><small>(Please mention the name of your
+                    Father, Mother, Spouse, Children.)</small></span></h6>
+        <table class="table table-bordered rwd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width: 160px;">Relationship</th>
+                    <th style="width: 160px;">Date of Birth</th>
+                    <th *ngIf="!fieldReadOnly || !disableOnEditFamilyDetailsForm" style="width: 40px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let fmDetails of familyMembersDetailsArrayNew;let i=index;">
+                    <td data-th="Name">
+                        <input type="text" class="form-control" [(ngModel)]="fmDetails.familyName">
+                    </td>
+                    <td data-th="Relatioship">
+                        <ng-select bindLabel="name" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="false" [clearable]="false"
+                            [(ngModel)]="fmDetails.familyRelationShip" (change)="onChangeRelationShip(fmDetails)">
+                            <ng-option [value]="rec.relationshipId" *ngFor="let rec of relationshipList">
+                                {{rec.relationshipName}}
+                            </ng-option>
+                        </ng-select>
+                    </td>
+                    <td data-th="Date of Birth">
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepicker" id="datepicker{{i}}"
+                                placeholder="From Date"
+                                [(ngModel)]="fmDetails.familyDOB" #familyDOB>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- <td *ngIf="!fmDetails.isReadOnly || !disableOnEditFamilyDetailsForm" class="text-center"> -->
+                    <td class="text-center">
+                        <a href="javascript:void(0)" class="row-btn" (click)="onAddFamilyMembers(i,fmDetails)">+</a>
+                    </td>
+                </tr>
+                <tr *ngFor="let fmDetails of familyMembersDetailsArray;let i=index;">
+                    <td data-th="Name">
+                        <input type="text" class="form-control" [(ngModel)]="fmDetails.familyName"
+                            [readonly]="fmDetails.isReadOnly && disableOnEditFamilyDetailsForm">
+                    </td>
+                    <td data-th="Relatioship">
+                        <ng-select bindLabel="name" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="false" [clearable]="false"
+                            [readonly]="fmDetails.isReadOnly && disableOnEditFamilyDetailsForm"
+                            [(ngModel)]="fmDetails.familyRelationShip" (change)="onChangeRelationShip(fmDetails)">
+                            <ng-option [value]="rec.relationshipId" *ngFor="let rec of relationshipList">
+                                {{rec.relationshipName}}
+                            </ng-option>
+                        </ng-select>
+                    </td>
+                    <td data-th="Date of Birth">
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepicker" id="datepicker{{i}}"
+                                placeholder="From Date"
+                                [readonly]="fmDetails.isReadOnly && disableOnEditFamilyDetailsForm"
+                                [(ngModel)]="fmDetails.familyDOB" #familyDOB>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </td>                    
+                    <!-- <td *ngIf="(!fmDetails.isReadOnly && fieldReadOnly) || (!fmDetails.isReadOnly && disableOnEditFamilyDetailsForm)"
+                        class="text-center">
+                        <a href="javascript:void(0)" class="row-btn" (click)="onAddFamilyMembers(i,fmDetails)">+</a>
+                    </td> -->
+                    <td *ngIf="(fmDetails.isReadOnly && !fieldReadOnly) || (fmDetails.isReadOnly && !disableOnEditFamilyDetailsForm)"
+                        class="text-center"><a href="javascript:void(0)" class="row-btn"
+                            (click)="onClickDeleteFamilyMembers(i)"><i class="las la-trash-alt"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Date<span class="required">*</span></label>
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right datepiker"
+                            [readonly]="fieldReadOnly && disableOnEditFamilyDetailsForm" id="" disabled
+                            placeholder="From Date" (change)="onChangeDate()" [(ngModel)]="objCandidateJoiningForm.date"
+                            #fdDate>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-row" *ngIf="FamilyDetailsFormRemarks.length > 0">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Remarks :{{FamilyDetailsFormRemarks}}</label>
+                    
+                </div>
+            </div>
+        </div> -->
+        <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of FamilyDetailsFormRemarks;">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+        <div class="form-row" *ngIf="isFamilyRemarksForCandidate">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks<span class="required">*</span></label>
+                    <textarea class="form-control" placeholder="Enter Remarks..." [(ngModel)]="remarksForFamilyCandidate">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-right">
+            <button *ngIf="!fieldReadOnly || !disableOnEditFamilyDetailsForm" type="button " class="btn btn-secondary"
+                (click)="onSaveAsDraft()">Save as
+                Draft</button>
+            <button type="button " class="btn btn-black ml-2"
+                (click)="nextShowPersonalAccidentInsurancePolicy()">Next</button>
+        </div>
+    </div>
+    <!-- Family Details Form End -->
+    <!-- Personal Accident Insurance Policy Form -->
+    <div *ngIf="showInsurancePolicySection">
+        <h6 class="red text-uppercase">Personal Accident Insurance Policy</h6>
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name of Nominee<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditAccidentInsurancePolicyForm"
+                        [(ngModel)]="objCandidateJoiningForm.acidentalPolicyNominee">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>Relationship<span class="required">*</span></label>
+                <!-- <select class="selectpicker form-control" data-container="body" title='Select'>
+                    <option value="0">Father</option>
+                    <option value="1">Moher</option>
+                    <option value="2">Spouse</option>
+                </select> -->
+                <ng-select bindLabel="name" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="false" [clearable]="false" (change)="onChangeFamilyRelation($event)"
+                    [(ngModel)]="objCandidateJoiningForm.acidentalPolicyNomineeRelationShip"
+                    [disabled]="fieldReadOnly && disableOnEditAccidentInsurancePolicyForm">
+                    <ng-option [value]="rec.relationshipId" *ngFor="let rec of familyrelationshipList">
+                        {{rec.relationshipName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+            <div class="col-md-3" *ngIf="showReleationShipName">
+                <div class="form-group">
+                    <label>Other Relationship Name</label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditAccidentInsurancePolicyForm"
+                        [(ngModel)]="objCandidateJoiningForm.otherRelationName">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Full Address<span class="required">*</span></label>
+                    <textarea class="form-control"
+                        [readonly]="fieldReadOnly && disableOnEditAccidentInsurancePolicyForm"
+                        [(ngModel)]="objCandidateJoiningForm.acidentalPolicyNomineeAddress"></textarea>
+                </div>
+            </div>
+            <div class="alert alert-warning">
+                As the person to whom is to be paid any sum that may become due under the policy of insurance under
+                which I am covered. in the event of my death in circumstences giving rise to be valid
+                claim thereunder as on death and I further agree that a discharge of my company by the said nominee
+                shall be deemed to be a suficient and binding discharge to the company.
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="" disabled
+                        [readonly]="fieldReadOnly && disableOnEditAccidentInsurancePolicyForm"
+                        [(ngModel)]="objCandidateJoiningForm.acidentalPolicyName">
+                </div>
+            </div>
+        </div>
+        <!-- <div>
+            <div class="form-group" *ngIf="AccidentInsurancePolicyFormRemarks.length > 0">
+                <label>Remarks :{{AccidentInsurancePolicyFormRemarks}}</label>
+            </div>
+        </div> -->
+        <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of AccidentInsurancePolicyFormRemarks;">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+        <div class="form-row" *ngIf="isAccidentRemarksForCandidate">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks<span class="required">*</span></label>
+                    <textarea class="form-control" placeholder="Enter Remarks..." [(ngModel)]="remarksForAccidentCandidate">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 clearfix">
+            <button type="button " class="btn btn-primary float-left"
+                (click)="prevShowFamilydetailsSection()">Previous</button>
+            <button type="button" class="btn btn-black float-right ml-2"
+                (click)="nextShowSEBIInitialDisclosureSection()">Next</button>
+            <button *ngIf="!fieldReadOnly || !disableOnEditAccidentInsurancePolicyForm" type="button"
+                class="btn btn-secondary float-right" (click)="onSaveAsDraft()">Save as Draft</button>
+        </div>
+    </div>
+    <!-- Personal Accident Insurance Policy Form End -->
+    <!-- SEBI Initial Disclosure Form -->
+    <div *ngIf="showSEBIInitialDisclosure && objCandidateJoiningForm.sebiApplicable">
+        <h6 class="red text-uppercase">SEBI Initial Disclosure</h6>
+        <h6>A. Details of Designated Person:</h6>
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                        [(ngModel)]="objCandidateJoiningForm.sebiName">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Employee No.<span class="required">*</span></label>
+                    <input type="text" class="form-control" disabled
+                        [(ngModel)]="objCandidateJoiningForm.sebiEmployeeNo">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Designation<span class="required">*</span></label>
+                    <input type="text" class="form-control" disabled
+                        [(ngModel)]="objCandidateJoiningForm.sebiDesignationName">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Department<span class="required">*</span></label>
+                    <input type="text" class="form-control" disabled
+                        [(ngModel)]="objCandidateJoiningForm.sebiDepartmentName">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>PAN<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                        [(ngModel)]="objCandidateJoiningForm.sebiPanNo">
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Phone/Mobile No.<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm" maxlength="10"
+                        (keypress)="numberOnly($event)" [(ngModel)]="objCandidateJoiningForm.sebiMobileNo">
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label>The names of educational institutions from which Designated Person have graduated<span
+                            class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                        [(ngModel)]="objCandidateJoiningForm.sebiInsTitute">
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Past Employer (If Applicable)<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                        [(ngModel)]="objCandidateJoiningForm.sebiPastEmployer">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>No of Securities held as on {{todayDate}}<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm" (keypress)="numberOnly($event)"
+                        [(ngModel)]="objCandidateJoiningForm.sebiNoofSecurity">
+                </div>
+            </div>
+        </div>
+
+        <h6>B. Details of Immediate Relatives, if any :</h6>
+        <div class="alert alert-warning">
+            “Immediate relative” means a spouse of a person, and includes parent, sibling, and child of such person or
+            of the spouse, any of whom is either dependent financially on such person, or consults such person in taking
+            decisions relating to trading in securities.
+        </div>
+        <table class="table table-bordered rwd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width: 140px;">PAN</th>
+                    <th style="width: 140px;">Phone/Mobile No.</th>
+                    <th style="width: 220px;">No of Securities held by my Immediate Relatives as on {{todayDate}}</th>
+                    <th *ngIf="!fieldReadOnly || !disableOnEditSebiDisclosureForm" style="width: 40px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let irDetails of immediateRelativesArray;let i=index;">
+                    <td data-th="Name">
+                        <input type="text" class="form-control" [(ngModel)]="irDetails.imidiateRelativesName"
+                            [readonly]="irDetails.isReadOnly && disableOnEditSebiDisclosureForm">
+                    </td>
+                    <td data-th="PAN">
+                        <input type="text" class="form-control" [(ngModel)]="irDetails.imidiateRelativesPAN"
+                            [readonly]="irDetails.isReadOnly && disableOnEditSebiDisclosureForm">
+                    </td>
+                    <td data-th="Phone/Mobile No.">
+                        <input type="text" class="form-control" [(ngModel)]="irDetails.imidiateRelativesPhone"
+                            (keypress)="numberOnly($event)"
+                            [readonly]="irDetails.isReadOnly && disableOnEditSebiDisclosureForm">
+                    </td>
+                    <td data-th="No of Securities held by my Immediate Relatives as on 01.04.2021">
+                        <input type="text" class="form-control" [(ngModel)]="irDetails.imidiateRelativesNoofSecurity"
+                            (keypress)="numberOnly($event)"
+                            [readonly]="irDetails.isReadOnly && disableOnEditSebiDisclosureForm">
+                    </td>
+                    <!-- <td *ngIf="!irDetails.isReadOnly && !disableOnEditSebiDisclosureForm" class="text-center"> -->
+                    <td *ngIf="(!irDetails.isReadOnly && fieldReadOnly) || (!irDetails.isReadOnly && disableOnEditSebiDisclosureForm)"
+                        class="text-center">
+                        <a href="javascript:void(0)" class="row-btn" (click)="onAddImmediatRelatives(i,irDetails)">+</a>
+                    </td>
+                    <td *ngIf="(irDetails.isReadOnly && !fieldReadOnly) || (irDetails.isReadOnly && !disableOnEditSebiDisclosureForm)"
+                        class="text-center"><a href="javascript:void(0)" class="row-btn"
+                            (click)="onClickDeleteImmediateRelatives(i,irDetails)"><i class="las la-trash-alt"></i></a>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td data-th="Name">
+                        <input type="text" class="form-control" disabled value="Sample Name">
+                    </td>
+                    <td data-th="PAN">
+                        <input type="text" class="form-control" disabled value="NOLRF0988Y">
+                    </td>
+                    <td data-th="Phone/Mobile No.">
+                        <input type="text" class="form-control" disabled value="1234567890">
+                    </td>
+                    <td data-th="No of Securities held by my Immediate Relatives as on 01.04.2021">
+                        <input type="text" class="form-control" disabled value="1">
+                    </td>
+                    <td class="text-center"><a href="javascript:void(0)" class="row-btn"><i
+                                class="las la-trash-alt"></i></a></td>
+                </tr> -->
+            </tbody>
+        </table>
+        <h6>C. Person with whom Designated Person shares a material financial relationship:</h6>
+        <table class="table table-bordered rwd-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width: 140px;">PAN</th>
+                    <th style="width: 140px;">Phone/Mobile No.</th>
+                    <!-- <th style="width: 40px;"></th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-th="Name">
+                        <input type="text" class="form-control"
+                            [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                            [(ngModel)]="objCandidateJoiningForm.sebiDesigName">
+                    </td>
+                    <td data-th="PAN">
+                        <input type="text" class="form-control"
+                            [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                            [(ngModel)]="objCandidateJoiningForm.sebiDesigPAN">
+                    </td>
+                    <td data-th="Phone/Mobile No.">
+                        <input type="text" class="form-control"
+                            [readonly]="fieldReadOnly && disableOnEditSebiDisclosureForm"
+                            [(ngModel)]="objCandidateJoiningForm.sebiDesigPhone" (keypress)="numberOnly($event)">
+                    </td>
+                    <!-- <td class="text-center"><a href="javascript:void(0)" class="row-btn">+</a> </td> -->
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-warning">
+            “Material financial relationship” shall mean a relationship in which one person is a recipient of any kind
+            of payment such as by way of a loan or gift during the immediately preceding twelve months, equivalent to at
+            least 25% of such payer’s annual income but shall exclude relationships in which the payment is based on
+            arm’s length transactions.
+        </div>
+        <!-- <div class="col-md-4">
+            <div class="form-group" *ngIf="SebiDisclosureFormRemarks.length > 0">
+                <label>Remarks :{{SebiDisclosureFormRemarks}}</label>
+            </div>
+        </div> -->
+        <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of SebiDisclosureFormRemarks">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+        <div class="form-row" *ngIf="isSebiRemarksForCandidate">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks<span class="required">*</span></label>
+                    <textarea class="form-control" placeholder="Enter Remarks..." [(ngModel)]="remarksForSebiCandidate">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 clearfix">
+            <button type="button " class="btn btn-primary float-left"
+                (click)="prevShowPersonalAccidentPolicy()">Previous</button>
+            <button type="button" class="btn btn-black float-right ml-2"
+                (click)="nextShowJoiningReportSection()">Next</button>
+            <button type="button" *ngIf="!fieldReadOnly || !disableOnEditSebiDisclosureForm"
+                class="btn btn-secondary float-right" (click)="onSaveAsDraft()">Save as Draft</button>
+        </div>
+    </div>
+    <!-- SEBI Initial Disclosure Form End -->
+    <!-- Joining report Form -->
+    <div *ngIf="showJoiningReport">
+        <h6 class="red text-uppercase">Joining Report</h6>
+        <div class="form-inline">
+            <label for="staticEmail2" class="mr-2 mb-2">With reference to your letter dated</label>
+            <input type="text" class="form-control mb-2" disabled
+                [(ngModel)]="objCandidateJoiningForm.joiningLetterDate" #joiningLetterDate>
+            <label for="staticEmail2" class="mx-2 mb-2">, regarding my appointment as</label>
+            <input type="text" class="form-control mb-2" disabled
+                [(ngModel)]="objCandidateJoiningForm.joiningLetterDesignationName">
+        </div>
+        <div class="form-inline">
+            <label for="staticEmail2" class="mr-2 mb-2">this is to confirm that I have joined today</label>
+            <div class="input-group datepiker date mb-2">
+                <input type="text" class="form-control pull-right datepiker" disabled
+                    [readonly]="fieldReadOnly && disableOnEditJoiningReportForm" id="" placeholder="From Date"
+                    (change)="onChangeJoiningDate()" [(ngModel)]="objCandidateJoiningForm.joiningDate" #JoiningDate>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Date<span class="required">*</span></label>
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control pull-right datepiker" disabled
+                            [readonly]="fieldReadOnly && disableOnEditJoiningReportForm" id="" placeholder="From Date"
+                            [(ngModel)]="objCandidateJoiningForm.signatureDate" #SignatureDate>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Place<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder=""
+                        [readonly]="fieldReadOnly && disableOnEditJoiningReportForm"
+                        [(ngModel)]="objCandidateJoiningForm.signaturePlace">
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="!fieldReadOnly || !disableOnEditJoiningReportForm">
+                <label for="">Upload Signature (Suport jpeg/jpg Max size 80KB) <span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="image/jpeg , image/jpg"
+                        id="customFile" (change)="onAttachmentFileChange($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="!fieldReadOnly || !disableOnEditJoiningReportForm">
+                <div class="form-group">
+                    <label style="color: white;"> Sign</label>
+                <button type="button" class="btn btn-primary" (click)="onClickUploadedSignature()"
+                >Upload Signature</button></div>
+            </div>
+
+            <div class="col-md-6"
+                *ngIf="fieldReadOnly || objCandidateJoiningForm.signature!='' || !disableOnEditJoiningReportForm">
+                <div class="form-group">
+                    <label>Uploaded Signature</label>
+                    <div class="attach-file">
+                        <a (click)="openFile(objCandidateJoiningForm.signature)" style="cursor: pointer;" title="Download"><i
+                                class="las color-black la-paperclip"></i>Signature </a>
+                        <a (click)="openFile(objCandidateJoiningForm.signature)" style="cursor: pointer;"><i
+                                class="las la-download red"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-md-4">
+            <div class="form-group" *ngIf="JoiningReportFormRemarks.length > 0">
+                <label>Remarks :{{JoiningReportFormRemarks}}</label>
+            </div>
+        </div> -->
+        <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of JoiningReportFormRemarks;">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+        <!-- <div class="form-row" *ngIf="isRemarksForCandidate">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks<span class="required">*</span></label>
+                    <textarea class="form-control" placeholder="Enter Remarks..." [(ngModel)]="remarksForCandidate">
+                    </textarea>
+                </div>
+            </div>
+        </div> -->
+        <div class="form-row" *ngIf="isJoiningRemarksForCandidate">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks<span class="required">*</span></label>
+                    <textarea class="form-control" placeholder="Enter Remarks..." [(ngModel)]="remarksForJoiningCandidate">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 clearfix">
+            <button type="button " class="btn btn-primary float-left"
+                (click)="prevShowSEIBInitialDisclosure()">Previous</button>
+            <button
+                *ngIf="!fieldReadOnly || !disableOnEditFamilyDetailsForm || !disableOnEditAccidentInsurancePolicyForm || !disableOnEditSebiDisclosureForm || !disableOnEditJoiningReportForm"
+                type="button" class="btn btn-black float-right ml-2" (click)="onConfirmPopoup('Y')">Submit</button>
+            <button *ngIf="!fieldReadOnly || !disableOnEditJoiningReportForm" type="button"
+                class="btn btn-secondary float-right" (click)="onSaveAsDraft()">Save as Draft</button>
+        </div>
+    </div>
+    <!-- Joining report Form End -->
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                    correctly.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="onConfirmPopoup('N')">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onConfirmPopoup('Y')">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+
+<div id="printFamilyDetailsDiv" style="display: none;">
+    <app-familydetailsformpdfgeneration [familyDetailsRecord]="familyDetailsData"></app-familydetailsformpdfgeneration>
+</div>
+<div id="printAccidentInsurancePolicy" style="display: none;">
+    <app-personalaccidentpdfgeneration [accidentInsurancePolicyRecord]="accidentInsurancePolicyData">
+    </app-personalaccidentpdfgeneration>
+</div>
+<div id="printSEBIDisclosure" style="display: none;">
+    <app-sebidisclosurepdfgeneration [sebiDisclosureRecord]="SEBIDisclosureData"></app-sebidisclosurepdfgeneration>
+</div>
+<div id="printJoiningReport" style="display: none;">
+    <app-joiningreportpdfgeneration [inductionRecord]="joiningReportData"></app-joiningreportpdfgeneration>
+</div>
+
+
+
+<!-- <div id="printFamilyDetailsDiv" style="display: none;">
+    <app-pdffamilydetailsform [familyDetailsRecord]="familyDetailsData"></app-pdffamilydetailsform>
+</div>
+
+<div id="printJoiningReport" style="display: none;">
+    <app-pdfjoiningreportform [inductionRecord]="joiningReportData"></app-pdfjoiningreportform>
+</div>
+<div id="printAccidentInsurancePolicy" style="display: none;">
+    <app-pdfpersonalaccidentinsuranceform [accidentInsurancePolicyRecord]="accidentInsurancePolicyData">
+    </app-pdfpersonalaccidentinsuranceform>
+</div>
+<div id="printSEBIDisclosure" style="display: none;">
+    <app-pdfsebiinitialdisclosureform [sebiDisclosureRecord]="SEBIDisclosureData"></app-pdfsebiinitialdisclosureform>
+</div> -->

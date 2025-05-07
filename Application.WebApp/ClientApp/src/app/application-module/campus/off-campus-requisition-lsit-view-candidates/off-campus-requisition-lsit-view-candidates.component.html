@@ -1,0 +1,298 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoRequisitionDeatils()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+                
+                    <h1 class="f-l">All Candidate</h1>
+                
+    </div>
+    <div class="text-right my-2">
+        <button type="button" *ngIf="callngIfFunction?showBtnSendselection():false"
+            class="btn btn-rounded btn-outline-success btn-sm" data-toggle="modal" data-target="#selectionModel"
+            (click)="openSelectionModal()" ><i class="las la-check"></i>
+            Send Selection Communication</button>
+      <button type="button" *ngIf="callngIfFunction?showBtnDocumentCollection():false"
+                    class="btn btn-rounded btn-outline-success btn-sm" data-toggle="modal"
+                    data-target="#documentCollectionModal" (click)="openDocumentCollectionModal()"><i
+                        class="las la-check"></i> Document Collection</button>
+
+      <button type="button" *ngIf="callngIfFunction?showBtnMgmtApproval():false"
+                    class="btn btn-rounded btn-outline-success btn-sm"
+                     (click)="gotoMgmtApproval()"><i
+                        class="las la-check"></i> Generate Management Approval</button>
+
+      <button type="button" *ngIf="callngIfFunction?showUploadmgmtApproval():false"
+                        class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal" (click)="openUploadmgmtApproval()"
+                        data-target="#managementApprovalModal"><i class="las la-check"></i> Upload Management
+                        Approval</button>
+    </div>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div [ngClass]="pendingActiveDivClass" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th>
+                            <div class="form-check">
+                                <input type="checkbox" id="ani" [(ngModel)]="selectAll" (change)="onCheckSelectAll($event)">
+                                <label class="chk" for="ani"></label>
+                            </div>
+                        </th>
+                            <th>Candidate Id</th>
+                            <th>Candidate Name</th>
+                            <th>Age</th>
+                            <th>Highest Qualification</th>
+                            <th>Course</th>
+                            <th>Stream</th>
+                            <th>Verticals</th>
+                            <th>Functions</th>
+                            
+                            <th>Hiring Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of candidateList;let i=index">
+                            <td>
+                              <div class="form-check">
+                                  <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)"
+                                      (change)="onCheckRowWise(data,$event,i)">
+                                  <label class="chk" for="{{i}}"></label>
+                              </div>
+                            </td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.fullName}}</td>
+                            <td>{{data.age}}</td>
+                            <td>{{data.higestQualification}}</td>
+                            <td>{{data.courseName}}</td>
+                            <td>{{data.streamName}}</td>
+                            <td>{{data.verticalName}}</td>
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.statusname}}</td>
+                            
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                        <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                            <a *ngIf="data.statusname == 'Selected'" class="dropdown-item" data-toggle="modal" data-target="#selectionModel" (click)="onCLickSelect(data)"
+                                            href="javascript:void(0)"><i class="las la-check-square"></i>Send Selection Communication</a>
+
+                                            <!-- <a class="dropdown-item" (click)="gotoSalaryFitmentPage(data)"
+                                            href="javascript:void(0)"><i class="las la-check-square"></i>Salary Fitment</a>
+
+                                            <a class="dropdown-item" *ngIf="data.statusId>38" (click)="gotoViewMgmtApproval(data)"
+                                            href="javascript:void(0)"><i class="las la-check-square"></i>View Generate Management Approval</a>
+                                            
+                                            <a class="dropdown-item"
+                                            *ngIf="data.statusId==40"
+                                            (click)="gotoSendOfferLetter(data)" href="javascript:void(0)">
+                                            <i class="las la-check-square"></i> Send Offer Letter</a> -->
+                                            <a class="dropdown-item" *ngIf="data.optionVisible != 0"
+                                            (click)="gotoViewDocuments(data.candidateId,data.requisitionDetailId)"
+                                            href="javascript:void(0)"><i class="las la-folder-open"></i>View Document</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                            (click)="openMapReq(data)" *ngIf="data.statusId == 33"
+                                                data-target="#requisitionModal"><i class="las la-check-square"></i>Map
+                                                Requisition</a>
+                                            <a class="dropdown-item" 
+                                            href="javascript:void(0)"><i class="las la-check-square"></i>Candidate Deatils</a>
+                                            <a class="dropdown-item" data-toggle="modal"
+                                             
+                                            href="javascript:void(0)"><i class="las la-check-square"></i>Reject</a>
+                                    </div>
+                                   
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+</div>
+
+<div class="modal fade zoom-in" id="requisitionModal" role="dialog">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" (click)="closeRequisitionModal()" class="close">
+                    <i class="las la-times"></i>
+                </button>
+                <h4 class="modal-title">Map Requisition</h4>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label> Requsition Type</label>
+                                <select class="selectpicker" title='Select' [(ngModel)]="requisitionType" 
+                                (change)="onChangeRequisitionType()">
+                                    <!-- <option [value]="1">
+                                        Dummy Requsition
+                                    </option> -->
+                                    <option [value]="0">
+                                        Actual Requsition
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Requisition No<span class="required">*</span></label>
+                                <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    [(ngModel)]="selectedRequisitionDetailId">
+                                    <ng-option [value]="rec.requisitionDetailId"
+                                        *ngFor="let rec of campusrequisitionLists">
+                                        {{rec.requisitionNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-black" (click)="onMapRequisition()">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div id="printerdiv" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+
+
+<div class="modal fade zoom-in" id="selectionModel" role="dialog">
+    <!-- <form [formGroup]="scheduleForm" (ngSubmit)="onTestSchedule()" autocomplete="off"> -->
+    <div class="modal-dialog modal-md modal-dialog-centered">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" (click)="closeselectionModel()" class="close">
+            <i class="las la-times"></i>
+          </button>
+          <h4 class="modal-title">Send Selection Communication</h4>
+        </div>
+        <div class="modal-body">
+          <div class="step2" >
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Choose Template<span class="required">*</span></label>
+                  <ng-select bindLabel="templateEmailName" class="ddlinterviewemailtemplate"
+                             [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                             [clearable]="false" [(ngModel)]="selectedInterviewEmailTemplateId" (change)="changeInterviewEmailTemplate()"
+                            >
+                    <ng-option [value]="rec.templateId" *ngFor="let rec of interviewemailTemplates">
+                        {{rec.templateEmailName}}
+                      </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Edit Template</label>
+                  <ckeditor [config]="ckeConfig" [(ngModel)]="interviewEmailTemplateDescription"
+                            debounce="500"></ckeditor>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-primary">Cancel</button> -->
+          <button type="button" class="btn btn-primary" (click)=" closeselectionModel()">Cancel </button>
+          
+          <button type="submit" class="btn btn-black" (click)="oncickSelectioModel()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- </form> -->
+  </div>
+  <div class="modal fade" id="documentCollectionModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeDocumentCollectionModal" #closeDocumentCollectionModal class="close"
+                    data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Document Collection</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Edit Communication Template</label>
+                            <ckeditor [(ngModel)]="documentCollectionEmailTemplateDescription" [config]="ckeConfig"
+                                debounce="500"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm"
+                    (click)="SendDocumentCollectionCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="managementApprovalModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" id="closeManagementApprovalModal" #closeManagementApprovalModal class="close"
+                  data-dismiss="modal"><i class="las la-times"></i></button>
+              <h4 class="modal-title">Upload Management Approval</h4>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-sm-12">
+                      <div class="form-group">
+                          <label for="">Upload <span class="grey">(PDF format only)</span><span
+                                  class="required">*</span></label>
+                          <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                                  (change)="onFileChange($event)">
+                              <label class="custom-file-label" for="customFile" #managementFileImport>Choose
+                                  file</label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary btn-sm"
+                  (click)="UploadManagementApproval()">Submit</button>
+          </div>
+      </div>
+
+  </div>
+</div>

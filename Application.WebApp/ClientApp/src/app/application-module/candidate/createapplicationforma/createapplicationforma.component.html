@@ -1,0 +1,2318 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">Application Form</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-step m-b-20 text-center">
+        <div class="step-container">
+          <ul class="progressbar">
+            <li [ngClass]="section1==true?'active':''"></li>
+            <li [ngClass]="section2==true?'active':''"></li>
+            <li [ngClass]="section3==true?'active':''"></li>
+            <li [ngClass]="section4==true?'active':''"></li>
+            <li [ngClass]="section5==true?'active':''"></li>
+            <li [ngClass]="section6==true?'active':''"></li>
+            <li [ngClass]="section7==true?'active':''"></li>
+            <li [ngClass]="section8==true?'active':''"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Section 1 start -->
+  <div class="section1" *ngIf="section1">
+    <h6 class="red text-uppercase">Personal Profile</h6>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="position-relative">
+          <div class="circle">
+            <img class="profile-pic" [src]="applicationFormData.candiadatePhoto">
+          </div>
+          <div class="p-image">
+            <i class="las la-pen upload-button" (click)="openFileUpload()"></i>
+            <input class="file-upload" type="file" accept="image/*" (change)="onFileChanged($event)" />
+          </div>
+        </div>
+        <div class="text-center">
+          <p class="grey mb-0">Passport size photo</p>
+          <small class="grey">(Max size 2 MB)</small>
+          <p class="error-msg position-relative" *ngIf="photoReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="form-row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Position applied for</label>
+              <input type="text" class="form-control" placeholder="" disabled
+                [ngModel]="candidateProfile?.positionAppliedFor">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" placeholder="" disabled [ngModel]="candidateProfile?.fullName">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Gender</label>
+              <input type="text" class="form-control" placeholder="" disabled [ngModel]="candidateProfile?.genderName">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="text" class="form-control" placeholder="" disabled [ngModel]="candidateProfile?.dob">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Age(Yrs)</label>
+              <input type="text" class="form-control" placeholder="" disabled [ngModel]="candidateProfile?.age">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Communication Address<span class="required">*</span></label>
+              <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.communicationAddress"
+                (ngModelChange)="changeCommunicationAddress($event)"></textarea>
+              <p class="error-msg" *ngIf="communicationAddressReq">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>State</label>
+          <ng-select bindLabel="stateName" class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="false" [clearable]="false" disabled [ngModel]="candidateProfile?.communicationStateId"
+            (ngModelChange)="candidateProfile.communicationStateId = $event">
+            <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+              {{rec.stateName}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>PIN<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" numbersOnly
+            [ngModel]="candidateProfile?.communicationPin" maxlength="6" minlength="6"
+            (ngModelChange)="candidateProfile.communicationPin = $event">
+          <p class="error-msg" *ngIf="communicationPinReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Phone No.<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" disabled
+            [ngModel]="candidateProfile?.communicationPhoneNo" maxlength="10"
+            (ngModelChange)="candidateProfile.communicationPhoneNo = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Alternate Contact No.<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" maxlength="10" numbersOnly
+            [ngModel]="candidateProfile?.communicationAlternativeContactNo"
+            (ngModelChange)="candidateProfile.communicationAlternativeContactNo = $event">
+          <p class="error-msg" *ngIf="communicationAlternateContactNoReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Email ID<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.emailId" disabled
+            (ngModelChange)="candidateProfile.emailId = $event">
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4">
+        <label class="checkbox_label">
+          Permanent Address same as Communication Address
+          <input type="checkbox" [checked]="samePermanentAddress" [(ngModel)]="samePermanentAddress"
+            (ngModelChange)="changeSamePermanent($event)">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Permanent Address<span class="required">*</span></label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.permanentAddress"
+            (ngModelChange)="candidateProfile.permanentAddress = $event"></textarea>
+          <p class="error-msg" *ngIf="permanentAddressReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Country<span class="required">*</span></label>
+          <ng-select bindLabel="countryName" class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="true" [clearable]="false" [ngModel]="candidateProfile?.permanentCountryId"
+            (ngModelChange)="candidateProfile.permanentCountryId = $event">
+            <ng-option [value]="rec.countryId" *ngFor="let rec of countries">
+              {{rec.countryName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="permanentCountryIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>State<span class="required">*</span></label>
+          <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+            [clearable]="false" [ngModel]="candidateProfile?.permanentStateId"
+            (ngModelChange)="candidateProfile.permanentStateId = $event">
+            <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+              {{rec.stateName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="permanentStateIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>PIN<span class="required">*</span></label>
+          <input type="text" class="form-control" maxlength="6" placeholder="" numbersOnly
+            [ngModel]="candidateProfile?.permanentPin" (ngModelChange)="candidateProfile.permanentPin = $event">
+          <p class="error-msg" *ngIf="permanentPinReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <!-- <div class="col-md-2">
+        <div class="form-group">
+          <label>Phone No.<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" maxlength="10"
+            [ngModel]="candidateProfile?.permanentPhone" (ngModelChange)="candidateProfile.permanentPhone = $event">
+          <p class="error-msg" *ngIf="permanentPhoneReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div> -->
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Home Town<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.permanentHomeTown"
+            (ngModelChange)="candidateProfile.permanentHomeTown = $event">
+          <p class="error-msg" *ngIf="permanentHomeTownReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Native State<span class="required">*</span></label>
+          <ng-select bindLabel="stateName" class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="true" [clearable]="false" [ngModel]="candidateProfile?.permanentNativeStateId"
+            (ngModelChange)="candidateProfile.permanentNativeStateId = $event">
+            <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+              {{rec.stateName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="permanentNativeStateIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Aadhar No.<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.aadharNo" disabled
+            (ngModelChange)="candidateProfile.aadharNo = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>UAN No.<small>(appl. to PF member)</small></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.uanno"
+            (ngModelChange)="candidateProfile.uanno = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>PAN No.<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.panNo"
+            (ngModelChange)="candidateProfile.panNo = $event">
+          <p class="error-msg" *ngIf="panNoReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Nationality<span class="required">*</span></label>
+          <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+            [clearable]="false" [ngModel]="candidateProfile?.nationalityId"
+            (ngModelChange)="candidateProfile.nationalityId = $event">
+            <ng-option [value]="1">Indian</ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="nationalityIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Religion<span class="required">*</span></label>
+          <ng-select bindLabel="religionName" class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="false" [clearable]="false" [ngModel]="candidateProfile?.religionId"
+            (ngModelChange)="candidateProfile.religionId = $event">
+            <ng-option [value]="rec.religionId" *ngFor="let rec of religions">
+              {{rec.religionName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="religionIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Caste<span class="required">*</span></label>
+          <ng-select bindLabel="casteName" class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="false" [clearable]="false" [ngModel]="candidateProfile?.casteId"
+            (ngModelChange)="candidateProfile.casteId = $event">
+            <ng-option [value]="rec.casteId" *ngFor="let rec of castes">
+              {{rec.casteName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="casteIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Height(Cms)<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" numbersOnly [ngModel]="candidateProfile?.height"
+            (ngModelChange)="candidateProfile.height = $event">
+          <p class="error-msg" *ngIf="heightReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Weight(Kgs)<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" numbersOnly [ngModel]="candidateProfile?.weight"
+            (ngModelChange)="candidateProfile.weight = $event">
+          <p class="error-msg" *ngIf="weightReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Blood Group<span class="required">*</span></label>
+          <ng-select bindLabel="bloodGroupName" class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="false" [clearable]="false" [ngModel]="candidateProfile?.bloodGroupId"
+            (ngModelChange)="candidateProfile.bloodGroupId = $event">
+            <ng-option [value]="rec.bloodGroupId" *ngFor="let rec of bloodGroups">
+              {{rec.bloodGroupName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="bloodGroupIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-sm-12">
+        <label>Eye Sight Corrected<span class="required">*</span></label>
+        <div class="form-row">
+          <div class="col-md-2">
+            <div class="form-group">
+
+              <!-- <input type="checkbox" [ngModel]="candidateProfile?.eyeSightCorrected"
+                  (ngModelChange)="candidateProfile.eyeSightCorrected = $event"> -->
+              <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" [(ngModel)]="ddlSelectedEyesightCorrected"
+                (change)="onChangeEyesightCorrected($event)">
+                <!-- <ng-option [value]="0" disabled>Select</ng-option> -->
+                <ng-option [value]="1">Yes</ng-option>
+                <ng-option [value]="2">No</ng-option>
+              </ng-select>
+              <p class="error-msg" *ngIf="eyeSightCorrected">
+                <span>Required</span>
+              </p>
+
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-group normal">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Right</div>
+              </div>
+              <input type="text" class="form-control" appTwoDigitDecimalNegativeNumber id=""
+                [ngModel]="candidateProfile?.eyeSightRight"
+                [disabled]="ddlSelectedEyesightCorrected==2 || ddlSelectedEyesightCorrected==null"
+                (ngModelChange)="candidateProfile.eyeSightRight = $event">
+              <p class="error-msg" *ngIf="eyeSightRightReq">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-group normal">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Left</div>
+              </div>
+              <input type="text" class="form-control" appTwoDigitDecimalNegativeNumber id=""
+                [ngModel]="candidateProfile?.eyeSightLeft"
+                [disabled]="ddlSelectedEyesightCorrected==2 || ddlSelectedEyesightCorrected==null"
+                (ngModelChange)="candidateProfile.eyeSightLeft = $event">
+              <!-- [disabled]="!candidateProfile?.eyeSightCorrected" -->
+              <p class="error-msg" *ngIf="eyeSightLeftReq">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Any Handicaps<span class="required">*</span></label>
+
+          <!-- <input type="checkbox" [ngModel]="candidateProfile?.handiCap"
+                   (ngModelChange)="candidateProfile.handiCap = $event"> -->
+          <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+            [clearable]="false" [(ngModel)]="ddlSelectedHandicap" (change)="onChangeHandicap($event)">
+            <ng-option [value]="1">Yes</ng-option>
+            <ng-option [value]="2">No</ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="handiCap">
+            <span>Required</span>
+          </p>
+          <!-- <div class="slider round">
+              <span class="on">Yes</span><span class="off">No</span>
+            </div> -->
+
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="form-group">
+          <label>Give Details</label>
+          <textarea class="form-control" placeholder="" [disabled]="ddlSelectedHandicap==2 || ddlSelectedHandicap==null"
+            [ngModel]="candidateProfile?.handiCapDetails"
+            (ngModelChange)="candidateProfile.handiCapDetails = $event"></textarea>
+          <p class="error-msg" *ngIf="handicapReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Chronic/Major illness<span class="required">*</span></label>
+
+          <!-- <input type="checkbox" [ngModel]="candidateProfile?.cronicMajorIllness"
+                   (ngModelChange)="candidateProfile.cronicMajorIllness = $event"> -->
+          <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+            [clearable]="false" [(ngModel)]="ddlSelectedCronicIllness" (change)="onChangeChronicIllness($event)">
+            <ng-option [value]="1">Yes</ng-option>
+            <ng-option [value]="2">No</ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="cronicIllnessReq">
+            <span>Required</span>
+            <!-- <div class="slider round">
+              <span class="on">Yes</span><span class="off">No</span>
+            </div> -->
+
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="form-group">
+          <label>Give Details</label>
+          <textarea class="form-control" placeholder=""
+            [disabled]="ddlSelectedCronicIllness==2 || ddlSelectedCronicIllness==null "
+            [ngModel]="candidateProfile?.cronicMajorIllnessDetails"
+            (ngModelChange)="candidateProfile.cronicMajorIllnessDetails = $event"></textarea>
+          <p class="error-msg" *ngIf="cronicIllnessReq">
+            <span>Required</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-sm-12">
+        <label>Identification Marks<span class="required">*</span></label>
+        <div class="form-row">
+          <div class="col-md-12 mb-1">
+            <div class="input-group normal">
+              <div class="input-group-prepend">
+                <div class="input-group-text">1.</div>
+              </div>
+              <input type="text" class="form-control" id="" [ngModel]="candidateProfile?.identificationMarks1"
+                (ngModelChange)="candidateProfile.identificationMarks1 = $event">
+              <p class="error-msg" *ngIf="identificationMarks1Req">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="input-group normal">
+              <div class="input-group-prepend">
+                <div class="input-group-text">2.</div>
+              </div>
+              <input type="text" class="form-control" id="" [ngModel]="candidateProfile?.identificationMarks2"
+                (ngModelChange)="candidateProfile.identificationMarks2 = $event">
+              <p class="error-msg" *ngIf="identificationMarks2Req">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 text-right">
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button " class="btn btn-secondary" (click)="SaveStep1()">Save as Draft</button> -->
+      <button type="button " class="btn btn-black ml-1" (click)="gotoSection2()">Next</button>
+    </div>
+  </div>
+  <!-- Section 1 end -->
+  <!-- Section 2 start -->
+  <div class="section2" *ngIf="section2">
+    <h6 class="red text-uppercase">
+      Family Background: <span class="grey font-weight-normal" style="text-transform: none;">
+        <small>
+          Give details of all family members Father,
+          Mother, Sibling(s), Spouse and Children as applicable
+        </small>
+      </span>
+    </h6>
+    <div class="table-responsive" *ngIf="familyBackGroundDetails.length>0?true:false">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Relationship</th>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Education</th>
+            <th>Occupation</th>
+            <th>Organisation/Place</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of familyBackGroundDetails; let i=index">
+            <td>{{data.familyRelationShipName}}</td>
+            <td>{{data.familyName}}</td>
+            <td>{{data.familyDOB}}</td>
+            <td>{{data.educationName}}</td>
+            <td>{{data.occupationName}}</td>
+            <td>{{data.familyOrganisation}}</td>
+            <td class="text-center">
+              <a href="javascript:void(0)" (click)="removeFamily(i)" class="row-btn"><i
+                  class="las la-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+    <div class="border-box mb-2">
+      <div class="form-row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Relationship<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="familyRelationshipId">
+              <ng-option [value]="rec.id" *ngFor="let rec of familyRelations">
+                {{rec.name}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="familyRelationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Name<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="familyName">
+            <p class="error-msg" *ngIf="familyNameReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>DOB<span class="required">*</span></label>
+            <div class="input-group datepiker date">
+              <input type="text" class="form-control datepicker pull-right" #fDate placeholder="DOB">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              </div>
+            </div>
+            <p class="error-msg" *ngIf="familyDOBReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Education<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="familyEducationId">
+              <ng-option [value]="rec.id" *ngFor="let rec of familyEducations">
+                {{rec.name}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="familyEducationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Occupation<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="familyOccupationId">
+              <ng-option [value]="rec.occupationId" *ngFor="let rec of familyOccupations">
+                {{rec.occupationName}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="familyOccupationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Organisation/Place</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="familyOrganization">
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <button type="button" class="btn btn-light btn-sm"><i class="las la-copy"></i></button>
+          <button type="button" class="btn btn-light btn-sm ml-1 red">
+            <i class="las la-trash-alt"></i>
+          </button>
+          <button type="button" (click)="addFamily()" class="btn btn-sm btn-black ml-1">
+            <i class="las la-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4">
+        <label>Do you have any relatives in MRF?<span class="required">*</span></label>
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" (change)="changeMRFRelativeStatus($event)" [(ngModel)]="mrfRealtivesValue">
+                <ng-option [value]="1">Yes</ng-option>
+                <ng-option [value]="0">No</ng-option>
+              </ng-select>
+              <!-- <label class="switch">
+                <input type="checkbox" [ngModel]="candidateProfile?.mrfRealtives"
+                  (ngModelChange)="changeMRFRelativeStatus($event)">
+                <div class="slider round">
+                  <span class="on">Yes</span><span class="off">No</span>
+                </div>
+              </label> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isMRFRelative">
+      <div class="table-responsive" *ngIf="mrfRelationShipDetails.length>0?true:false">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Employee Id</th>
+              <th>Designation</th>
+              <th>Relationship</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of mrfRelationShipDetails;let i=index">
+              <td>{{data.relativeName}}</td>
+              <td>{{data.relativeEmployeeId}}</td>
+              <td>{{data.relativeDesignation}}</td>
+              <td>{{data.relativeRelationShipName}}</td>
+              <td class="text-center">
+                <a href="javascript:void(0)" (click)="removeMRFRelative(i)" class="row-btn"><i
+                    class="las la-trash-alt"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Name<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="mrfRelativeName">
+            <p class="error-msg" *ngIf="mrfNameReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Employee ID<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="mrfRelativeEmployeeId">
+            <p class="error-msg" *ngIf="mrfEmpIdReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Designation<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="mrfRelativeDesignation">
+            <p class="error-msg" *ngIf="mrfDesignationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Relationship<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="mrfRelativeRelationshipId">
+              <ng-option [value]="rec.id" *ngFor="let rec of relativeRelations">
+                {{rec.name}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="mrfRelationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 text-right">
+          <button type="button" class="btn btn-sm btn-black ml-1" (click)="addMRFRelative()">
+            <i class="las la-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <label>
+          Do you have any relatives working for tyre companies, Tyre Dealers or Tyre Retreaders?<span
+            class="required">*</span>
+        </label>
+        <div class="form-row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" (change)="changeTyreRelativeStatus($event)"
+                [(ngModel)]="tyreCompanyRealtionShipValue">
+                <ng-option [value]="1">Yes</ng-option>
+                <ng-option [value]="0">No</ng-option>
+              </ng-select>
+              <!-- <label class="switch">
+                <input type="checkbox" [ngModel]="candidateProfile?.tyreCompanyRealtionShip"
+                  (ngModelChange)="changeTyreRelativeStatus($event)">
+                <div class="slider round">
+                  <span class="on">Yes</span><span class="off">No</span>
+                </div>
+              </label> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isTyreRelative">
+      <div class="table-responsive" *ngIf="tyreCompanyRelationShipDetails.length>0?true:false">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Designation</th>
+              <th>Tyre Company/ Tyre Dealer/ Tyre Retreader</th>
+              <th>Relationship</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of tyreCompanyRelationShipDetails;let i=index">
+              <td>{{data.tyreRelativeName}}</td>
+              <td>{{data.tyreRelativeDesignation}}</td>
+              <td>{{data.tyreRelativeCompanyName}}</td>
+              <td>{{data.tyreRelativeRelationShipName}}</td>
+              <td class="text-center">
+                <a href="javascript:void(0)" (click)="removeTyreRelative(i)" class="row-btn"><i
+                    class="las la-trash-alt"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Name<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="tyreRelativeName">
+            <p class="error-msg" *ngIf="tyreNameReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Designation<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="tyreRelativeDesignation">
+            <p class="error-msg" *ngIf="tyreDesignationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Tyre Company/ Tyre Dealer/ Tyre Retreader<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="tyreRelativeCompanyName">
+            <p class="error-msg" *ngIf="tyreRelativeCompanyReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Relationship<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="tyreRelativeRelationshipId">
+              <ng-option [value]="rec.id" *ngFor="let rec of relativeRelations">
+                {{rec.name}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="tyreRelationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="isTyreRelative">
+      <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-sm btn-black ml-1" (click)="addTyreRelative()">
+          <i class="las la-plus"></i> Add
+        </button>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoSection1()">Previous</button>
+
+      <button type="button" class="btn btn-black float-right ml-2" (click)="gotoSection3()">Next</button>
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button " class="btn btn-secondary float-right " (click)="SaveStep2()">Save as Draft</button> -->
+      <!-- <button type="button" class="btn btn-secondary float-right">Save as Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 2 end -->
+  <!-- Section 3 start -->
+  <div class="section3" *ngIf="section3">
+    <h6 class="red text-uppercase">
+      Academic Achivements
+      <span class="grey text-capitalize font-weight-normal">
+        <small>
+          Give details of all exams from school final onwards (10th, Plus Two / PUC, UG / Diploma,
+          PG)
+        </small>
+      </span>
+    </h6>
+    <div class="border-box mb-2" *ngFor="let data of academicDetails; let i=index">
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Qualification:</p>
+          <p class="d-inline-block">{{data.qualificationName}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Course:</p>
+          <p class="d-inline-block">{{data.courseName}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Remarks:</p>
+          <p class="d-inline-block">{{data.courseRemarks}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Specialization/Stream:</p>
+          <p class="d-inline-block">{{data.specalization}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Institution:</p>
+          <p class="d-inline-block">{{data.instutation}}</p>
+        </div>
+        <div class="col-md-8">
+          <p class="d-inline-block grey">Address:</p>
+          <p class="d-inline-block">{{data.academicAddress}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">University/Board:</p>
+          <p class="d-inline-block">{{data.universityName}}</p>
+        </div>
+        <!-- <div class="col-md-4" *ngIf="data.university==0">    
+          <p class="d-inline-block grey">University Name :</p>
+          <p class="d-inline-block">{{data.otherUniversityName}}</p>
+        </div> -->
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Duration:</p>
+          <p class="d-inline-block">{{data.academicDurationFrom}} - {{data.academicDurationTo}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Course Type:</p>
+          <p class="d-inline-block">{{data.courseTypeName}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Core/Major Subjects:</p>
+          <p class="d-inline-block">{{data.subjects}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Month & Year of Passing:</p>
+          <p class="d-inline-block">{{data.monthOfPassing}} - {{data.yearOfPassing}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Class/Grade/Division:</p>
+          <p class="d-inline-block">{{data.gradeName}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Marks Aggregate (%):</p>
+          <p class="d-inline-block">{{data.marks}}</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <button type="button" class="btn btn-light btn-sm ml-1 red">
+            <i class="las la-trash-alt" (click)="removeAcademicDetails(i)"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="academicBorederClass">
+      <div class="form-row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Qualification<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="academicQualificationId" (ngModelChange)="changeQualification($event)">
+              <ng-option [value]="rec.qualificationId" *ngFor="let rec of qualifications">
+                {{rec.qualificationName}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="academicQualificationIdReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Course<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="academicCourseId" (ngModelChange)="changeCourse($event)">
+              <ng-option [value]="rec.courseId" *ngFor="let rec of courses">
+                {{rec.courseName}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="academicCourseIdReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="courseRemarks">
+          <div class="form-group">
+            <label>Remarks</label>
+            <input type="text" class="form-control" placeholder="Type Course" [(ngModel)]="academicRemarks">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Specialization / Stream<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="academicStream">
+            <p class="error-msg" *ngIf="academicStreamReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Institution<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="academicInstitution">
+            <p class="error-msg" *ngIf="academicInstitutionReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label>Address<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="academicAddress">
+            <p class="error-msg" *ngIf="academicAddressReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>University / Board<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="academicUniversityId">
+              <ng-option [value]="rec.qulificationUniversityBoardId" *ngFor="let rec of academicUniversity">
+                {{rec.qulificationUniversityBoardName}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="academicUniversityIdReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="academicUniversityId==0">
+          <div class="form-group">
+            <label>University Name<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="Enter University Name"
+              [(ngModel)]="otherUniversityName">
+            <p class="error-msg" *ngIf="academicOtherUniversityNameReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Duration<span class="required">*</span></label>
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control datepicker pull-right" #faDate placeholder="From">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+                <p class="error-msg" *ngIf="academicFromDateReq">
+                  <span>Required</span>
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control datepicker pull-right" #taDate placeholder="To">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+                <p class="error-msg" *ngIf="academicToDateReq">
+                  <span>Required</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Full Time / Part Time / Correspondence<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="academicQualificationTypeId">
+              <ng-option [value]="rec.qualificationTypeId" *ngFor="let rec of qualificationType">
+                {{rec.qualificationTypeName}}
+              </ng-option>
+            </ng-select>
+
+            <p class="error-msg" *ngIf="academicQualificationTypeIdReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Core / Major Subjects<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="academicSubject">
+            <p class="error-msg" *ngIf="academicSubjectReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Month and Year of Passing<span class="required">*</span></label>
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                  [clearable]="false" [(ngModel)]="academicMonthId">
+                  <ng-option [value]="rec.id" *ngFor="let rec of academicMonths">
+                    {{rec.name}}
+                  </ng-option>
+                </ng-select>
+                <p class="error-msg" *ngIf="academicMonthIdReq">
+                  <span>Required</span>
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                  [clearable]="false" [(ngModel)]="academicYearId">
+                  <ng-option [value]="rec.id" *ngFor="let rec of academicYears">
+                    {{rec.name}}
+                  </ng-option>
+                </ng-select>
+                <p class="error-msg" *ngIf="academicYearIdReq">
+                  <span>Required</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Class/Grade/Division<span class="required">*</span></label>
+            <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+              [clearable]="false" [(ngModel)]="academicGradeId">
+              <ng-option [value]="rec.qulificationClassGaradeDivisionId" *ngFor="let rec of academicQualificationGrade">
+                {{rec.qulificationClassGaradeDivisionName}}
+              </ng-option>
+            </ng-select>
+            <p class="error-msg" *ngIf="academicGradeIdReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Marks Aggregate (%)<span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="CGPA to be conv. to %" [(ngModel)]="academicPercentage"
+              appTwoDigitDecimaNumberLessThan100 maxlength="5">
+            <p class="error-msg" *ngIf="academicPercentageReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <button type="button" class="btn btn-light btn-sm"><i class="las la-copy"></i></button>
+          <button type="button" class="btn btn-light btn-sm ml-1 red">
+            <i class="las la-trash-alt"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-black ml-1" (click)="addQualification()">
+            <i class="las la-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row mb-4">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>State reason for gap if any</label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.reasonforGap"
+            (ngModelChange)="candidateProfile.reasonforGap = $event"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <h6 class="red text-uppercase">Certification / Training (Professional / Vocational)</h6>
+    <div class="table-responsive" *ngIf="certificationDetails.length>0?true:false">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Organisation</th>
+            <th>Nature of Training</th>
+            <th>Duration</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of certificationDetails;let i=index">
+            <td>{{data.certificationOrganisation}}</td>
+            <td>{{data.certificationNatureofTraining}}</td>
+            <td>{{data.certificationDurationFrom}} - {{data.certificationDurationTo}}</td>
+            <td class="text-center">
+              <a href="javascript:void(0)" (click)="removeCertification(i)" class="row-btn"><i
+                  class="las la-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+    <div class="border-box mb-2">
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Organisation</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="certificationOrganisation">
+            <p class="error-msg" *ngIf="certificationOrganisationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Nature of Training</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="certificationNatureofTraining">
+            <p class="error-msg" *ngIf="certificationNatureofTrainingReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Duration</label>
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control datepicker pull-right" #fCDate placeholder="From">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+                <p class="error-msg" *ngIf="certificationDurationFromReq">
+                  <span>Required</span>
+                </p>
+              </div>
+
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control datepicker pull-right" #tCDate placeholder="To">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+                <p class="error-msg" *ngIf="certificationDurationToReq">
+                  <span>Required</span>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <!-- <button type="button" class="btn btn-light btn-sm"><i class="las la-copy"></i></button>
+          <button type="button" class="btn btn-light btn-sm ml-1 red"><i
+                  class="las la-trash-alt"></i></button> -->
+          <button type="button" class="btn btn-sm btn-black ml-1" (click)="addCertification()">
+            <i class="las la-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <h6 class="red text-uppercase">Membership of Professional Bodies</h6>
+    <div class="table-responsive" *ngIf="membershipDetails.length>0?true:false">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Professional Body / Institution</th>
+            <th>Class of Membership</th>
+            <th>From</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of membershipDetails;let i=index">
+            <td>{{data.institution}}</td>
+            <td>{{data.classofMemberShip}}</td>
+            <td>{{data.membershipFrom}} </td>
+            <td class="text-center">
+              <a href="javascript:void(0)" (click)="removeMembership(i)" class="row-btn"><i
+                  class="las la-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+    <div class="border-box mb-2">
+      <div class="form-row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Professional Body / Institution</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="membershipInstitution">
+            <p class="error-msg" *ngIf="membershipInstitutionReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Class of Membership</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="membershipClass">
+            <p class="error-msg" *ngIf="membershipClassReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>From</label>
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control datepicker pull-right" #fMDate placeholder="From">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+                <p class="error-msg" *ngIf="membershipFromReq">
+                  <span>Required</span>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <button type="button" class="btn btn-sm btn-black ml-1" (click)="addMembership()">
+            <i class="las la-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoPreviousSection2()">Previous</button>
+      <button type="button" class="btn btn-black float-right ml-2" (click)="gotoSection4()">Next</button>
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button " class="btn btn-secondary float-right " (click)="SaveStep3()">Save as Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 3 end -->
+  <!-- Section 4 start -->
+  <div class="section4" *ngIf="section4">
+    <h6 class="red text-uppercase">Extra Curricular Activities / spare time interest:</h6>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nature of Activity</th>
+            <th colspan="2">Level of Achievement</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of extraCarricularActivitiesDetails;let i=index">
+            <td>{{data.natureofActivities}}</td>
+            <td>{{data.levelofAchivement}}</td>
+            <td class="text-center">
+              <a href="javascript:void(0)" (click)="removeActivity(i)" class="row-btn"><i
+                  class="las la-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td class="align-top">
+              <input type="text" class="form-control" placeholder="" [(ngModel)]="natureofActivities">
+              <p class="error-msg" *ngIf="natureofActivitiesReq">
+                <span>Required</span>
+              </p>
+            </td>
+            <td colspan="2" class="align-top">
+              <input type="text" class="form-control" placeholder="" [(ngModel)]="levelofAchivement">
+              <p class="error-msg" *ngIf="levelofAchivementReq">
+                <span>Required</span>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-sm btn-black ml-1" (click)="addActivity()">
+          <i class="las la-plus"></i> Add
+        </button>
+      </div>
+    </div>
+    <h6 class="red text-uppercase">MOTHER TONGUE</h6>
+    <div class="table-responsive" [ngClass]="languageBorderClass">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Languages</th>
+            <th class="text-center">Read</th>
+            <th class="text-center">Write</th>
+            <th class="text-center">Speak</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of motherarr;let i=index">
+            <td>{{data.motherTongueName}}</td>
+            <td class="text-center">{{data.read==true?'Yes':'No'}}</td>
+            <td class="text-center">{{data.write==true?'Yes':'No'}}</td>
+            <td class="text-center">{{data.speak==true?'Yes':'No'}}</td>
+            <td class="text-center">
+              <a href="javascript:void(0)" (click)="removemother(i)" class="row-btn"><i
+                  class="las la-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td>
+              <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" [(ngModel)]="mothertongueId">
+                <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                  {{rec.languageName}}
+                </ng-option>
+              </ng-select>
+              <p class="error-msg" *ngIf="mothertongueIdReq">
+                <span>Required</span>
+              </p>
+            </td>
+            <td class="text-center">
+              <div class="form-check">
+                <input type="checkbox" id="motherread" [checked]="motherread" [(ngModel)]="motherread">
+                <label class="chk" for="motherread"></label>
+              </div>
+            </td>
+            <td class="text-center">
+              <div class="form-check">
+                <input type="checkbox" id="motherwrite" [checked]="motherwrite" [(ngModel)]="motherwrite">
+                <label class="chk" for="motherwrite"></label>
+              </div>
+            </td>
+            <td class="text-center" colspan="2">
+              <div class="form-check">
+                <input type="checkbox" id="motherspeak" [checked]="motherspeak" [(ngModel)]="motherspeak">
+                <label class="chk" for="motherspeak"></label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-sm btn-black ml-1" (click)="addmother()">
+          <i class="las la-plus"></i> Add
+        </button>
+      </div>
+    </div>
+    <h6 class="red text-uppercase">Other Languages</h6>
+    <div class="table-responsive">
+      <!-- [ngClass]="languageBorderClass" -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Languages</th>
+            <th class="text-center">Read</th>
+            <th class="text-center">Write</th>
+            <th class="text-center">Speak</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of languageKnownDetails;let i=index">
+            <td *ngIf="data.languageKnownLineId!=1">{{data.motherTongueName}}</td>
+            <td *ngIf="data.languageKnownLineId!=1" class="text-center">{{data.read==true?'Yes':'No'}}</td>
+            <td *ngIf="data.languageKnownLineId!=1" class="text-center">{{data.write==true?'Yes':'No'}}</td>
+            <td *ngIf="data.languageKnownLineId!=1" class="text-center">{{data.speak==true?'Yes':'No'}}</td>
+            <td *ngIf="data.languageKnownLineId!=1" class="text-center">
+              <a href="javascript:void(0)" (click)="removeLanguage(i)" class="row-btn"><i
+                  class="las la-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td>
+              <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" [(ngModel)]="knownLanguageId">
+                <ng-option [value]="rec.languageId" *ngFor="let rec of languages">
+                  {{rec.languageName}}
+                </ng-option>
+              </ng-select>
+              <p class="error-msg" *ngIf="knownLanguageIdReq">
+                <span>Required</span>
+              </p>
+            </td>
+            <td class="text-center">
+              <div class="form-check">
+                <input type="checkbox" id="languageRead" [checked]="languageRead" [(ngModel)]="languageRead">
+                <label class="chk" for="languageRead"></label>
+              </div>
+            </td>
+            <td class="text-center">
+              <div class="form-check">
+                <input type="checkbox" id="languageWrite" [checked]="languageWrite" [(ngModel)]="languageWrite">
+                <label class="chk" for="languageWrite"></label>
+              </div>
+            </td>
+            <td class="text-center" colspan="2">
+              <div class="form-check">
+                <input type="checkbox" id="languageSpeak" [checked]="languageSpeak" [(ngModel)]="languageSpeak">
+                <label class="chk" for="languageSpeak"></label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-sm btn-black ml-1" (click)="addLanguages()">
+          <i class="las la-plus"></i> Add
+        </button>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoPreviousSection3()">Previous</button>
+      <button type="button" class="btn btn-black float-right ml-2" (click)="gotoSection5()">Next</button>
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button " class="btn btn-secondary float-right " (click)="SaveStep4()">Save as Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 4 end -->
+  <!-- Section 5 start -->
+  <div class="section5" *ngIf="section5">
+    <h6 class="red text-uppercase" *ngIf="isExperinced">Work Experience:</h6>
+    <div class="border-box mb-2" *ngFor="let data of peviousAssignmentDetails; let i=index">
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Organization:</p>
+          <p class="d-inline-block">{{data.peviousAssignmentOrganisation}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Duration:</p>
+          <p class="d-inline-block">{{data.peviousAssignmentFrom}} - {{data.peviousAssignmentTo}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Position:</p>
+          <p class="d-inline-block">{{data.peviousAssignmentPosition}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Nature of Training / Work:</p>
+          <p class="d-inline-block">{{data.peviousAssignmentDescriptionofWork}}</p>
+        </div>
+        <div class="col-md-8">
+          <p class="d-inline-block grey">Address:</p>
+          <p class="d-inline-block">{{data.peviousAssignmentAddress}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">CTC PA:</p>
+          <p class="d-inline-block">{{data.peviousAssignmentCTC}}</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <button type="button" class="btn btn-light btn-sm ml-1 red">
+            <i class="las la-trash-alt" (click)="removeWorkDetails(i)"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isExperinced" [ngClass]="workBorederClass">
+      <div class="form-row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>From</label>
+            <div class="input-group datepiker date">
+              <input type="text" class="form-control datepicker pull-right" #fwDate id="" placeholder="From Date">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              </div>
+            </div>
+            <p class="error-msg" *ngIf="workFromDateReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>To</label>
+            <div class="input-group datepiker date">
+              <input type="text" class="form-control datepicker pull-right" #twDate id="" placeholder="To Date">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              </div>
+            </div>
+            <p class="error-msg" *ngIf="workToDateReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Organisation</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="workOrganization">
+            <p class="error-msg" *ngIf="workOrganizationReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="workAddress">
+            <p class="error-msg" *ngIf="workAddressReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Position</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="workPosition">
+            <p class="error-msg" *ngIf="workPositionReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label>Brief description of work</label>
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="workNature">
+            <p class="error-msg" *ngIf="workNatureReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>CTC PA</label>
+            <input type="text" class="form-control text-right" numbersOnly placeholder="" [(ngModel)]="workCTC">
+            <p class="error-msg" *ngIf="workCTCReq">
+              <span>Required</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 py-2 border-top text-right">
+          <button type="button" class="btn btn-light btn-sm"><i class="las la-copy"></i></button>
+          <button type="button" class="btn btn-light btn-sm ml-1 red">
+            <i class="las la-trash-alt"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-black ml-1" (click)="addExperience()">
+            <i class="las la-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>State reason for gap if any</label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.previousAssignmentGap"
+            (ngModelChange)="candidateProfile.previousAssignmentGap = $event"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Expected CTC(PA)<span class="required">*</span></label>
+          <input type="text" class="form-control text-right" numbersOnly placeholder=""
+            [ngModel]="candidateProfile?.expectedCTC" (ngModelChange)="candidateProfile.expectedCTC = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Joining Time Req. (Days)<span class="required">*</span></label>
+          <input type="text" class="form-control text-right" numbersOnly placeholder=""
+            [ngModel]="candidateProfile?.joiningDaysRequired"
+            (ngModelChange)="candidateProfile.joiningDaysRequired = $event">
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoPreviousSection4()">Previous</button>
+      <button type="button" class="btn btn-black float-right ml-2" (click)="gotoSection6()">Next</button>
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button " class="btn btn-secondary float-right " (click)="SaveStep5()">Save as Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 5 end -->
+  <!-- Section 6 start -->
+  <div class="section6" *ngIf="section6">
+    <h6 class="red text-uppercase">
+      Reference Details (Other than relatives):
+      <span class="grey text-capitalize font-weight-normal">
+        <small>
+          (Fill 3 professional rerence. If fresher please add Principal / HOD / Prof etc. as
+          reference)
+        </small>
+      </span>
+    </h6>
+    <div>
+      <label><b>Reference 1</b></label>
+      <div class="border-box mb-2">
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Name<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref1Name"
+                (ngModelChange)="candidateProfile.ref1Name = $event">
+              <p class="error-msg" *ngIf="showref1Name">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Position<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref1Position"
+                (ngModelChange)="candidateProfile.ref1Position = $event">
+              <p class="error-msg" *ngIf="showref1Position">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Organisation<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref1Organisation"
+                (ngModelChange)="candidateProfile.ref1Organisation = $event">
+              <p class="error-msg" *ngIf="showref1Organisation">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Location<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref1Location"
+                (ngModelChange)="candidateProfile.ref1Location = $event">
+              <p class="error-msg" *ngIf="showref1Location">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Contact No.<span class="required">*</span></label>
+              <input type="text" maxlength="10" class="form-control" numbersOnly placeholder=""
+                [ngModel]="candidateProfile?.ref1ContactNo" (ngModelChange)="candidateProfile.ref1ContactNo = $event">
+              <p class="error-msg" *ngIf="showref1ContactNo">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email ID</label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref1EmailId"
+                (ngModelChange)="candidateProfile.ref1EmailId = $event">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label><b>Reference 2</b></label>
+      <div class="border-box mb-2">
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Name<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref2Name"
+                (ngModelChange)="candidateProfile.ref2Name = $event">
+              <p class="error-msg" *ngIf="showref2Name">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Position<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref2Position"
+                (ngModelChange)="candidateProfile.ref2Position = $event">
+              <p class="error-msg" *ngIf="showref2Position">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Organisation<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref2Organisation"
+                (ngModelChange)="candidateProfile.ref2Organisation = $event">
+              <p class="error-msg" *ngIf="showref2Organisation">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Location<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref2Location"
+                (ngModelChange)="candidateProfile.ref2Location = $event">
+              <p class="error-msg" *ngIf="showref2Location">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Contact No.<span class="required">*</span></label>
+              <input type="text" maxlength="10" class="form-control" numbersOnly placeholder=""
+                [ngModel]="candidateProfile?.ref2ContactNo" (ngModelChange)="candidateProfile.ref2ContactNo = $event">
+              <p class="error-msg" *ngIf="showref2ContactNo">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email ID</label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref2EmailId"
+                (ngModelChange)="candidateProfile.ref2EmailId = $event">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label><b>Reference 3</b></label>
+      <div class="border-box mb-2">
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Name<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref3Name"
+                (ngModelChange)="candidateProfile.ref3Name = $event">
+              <p class="error-msg" *ngIf="showref3Name">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Position<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref3Position"
+                (ngModelChange)="candidateProfile.ref3Position = $event">
+              <p class="error-msg" *ngIf="showref3Position">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Organisation<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref3Organisation"
+                (ngModelChange)="candidateProfile.ref3Organisation = $event">
+              <p class="error-msg" *ngIf="showref3Organisation">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Location<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref3Location"
+                (ngModelChange)="candidateProfile.ref3Location = $event">
+              <p class="error-msg" *ngIf="showref3Location">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label>Contact No.<span class="required">*</span></label>
+              <input type="text" maxlength="10" class="form-control" numbersOnly placeholder=""
+                [ngModel]="candidateProfile?.ref3ContactNo" (ngModelChange)="candidateProfile.ref3ContactNo = $event">
+              <p class="error-msg" *ngIf="showref3ContactNo">
+                <span>Required</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email ID</label>
+              <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.ref3EmailId"
+                (ngModelChange)="candidateProfile.ref3EmailId = $event">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoPreviousSection5()">Previous</button>
+      <button type="button" class="btn btn-black float-right ml-2" (click)="gotoSection7()">Next</button>
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button " class="btn btn-secondary float-right " (click)="SaveStep6()">Save as Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 6 end -->
+  <!-- Section 7 Start -->
+  <div class="section7" *ngIf="section7">
+    <h6 class="red text-uppercase">Other Details:</h6>
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>
+            Why do you consider yourself suitable for the position applied?<span class="required">*</span>
+          </label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.joiningComments"
+            (ngModelChange)="candidateProfile.joiningComments = $event"></textarea>
+          <p class="error-msg" *ngIf="joiningCommentsReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>
+            Any additional information you wish to provide<span class="required">*</span>
+          </label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.additionoalDetails"
+            (ngModelChange)="candidateProfile.additionoalDetails = $event"></textarea>
+          <p class="error-msg" *ngIf="additionoalDetailsReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <label>Have you ever been interviewed for any position in MRF?<span class="required">*</span></label>
+        <div class="form-row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" (change)="changeInterviewDetailsStatus($event)"
+                [(ngModel)]="mrfPreInterviewStatusValue">
+                <ng-option [value]="1">Yes</ng-option>
+                <ng-option [value]="0">No</ng-option>
+              </ng-select>
+              <!-- <label class="switch">
+                <input type="checkbox" [ngModel]="mrfPreInterviewStatus"
+                  (ngModelChange)="changeInterviewDetailsStatus($event)">
+                <div class="slider round">
+                  <span class="on">Yes</span><span class="off">No</span>
+                </div>
+              </label> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-box mb-2" *ngFor="let data of preInterviewDetails; let i=index">
+      <div class="row">
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Position:</p>
+          <p class="d-inline-block">{{data.positionName}}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="d-inline-block grey">Duration:</p>
+          <p class="d-inline-block">{{data.interviewDate}}</p>
+        </div>
+        <div class="col-md-4 text-right">
+          <button type="button" class="btn btn-light btn-sm ml-1 mb-2 red">
+            <i class="las la-trash-alt" (click)="removePreInterview(i)"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="mrfPreInterviewStatus">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Position<span class="required">*</span></label>
+          <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+            [clearable]="false" [(ngModel)]="positionId">
+            <ng-option [value]="rec.positionId" *ngFor="let rec of positions">
+              {{rec.positionName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="preInterviewPositionReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Date<span class="required">*</span></label>
+          <div class="input-group datepiker date">
+            <input type="text" class="form-control datepicker pull-right" id="" #inDate placeholder="Date">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <p class="error-msg" *ngIf="preInterviewDateReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-sm btn-black mt-md-4" (click)="addPreInterview()"><i
+            class="las la-plus"></i> Add</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <label>
+          Have you ever been prosecuted in a criminal court or is there any pending claims, action, suits
+          or proceeding against you?<span class="required">*</span>
+        </label>
+        <div class="form-row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" (change)="changeCriminalCase($event)" [(ngModel)]="criminalCaseValue">
+                <ng-option [value]="1">Yes</ng-option>
+                <ng-option [value]="0">No</ng-option>
+              </ng-select>
+              <!-- <label class="switch">
+                <input type="checkbox" [ngModel]="candidateProfile?.criminalCase"
+                  (ngModelChange)="changeCriminalCase($event)">
+                <div class="slider round">
+                  <span class="on">Yes</span><span class="off">No</span>
+                </div>
+              </label> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="criminalCase">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Give Details<span class="required">*</span></label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.criminalCaseDetails"
+            (ngModelChange)="candidateProfile.criminalCaseDetails = $event"></textarea>
+          <p class="error-msg" *ngIf="criminalCaseDetailsReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <label>
+          Have you ever been involved any fraud, unethical and/or immoral acts, departmental enquiry in
+          your previous employment(s)<span class="required">*</span>
+        </label>
+        <div class="form-row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                [clearable]="false" (change)="changePreviousEmploymentEnquiry($event)"
+                [(ngModel)]="previousEmployemntEnquiryValue">
+                <ng-option [value]="1">Yes</ng-option>
+                <ng-option [value]="0">No</ng-option>
+              </ng-select>
+
+              <!-- <label class="switch">
+                <input type="checkbox" [ngModel]="candidateProfile?.previousEmployemntEnquiry"
+                  (ngModelChange)="changePreviousEmploymentEnquiry($event)">
+                <div class="slider round">
+                  <span class="on">Yes</span><span class="off">No</span>
+                </div>
+              </label> -->
+              <!-- arg -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="previousEmployemntEnquiry">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Give Details<span class="required">*</span></label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.previousEmployemntEnquiryDetails"
+            (ngModelChange)="candidateProfile.previousEmployemntEnquiryDetails = $event"></textarea>
+          <p class="error-msg" *ngIf="previousEmployemntEnquiryDetailsReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoPreviousSection6()">Previous</button>
+      <button type="button" class="btn btn-black float-right ml-2" (click)="gotoSection8()">Next</button>
+      
+      <!-- <button type="button" class="btn btn-secondary float-right" (click)="saveStep7()">Save as Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 7 end -->
+  <!-- Section 8 start -->
+  <!--BY kuntal-->
+  <div class="section8" *ngIf="section8">
+    <h6 class="red text-uppercase">How did you get to know about this position (Check where applicable):</h6>
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="GenderId" value="1" id="radio1" type="radio" [checked]="candidateProfile?.jobPortal"
+            (change)="changeJobPortal($event)">
+          <label for="radio1">Job Portal</label>
+        </div>
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="GenderId" value="2" id="radio2" type="radio" [checked]="candidateProfile?.linkedIn"
+            (change)="changeLinkedIn($event)">
+          <label for="radio2">Social Media</label>
+        </div>
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="GenderId" value="3" id="radio3" type="radio" [checked]="candidateProfile?.careerSite"
+            (change)="changeCareerSite($event)">
+          <label for="radio3">Career Site</label>
+        </div>
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="GenderId" value="4" id="radio4" type="radio" [checked]="candidateProfile?.paperAdvertisement"
+            (change)="changePaperAdvertisement($event)">
+          <label for="radio4">Paper Advertisement</label>
+        </div>
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="GenderId" value="5" id="radio5" type="radio" [checked]="candidateProfile?.employeeReferal"
+            (change)="changeEmpReferral($event)">
+          <label for="radio5">Employee Referal</label>
+        </div>
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="GenderId" value="6" id="radio6" type="radio" [checked]="candidateProfile?.consultantApplicable"
+            (change)="changeConsultantApplicable($event)">
+          <label for="radio6">Consultant</label>
+        </div>
+        <div class="rdio rdio-primary d-inline-block">
+          <input name="internalRef" value="8" id="radio8" type="radio" [checked]="candidateProfile?.isInternalRef"
+          (change)="Reference($event)">
+          <label for="radio8">Internal Reference</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="employeeReferral">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Name of Employee<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.refNameofEmployee"
+            (ngModelChange)="candidateProfile.refNameofEmployee = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Employee ID<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.refEmployeeId"
+            (ngModelChange)="candidateProfile.refEmployeeId = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Employee Designation<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.refEmployeeDesignation"
+            (ngModelChange)="candidateProfile.refEmployeeDesignation = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Location<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.refEmployeeLocation"
+            (ngModelChange)="candidateProfile.refEmployeeLocation = $event">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Function<span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="" [ngModel]="candidateProfile?.refEmployeeFunction"
+            (ngModelChange)="candidateProfile.refEmployeeFunction = $event">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>How do you know the employee who has referred you<span class="required">*</span></label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.refEmployeeKnowing"
+            (ngModelChange)="candidateProfile.refEmployeeKnowing = $event"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="consultantApplicable">
+      <div class="col-md-4">
+        <div class="form-group">
+          <ng-select class="" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+            [clearable]="false" [(ngModel)]="consultant" (ngModelChange)="changeConsultant($event)">
+            <ng-option [value]="rec.vendorId" *ngFor="let rec of vendors">
+              {{rec.vendorName}}
+            </ng-option>
+          </ng-select>
+          <p class="error-msg" *ngIf="knownLanguageIdReq">
+            <span>Required</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="consultantApplicableOthers">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>If other, Please mention the source<span class="required">*</span></label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.otherSource"
+            (ngModelChange)="candidateProfile.otherSource = $event"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="internalRef">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Please Specify<span class="required">*</span></label>
+          <textarea class="form-control" placeholder="" [ngModel]="candidateProfile?.internalRefName"
+          (ngModelChange)="candidateProfile.internalRefName = $event"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <h6 class="red text-uppercase mt-4">Declaration:</h6>
+    <div class="alert alert-warning" role="alert">
+      <p>
+        I hereby declare that the particulars as given above are true. Any false information contained in the
+        application or statement made before the Company's Medical Examiner, shall automatically rescind the contract of
+        employment.
+      </p>
+      <p>
+        I hereby authorize MRF Limited and/or or their authorized representatives and contractors to verify information
+        presented on my employment application/resume and to procure an investigative report or consumer report for that
+        purpose.
+      </p>
+    </div>
+    <div class="form-row">
+      <!-- <div class="col-md-2">
+          <div class="form-group">
+              <label>Date<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" disabled>
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="form-group">
+              <label>Place<span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="" disabled>
+          </div>
+      </div> -->
+      <div class="col-md-6">
+        <label for="">Attach Signature (Max size 80KB) <span class="required">*</span></label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile" accept="image/*"
+            (change)="onSignatureFileChange($event.target.files)">
+          <label class="custom-file-label" for="customFile" #signatureFileImport></label>
+        </div>
+      </div>
+
+      <div class="col-md-6" *ngIf="showUploadedSignature">
+        <div class="form-group">
+          <label>Uploaded Signature</label>
+          <div class="attach-file">
+            <a href="{{candidateProfile?.signature}}" target="_blank" title="Download"><i
+                class="las color-black la-paperclip"></i>Signature </a>
+            <a href="{{candidateProfile?.signature}}" target="_blank"><i class="las la-download red"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 clearfix">
+      <button type="button " class="btn btn-primary float-left" (click)="gotoPreviousSection7()">Previous</button>
+
+      <button type="button" class="btn btn-black float-right ml-1" (click)="submit()">Submit</button>
+      <!-- commented on 08/02/24 -->
+      <!-- <button type="button" class="btn btn-secondary float-right" (click)="SaveApplicationForm('1')">Save as
+        Draft</button> -->
+    </div>
+  </div>
+  <!-- Section 8 end -->
+
+
+
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<!-- Anif -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+
+          <div class="modal-body">
+              <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+              <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                  correctly.</h6>
+              <div class="mt-4 text-center">
+                  <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-black ml-2" (click)="SaveApplicationForm('2')">Yes</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div id="printerdivApplicationForm" style="display: none;">
+  <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>

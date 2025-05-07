@@ -1,0 +1,111 @@
+<div class='book'>
+    <!--A4 page start-->
+    <div style='width: 74px; text-align: center; margin: 0 auto;'>
+        <img src='https://mrfhrportaldocumentstrg.blob.core.windows.net/signatureupload/logo.png'
+        style='width: 100%; text-align: center;'
+        alt=''>
+    </div>
+    <h2 style='text-align: center;'>TRAVEL REIMBURSEMENT</h2>
+
+    <div style='margin: 10px 0;'>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; text-align: right;'><b>Date:</b> {{today | date :'dd/MM/yyyy'}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style='margin: 10px 0;'>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px; width: 170px;'>NAME</td>
+                <td style='padding: 3px 5px; width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{travelReimbursementRecord?.candidateFullName}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>POSITION</td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{travelReimbursementRecord?.designationName}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>GRADE</td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{travelReimbursementRecord?.gradeName}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>DATE OF INDUCTION</td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{travelReimbursementRecord?.dateofInduction}}</td>
+            </tr>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;width: 170px;'>PLACE OF INDUCTION</td>
+                <td style='padding: 3px 5px;width: 20px;'>:</td>
+                <td style='padding: 3px 5px;'>{{travelReimbursementRecord?.placeofInductionDesc}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <br/>
+    <p>Please find below the details and reimburse the same as applicable as per my eligibility</p>
+    <br/>
+<div>
+    <table border="1"
+        style='width: 100%;  border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+        <thead>
+            <tr>
+                <th rowspan="2" style='border:1px solid #000; padding: 3px 5px;'>FOR</th>
+                <th colspan="2" style='border:1px solid #000; padding: 3px 5px; text-align: center;'>DESTINATION</th>
+                <th rowspan="2" style='border:1px solid #000; padding: 3px 5px;'>MODE OF TRANSPORT</th>
+                <th rowspan="2" style='border:1px solid #000; padding: 3px 5px; text-align: right;'>AMOUNT</th>
+            </tr>
+            <tr>
+                <th style='border:1px solid #000; padding: 3px 5px; text-align: center;'>FROM</th>
+                <th style='border:1px solid #000; padding: 3px 5px; text-align: center;'>TO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of this.travelReimbursementRecord?.employeeTravelJourneyDetails;let i=index">
+                <td rowspan="0" style='border:1px solid #000; padding: 3px 5px;' *ngIf="i==0">Travelling to Reporting Location</td>
+                <td style='border:1px solid #000; padding: 3px 5px; text-align: center;'>{{data.from}}</td>
+                <td style='border:1px solid #000; padding: 3px 5px; text-align: center;'>{{data.to}}</td>
+                <td style='border:1px solid #000; padding: 3px 5px;'>{{getModeOfTransport(data.travelModeId)}}</td>
+                <td style='border:1px solid #000; padding: 3px 5px; text-align: right;'>{{data.claimAmount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p>Encl: Tickets/bills</p>
+<br/><br/>
+<!-- <div>
+    <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+        <tbody>
+            <tr style="vertical-align: top;">
+                <td style="width: 50px;">Rupees:</td>
+                <td>
+                     <p style="margin: 0; text-transform: capitalize;">two thousand</p>
+                    <p style="margin: 0; text-transform: capitalize;">
+                        {{travelReimbursementRecord?.employeeTravelJourneyDetails[0].claimAmount |
+                        numberToWords}}</p>
+                    <p style="margin: 0; line-height: 5px;">
+                        -----------------------------------------------------------------------------------------------------------------------------
+                    </p>
+                    <p style="margin: 0;text-align: center;">(Write total amount in words)</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> -->
+    <table style='width: 100%;border-collapse: collapse; border-spacing: 0px; text-align: left; margin: 40px 0 0 0;'>
+        <tbody>
+            <tr>
+                <td style='width: 50%; padding: 3px 5px; text-align: right;'><img width='100' style='text-align:right'
+                    src="https://hrportaldocumentstorage.blob.core.windows.net/hrdocument/Signature.jpg"
+                    alt=""></td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px; text-align: right;'>SIGNATURE</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

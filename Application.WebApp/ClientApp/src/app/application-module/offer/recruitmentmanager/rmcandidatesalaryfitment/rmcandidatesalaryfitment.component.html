@@ -1,0 +1,719 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Salary Fitment</h1>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                        aria-controls="collapseOne">
+                        Candidate Details
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body" *ngFor="let data of candidates">
+                    <div class="candidate-info-header mb-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="col">
+                                <h6 class="red d-inline-block mt-1">{{data.prefixName}} {{data.fullName}}
+                                    ({{data.candidateNo}})</h6>
+                                <span> {{data.emailId}}</span>
+                            </div>
+                            <div class="col" *ngIf="data.hiringStatusId!=1">
+                                <span
+                                    [class]="data.hiringStatusId!=4?'badge badge-pill badge-success':'badge badge-pill badge-danger'">{{data.hiringStatusName}}</span>
+                            </div>
+                        </div>
+                        <div class="pb-1">
+                            <span class="mr-3"><i class="las la-mobile"></i> {{data.contactNo}}</span><span><i
+                                    [class]="data.genderName=='Male'?'las la-male':'las la-female'"></i>
+                                {{data.genderName}}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Age :</p>
+                            <p class="d-inline-block">{{data.age}}Yrs</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Aadhar No. :</p>
+                            <p class="d-inline-block">{{data.aadharNo}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Mother Tongue :</p>
+                            <p class="d-inline-block">{{data.motherTongueName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Languages Known :</p>
+                            <p class="d-inline-block">{{data.languageNames}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Highest Qualification :</p>
+                            <p class="d-inline-block">{{data.qualificationName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Course :</p>
+                            <p class="d-inline-block">{{data.courseName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Stream :</p>
+                            <p class="d-inline-block">{{data.streamName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Percentage :</p>
+                            <p class="d-inline-block">{{data.marksPercentage}}%</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Year of Completion :</p>
+                            <p class="d-inline-block">{{data.completionYear}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Qualification Type :</p>
+                            <p class="d-inline-block">{{data.qualificationTypeName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Total Experience :</p>
+                            <p class="d-inline-block">{{data.experienceYear}}years {{data.experienceMonth}} months</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current CTC :</p>
+                            <p class="d-inline-block">{{data.currentCTC}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current Employer :</p>
+                            <p class="d-inline-block">{{data.currentEmployer}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Designation :</p>
+                            <p class="d-inline-block">{{data.currentDesignation}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Domain :</p>
+                            <p class="d-inline-block">{{data.domainName}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Sub-Domain :</p>
+                            <p class="d-inline-block">{{data.subDomainName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Current Location :</p>
+                            <p class="d-inline-block">{{data.stateName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="d-inline-block grey">Any Previous Application History in MRF :</p>
+                            <p class="d-inline-block">{{data.previousAppliedName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Any relative Working on MRF :</p>
+                            <p class="d-inline-block">{{data.relativeStatusName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+                            <p class="d-inline-block grey">Relative Name :</p>
+                            <p class="d-inline-block">{{data.relativeName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.relativeStatus!=0">
+                            <p class="d-inline-block grey">Relative Contact No :</p>
+                            <p class="d-inline-block">{{data.relativeContactNo}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="data.parentRelationshipId!=0">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Referee's Relation /Familarity :</p>
+                            <p class="d-inline-block">{{data.parentRelationshipName}}</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.childRelationshipId!=0">
+                            <p class="d-inline-block grey">Relation Details :</p>
+                            <p class="d-inline-block">{{data.childRelationshipName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="data.relationshipNotes!=''">
+                        <div class="col-md-12">
+                            <p class="d-inline-block grey">Relationship/Familarity Details :</p>
+                            <p class="d-inline-block">{{data.relationshipNotes}}</p>
+                        </div>
+                    </div>
+                    <!--Piu Biswas-->
+                    <div class="form-row" *ngIf="data.cmdApprovalRequired!=0">
+                        <div class="col-md-3">
+                            <p class="d-inline-block grey">Cmd Approval Required :</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalRequired==0">No</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalRequired==1">Yes</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.cmdApprovalRequired==1">
+                            <p class="d-inline-block grey">Cmd Approval Status :</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalStatus==0">No</p>
+                            <p class="d-inline-block" *ngIf="data.cmdApprovalStatus==1">Yes</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="data.cmdApprovalNo!=''">
+                            <p class="d-inline-block grey">Cmd Approval No :</p>
+                            <p class="d-inline-block">{{data.cmdApprovalNo}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-md-6" *ngIf="data.cmdApprovalNo!=''">
+                            <p>CMD Approval Documnet :</p>
+                            <div class="attach-file">
+                                <a (click)="openFile(data.cmdApprovalDocument)" style="cursor: pointer;" title="Download" ><i
+                                        class="las color-black la-paperclip"></i>CMD Approval doc </a>
+                                <a (click)="openFile(data.cmdApprovalDocument)" style="cursor: pointer;"><i
+                                        class="las la-download red"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Resume :</p>
+                            <div class="attach-file">
+                                <a (click)="openFile(data.resume)" style="cursor: pointer;" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Resume doc </a>
+                                <a (click)="openFile(data.resume)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="testScoreVisible">
+                        <hr>
+                        <h6 class="red">Test Score</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Test Completion Date</th>
+                                        <th class="text-center">Score Obtained</th>
+                                        <th class="text-center">Aptitude</th>
+                                        <th class="text-center">Reading/Planning Excercise</th>
+                                        <th class="text-center">Written Excercise/Emotional Maturity</th>
+                                        <th class="text-center">Technical</th>
+                                        <th>Test Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of testResults">
+                                        <td>{{data.testCompletionDate}}</td>
+                                        <td class="text-center">{{data.scoreObtained}}</td>
+                                        <td class="text-center">{{data.apptitude}}</td>
+                                        <td class="text-center">{{data.readingExercise}}</td>
+                                        <td class="text-center">{{data.writtenExercise}}</td>
+                                        <td class="text-center">{{data.technical}}</td>
+                                        <td>{{data.testResult}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree">
+                        Uploaded Documents
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Document Type</th>
+                                    <th>Document Particular</th>
+                                    <th>Document Name</th>
+                                    <th>Uploaded Document</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of attachedSubmittedDocumentArrayList">
+                                    <td>{{data.doumentTypName}}</td>
+                                    <td>{{data.doumentParticularName}}</td>
+                                    <td>{{data.doumentName}}</td>
+                                    <td>
+                                        <div *ngIf="data.documentPath !== ''" class="attach-file mb-0">
+                                            <a (click)="openFile(data.documentPath)" style="cursor: pointer;" title="Download"><i
+                                                    class="las color-black la-paperclip"></i>Download</a>
+                                            <a (click)="openFile(data.documentPath)" style="cursor: pointer;"><i
+                                                    class="las la-download red"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                        aria-controls="collapseTwo">
+                        Current Salary Details
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Emoluments</th>
+                                    <th class="text-right">Monthly(rs.)</th>
+                                    <th class="text-right">Yearly(rs.)</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of documentData?.salaryDetails">
+                                    <td>{{data.emolumntName}}</td>
+                                    <td class="text-right">{{data.monthly}}</td>
+                                    <td class="text-right">{{data.yerly}}</td>
+                                    <td>{{data.emolumntVerifyRemark}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <h6 class="m-0">Total</h6>
+                                    </td>
+                                    <td class="text-right">
+                                        <h6 class="m-0">{{monthlyTotal}}</h6>
+                                    </td>
+                                    <td class="text-right">
+                                        <h6 class="m-0">{{yearlyTotal}}</h6>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h2>
+                    <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed"
+                        data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                        aria-controls="collapseFour">
+                        Salary Fitment
+                        <span>
+                            <i class="fa fa-minus"></i>
+                        </span>
+                    </button>
+                </h2>
+            </div>
+
+        </div>
+        <div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Designation<span class="required">*</span></label>
+                            <!-- <ng-select bindLabel="positionName" [placeholder]="'Select'"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="selectedCandidateDesignationId" name="selectedCandidateDesignationId">
+                                <ng-option [value]="rec.positionId" *ngFor="let rec of positions">
+                                    {{rec.positionName}}
+                                </ng-option>
+                            </ng-select> -->
+                            <input type="text" class="form-control" [(ngModel)]="selectedCandidateDesignationText" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Location<span class="required">*</span></label>
+                            <ng-select bindLabel="locationOffice" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="true" [clearable]="false"
+                                [(ngModel)]="selectedCandidateLocationId" name="selectedCandidateLocationId">
+                                <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                    {{rec.locationOffice}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Probation<span class="required">*</span></label>
+                            <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                                [searchable]="false" [clearable]="false" [(ngModel)]="selectedCandidateProbationIdId"
+                                name="selectedCandidateProbationIdId">
+                                <ng-option [value]="1">6 Months</ng-option>
+                                <ng-option [value]="2">1 Year</ng-option>
+                                <ng-option [value]="3">NA </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <!-- Added by arghya on 27-06-2022 -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>
+                                Grade <span class="required">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="txtGrade" value="{{gradeName}}" name="created"
+                                readonly>
+
+                        </div>
+                    </div>
+                    <!-- Till this -->
+                    <div class="d-flex w-100 justify-content-end">
+                        <div class="my-2"
+                            *ngIf="savedSalaryData?.hiringStatusId>=33 && savedSalaryData?.hiringStatusId<=37 && savedSalaryData?.hiringStatusId!=36 ">
+                            <button type="button" class="btn btn-sm btn-black mb-2" data-target="#salarypopup"
+                                data-toggle="modal">
+                                <i class="las la-plus"></i> Set Salary
+                            </button>
+                        </div>
+                        <div class="my-2" *ngIf="savedSalaryData?.salaryFitmentDetails.length>0">
+                            <button type="button" class="btn btn-primary btn-sm mb-2 ml-2" (click)="DownloadPDF()">
+                                <i class="las la-download"></i> Download Salary Fitment
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" *ngIf="savedSalaryData?.hiringStatusId>35">
+                        <div *ngFor="let data of savedSalaryData?.salaryFitmentDetails">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" style="width: 40px;"></th>
+                                        <th rowspan="2">
+                                            <span class="red" *ngIf="data.acceptance==3">Declined</span>
+                                            <span class="green" *ngIf="data.acceptance==2">Accepted</span>
+                                            <span class="yellow" *ngIf="data.acceptance==1">Pending</span>
+                                        </th>
+                                        <th colspan="2" class="text-center">Proposed</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-right" style="width: 140px;">Monthly(Rs.)</th>
+                                        <th class="text-right" style="width: 140px;">Yearly(Rs.)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let rec of data.salaryFitmentSalaryDetailsFormat">
+                                        <td>{{rec.visibleOrder}}</td>
+                                        <td>{{rec.salaryAccountHeadName}}</td>
+                                        <td class="text-right">
+                                            {{rec.calculatedSalaryValue>0?rec.calculatedSalaryValue:''}}
+                                        </td>
+                                        <td class="text-right">
+                                            {{rec.calculatedSalaryValueYearly>0?rec.calculatedSalaryValueYearly:''}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-responsive" *ngIf="calculatedSalary?.claCulatePayStructureValueFormat.length>0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="width: 40px;"></th>
+                                    <th rowspan="2"></th>
+                                    <th colspan="2" class="text-center">Proposed</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" style="width: 140px;">Monthly(Rs.)</th>
+                                    <th class="text-right" style="width: 140px;">Yearly(Rs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of calculatedSalary?.claCulatePayStructureValueFormat">
+                                    <td>{{data.order}}</td>
+                                    <td>{{data.salaryAccountHeadName}}</td>
+                                    <td class="text-right">{{data.calculatedValue}}</td>
+                                    <td class="text-right">{{data.calculatedValueYerly}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        In addition to the above you will be eligible for the following benefits as per Company policy
+                        <ul>
+                            <li>Group Hospitalization Insurance for self, wife and dependent children</li>
+                            <li>Group Personal Accident Insurance for self </li>
+                        </ul>
+                        <p style="font-size: 17px;"><span class="table-warning"><b>Note&nbsp;:</b>Please note that the final CTC amount may be subject to minor rounding adjustments.</span> </p>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="table-warning">
+                                    <td>Our Offer</td>
+                                    <td class="text-right">{{ourOffer}}</td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td>In %</td>
+                                    <td class="text-right">{{percentCTC| number:'2.0-0'}}</td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td>Basic(%)</td>
+                                    <td class="text-right">{{percentBasic| number:'2.0-0'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="showExperience">
+                    <h6 class="red">Year of Experience:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 300px;">Company</th>
+                                    <th style="width: 130px;">From</th>
+                                    <th style="width: 130px;">To</th>
+                                    <th style="width: 80px;">Days</th>
+                                    <th style="width: 80px;">Years</th>
+                                    <th>Remarks</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of savedSalaryData?.salaryFitmentExperience">
+                                    <td><input type="text" class="form-control" placeholder=""
+                                            (ngModelChange)="data.organisation=$event"
+                                            [(ngModel)]="data.organisation" /></td>
+                                    <td>
+                                        <!-- Was -->
+                                        <!--  <div class="input-group datepiker date">
+                                  <input type="text" class="form-control pull-right fa fa-calendar" id="" (ngModelChange)="data.from=$event"
+                                          placeholder="From Date"  [(ngModel)]="data.from"/>
+                                  <div class="input-group-append">
+                                      <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                  </div>
+                              </div> -->
+                                        <!-- Changed by Anif on 25-06-2022 -->
+                                        <!-- Disabled Added By Amartya on 05-08-2023-->
+                                        <div class="input-group datepickerfrom date">
+                                            <input type="text" class="form-control pull-right datepickerfrom"
+                                                id="datepickerfrom{{data.salaryFitmentExperienceId}}"
+                                                [disabled]="!(savedSalaryData?.hiringStatusId==35 || savedSalaryData?.hiringStatusId==37 || savedSalaryData?.hiringStatusId==34 || savedSalaryData?.hiringStatusId==33)"
+                                                placeholder="From Date" autocomplete="off" [(ngModel)]="data.from"
+                                                (ngModelChange)="data.from=$event">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- Disabled Added By Amartya on 05-08-2023-->
+                                        <div class="input-group datepickerto date">
+                                            <input type="text" class="form-control pull-right datepickerto"
+                                                id="datepickerto{{data.salaryFitmentExperienceId}}"
+                                                [disabled]="!(savedSalaryData?.hiringStatusId==35 || savedSalaryData?.hiringStatusId==37 || savedSalaryData?.hiringStatusId==34 || savedSalaryData?.hiringStatusId==33)"
+                                                (ngModelChange)="data.to=$event" placeholder="To Date"
+                                                [(ngModel)]="data.to" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="form-control" placeholder=""
+                                            (ngModelChange)="data.days=$event" [(ngModel)]="data.days" /></td>
+                                    <td><input type="text" class="form-control" placeholder=""
+                                            (ngModelChange)="data.years=$event" [(ngModel)]="data.years" /></td>
+                                    <td><input type="text" class="form-control" placeholder=""
+                                            (ngModelChange)="data.remarks=$event" [(ngModel)]="data.remarks" /></td>
+                                    <td class="text-center"><a href="javascript:void(0)"
+                                            (click)="removeExperience(data.salaryFitmentExperienceId)"
+                                            class="row-btn"><i class="las la-trash-alt"></i></a></td>
+                                </tr>
+                                <tr *ngIf="savedSalaryData?.salaryFitmentExperience.length==0">
+                                    <td colspan="7" class="text-center">No Data Available</td>
+                                </tr>
+                            </tbody>
+                            <tfoot *ngIf="savedSalaryData?.salaryFitmentExperience.length>0">
+                                <tr>
+                                    <td>
+                                        <p class="m-0 font-weight-bold">Total Experience</p>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <p class="m-0 font-weight-bold">{{allexperience| number}}</p>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="m-t-4">
+                <h6 class="red" *ngIf="savedSalaryData?.salaryFitmentDetails.length>0">Remarks:</h6>
+                <div *ngFor="let data of salaryFitmentRemarks">
+                    <div class="media mb-3">
+                        <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                        <div class="media-body">
+                            <h6 class="mt-0">{{data.createdByName}} <span></span></h6>
+                            {{data.reamrks}}
+                        </div>
+                    </div>
+                    <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                        <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                        <div class="media-body">
+                            <h6 class="mt-0">{{data?.modifiedByName}} <span></span></h6>
+                            {{data.reamrksReply}}
+                        </div>
+                    </div>
+                </div>
+                <div
+                    *ngIf="savedSalaryData?.hiringStatusId==35 || savedSalaryData?.hiringStatusId==37 || savedSalaryData?.hiringStatusId==34 || savedSalaryData?.hiringStatusId==33">
+                    <div class="form-group" *ngIf="savedSalaryData?.salaryFitmentDetails.length>0">
+                        <label for="">Remarks</label>
+                        <textarea id="" class="form-control txtremarks" [(ngModel)]="additionalRemarks"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-right"
+            *ngIf="savedSalaryData?.hiringStatusId==35 || savedSalaryData?.hiringStatusId==37 || savedSalaryData?.hiringStatusId==34 || savedSalaryData?.hiringStatusId==33">
+            <button type="button" class="btn btn-black" data-toggle="modal" (click)="yessubmitData()">Send to
+                Candidate</button>
+            <!-- <button type="button " class="btn btn-primary ml-1">Cancel</button> -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="confirmPopup" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                    <h6 class="conComment text-center">Are you sure you want to continue.</h6>
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-black ml-2" (click)="submitData()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End -->
+    <div class="modal fade" id="salarypopup" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="closeSalaryModal" #closeSalaryModal class="close" data-dismiss="modal"><i
+                            class="las la-times"></i></button>
+                    <h4 class="modal-title">Set Salary</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Grade</label>
+                                <ng-select bindLabel="gradeName" [(ngModel)]="selectedGradeId" [placeholder]="'Select'"
+                                    (ngModelChange)="onChangeGrade($event)" [appendTo]="'body'" [multiple]="false"
+                                    [searchable]="false" [clearable]="false">
+                                    <ng-option [value]="rec.gradeId" *ngFor="let rec of gradeList">
+                                        {{rec.gradeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Salary Template</label>
+                                <ng-select bindLabel="salaryTemplateName" [(ngModel)]="selectedTemplateId"
+                                    (ngModelChange)="onChangeTemplate($event)" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                    <ng-option [value]="rec.salaryTemplateId" *ngFor="let rec of salaryTemplates">
+                                        {{rec.salaryTemplateName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="dataTable1" class="table table-bordered" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Account Head</th>
+                                    <th>Formula</th>
+                                    <th class="text-right" style="width: 160px;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of searchSalaryTemplateDetails">
+                                    <td>{{data.salaryAccountHeadName}}</td>
+                                    <td>{{data.salaryFormula}}</td>
+                                    <td class="text-right">
+                                        <!-- Sanjib's code -->
+                                        <!-- <input type="text" class="form-control"
+                                        [disabled]="(data.salaryValue==0 && data.salaryFormula!='')?true:false"
+                                        [(ngModel)]="data.salaryValue" /> -->
+
+                                        <!-- Anifur's Code based on client feed back -->
+                                        <input type="text" class="form-control"
+                                            [disabled]="(data.salaryAccountHeadId!=1 && data.salaryAccountHeadId!=5)?true:false"
+                                            [(ngModel)]="data.salaryValue" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"
+                        (click)="getCalculatedSalaryTemplate()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
+    <div id="printerdiv" style="display: none;">
+        <app-pdfsalaryfitment [salaryFitment]="salaryFitmentDataForPDF"></app-pdfsalaryfitment>
+    </div>
+    <div id="printerdivSingle" style="display: none;">
+        <app-pdfsalaryfitmentsinglepage [salaryFitment]="salaryFitmentDataForPDF"></app-pdfsalaryfitmentsinglepage>
+    </div>
+
+    <!-- Anif -->

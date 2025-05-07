@@ -1,0 +1,135 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoRoRequisitionList()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Request Details</h1>
+    </div>
+    <div *ngFor="let data of requisitionLists">
+        <div class="d-flex align-items-center mb-2">
+            <div class="icon_empSearch">
+                <img src="assets/images/expart-icon.png" alt="">
+            </div>
+            <div class="position">
+                <h5 class="red mt-1 mb-1">{{data.positionName}}</h5>
+                <p class="font-weight-bold">{{data.requisitionNo}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Requested On :</p>
+                <p class="d-inline-block">{{data.createdOn}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Requested Type :</p>
+                <p class="d-inline-block">{{data.requisitionType}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Department Name :</p>
+                <p class="d-inline-block">{{data.departmentName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function :</p>
+                <p class="d-inline-block">{{data.functionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Location :</p>
+                <p class="d-inline-block">{{data.locationNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Number of Position :</p>
+                <p class="d-inline-block">{{data.requestCount}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade :</p>
+                <p class="d-inline-block">{{data.gradeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Job Type :</p>
+                <p class="d-inline-block">{{data.jobTypeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Target Date:</p>
+                <p class="d-inline-block">{{data.targetDate}}</p>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-sm-12">
+                <div class="attach-file">
+                    <a (click)="openFile(data.managementApprovalDocument)" style="cursor: pointer;" title="Download"><i
+                            class="las color-black la-paperclip"></i>Download IOM </a>
+                    <a (click)="openFile(data.managementApprovalDocument)" style="cursor: pointer;"><i
+                            class="las la-download red"></i></a>
+                </div>
+                <div class="attach-file">
+                    <a href="javascript:void(0)" title="Download"><i class="las color-black la-paperclip"></i>Download
+                        JD </a>
+                    <a href="javascript:void(0)"><i class="las la-download red"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="saveForm" (ngSubmit)="formSubmit()" #formGroupRef="ngForm">
+        <input type="hidden" formControlName="requisitionDetailId" #requisitionDetailId />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Allocated To<span class="required">*</span></label>
+                    <!-- <select class="selectpicker" title="Select" formControlName="allocatedAutoUserId"
+                        #allocatedAutoUserId>
+                        <option *ngFor="let user of rmUser" [ngValue]="user.autoUserId">
+                            {{user.empName}}
+                        </option>
+                    </select> -->
+                    <ng-select bindLabel="empName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                        [searchable]="false" [clearable]="false" formControlName="allocatedAutoUserId">
+                        <ng-option [value]="user.autoUserId" *ngFor="let user of rmUser">
+                            {{user.empName}}
+                        </ng-option>
+                    </ng-select>
+                    <div
+                        *ngIf="saveForm.controls['allocatedAutoUserId'].touched && !saveForm.controls['allocatedAutoUserId'].valid">
+                        <span class="text-danger error"
+                            *ngIf="saveForm.controls['allocatedAutoUserId'].hasError('required') ">
+                            Required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="">Salary<span class="required">*</span></label>
+                    <ng-select bindLabel="salaryName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                        [searchable]="false" [clearable]="false" formControlName="salaryId">
+                        <ng-option [value]="salary.salaryId" *ngFor="let salary of salaries">
+                            {{salary.salaryName}}
+                        </ng-option>
+                    </ng-select>
+                    <div *ngIf="saveForm.controls['salaryId'].touched && !saveForm.controls['salaryId'].valid">
+                        <span class="text-danger error" *ngIf="saveForm.controls['salaryId'].hasError('required') ">
+                            Required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea class="form-control" formControlName="remarks" #remarks></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="my-2">
+            <!-- <button type="submit" [disabled]="saveForm.invalid" class="btn btn-black">Allocate</button> -->
+            <button type="submit" class="btn btn-black" [disabled]="saveForm.invalid">Allocate</button>
+            <button type="button" class="btn btn-primary ml-1" (click)="gotoRoRequisitionList()">Cancel</button>
+        </div>
+    </form>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

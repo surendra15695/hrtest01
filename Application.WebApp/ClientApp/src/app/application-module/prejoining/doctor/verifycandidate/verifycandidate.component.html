@@ -1,0 +1,111 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" class="back-btn" routerLink="/app/doctor/candidatelist"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Verify Report</h1>
+    </div>
+    <div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate Name:</p>
+                <p class="d-inline-block">{{doctorVerificationReportDetails?.name}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Vertical:</p>
+                <p class="d-inline-block">{{doctorVerificationReportDetails?.verticalName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Designation:</p>
+                <p class="d-inline-block">{{doctorVerificationReportDetails?.position}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function:</p>
+                <p class="d-inline-block">{{doctorVerificationReportDetails?.functionName}}</p>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Department:</p>
+                <p class="d-inline-block">{{doctorVerificationReportDetails?.departmentName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Location:</p>
+                <p class="d-inline-block">{{doctorVerificationReportDetails?.location}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Medical Doc.:</p>
+                <div class="attach-file">
+                    <a (click)="openFile(doctorVerificationReportDetails?.document)" style="cursor: pointer;" title="Download"><i
+                            class="las color-black la-paperclip"></i>{{doctorVerificationReportDetails?.documentName}}
+                    </a>
+                    <a href="javascript:void(0)"><i class="las la-download red"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <form [formGroup]="verifyCandidateForm" (ngSubmit)="onVerifyReport()">
+        <div>
+            <h6 class="red">Take Action</h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Medically Fit</label>
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="1" id="radio1" type="radio" (change)="onChangeMedicallyFit('Y')"
+                                [disabled]="!canEdit">
+                            <label for="radio1">Yes</label>
+                        </div>
+                        <div class="rdio rdio-primary d-inline-block">
+                            <input name="radio" value="2" id="radio2" type="radio" (change)="onChangeMedicallyFit('N')"
+                                [disabled]="!canEdit">
+                            <label for="radio2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Remarks</label>
+                        <textarea name="" id="" class="form-control" formControlName="medicalallyFitRemarks"
+                            [readonly]="!canEdit"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr> 
+                        <th>Remarks For</th>
+                        <th>Remarks By</th>
+                        <th>Date</th>
+                        <th>Remarks</th>                   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let rec of candidateremarksList">
+                        <td>{{rec.statusName}}</td>
+                        <td>{{rec.empName}}</td> 
+                        <td>{{rec.createdOn}}</td> 
+                        <td>{{rec.remarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4" *ngIf="canEdit">
+            <button type="submit" class="btn btn-black">Submit</button>
+            <button type="button" class="btn btn-primary ml-1" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+
+<div id="printMedicalDocDiv" style="display: none;">
+    <app-pdf-upload-medical-document [medicalDocRecord]="medicalDocData"></app-pdf-upload-medical-document>
+</div>
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

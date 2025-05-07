@@ -1,0 +1,329 @@
+<div class="content-box">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="firsttab" data-toggle="tab" href="#tabOne" role="tab" aria-controls="home"
+                aria-selected="true" (click)="onClickPendingTab()">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="secondtab" data-toggle="tab" href="#tabTwo" role="tab" aria-controls="profile"
+                aria-selected="false" (click)="onClickProcessedTab()">Processed</a>
+        </li>
+    </ul>
+    <!-- Tab Section Start -->
+    <div class="tab-content mt-3" id="myTabContent">
+        <!-- tab One Start-->
+        <div class="tab-pane fade show active" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchformPending" (ngSubmit)="pendingFormSubmit()">
+                <div class="filter-sec">
+                    <div class="form-row m-t-10">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate No</label>
+                                <input type="text" class="form-control" formControlName="candidateNo">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="verticalId">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="pendingResetClick()"><i
+                                    class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+            <div class="text-right my-2">
+                <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+                    data-target="#callBackModal" *ngIf="callngIfFunction?showAllocateCandidateButton():false"
+                    (click)="onClickTakeActionButton()">Take
+                    Action</button>
+            </div>
+
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAllPending" [(ngModel)]="selectAllPending"
+                                        (change)="onCheckSelectAllPending($event)">
+                                    <label class="chk" for="chkAllPending"></label>
+                                </div>
+                            </th>
+                            <th>Requisition No</th>
+                            <th>Cand.No</th>
+                            <th>Candidate Name</th>
+                            <!-- <th>Designation</th> -->
+                            <th>Function</th>
+                            <th>Department</th>
+                            <!-- <th>Grade</th> -->
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Qualification</th>
+                            <th>Exp.</th>
+                            <!-- <th>Cur. Location</th> -->
+                            <!-- <th>D.O.J</th> -->
+                            <th>Remarks</th>
+                            <th>Approval Status</th>
+                            <th>Hiring Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of callbackPendingList;let i=index;">
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{i}}" [ngModel]="getPendingEnableStatus(data)"
+                                        (change)="onCheckRowWisePending(data,$event)">
+                                    <label class="chk" for="{{i}}"></label>
+                                </div>
+
+                            </td>
+                            <td>{{data.requisitionNo}}</td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <!-- <td>{{data.designationName}}</td> -->
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <!-- <td>{{data.gradeName}}</td> -->
+                            <td>{{data.emailId}}</td>
+                            <td>{{data.contact}}</td>
+                            <td>{{data.courseName}} {{data.streamName}}</td>
+                            <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                            <!-- <td>{{data.communicationAddress}} , {{data.communicationStateName}}</td> -->
+                            <!-- <td>{{data.dateofJoining}}</td> -->
+                            <td>{{data.remarks}}</td>
+                            <td>{{data.approvalStatus}}</td>
+                            <td>{{data.hiringStatusName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            (click)="onClickTakeActionOption(data)" data-toggle="modal"
+                                            data-target="#callBackModal">
+                                            <i class="las la-check-square"></i> Take
+                                            Action
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- tab One End-->
+
+        <!-- tab two Start-->
+        <div class="tab-pane fade" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <!-- Fiter section start -->
+            <form [formGroup]="searchFormProcessed" (ngSubmit)="processedFormSubmit()">
+                <div class="filter-sec">
+                    <div class="form-row m-t-10">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate No</label>
+                                <input type="text" class="form-control" formControlName="candidateNo">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="verticalId">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-black btn-sm"><i
+                                    class="las la-filter"></i>Filter</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-1"
+                                (click)="processedResetClick()"><i class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fiter section End -->
+
+
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <!-- <th>
+                                <div class="form-check">
+                                    <input type="checkbox" id="chkAllAllocated" [(ngModel)]="selectAllAllocated"
+                                        (change)="onCheckSelectAllAllocated($event)">
+                                    <label class="chk" for="chkAllAllocated"></label>
+                                </div>
+                            </th> -->
+                            <th>Requisition No</th>
+                            <th>Cand. ID</th>
+                            <th>Candidate Name</th>
+                            <!-- <th>Designation</th> -->
+                            <th>Function</th>
+                            <th>Department</th>
+                            <!-- <th>Grade</th> -->
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Qualification</th>
+                            <th>Exp.</th>
+                            <!-- <th>Cur. Location</th> -->
+                            <!-- <th>D.O.J</th> -->
+                            <th>Approval Remarks</th>
+                            <th>Approval Status</th>
+                            <th>Hiring Status</th>
+                            <!-- <th style="text-align: center;"></th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of processedCallBackList;">
+                            <!-- <td>
+                                <div class="form-check">
+                                    <input type="checkbox" id="{{data.candidateId}}"
+                                        [ngModel]="getEnableStatusAllocated(data)"
+                                        (change)="onCheckRowWiseAllocated(data,$event)">
+                                    <label class="chk" for="{{data.candidateId}}"></label>
+                                </div>
+                            </td> -->
+                            <td>{{data.requisitionNo}}</td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <!-- <td>{{data.designationName}}</td>   -->
+                            <td>{{data.functionName}}</td>
+                            <td>{{data.departmentName}}</td>
+                            <!-- <td>{{data.gradeName}}</td> -->
+                            <td>{{data.emailId}}</td>
+                            <td>{{data.contact}}</td>
+                            <td>{{data.courseName}} {{data.streamName}}</td>
+                            <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                            <!-- <td>{{data.communicationAddress}} , {{data.communicationStateName}}</td> -->
+                            <!-- <td>{{data.dateofJoining}}</td> -->
+                            <td>{{data.remarks}}</td>
+                            <td>{{data.approvalStatus}}</td>
+                            <td>{{data.hiringStatusName}}</td>
+                            <!-- <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a *ngIf="data.dateofJoining!='' && data.hiringStatusId!=55"
+                                            class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                            data-target="#updateJoiningDateModal"
+                                            (click)="onClickUpdateJoningDate(data)"><i class="las la-pen"></i> Update
+                                            Joining
+                                            Date</a>
+                                        <a class="dropdown-item" *ngIf="data.hiringStatusId!=55"
+                                            href="javascript:void(0)" data-toggle="modal" data-target="#declineModal"
+                                            (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'Allocation')"><i
+                                                class="las la-times-circle"></i>
+                                            Declined</a>
+                                    </div>
+                                </div>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- tab two end-->
+    </div>
+    <!-- Tab Section end -->
+</div>
+
+
+<div class="modal fade" id="callBackModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">Call Back Acknowledgement</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div class="rdio rdio-primary d-inline-block">
+                                <input name="callbackradio" value="2" id="radio3" type="radio"
+                                    (change)="onChangeApprove('A')"
+                                    [checked]="objApproveRejectFormData.approvalStatusId==2">
+                                <!--  [checked]="objApproveRejectFormData.approvalStatusId==true" -->
+                                <label for="radio3">Approve</label>
+                            </div>
+                            <div class="rdio rdio-primary d-inline-block">
+                                <input name="callbackradio" value="3" id="radio4" type="radio"
+                                    (change)="onChangeApprove('R')"
+                                    [checked]="objApproveRejectFormData.approvalStatusId==3">
+                                <!-- [checked]="objApproveRejectFormData.approvalStatusId==0" -->
+                                <label for="radio4">Reject</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="objApproveRejectFormData.remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="approveRejectSubmit()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>

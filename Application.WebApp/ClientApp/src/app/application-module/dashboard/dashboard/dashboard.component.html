@@ -1,0 +1,203 @@
+<div class="container-fluid">
+    <div class="form-row">
+        <div class="col-md-12" *ngIf="rmContent">
+            <div class="form-row">
+                <div class="col-md-2">
+                    <h6>Total Active positions</h6>
+                    <div class="status-card type-e d-flex align-items-center justify-content-between">
+                        <div class="icon"><img src="images/people-icon.png" alt=""></div>
+                        <div class="text-right">
+                            <h3>6</h3>
+                            <h6>Positions</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h6>Total Candidates</h6>
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <div class="status-card type-a d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/to-process-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>25</h3>
+                                    <h6>Profile Sourced</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-b d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/processing-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>24</h3>
+                                    <h6>Interview Scheduled</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-c d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/hired-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>18</h3>
+                                    <h6>Selected Candidates</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-d d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/rejected-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>15</h3>
+                                    <h6>Offered Candidates</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-d d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/rejected-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>10</h3>
+                                    <h6>Joined Candidates</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h6>Average Lead Time</h6>
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <div class="status-card type-a d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/to-process-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>13</h3>
+                                    <h6>Requisition To Joining</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-b d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/processing-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>3</h3>
+                                    <h6>Selection To Joining</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-c d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/hired-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>1</h3>
+                                    <h6>Requisition To Selection</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-d d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/rejected-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>2</h3>
+                                    <h6>Selection To Approval</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="status-card type-d d-flex align-items-center justify-content-between">
+                                <div class="icon"><img src="images/rejected-icon.png" alt=""></div>
+                                <div class="text-right">
+                                    <h3>2</h3>
+                                    <h6>Approval To Joining</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5" style="display: none;">
+            <div class="performance-chart-card">
+                <h6 class="mt-0">Vendor Preformance</h6>
+                <div class="graph-area">Graph goes here</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Added By Anif on 04-08-2022 -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <form [formGroup]="changePasswordForm" (ngSubmit)="actionFormSubmit()" autocomplete="off">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button> -->
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Old Password <span class="red">*</span></label>
+                                <input type="text" class="form-control" formControlName="oldPassword">
+                                <p class="error-msg"
+                                    *ngIf="changePasswordForm.controls['oldPassword'].touched && !changePasswordForm.controls['oldPassword'].valid">
+                                    <span
+                                        *ngIf="changePasswordForm.controls['oldPassword'].hasError('required') || changePasswordForm.controls['oldPassword']==''">Please
+                                        Enter Password</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>New Password <span class="red">*</span></label>
+                                <input type="password" class="form-control" formControlName="newPassword"
+                                    (keyup)="onNewPasswordPress($event)">
+                                <!--  (keyup)="onNewPasswordPress($event)" -->
+                                <p class="error-msg"
+                                    *ngIf="changePasswordForm.controls['newPassword'].touched && !changePasswordForm.controls['newPassword'].valid">
+                                    <span
+                                        *ngIf="changePasswordForm.controls['newPassword'].hasError('required') || changePasswordForm.controls['newPassword']==''">Please
+                                        Enter Password</span>
+                                    <span *ngIf="changePasswordForm.controls['newPassword'].hasError('pattern') "
+                                        title="Password should be atleast 8 characters long and should contain one number,one character and one special character">Invalid
+                                        Password<i class="fa fa-info-circle"></i></span>
+                                        <span class="error-msg" style="position: relative; margin-left: 5px" *ngIf="newPassMissmatch">Password doesn't match</span>
+
+                                </p>
+                                <!-- <p class="error-msg" *ngIf="newPassMissmatch">Password doesn't match</p> -->
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Confirm Password <span class="red">*</span></label>
+                                <input [type]="passwordhide ? 'password' : 'text'" id="id_password" class="form-control" formControlName="cnfNewPassword"
+                                    (keyup)="onCnfPasswordPress($event)">
+                                    <i [class]="passwordhide ? 'fa fa-fw field-icon toggle-password fa-eye' :'fa fa-fw field-icon toggle-password fa-eye-slash'" id="togglePassword" style="position: absolute; right:10px; bottom: 10px;" (click)="onclickeye()"></i>
+                                <!--  -->
+                                <p class="error-msg"
+                                    *ngIf="changePasswordForm.controls['cnfNewPassword'].touched && !changePasswordForm.controls['cnfNewPassword'].valid">
+                                    <span
+                                        *ngIf="changePasswordForm.controls['cnfNewPassword'].hasError('required') || changePasswordForm.controls['cnfNewPassword']==''">Please
+                                        Enter Password</span>
+                                </p>
+                                <p class="error-msg" *ngIf="cnfPasswordMissmatch && changePasswordForm.controls['cnfNewPassword'].valid">Password doesn't match</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-black btn-sm" (click)="actionFormSubmit()">Submit</button> -->
+                    <button type="submit" class="btn btn-black btn-sm">Submit</button>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<!-- Modal  end -->

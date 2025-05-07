@@ -1,0 +1,42 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Upload Employee Master</h1>
+    </div>
+    <div class="alert alert-warning">
+        <p>
+            <span style="color:red;">Note:</span>
+            While uploading Emplyee Master, please convert the Aadhaar number field to Numeric before uploading.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="">Upload File<span class="required">*</span><small class="font-italic grey">(Only Excel
+                    File)</small></label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    (change)="onFileChange($event.target.files)">
+                <label class="custom-file-label" for="customFile" #testResult></label>
+            </div>
+        </div>
+        <div class="mt-4 text-right">
+            <button type="button" class="btn btn-black" (click)="onUpload()"><i
+                    class="las la-upload"></i>Upload</button>
+        </div>&nbsp;
+        <div class="mt-4 text-right">
+            <button type="button" class="btn btn-black" (click)="SampleFile()"><i class="las la-download"></i>Sample
+                File</button>
+        </div>&nbsp;
+        <div class="mt-4 text-right" *ngIf="isDownloadVisible">
+            <button type="button" class="btn btn-black" (click)="ExportReport()"><i class="las la-download"></i>Download
+                Status Report</button>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

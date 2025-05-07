@@ -1,0 +1,117 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>  
+               <a href="#" class="back-btn"><i class="las la-arrow-circle-left"></i></a>                                
+               <h1 class="f-l">Listen Review Approval</h1>
+            </div>
+        </div>   
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{reviewData.empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{reviewData.fullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Reviewer:</p>
+                <p class="d-inline-block">{{reviewData.reviewer}}</p>
+            </div> 
+        </div>
+         
+        <hr>
+    </div>
+    <div id="accordion" class="myaccordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2>
+              <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Review Details
+                <span>
+                  <i class="fa fa-minus"></i>
+                </span>
+              </button>
+            </h2>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+           <div class="card-body">
+             <div class="custom-list-item">
+                <strong>How do you find your work engaging? How can we improve it?</strong>
+                <p>{{reviewData.question1Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>How are the additional support you expect to excel in your work?</strong>
+                 <p>{{reviewData.question2Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>What are the challenges in the work envirnment?</strong>
+                <p>{{reviewData.question3Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Any training area/tolls to improve your work?</strong>
+                <p>{{reviewData.question4Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Any grievances(observed/explained)</strong>
+                <p>{{reviewData.question5Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Any critical incident/achievements to be noted(Positive/Negative)</strong>
+                <p>{{reviewData.question6Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Status on points of last listening process(if any)</strong>
+                <p>{{reviewData.question7Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Observed Strength, if any(with specific example)</strong>
+                <p>{{reviewData.question8Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Overall are for improvement, if any(with specific example)</strong>
+                <p>{{reviewData.question9Answer}}</p>
+             </div>
+             <div class="custom-list-item">
+                <strong>Any specific action plan based on the current listening</strong>
+                <p>{{reviewData.question10Answer}}</p>
+             </div>
+            </div>
+          </div>
+        </div>
+    </div>  
+    <hr> 
+    <h6 class="red">Take Action:</h6>       
+    <div class="form-group">
+        <label>Action</label>
+        <div class="rdio rdio-primary mb-2 d-md-inline">
+            <input name="radio" id="radio1" type="radio" name="approvalStatusId" [value]="2" 
+            [(ngModel)]="approvalStatusId"  [checked]="selectedApprovalStatus=='2'?true:false"
+            [attr.disabled]="disableAll==true?true:null">
+            <label for="radio1">Approve</label>
+        </div>
+        <div class="rdio rdio-primary mb-2 d-md-inline">
+            <input name="radio" id="radio2" type="radio" name="approvalStatusId" [value]="3"
+             [(ngModel)]="approvalStatusId" [checked]="selectedApprovalStatus=='3'?true:false"
+             [attr.disabled]="disableAll==true?true:null">
+            <label for="radio2">Reject</label>
+        </div>  
+        <div class="rdio rdio-primary mb-2 d-md-inline">
+            <input name="radio" id="radio3" type="radio" name="approvalStatusId" [value]="4" 
+            [(ngModel)]="approvalStatusId"  [checked]="selectedApprovalStatus=='4'?true:false"
+            [attr.disabled]="disableAll==true?true:null">
+            <label for="radio3">Send back to AIC</label>
+        </div>                              
+    </div>
+    <div class="form-group">
+        <label>Remarks</label>
+        <textarea class="form-control" placeholder="Write here..." [(ngModel)]="approvalRemarks" 
+        name="approvalRemarks"  [attr.disabled]="disableAll==true?true:null"></textarea>
+    </div>
+    <div class="mt-4"  *ngIf="!showButton">
+        <button type="button" class="btn btn-black"  (click)="onSubmit()">Submit</button>
+    </div>
+</div>

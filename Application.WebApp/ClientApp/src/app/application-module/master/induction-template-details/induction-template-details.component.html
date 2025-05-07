@@ -1,0 +1,63 @@
+<div>
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Induction Template Details</h1>
+    </div>
+    <div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Template Name:</p>
+                <p class="d-inline-block">
+                    {{inductionTemplateDetailsList[0].inductionTemplateName}}</p>
+
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Template For:</p>
+                <p class="d-inline-block"> {{inductionTemplateDetailsList[0].isBatch==true?"Batch":"Candidate"}}</p>
+            </div>
+
+        </div>
+        <hr>
+    </div>
+
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center">Sl. No.</th>
+                    <th class="text-center">Training Tittle</th>
+                    <th class="text-center">From Time</th>
+                    <th class="text-center">To Time</th>
+                    <th class="text-center">Session Deatails</th>
+                    <th class="text-center">Coordinator Name</th>
+                    <th class="text-center">Trainer/Person Name</th>
+                    <th class="text-center">Mode</th>
+                    <th class="text-center">Is External</th>
+                    <th class="text-center">Location</th>
+                    <th class="text-center">Venue</th>
+                    <th class="text-center">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of inductionTemplateDetailsList; let i = index;">
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="text-center">{{data.traingTitle}}</td>
+                    <td class="text-center">{{data.timeFrom}}</td>
+                    <td class="text-center">{{data.timeTo}}</td>
+                    <td class="text-center">{{data.detailsofSession}}</td>
+                    <td class="text-center">{{data.inductionCoOrdinatorName}}</td>
+                    <td class="text-center">{{data.trainerName}}</td>
+                    <td class="text-center">{{data.inductionModeName}}</td>
+                    <td class="text-center">{{data.isExternal==true?"Yes":"No"}}</td>
+                    <td class="text-center">{{data.locationName}}</td>
+                    <td class="text-center">{{data.inductionVenueName}}</td>
+                    <td class="text-center">{{data.remarks}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

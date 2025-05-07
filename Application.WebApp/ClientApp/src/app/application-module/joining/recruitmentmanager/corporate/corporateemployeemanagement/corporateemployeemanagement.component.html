@@ -1,0 +1,310 @@
+<div class="content-box">
+
+    <h6 class="red">All Candidates</h6>
+    <!-- Fiter section start -->
+    <form [formGroup]="searchFormEmployeeManagement" (ngSubmit)="onSearchEmployee()">
+        <div class="filter-sec mb-3">
+            <div class="form-row m-t-10">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Date of Joining</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="datepicker"
+                                        placeholder="From Date" formControlName="dtofJoiningFrom" #dtofJoiningFrom>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="datepicker1"
+                                        placeholder="To Date" formControlName="dtofJoiningTo" #dtofJoiningTo>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Employee ID</label>
+                        <input type="text" class="form-control" formControlName="employeeNo">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Employee Name</label>
+                        <input type="text" class="form-control" formControlName="name">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Requisition No</label>
+                        <input type="text" class="form-control" formControlName="requisitionNo">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Source</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="source">
+                            <!-- <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option> -->
+                            <ng-option [value]="1">Test</ng-option>
+                            <ng-option [value]="2">Test</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Employee Status</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false"
+                            formControlName="employeeStatus">
+                            <!-- <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option> -->
+                            <ng-option [value]="1">Test</ng-option>
+                            <ng-option [value]="2">Test</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Hiring Status</label>
+                        <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                            [clearable]="false" formControlName="hiringStatus">
+                            <ng-option [value]="0">All </ng-option>
+                            <ng-option [value]="43">Offer Accepted</ng-option>
+                            <ng-option [value]="44">Joining Date Confirmed</ng-option>
+                            <ng-option [value]="45">Joining Scheduled</ng-option>
+                            <ng-option [value]="46">Onboarding Allocated</ng-option>
+                            <ng-option [value]="47">Onboarding Scheduled</ng-option>
+                            <ng-option [value]="48">Welcome Send</ng-option>
+                            <ng-option [value]="49">Welcome Declined</ng-option>
+                            <ng-option [value]="50">Welcome Acknowledged</ng-option>
+                            <ng-option [value]="51">Joinining Acknowledge</ng-option>
+                            <ng-option [value]="52">Onboarding Complete</ng-option>
+                            <ng-option [value]="53">Docs Verified Ok-Hiring</ng-option>
+                            <ng-option [value]="54">Employee No Updated</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="onResetClick()"><i class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Fiter section End -->
+
+    <div class="text-right my-2" *ngIf="(callngIfFunction?showBtnEnableNoticePeriod():false)&&(shownoticeperiodbuyout==true)">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#noticePeriod" (click)="btnClickEnableNoticePeriod()">Enable Notice Period Buyout</button>
+    </div>
+    <div class="text-right my-2" *ngIf="(callngIfFunction?showBtnDisableNoticePeriod():false)&&(showdisablenoticeperiod==true)">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#disablenoticePeriod" (click)="btnClickEnableNoticePeriod()">Disable Notice Period Buyout</button>
+    </div>
+    <div class="text-right my-2" *ngIf="(callngIfFunction?showBtnRelocationReimbursement():false)&&(showreallocationreimbursement==true)">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#relocationreimbursement" (click)="btnClickRelocationReimbursement()">Enable Relocation
+            Reimbursement</button>
+    </div>
+    <div class="text-right my-2" *ngIf="(callngIfFunction?showBtnDisableRelocationReimbursement():false)&&(showdisablereallocationreimbursement==true)">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#relocationreimbursementdisable" (click)="btnClickRelocationReimbursement()">Disable Relocation
+            Reimbursement</button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <!-- <div class="form-check">
+                            <input type="checkbox" id="chkAll" [(ngModel)]="selectAll"
+                                (change)="onCheckSelectAll($event)">
+                            <label class="chk" for="chkAll"></label>
+                        </div> -->
+                    </th>
+                    <th>Cand. ID</th> 
+                    <th>Emp. ID</th>                   
+                    <th>Emp. Name</th>
+                    <th>Designation</th>
+                    <th>Pos. Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>Req No</th>
+                    <th>Source</th>
+                    <th>Owner</th>
+                    <th>D.O.J</th>
+                    <th>Doc Status</th>
+                    <th>Emp Status</th>
+                    <th>Hiring Status</th>
+                  <th>Notice Period Buyout</th>
+                  <th>Relocation Reimbursement</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of employeeManagementList;let i=index;">
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)"
+                                (change)="onCheckRowWise(data,$event,i)">
+                            <label class="chk" for="{{i}}"></label>
+                        </div>
+                    </td>
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.empNo}}</td>
+                    <td>{{data.candidateFullName}}</td>
+                    <td>{{data.designationName}}</td>
+                    <td>{{data.locationName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.requisitionNo}}</td>
+                    <td>{{data.sourceChannelName}}</td>
+                    <td>{{data.candidateOwner}}</td>
+                    <td>{{data.dateofJoining}}</td>
+                    <!-- <td>{{data.modeofJoining}}</td> -->
+                    <td>{{data.docApprovalStatus}}</td>
+                    <td>{{data.empStatusName}}</td>
+                    <td>{{data.hiringStatusName}}</td>
+                    <td style="text-align:center">{{data.noticeperiodBuyoutStatus}}</td>
+                    <!-- <td style="text-align:center">{{data.candidateNoticePeriodBuyOutId !== 0 ? 'Complete':'Incomplete'}}</td> -->
+                    <!-- <td style="text-align:center">{{data.candidateReallocationReimbursementEnableId !== 0 ? 'Complete':'Incomplete'}}</td> -->
+                    <td style="text-align:center">{{data.reallocationReimbursementEnableStatus}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <a *ngIf="(data.candidateNoticePeriodBuyOutId ! == 0 ? true : false)&&(data.empId  != 0 ? true : false)" class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#noticePeriod" (click)="onClickNoticePeriodBuyout(data)"><i
+                                        class="las la-folder-open"></i>Enable Notice Period Buyout</a>
+                                <a *ngIf="(data.noticeperiodBuyoutStatus=='Enabled')&&(data.empId  != 0 ? true : false)" class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#disablenoticePeriod" (click)="onClickNoticePeriodBuyout(data)"><i
+                                        class="las la-folder-open"></i>Disable Notice Period Buyout</a>
+                                <a *ngIf="data.candidateReallocationReimbursementEnableId ! == 0 ?  true : false" class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#relocationreimbursement"
+                                    (click)="onClickRelocationReimbursement(data)"><i
+                                        class="las la-tasks"></i>Enable Relocation Reimbursement</a>
+                                <a *ngIf="data.reallocationReimbursementEnableStatus=='Enabled'" class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                        data-target="#relocationreimbursementdisable"
+                                        (click)="onClickRelocationReimbursement(data)"><i
+                                            class="las la-tasks"></i>Disable Relocation Reimbursement</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                        (click)="onClickViewDocument(data)"><i
+                                            class="las la-folder-open"></i>
+                                        View Document</a>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="noticePeriod" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">You want to enable notice period buyout for Employee-
+                    {{employeeId}}.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSaveEnableNoticcPeriodBuyout()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="disablenoticePeriod" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">You want to disable notice period buyout for Employee-
+                    {{employeeId}}.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSavedisableNoticcPeriodBuyout()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+<!-- Modal -->
+
+<div class="modal fade" id="relocationreimbursement" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">You want to enable relocation reimbursement for Employee-
+                    {{employeeId}}.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSaveRelocationReimbursement()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="relocationreimbursementdisable" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">You want to disable relocation reimbursement for Employee-
+                    {{employeeId}}.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSaveRelocationReimbursementdisable()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

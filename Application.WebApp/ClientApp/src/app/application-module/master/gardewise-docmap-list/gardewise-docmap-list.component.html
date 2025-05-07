@@ -1,0 +1,112 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Grade Wise Document Required</h1>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary btn-sm" (click)="onClickNew()"><i class="las la-plus"></i>
+                    Add
+                    New</button> <!--  [routerLink]="['/admin/add-edit-gradewise-docmap',0,false]" -->
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="searchForm" (ngSubmit)="filter()">
+        <div class="filter-sec">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="verticalId"
+                            (change)="changeVertical()">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <ng-select bindLabel="gradeName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="true" [clearable]="false" formControlName="gradeId">
+                            <ng-option [value]="rec.gradeId" *ngFor="let rec of gradeList">
+                                {{rec.gradeName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-4">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                        Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center">Sl. No.</th>
+                    <th class="text-center">Vertical</th>
+                    <th class="text-center">Function</th>
+                    <th class="text-center">Grade</th>
+                    <th class="text-center">Document Type</th>
+                    <th class="text-center">Document Particular</th>
+                    <th class="text-center">Required Doc</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of gradeWiseDocumentMapList; let i = index;">
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="text-center">{{data.verticalName}}</td>
+                    <td class="text-center">{{data.functionName}}</td>
+                    <td class="text-center">{{data.gradeName}}</td>
+                    <td class="text-center">{{data.attachmentDocumentTypeName}}</td>
+                    <td class="text-center">{{data.attachmentDocumentParticularName}}</td>
+                    <td class="text-center">{{getRequiredDocCount(data.documentMapId)}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="onClickEdit(data)"><i
+                                        class="las la-pen"></i> Edit</a>
+                                <!-- [routerLink]="['/admin/add-edit-gradewise-docmap',data.documentMapId,true]" -->
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="onDetailsClick(data)"><i class="las la-reply"></i>
+                                    Details</a>
+                                <!-- [routerLink]="['/admin/gradewise-docmap-details',data.documentMapId,data.verticalId,data.functionId,data.gradeId]" -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

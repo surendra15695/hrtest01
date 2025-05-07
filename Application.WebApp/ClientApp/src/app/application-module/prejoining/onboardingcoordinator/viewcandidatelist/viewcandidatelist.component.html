@@ -1,0 +1,680 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <a class="back-btn" href="javascript:void(0)" (click)="onClickBack()"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Batch ID: {{batchNo}}</h1>
+    </div>
+    <h6 class="red">All Candidates</h6>
+    <!-- Fiter section start -->
+    <form [formGroup]="searchForm" (ngSubmit)="searchSubmit()">
+        <div class="filter-sec mb-3">
+            <div class="form-row m-t-10">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Candidate Name</label>
+                        <input type="text" class="form-control" formControlName="candidateName">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="verticalId"
+                            (change)="changeVertical()">
+                            <!-- [readonly]="true"  Removed as they want to be select pn 27-08-2022 -->
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Pos. Location</label>
+                        <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="locationId">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false" formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="onClickReset()"><i
+                            class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Fiter section End -->
+
+    <!-- <div class="text-right my-2" *ngIf="callngIfFunction?showBtnMoveCandidate():false">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#moveCandidateModal" (click)="btnClickMoveAllCandidate()">Move Candidate</button>
+    </div>
+    <div class="text-right my-2" *ngIf="callngIfFunction?showBtnShareWithCandidate():false">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#shareWithCandidateModal" (click)="onClickBtnShareWithCandiate()">Share With Candidate</button>
+    </div>
+ -->
+
+    <div class="text-right my-2">
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            *ngIf="callngIfFunction?showBtnMoveCandidate():false" data-target="#moveCandidateModal"
+            (click)="btnClickMoveAllCandidate()">Move Candidate</button>
+
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+            data-target="#shareWithCandidateModal" *ngIf="callngIfFunction?showBtnShareWithCandidate():false"
+            (click)="onClickBtnShareWithCandiate()">Share With Candidate</button> <!--   -->
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <input type="checkbox" id="chkAll" [(ngModel)]="selectAll"
+                                (change)="onCheckSelectAll($event)">
+                            <label class="chk" for="chkAll"></label>
+                        </div>
+                    </th>
+                    <th>Cand. ID</th>
+                    <th>Candidate Name</th>
+                    <th>Designation</th>
+                    <th>Pos. Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Qualification</th>
+                    <th>Exp.</th>
+                    <th>Cur. Location</th>
+                    <th>D.O.J</th>
+                    <th>M.O.J</th>
+                    <th>Gross Monthly</th>
+                    <th>Remarks</th>
+                    <th>Document Status</th>
+                    <th>Onboarding Status</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of candidateList;let i=index;">
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatusRowWise(data)"
+                                (change)="onCheckRowWiseData(data,$event,i)">
+                            <label class="chk" for="{{i}}"></label>
+                        </div>
+                    </td>
+                    <td>{{data.candidateNo}}</td>
+                    <td><a href="javascript:void(0)"
+                            (click)="gotoCandidateAction(data.candidateId, data.requisitionDetailId)" class="red">
+                            {{data.candidateFullName}}</a>
+                    </td>
+                    <td>{{data.designationName}}</td>
+                    <td>{{data.locationName}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.emailId}}</td>
+                    <td>{{data.contact}}</td>
+                    <td>{{data.courseName}} {{data.streamName}}</td>
+                    <td>{{data.experienceYear}} Y {{data.experienceMonth}} M</td>
+                    <td>{{data.communicationAddress}} , {{data.communicationStateName}} <br>
+                    </td> <!-- {{data.communicationPin}} -->
+                    <td>{{data.dateofJoining}}</td>
+                    <td>{{data.modeofJoiningName}}</td>
+                    <td>{{data.monthlyGross}}</td>
+                    <td>{{data.remarks}}
+                        <!-- <a href="#" class="red" data-toggle="popover"
+                        data-content="<div>Lorem ipsum dolor sit amet consectetur adipisicing.</div>"
+                        rel="popover" data-placement="right" data-trigger="hover"><i
+                            class="fa fa-info-circle"></i></a> -->
+                    </td>
+                    <td *ngIf="showPopoverForOM">
+                        {{(data.onboardingManagerNotApproveDoc==' ' ||data.onboardingManagerNotApproveDoc==''
+                        )?"Completed":"Pending"}}
+                        <a *ngIf="data.onboardingManagerNotApproveDoc!=' '" href="javascript:void(0)" class="red"
+                            data-toggle="popover" [attr.data-content]="data.popoverContent" rel="popover"
+                            data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+                    </td>
+                    <td *ngIf="showPopoverForOC">
+                        {{(data.onboardingCordinatorNotApproveDoc==' ' ||data.onboardingCordinatorNotApproveDoc==''
+                        )?"Completed":"Pending"}}
+                        <a *ngIf="data.onboardingCordinatorNotApproveDoc!=' '" href="javascript:void(0)" class="red"
+                            data-toggle="popover" [attr.data-content]="data.popoverContent" rel="popover"
+                            data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+                    </td>
+                    <td>{{data.hiringStatusName}}</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+
+                                <a *ngIf="data.hiringStatusId>=47 && data.hiringStatusId<48 && data.hiringStatusId!=55 && data.candidateAccomodationHeaderId>0"
+                                    class="dropdown-item" href="javascript:void(0)"
+                                    (click)="onOptionClickShareWithCandidate(data)" data-toggle="modal"
+                                    data-target="#shareWithCandidateModal"><i class="las la-share"></i> Share With
+                                    Candidate</a>
+
+                                <a *ngIf="from=='OH' && data.hiringStatusId>47 && data.hiringStatusId!=55"
+                                    class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    (click)="onClickEditAdditionalDoc(data)" data-target="#editAdditionalDoc"><i
+                                        class="las la-share"></i> Edit Additional Document</a>
+
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)"
+                                    (click)="onClickViewDocument(data)"><i class="las la-folder-open"></i> View
+                                    Document</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)"
+                                    data-toggle="modal" data-target="#moveCandidateModal"
+                                    (click)="onMoveRowWise(data)"><i class="las la-pen"></i> Move Candidate</a>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    *ngIf="data.dateofJoining!='' && data.hiringStatusId!=55" data-toggle="modal"
+                                    data-target="#updateJoiningDateModal" (click)="onClickUpdateJoningDate(data)"><i
+                                        class="las la-pen"></i>
+                                    Update Joining Date</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId==61" href="javascript:void(0)"
+                                    (click)="onClickReassignCandidate(data)"><i class="las la-share"></i>Reassign
+                                    Candidate</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)"
+                                    data-toggle="modal" data-target="#declineModal"
+                                    (click)="openModalPopupRejectDeclineCallBack(56,data.candidateId,'ViewCandidate')"><i
+                                        class="las la-times-circle"></i>
+                                    Candidate Declined</a>
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                    *ngIf="data.hiringStatusId==54" data-target="#discontinueModal"
+                                    (click)="openModalPopupDiscontinue(data.candidateId,data)"><i
+                                        class="las la-times-circle"></i>
+                                    Discontinue Candidate</a>
+                                <a class="dropdown-item" *ngIf="data.hiringStatusId>=47 && data.hiringStatusId!=55"
+                                    href="javascript:void(0)" (click)="onClickJoiningCheckList(data)"><i
+                                        class="las la-tasks"></i>Joining
+                                    Checklist</a> <!-- *ngIf="data.hiringStatusId>=50" -->
+                                <!-- <a class="dropdown-item" *ngIf="data.hiringStatusId!=55" href="javascript:void(0)"
+                                    data-toggle="modal" data-target="#declineModal"
+                                    (click)="openModalPopupRejectDeclineCallBack(55,data.candidateId,'ViewCandidate')"><i
+                                        class="las la-times-circle"></i>
+                                    Discontinued Candidate</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Move Candidate Modal -->
+<div class="modal fade" id="moveCandidateModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Move Candidate</h4>
+            </div>
+            <form [formGroup]="candidateMoveSaveForm" (ngSubmit)="btnSaveMoveCandidate()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Move To<span class="required">*</span></label>
+                                <ng-select bindLabel="joinigTypeName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="joinIngType" name="joinIngType" (change)="onChangeMoveType()">
+                                    <ng-option [value]="rec.joiningTypeId" *ngFor="let rec of joiningTypeList">
+                                        {{rec.joinigTypeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Vertical<span class="required">*</span></label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="vertical" (change)="getVerticalWiseBatch($event)">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of verticalsPopUp">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Batch ID</label>
+                                <ng-select bindLabel="batchName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="batchId">
+                                    <ng-option [value]="rec.batchId" *ngFor="let rec of batchs">
+                                        {{rec.batchName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="showBatchForMove">
+                            <div class="form-group">
+                                <label>Batch ID</label>
+                                <ng-select bindLabel="batchNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="batchId">
+                                    <ng-option [value]="rec.batchId" *ngFor="let rec of batchs">
+                                        {{rec.batchNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        (click)="btnCancelClick()">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm">Move</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+<!-- Anifur -->
+
+<!-- Share Induction With Candidate Modal -->
+<div class="modal fade" id="shareWithCandidateModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Share Induction With Candidate</h4>
+            </div>
+            <!-- <form [formGroup]="shareInductionScheduleWithCandidateForm" (ngSubmit)="btnShareInductionWithCandidate()"
+                autocomplete="off"> -->
+            <div class="modal-body" style="height: 530px;overflow: scroll;">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th>Candidates</th>
+                                <th class="text-center">ESI Declaration Form</th>
+                                <th class="text-center">SEBI Initial Disclosure</th>
+                                <th class="text-center">Super Annuation-Beneficiary Form</th>
+                                <!--  <th style="width: 60px;" class="text-center"></th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let jd of documentNames;let i=index;"> -->
+                            <tr *ngFor="let jd of candidatesForAdditionalDocuments;let i=index;">
+                                <!--   <td>{{jd.attachmentDocumentName}}</td>
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="{{jd.attachmentDocumentNameId}}"
+                                            (change)="onChangeJoiningDocuments($event,jd)">
+                                        <label class="chk" for="{{jd.attachmentDocumentNameId}}"></label>
+                                    </div>
+                                </td> -->
+                                <!-- <td>{{jd.candidateNo}}</td> -->
+                                <td>{{jd.candidateFullName}}</td>
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="{{16}}{{jd.candidateId}}"
+                                            (change)="onChangeJoiningDocuments($event,jd,16)">
+                                        <label class="chk" for="{{16}}{{jd.candidateId}}"></label>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="{{17}}{{jd.candidateId}}"
+                                            (change)="onChangeJoiningDocuments($event,jd,17)">
+                                        <label class="chk" for="{{17}}{{jd.candidateId}}"></label>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="{{18}}{{jd.candidateId}}"
+                                            (change)="onChangeJoiningDocuments($event,jd,18)">
+                                        <label class="chk" for="{{18}}{{jd.candidateId}}"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mb-3">
+                    <span class="red"><b>Note:</b></span>
+                    <span class="grey font-italic">Other joining forms are auto enabled.</span>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Choose Welcome Template</label>
+                            <!-- <select class="selectpicker" title='Select'>
+                                <option value="0">Option1</option>
+                                <option value="1">Option2</option>
+                            </select> -->
+                            <ng-select bindLabel="templateEmailName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="selectedTestEmailTemplateId" (change)="changeTestEmailTemplate()">
+                                <ng-option [value]="rec.templateId" *ngFor="let rec of emailTemplates">
+                                    {{rec.templateEmailName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Edit Template</label>
+                            <!-- <textarea id="txtEditor" formControlName="templateBody"></textarea> -->
+                            <ckeditor [(ngModel)]="testEmailTemplateDescription" name="templateBody"
+                                [config]="ckeConfig" debounce="500"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Anif 21-11-2022 -->
+                <button type="button" class="btn btn-black btn-sm ml-2" (click)="onClickPreviewShare()">Preview</button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                    (click)="onShareWithCancelClick()">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2"
+                    (click)="btnShareInductionWithCandidate()">Share</button>
+            </div>
+            <!-- </form> -->
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+<!-- Preview Modal Start  -->
+<!-- Anif 21-11-2022 -->
+<div class="modal fade" id="previewModal" role="dialog">
+    <!-- <div class="modal-dialog modal-dialog-centered"> -->
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="previewCloseModal" class="close" (click)="onClickPreviewModalClose()"
+                    data-toggle="modal" data-target="#shareWithCandidateModal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Candidate Details with Additional Document and Template Name</h4>
+            </div>
+            <div class="modal-body popup-maxheigth-500">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Candidate No</th>
+                                    <th>Candidate Name</th>
+                                    <th>Additional Document</th>
+                                    <th>Template</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let item of candidatePreviewArray; let i = index;">
+                                    <td>{{i+1}}</td>
+                                    <td><a href="javascript:void(0)" (click)="onClickEmployeeNoForPrev(item)"
+                                            class="red">{{item.candidateNo}} </a></td>
+                                    <td>{{item.candidateName}}</td>
+                                    <td>{{item.additionalDocuments}}</td>
+                                    <td>{{item.templateName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Preview Modal End -->
+
+<!-- Email Body description Start -->
+<!-- Anif 21-11-2022 -->
+<div class="modal fade" id="emailBodyDescriptionModal" role="dialog">
+    <!-- <div class="modal-dialog modal-dialog-centered"> -->
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="previewCloseModal" class="close" (click)="onClickEmailDescriptionClose()"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Template Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- {{emailDescriptionForPrev}} -->
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label> Sharing Template</label>
+                            <!-- <textarea id="txtEditor" formControlName="templateBody"></textarea> -->
+                            <!-- [config]="ckeConfig" -->
+                            <ckeditor [(ngModel)]="emailDescriptionForPrev" name="templateBody" debounce="500">
+                            </ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Email Body description End -->
+
+<!-- Update Joining Date Modal -->
+<div class="modal fade" id="updateJoiningDateModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Joining Date</h4>
+            </div>
+            <!-- <form [formGroup]="updateJoiningDateForm" (ngSubmit)="onAllocateCandidateToCoordinator()" autocomplete="off"> -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Date</label>
+                        <div class="input-group datepiker date">
+                            <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                placeholder="From Date" autocomplete="off" [(ngModel)]="joiningDate" #dateOfJoining>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Mode of Joining</label>
+                            <ng-select bindLabel="modeofJoiningName" [placeholder]="'Select'" [appendTo]="'body'"
+                                [multiple]="false" [searchable]="false" [clearable]="false"
+                                [(ngModel)]="modeofJoiningId">
+                                <ng-option [value]="rec.modeofJoiningId" *ngFor="let rec of modeOfJoiningList">
+                                    {{rec.modeofJoiningName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                    (click)="onClickUpdateJoiningDateCancel()">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm" (click)="onUpdateJoiningDate()">Submit</button>
+
+            </div>
+            <!-- </form> -->
+
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+
+
+<!-- Declined Modal Start -->
+<div class="modal fade" id="declineModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">{{actionName}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="declineremarks"
+                                #DeclineRemarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="ProcessCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Declined Modal End -->
+<div class="modal fade" id="discontinueModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal"><i
+                        class="las la-times"></i></button>
+                <h4 class="modal-title">Action on Request</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <h6 class="red m-0">Discontinue Candidate</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" [(ngModel)]="remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm" (click)="DiscontinueCandidate()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Edit additional Document model Start-->
+<div class="modal fade" id="editAdditionalDoc" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Edit Additional Document</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th>Joining Documents</th>
+                                <th style="width: 60px;" class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let jd of getEditableDocs;">
+                                <td>{{jd.attachmentDocumentName}}</td>
+                                <td class="text-center">
+                                    <!-- <div class="form-check">
+                                        <input type="checkbox" id="{{jd.attachmentDocumentNameId}}" 
+                                            (change)="onClickChangeAttachmentDoc($event,jd)">
+                                        <label class="chk" for="{{jd.attachmentDocumentNameId}}"></label>
+                                       
+                                    </div> -->
+                                    <input type="checkbox" (change)="onClickChangeAttachmentDoc($event,jd)"
+                                        [checked]="jd.shareWithCandidateId>0?true:false">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mb-3">
+                    <span class="red"><b>Note:</b></span>
+                    <span class="grey font-italic">Other joining forms are auto enabled.</span>
+                    <hr>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <!-- Anif 21-11-2022 -->
+
+                <button type="button" class="btn btn-primary btn-sm" (click)="onClickEditCancel()"
+                    data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-black btn-sm ml-2" (click)="onClickEditSubmit()">Submit</button>
+            </div>
+            <!-- </form> -->
+        </div>
+
+    </div>
+</div>
+<!--Edit additional Document model End-->
+
+
+<!-- for showing loader -->
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

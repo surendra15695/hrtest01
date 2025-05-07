@@ -1,0 +1,91 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>                                   
+                        <h1 class="f-l">Induction Feedback</h1>
+                    </div>
+                </div>   
+            </div>
+            <div class="mb-4">
+                <div class="form-row">
+                    <div class="col-md-3" *ngIf="candidateInductionFeedbackList?.batchNo!=0">
+                        <p class="d-inline-block grey">Batch ID:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.batchNo}}</p>
+                    </div>
+                    <div class="col-md-3" *ngIf="candidateInductionFeedbackList?.batchNo==0">
+                        <p class="d-inline-block grey">EMP ID: </p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.empNo}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Name:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.fullName}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Date of Joining:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.dateOfJoining}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Designation:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.designationName}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Posting Location:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.postingLocationName}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Function:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.functionName}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Department:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.departmentName}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="d-inline-block grey">Grade:</p>
+                        <p class="d-inline-block">{{candidateInductionFeedbackList?.gradeName}}</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h6 class="red">Assessment</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Training Title</th>                                         
+                                <th class="text-center">Assigned on</th>
+                                <th>Overall Rating</th>
+                                <th>Status</th>                                          
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of candidateFeedbackDetailData">
+                                <td>{{data.traingTitle}}</td>
+                                <td class="text-center">{{data.releaseDate}}</td>
+                                <td>{{data.overallRating}}</td>                             
+                                <td>{{getFeedbackStatus(data.feedbackStatusId,data.feedbackbutton)}}</td>                                     
+                                <td class="text-center" *ngIf="data.feedbackStatusId=='1'"></td>
+                                <td class="text-center" *ngIf="(data.feedbackStatusId=='2') && (data.feedbackbutton) && (data.buttonAppears)"><a href="javascript:void(0)" (click)="onClickGiveFeedback(data)" class="btn btn-primary btn-rounded btn-sm">Give Feedback</a></td>
+                                <td class="text-center" *ngIf="data.feedbackStatusId=='3'"><a href="javascript:void(0)" (click)="onClickViewFeedback(data)" class="btn btn-primary btn-rounded btn-sm">View Feedback</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="grey pt-2 pb-2">
+                 Rating scale = 1-5 (1=Lowest, 5=Highest)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

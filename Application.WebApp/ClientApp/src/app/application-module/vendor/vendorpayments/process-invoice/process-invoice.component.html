@@ -1,0 +1,558 @@
+<div class="content-box">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="firsttab" data-toggle="tab" href="#tabOne" role="tab" aria-controls="home"
+                aria-selected="true" (click)="onClickPendingTab()">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="secondtab" data-toggle="tab" href="#tabTwo" role="tab" aria-controls="profile"
+                aria-selected="false" (click)="onClickProcessedTab()">Processed</a>
+        </li>
+    </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div class="tab-pane fade show active" id="tabOne" role="tabpanel" aria-labelledby="firsttab">
+            <div class="filter-sec">
+                <form [formGroup]="searchFormProcessInvoiceList"
+                    (ngSubmit)="onSearchProcessInvoicePending()">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                <input type="text" class="form-control" formControlName="vendorName" placeholder="Enter Vendor Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Bill Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                                placeholder="From Date" formControlName="fromDate"
+                                                #fromDate>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                                placeholder="To Date" formControlName="toDate" #toDate>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Candidate ID</label>
+                                <input type="text" class="form-control" formControlName="candidateNo" placeholder="Enter Candidate Id">
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="candidateName" placeholder="Enter Candidate Name">
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-3 mt-md-4">
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Apply</button>
+                            <button type="button" (click)="onResetPending()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Vendor Name</th>
+                            <th>Bill Date</th>
+                            <th>Employee Id</th>
+                            <th>Employee Name</th>
+                            <th>Billable CTC</th>
+                            <th>Service Charge %</th>
+                            <th>Service Charge Amt.</th>
+                            <th>GST %</th>
+                            <th>GST Amount</th>
+                            <th>Total Bill Amount</th>
+                            <th>Invoice Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of processInvoiceList;let i=index;">
+                            <td>{{data.vendorName}}</td>
+                            <td>{{data.submittedOn}}</td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.billableCTC}}</td>
+                            <td>{{data.serviceChargePer}}</td>
+                            <td>{{data.serviceChargeAmount}}</td>
+                            <td>{{data.gstPer}}</td>
+                            <td>{{data.gstAmount}}</td>
+                            <td>{{data.totalBillAmount}}</td>
+                            <td>{{data.invoiceStatusName}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button data-boundary="window" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><i class="las la-ellipsis-v"></i></button>        
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" data-boundary="window">
+                                        <a class="dropdown-item" (click)="openFile(data.invoicePath)" style="cursor: pointer;"><i
+                                            class="las la-download"></i> Download Bill</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#myModal"
+                                            (click)="onClickClarification(data)"><i class="las la-question-circle"></i>Need Clarification</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#updatePRModal"
+                                            (click)="onClickUpdatePR(data)"><i class="las la-check-circle"></i>Update PR</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#updatePOModal"
+                                            (click)="onClickUpdatePO(data)"><i class="las la-check-circle"></i>Update PO</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#updateSSEntryModal"
+                                            (click)="onClickUpdateSS(data)"><i class="las la-check-circle"></i>Update Service sheet entry No</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#viewDetailsModal"
+                                            (click)="onClickViewDetails(data)"><i class="las la-file"></i>View Details</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+            <div class="filter-sec">
+                <form [formGroup]="searchFormProcessInvoiceList"
+                    (ngSubmit)="onSearchProcessInvoiceProcessed()">
+                    <div class="form-row m-t-10">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                <input type="text" class="form-control" formControlName="vendorName" placeholder="Enter Vendor Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Bill Date</label>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                                placeholder="From Date" formControlName="fromDate"
+                                                #fromDate>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                                placeholder="To Date" formControlName="toDate" #toDate>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Candidate ID</label>
+                                <input type="text" class="form-control" formControlName="candidateNo" placeholder="Enter Candidate Id">
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Candidate Name</label>
+                                <input type="text" class="form-control" formControlName="CandidateName" placeholder="Enter Candidate Name">
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-3 mt-md-4">
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Apply</button>
+                            <button type="button" (click)="onResetProcessed()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table id="dataTable2" class="table table-striped" >
+                    <thead>
+                        <tr>
+                            <th>Vendor Name</th>
+                            <th>Bill Date</th>
+                            <th>Employee Id</th>
+                            <th>Employee Name</th>
+                            <th>Billable CTC</th>
+                            <th>Service Charge %</th>
+                            <th>Service Charge Amt.</th>
+                            <th>GST %</th>
+                            <th>GST Amount</th>
+                            <th>Total Bill Amount</th>
+                            <th>Invoice Status</th>
+                            <th>Credit Note Status</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of processInvoiceList;let i=index;">
+                            <td>{{data.vendorName}}</td>
+                            <td>{{data.submittedOn}}</td>
+                            <td>{{data.candidateNo}}</td>
+                            <td>{{data.candidateFullName}}</td>
+                            <td>{{data.billableCTC}}</td>
+                            <td>{{data.serviceChargePer}}</td>
+                            <td>{{data.serviceChargeAmount}}</td>
+                            <td>{{data.gstPer}}</td>
+                            <td>{{data.gstAmount}}</td>
+                            <td>{{data.totalBillAmount}}</td>
+                            <td>{{data.invoiceStatusName}}</td>
+                            <td>{{data.creditNoteStatus}}</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button data-boundary="window" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><i class="las la-ellipsis-v"></i></button>        
+                                        <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                            <a class="dropdown-item" (click)="openFile(data.invoicePath)" style="cursor: pointer;">
+                                                <i class="las la-download"></i>Download Bill</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#myModal"
+                                                (click)="onClickClarification(data)"><i class="las la-question-circle"></i>Need Clarification</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#updatePRModal"
+                                                (click)="onClickUpdatePR(data)"><i class="las la-check-circle"></i>Update PR</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#updatePOModal"
+                                                (click)="onClickUpdatePO(data)"><i class="las la-check-circle"></i>Update PO</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#updateSSEntryModal"
+                                                (click)="onClickUpdateSS(data)"><i class="las la-check-circle"></i>Update Service sheet entry No</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#releaseInvoice" (click)="onClickReleaseInvoice(data)">
+                                                <i class="las la-share"></i>Release Invoice</a>
+                                            <a *ngIf="data.invoiceStatusId == 7 && data.creditNoteStatusId >= 0 && data.creditNoteStatusId <=4 && data.creditNoteStatusId!=1" class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#enableCreditNote" (click)="onClickEnableCreditNote(data)">
+                                                <i class="las la-enable"></i>Enable Credit Note</a>    
+                                            <a *ngIf="data.invoiceStatusId == 7 && data.creditNoteStatusId == 1" class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#disableCreditNote" (click)="onClickDisableCreditNote(data)">
+                                                <i class="las la-disable"></i>Disable Credit Note</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#viewDetailsModal"
+                                                (click)="onClickViewDetails(data)"><i class="las la-file"></i>View Details</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<!-- PR Modal Part -->
+<div class="modal fade" id="updatePRModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update PR</h4> 
+            </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Candidate Name: {{ candidateName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Bill Amount : {{ billAmount}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Purchase Request No</label>
+                                <input type="text" class="form-control"  [(ngModel)]="prNo" />                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-black btn-sm" (click)="onSubmitPR()">Submit</button>
+                </div>
+        </div>
+
+    </div>
+</div>  
+
+<!-- Clarification Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Clarification Reason</h4> 
+            </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Enter Reason (Max 120 character)</label>
+                                <textarea class="form-control"  [(ngModel)]="remarks"></textarea>                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-black btn-sm" (click)="onSubmitReason()">Submit</button>
+                </div>
+        </div>
+
+    </div>
+</div>  
+
+<!-- PO Modal Part -->
+<div class="modal fade" id="updatePOModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update PO</h4> 
+            </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Candidate Name: {{ candidateName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Bill Amount : {{ billAmount}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Purchase Order No</label>
+                                <input type="text" class="form-control"  [(ngModel)]="poNo" />                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-black btn-sm" (click)="onSubmitPO()">Submit</button>
+                </div>
+        </div>
+
+    </div>
+</div>  
+
+<!-- Service Sheet Modal Part -->
+<div class="modal fade" id="updateSSEntryModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Update Service Sheet Entry No</h4> 
+            </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Candidate Name: {{ candidateName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Bill Amount : {{ billAmount}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Service Sheet Entry No</label>
+                                <input type="text" class="form-control"  [(ngModel)]="ssEntryNo" />                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-black btn-sm" (click)="onSubmitServiceSheet()">Submit</button>
+                </div>
+        </div>
+
+    </div>
+</div> 
+
+<!-- Release Invoice Modal -->
+<div class="modal fade" id="releaseInvoice" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to continue ?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSaveReleaseInvoice()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enable Credit Note Modal -->
+<div class="modal fade" id="enableCreditNote" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to Enable ?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSaveEnableCreditNote()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Disable Credit Note Modal -->
+<div class="modal fade" id="disableCreditNote" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to Disable ?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onSaveDisableCreditNote()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewDetailsModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">View Details</h4> 
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="background-color: #efefef;">Vendor Name:</th>
+                            <td>{{ vendorName}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">Bill Date</th>
+                            <td> {{ billDate}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">Employee ID</th>
+                            <td>{{ employeeNo}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">Employee Name</th>
+                            <td>{{ candidateName}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">Bill Amount</th>
+                            <td>{{ billAmount}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">PR Number</th>
+                            <td>{{ dataPurchaseRequestNo}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">PO Number</th>
+                            <td>{{ dataPurchaseOrderNo}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">Service Sheet Entry Number</th>
+                            <td>{{ dataServiceSheetEntryNo}}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #efefef;">Invoice Status</th>
+                            <td>{{ invoiceStatus}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <div class="form-row" style='border:1px solid rgb(134, 134, 134);'>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Vendor Name: {{ vendorName}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Bill Date : {{ billDate}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Employee ID : {{ employeeNo}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Employee Name : {{ candidateName}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Bill Amount : {{ billAmount}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>PR Number : {{ dataPurchaseRequestNo}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>PO Number : {{ dataPurchaseOrderNo}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Service Sheet Entry Number : {{ dataServiceSheetEntryNo}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Invoice Status : {{ invoiceStatus}}</label>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+</div> 

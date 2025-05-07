@@ -1,0 +1,163 @@
+    <div class="content-box m-b-15 m-t-10">
+        <div class="page-title-area pb-2 mb-2">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div>
+                    <a href="javascript:void(0)" (click)="gotoCandidateList()"  class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                    <h1 class="f-l">Fill Stage Gate Assessment</h1>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="form-row m-b-10">
+                <div class="col-md-3">
+                    <p class="d-inline-block grey">Candidate Name:</p>
+                    <p class="d-inline-block">{{candidateDeatilsData.fullName}}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="d-inline-block grey">State of Origin:</p>
+                    <p class="d-inline-block">{{candidateDeatilsData.stateName}}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="d-inline-block grey">Current Location:</p>
+                    <p class="d-inline-block">{{candidateDeatilsData.homeTown}}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="d-inline-block grey">Date:</p>
+                    <p class="d-inline-block">{{currentDate | date:'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive my-2">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="10" class="text-center">GATE III - FINAL SCORING SHEET</th>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 140px;">Competencies</th>
+                        <th>IQ Test</th>
+                        <th>Negotiation Excercise</th>
+                        <th>Planning & Writing Excercise</th>
+                        <th>Presentation Excercise</th>
+                        <th>Competency Based Total Score</th>
+                        <th>Competency Average Total Score</th>
+                        <th>Weightage%</th>
+                        <th>Final Score (Average Score Multiplied into Weightage)</th>
+                        <th style="min-width: 70px;max-width: 70px;">On a Maximum Score</th>
+                    </tr>
+                    <!-- <tr >
+                        <th style="min-width: 140px;">Competencies</th>
+                        <ng-container *ngFor="let head of rowHeader">
+                        <th>{{head.componentName}}</th>
+                         <th>Negotiation Excercise</th>
+                        <th>Planning & Writing Excercise</th>
+                        <th>Presentation Excercise</th>
+                        <th>Competency Based Total Score</th>
+                        <th>Competency Average Total Score</th>
+                        <th>Weightage%</th>
+                        <th>Final Score (Average Score Multiplied into Weightage)</th>
+                    </ng-container>
+                        <th style="min-width: 70px;max-width: 70px;">On a Maximum Score</th>
+                    
+                    </tr> -->
+                </thead>
+                <!-- <tr *ngFor="let roww of columnHeader;let i=index">
+                    
+                    <td>{{roww.componentName}}</td>
+                    <td><input type="text" class="form-control" placeholder=""></td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" placeholder=""></td>
+                    <td class="bg-grey"></td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                    <td class="text-center"><input type="text" class="form-control" placeholder=""></td>
+                    <td class="text-center">4</td>
+                    <td rowspan="0" class="text-center" style="text-align: center;" *ngIf="i==0">6</td>
+                </tr> -->
+
+                <tr>
+                    <td>Analytical</td>
+                    <td><input type="text" class="form-control" placeholder="" [(ngModel)]="analyticalIq" [readonly]="isVisible" (change)="onchangeanaliq()" numbersOnly></td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" placeholder="" (change)="onchangeanaliq()" [readonly]="isVisible"  [(ngModel)]="analyticalplan" numbersOnly></td>
+                    <td class="bg-grey"></td>
+                    <td class="text-center">{{analyticaltotal}}</td>
+                    <td class="text-center">{{analyticalavg}}</td>
+                    <td class="text-center"><input type="text" class="form-control" [(ngModel)]="analyticalweight" [readonly]="isVisible"  (change)="onchangeAnaliticalWeight()" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{analiticalfinal}}</td>
+                    <td rowspan="6" class="text-center"><b>25</b></td>
+                </tr>
+                <tr>
+                    <td>Planning</td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="plainingnego" [readonly]="isVisible"  (change)="onchangeplannego()" placeholder="" numbersOnly></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="plainingwriting" [readonly]="isVisible"  (change)="onchangeplannego()" placeholder="" numbersOnly></td>
+                    <td class="bg-grey"></td>
+                    <td class="text-center">{{plainingtotal}}</td>
+                    <td class="text-center">{{plainingavg}}</td>
+                    <td class="text-center"><input type="text" [(ngModel)]="plainingweight" [readonly]="isVisible"  (change)="onchangeplanwieght()" class="form-control" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{planingfinal}}</td>
+                </tr>
+                <tr>
+                    <td>Selling Skill</td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="sellingnego" [readonly]="isVisible"  (change)="onchangesellingego()" placeholder="" numbersOnly></td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="sellingprese" [readonly]="isVisible"  (change)="onchangesellingego()" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{sellingtotal}}</td>
+                    <td class="text-center">{{sellingavg}}</td>
+                    <td class="text-center"><input type="text" [(ngModel)]="sellingweight" [readonly]="isVisible"  (change)="onchangesellwieght()" class="form-control" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{sellingfinal}}</td>
+                </tr>
+                <tr>
+                    <td>Taking Conversation</td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="takeconvnego" [readonly]="isVisible"  (change)="onchangetakeconvingego()" placeholder="" numbersOnly></td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="takeconvprese" [readonly]="isVisible"  (change)="onchangetakeconvingego()" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{takeconvtotal}}</td>
+                    <td class="text-center">{{takeconvavg}}</td>
+                    <td class="text-center"><input type="text" [(ngModel)]="takeconvweight" [readonly]="isVisible"  (change)="onchangetakeconvwieght()" class="form-control" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{takeconvfinal}}</td>
+                </tr>
+                <tr>
+                    <td>Customer Orientation</td>
+                    <td class="bg-grey"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="customertotalavg" [readonly]="isVisible"  placeholder="" numbersOnly></td>
+                    <td class="bg-grey"></td>
+                    <td class="bg-grey"></td>
+                    <td class="text-center">{{customertotalavg}}</td>
+                    <td class="text-center">{{customertotalavg}}</td>
+                    <td class="text-center"><input type="text" class="form-control" [readonly]="isVisible"  [(ngModel)]="customerweight" (change)="onchangecustomer()" placeholder="" numbersOnly></td>
+                    <td class="text-center">{{customerfinal}}</td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="text-right"><b>Total</b></td>           
+                    <td class="text-center"><b>{{totalMarks}}</b></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <h6>Instructions:</h6>
+            <ol class="grey">
+                <li>The rating for each Competency (*) in each Exercise will present in the Individual Exercise Marking Guide.</li>
+                <li>Those marked " * " with an asterisk is mandatory to be scored in this Gate III Final scoring Sheet.</li>
+                <li>Competency Based Total Score is the sum of the score of the mandatory field in a particular competency.</li>
+                <li>Competency Based Average Score is the average score of the mandatory fields in a particular competency.</li>
+                <li>Final Score of each Competency shall be arrived by multiplying the Average Score into the Weightage.</li>
+                <li>The final Score shall be on 25.</li>
+                <li>Please note that the shaded fields should not be scored.</li>
+            </ol>
+        </div>
+
+        <div class="mt-4">
+            <button type="button" *ngIf="isVisible ==true ? false:true" class="btn btn-black" (click)="onSubmit()">Submit</button>
+            <button type="button" *ngIf="isVisible ==true ? false:true" class="btn btn-primary ml-1" (click)="onCancel()">Cancel</button>
+            <button type="button" class="btn btn-secondary ml-1" (click)="pdfdownload()">Download as PDF</button>
+        </div>
+    </div>
+    <div id="printerdiv" style="display: none;">
+        <app-pdfstagegetassesment [pdfValues]="pdfValuePage"></app-pdfstagegetassesment>
+    </div>

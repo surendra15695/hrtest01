@@ -1,0 +1,59 @@
+<div class='book'>
+    <!--A4 page start-->
+    <div style='width: 74px; text-align: center; margin: 0 auto;'>
+        <img src='https://mrfhrportaldocumentstrg.blob.core.windows.net/signatureupload/logo.png'
+             style='width: 100%; text-align: center;' alt=''>
+    </div>
+    <br />
+    <h2 style='text-align: center;'><b>Pre employment Medical Certificate</b></h2>
+    <br/><br/><br/><br/>
+    <div style='margin: 10px 0;'>
+        <h2 style='padding: 3px 5px;'>Candidate  Details-</h2>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;'><b>Candidate ID : </b>{{medicalDocRecord?.candiadteId}} </td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px;'><b>Candidate Name : </b>{{medicalDocRecord?.candidatename}}</td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px;'><b>Medical Status : </b> {{medicalDocRecord?.isFit}}</td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px;'><b>Remarks: </b>{{medicalDocRecord?.remarks}} </td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <div style='margin: 10px 0;'>
+        <h2 style='padding: 3px 5px;'>Verified By-</h2>
+        <table style='width: 100%; border-collapse: collapse; border-spacing: 0px; text-align: left;'>
+            <tr valign='top'>
+                <td style='padding: 3px 5px;'><b>Doctor ID : </b>{{medicalDocRecord?.doctorIdForPdf}} </td>
+            </tr>
+            <tr>
+                <td style='padding: 3px 5px;'><b>Doctor Name : </b>{{medicalDocRecord?.doctorNameForPdf}} </td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <table style='width: 100%;border-collapse: collapse; border-spacing: 0px; text-align: left; margin: 40px 0 0 0;'>
+        <tbody>
+            <tr>
+                <td style='width: 50%; padding: 3px 5px; vertical-align: bottom;'>
+                    
+                </td>
+                <!-- <td style='width: 20%; text-align: right;'>
+                    <img width='100' style='text-align:right' src="https://hrportaldocumentstorage.blob.core.windows.net/hrdocument/Signature.jpg"
+                         alt="">
+                </td> -->
+            </tr>
+            <tr>
+                <td style='width: 50%; padding: 3px 5px;'><b>Date and Time : </b> {{medicalDocRecord?.datetime}}</td>
+                <!-- <td style='width: 50%; padding: 3px 5px; text-align: right;'><b>Signature</b></td> -->
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<!--A4 page End-->

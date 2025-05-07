@@ -1,0 +1,204 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a *ngIf="formVisible" href="javascript:void(0)" (click)="showList()" class="back-btn"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Campus College</h1>
+            </div>
+            <div *ngIf="listVisible">
+                <button type="button" class="btn btn-primary btn-sm" (click)="showForm()"><i class="las la-plus"></i>
+                    Add New</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- table -->
+    <div class="table-responsive" *ngIf="listVisible">
+        <table id="dataTable1" class="table table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>College Category</th>
+                    <th>College Name</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>Contact Person</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of campusColleges; let i = index;">
+                    <td>{{i+1}}</td>
+                    <td>{{item.collegeCategoryName}}</td>
+                    <td>{{item.collegeName}}</td>
+                    <td>{{item.countryName}}</td>
+                    <td>{{item.stateName}}</td>
+                    <td>{{item.contactName}}<br>{{item.contactDesignation}}<br>{{item.contactEmailId}}<br>{{item.contactNo}}
+                    </td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    (click)="getSelectedCampusCollege(item.campusCollegeId)"><i class="las la-pen"></i>
+                                    Edit</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- table End -->
+    <!-- Form Section Start -->
+    <div *ngIf="formVisible">
+        <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+            <div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>College Category <span class="required">*</span></label>
+                            <ng-select bindLabel="collegeCategoryName" formControlName="CollegeCategoryId"
+                                [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                                [clearable]="false">
+                                <ng-option [value]="rec.collegeCategoryId" *ngFor="let rec of collegeCategories">
+                                    {{rec.collegeCategoryName}}
+                                </ng-option>
+                            </ng-select>
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['CollegeCategoryId'].touched && !saveForm.controls['CollegeCategoryId'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['CollegeCategoryId'].hasError('required') || saveForm.controls['CollegeCategoryId']==undefined ">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>College Name <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="CollegeName">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['CollegeName'].touched && !saveForm.controls['CollegeName'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['CollegeName'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>College Type <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="CollegeType">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['CollegeType'].touched && !saveForm.controls['CollegeType'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['CollegeType'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Country <span class="required">*</span></label>
+                            <ng-select bindLabel="countryName" formControlName="CountryId" [placeholder]="'Select'"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                <ng-option [value]="rec.countryId" *ngFor="let rec of countries">
+                                    {{rec.countryName}}
+                                </ng-option>
+                            </ng-select>
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['CountryId'].touched && !saveForm.controls['CountryId'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['CountryId'].hasError('required') || saveForm.controls['CountryId']==undefined ">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>State <span class="required">*</span></label>
+                            <ng-select bindLabel="stateName" formControlName="StateId" [placeholder]="'Select'"
+                                [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                                    {{rec.stateName}}
+                                </ng-option>
+                            </ng-select>
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['StateId'].touched && !saveForm.controls['StateId'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['StateId'].hasError('required') || saveForm.controls['StateId']==undefined ">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>College Address <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="CollegeAddress">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['CollegeAddress'].touched && !saveForm.controls['CollegeAddress'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['CollegeAddress'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Contact person <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="ContactName">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['ContactName'].touched && !saveForm.controls['ContactName'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['ContactName'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Designation <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="ContactDesignation">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['ContactDesignation'].touched && !saveForm.controls['ContactDesignation'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['ContactDesignation'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Email Id <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="ContactEmailId">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['ContactEmailId'].touched && !saveForm.controls['ContactEmailId'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['ContactEmailId'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Contact No <span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="ContactNo">
+                            <p class="error-msg"
+                                *ngIf="saveForm.controls['ContactNo'].touched && !saveForm.controls['ContactNo'].valid">
+                                <span
+                                    *ngIf="saveForm.controls['ContactNo'].hasError('required')">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-right" *ngIf="formVisible">
+                    <button type="submit" class="btn btn-black" [disabled]="saveForm.invalid">{{btnText}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Form Section End -->
+</div>
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

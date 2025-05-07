@@ -1,0 +1,138 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">All Positions</h1>
+  </div>
+
+  <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Req No</label>
+            <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo placeholder="Enter requisition no." autocomplete="off" (change)="onchangeReqNoVendor()">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Vendor</label>
+            <ng-select (change)="onchangeReqNoVendor()" bindLabel="venueName" class="ddltestvenue" formControlName="vendorId" #vendorId name="VendorId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.vendorId" *ngFor="let rec of vendors">
+                {{rec.vendorId}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-12 text-right">
+          <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Requisition No </th>
+          <th>Consultant Name</th>
+          <th>Vendor Id</th>
+          <th>No of Candidates Submitted</th>
+          <th>No of Candidates Shortlisted</th>
+          <th>No of Candidates Not Attended Interview</th>
+          <th>No of Candidates Selected</th>
+          <th>No of Candidates Offered</th>
+          <th>No of Candidates Declined After Given Offer</th>
+          <th>No of Candidates Joined</th>
+          <th>No of Candidates Joined Within TAT</th>
+          <th>Average Time Taken</th>
+          <th>Date of Joining</th>
+          <th>Emp Id</th>
+          <th>No of Employees Still Active</th>
+          <th>Date of Separation</th>
+          <th>No of Employees Resigned In 6months</th>
+          <th>No of Employees Resigned Total</th>
+
+          <!-- <th style="text-align: center;"></th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of consultantPerformanceLists">
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.vendorName}}</td>
+           <td>{{data.vendorId}}</td>
+           <td>{{data.submitCount}}</td>
+           <td>{{data.shortlistCount}}</td>
+           <td>{{data.naiCount}}</td>
+           <td>{{data.selectedCount}}</td>
+           <td>{{data.offeredCount}}</td>
+           <td>{{data.declinedCount}}</td>
+           <td>{{data.joinedCount}}</td>
+           <td>{{data.joinedwithinTATCount}}</td>
+           <td>{{data.averageTime}}</td> 
+           <td>{{data.dateofJoining}}</td>
+           <td>{{data.empId}}</td>
+           <td>{{data.activeEmp}}</td>
+           <td>{{dol}}</td>
+           <td>{{data.resigEmp}}</td>
+           <td>{{data.totalResign}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="exportTable" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Requisition No </th>
+            <th>Consultant Name</th>
+            <th>Vendor Id</th>
+            <th>No of Candidates Submitted</th>
+            <th>No of Candidates Shortlisted</th>
+            <th>No of Candidates Not Attended Interview</th>
+            <th>No of Candidates Selected</th>
+            <th>No of Candidates Offered</th>
+            <th>No of Candidates Declined After Given Offer</th>
+            <th>No of Candidates Joined</th>
+            <th>No of Candidates Joined Within TAT</th>
+            <th>Average Time Taken</th>
+            <th>Date of Joining</th>
+            <th>Emp Id</th>
+            <th>No of Employees Still Active</th>
+            <th>Date of Separation</th>
+            <th>No of Employees Resigned In 6months</th>
+            <th>No of Employees Resigned Total</th>
+  
+            <!-- <th style="text-align: center;"></th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of consultantPerformanceLists">
+            <td>{{data.requisitionNo}}</td>
+            <td>{{data.vendorName}}</td>
+             <td>{{data.vendorId}}</td>
+             <td>{{data.submitCount}}</td>
+             <td>{{data.shortlistCount}}</td>
+             <td>{{data.naiCount}}</td>
+             <td>{{data.selectedCount}}</td>
+             <td>{{data.offeredCount}}</td>
+             <td>{{data.declinedCount}}</td>
+             <td>{{data.joinedCount}}</td>
+             <td>{{data.joinedwithinTATCount}}</td>
+             <td>{{data.averageTime}}</td> 
+             <td>{{data.dateofJoining}}</td>
+             <td>{{data.empId}}</td>
+             <td>{{data.activeEmp}}</td>
+             <td>{{dol}}</td>
+             <td>{{data.resigEmp}}</td>
+             <td>{{data.totalResign}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+    <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Export</button>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

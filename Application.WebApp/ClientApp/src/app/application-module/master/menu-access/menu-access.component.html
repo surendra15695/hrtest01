@@ -1,0 +1,45 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Menu Permission</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <!--[formGroup]="saveForm" (ngSubmit)="onSubmit()"-->
+        <form>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="swichLabel">User Role</label>
+                    <!--formControlName="RoleId" name="RoleId"-->
+                    <ng-select bindLabel="venueName" class="ddltestvenue" (change)="onChangeUserRole($event)"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                        [clearable]="false">
+                        <ng-option [value]="rec.roleId" *ngFor="let rec of RoleList">
+                            {{rec.roleName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class=" col-md-12 cbxTree">
+                <ngx-treeview [config]="config" [items]="items" (selectedChange)="onSelectedChange($event)"
+                    (filterChange)="onFilterChange($event)">
+                </ngx-treeview>
+            </div>
+            <!--formControlName="MenuID"-->
+            <!--  -->
+            <!--[disabled]="saveForm.invalid"-->
+            <div>
+                <button type="button" (click)="onSubmit()" class="btn btn-black btn-sm">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

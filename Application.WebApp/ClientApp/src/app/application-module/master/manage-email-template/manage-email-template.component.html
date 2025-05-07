@@ -1,0 +1,97 @@
+<div class="content-box" *ngIf="showEmailTemplateList">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Email Template Master</h1>
+            </div>
+            <div>
+                <a href="javascript:void(0)" (click)="onClickAddNew()" class="btn btn-primary btn-sm"><i
+                        class="las la-plus"></i> Add New Template</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 60px;">Sl. No.</th>
+                    <th class="text-center">Template Type Name</th>
+                    <th>Template Email Name</th>
+                    <th>Active</th>
+                    <th style="text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of emailTemplateList;let i=index">
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="text-center">{{data.templateTypeName}}</td>
+                    <td>{{data.templateEmailName}}</td>
+                    <td class="green" *ngIf="data.isActive==true">Active</td>
+                    <td class="red" *ngIf="data.isActive==false">Inactive</td>
+                    <td class="text-center">
+                        <div class="row-dropdown">
+                            <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                            <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="onClickEdit(data)"><i class="las la-pen"></i> Edit</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+<div *ngIf="showEmailTemplateAddNew">
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">{{pageName}}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Template Type<span class="required">*</span></label>
+                <ng-select bindLabel="templateType" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="true" [clearable]="false" [(ngModel)]="objSaveEmailTemplate.templateTypeId"
+                     (change)="onChangeTemplateType()" [disabled]="isEditMode">
+                    <ng-option [value]="rec.templateTypeId" *ngFor="let rec of emailTemplateTypeList">
+                        {{rec.templateTypeName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Template Name<span class="required">*</span></label>
+                <input type="text" name="trainingTittle" class="form-control"
+                    [(ngModel)]="objSaveEmailTemplate.templateEmailName" placeholder="Enter Template Name">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Template Description <span class="required">*</span></label>
+                <ckeditor [(ngModel)]="objSaveEmailTemplate.templateDescription" name="templateBody"
+                    [config]="ckeConfig" debounce="500"></ckeditor>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-black" (click)="onClickSubmit()">Submit</button>
+        <button type="button" (click)="onClickCancel()" class="btn btn-primary ml-2">Cancel</button>
+    </div>
+</div>
+
+<!-- for showing loader -->
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

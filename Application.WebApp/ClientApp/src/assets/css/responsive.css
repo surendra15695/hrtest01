@@ -1,0 +1,221 @@
+/*
+Template Name: DISHA SPECTACLE
+Author: EmbeeSoftware
+File: Responsive
+*/
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1281px) {
+  
+  
+  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  
+  
+}
+
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  
+  
+}
+
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  
+  
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  .side-menu {
+    position: fixed !important;
+  }
+  .enlarged .left.side-menu {
+    margin-left: -75px;
+  }
+  
+  .content-page .content {
+    margin-top: 75px;
+  }
+  
+ 
+  .navbar-nav {
+    margin: 0px;
+    display: inline-block;
+  }
+  .navbar-nav li {
+    display: inline-block;
+    line-height: 1px;
+  }
+  .navbar-nav.navbar-right {
+    float: right;
+  }
+  .content-page {
+    margin-left: 0px !important;
+  }
+  .footer {
+    left: 0px !important;
+  }
+  .m-t-22-xs {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-nav .open .dropdown-menu {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    left: auto;
+    position: absolute;
+    right: 0;
+  }
+  .navbar-nav .open .dropdown-menu li {
+    display: block;
+  }
+  .dropdown-lg {
+    width: 200px !important;
+  }
+  .user-box {
+    float: right;
+  }
+  .enlarged footer.footer, footer.footer {
+    width: 100%;
+  }
+  label {
+    line-height: 18px;
+  }
+  h4.label-fix {
+    left: 15px; padding: 0 5px;
+  }
+}
+
+/* 
+Container-alt 
+*/
+@media (min-width: 768px) {
+  .nav-tabs.nav-justified > li > a {
+    border-bottom: 2px solid #eeeeee;
+  }
+}
+
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+@media (min-width: 481px) and (max-width: 767px) {
+  
+ 
+}
+
+@media (max-width: 480px) {
+  .side-menu {
+    z-index: 10 !important;
+  }
+  .button-menu-mobile {
+    display: block;
+  }
+  .navbar-default .navbar-left .logo-area {
+    width:60px; margin-top: 10px; float:left;
+  }
+  .navbar-default .navbar-left .logo-area img {
+        width: 45px;
+    height: auto;
+  }
+  footer.footer p.text-left, footer.footer p.text-right {
+    float: none; text-align: center;
+  }
+	
+	.container-fluid{
+		margin-right: 0px !important;
+	}
+	.portal-logo{
+	margin: 20px 0px 0px 0px;
+    width: 30%;
+        font-size: 14px;
+}
+#btnShowTeamDetails{
+	margin:10px 10px 10px 0px; 
+}
+	.name{
+		display: none;
+	}
+}
+
+
+@media (max-width: 419px) {
+  .topbar-left {
+    width: 70px !important;
+  }
+  .content-page {
+    margin-left: 70px;
+  }
+  .forced .side-menu.left {
+    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
+  }
+  .enlarged .side-menu.left {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) !important;
+  }
+	.button-menu-mobile{
+		width: 55px;
+	}
+  .navbar-default {
+    padding: 0px;
+	  margin-left: 50px;
+  }
+  .navbar-default .navbar-left {
+    padding-left: 0px !important;
+    float:left;
+  }
+  .navbar-default .navbar-left li {
+    padding: 0px 5px;
+  }
+  .topbar-left {
+    display: none;
+  }
+  .navbar-nav .open .dropdown-menu {
+    margin-right: -20px;
+  }
+  .user-box .dropdown-menu {
+    margin-right: 0 !important;
+  }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,188 @@
+<div class="content-box m-b-15 m-t-10" *ngIf="uploadedMedicalDocument == null">
+    <div class="page-title-area pb-2 mb-2">
+      <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+        <div>
+          <h1 class="f-l">You are not mapped with any requisition yet.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="content-box m-b-15 m-t-10" *ngIf="uploadedMedicalDocument != null">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Upload Medical Document</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>Medical Form</div>
+                <div>
+                    <a (click)="openFile(medicalSampleDoc?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <span class="red"><b>NOTE:</b></span><span class="grey font-italic">Please complete the medical checkup as
+                per the above form and upload the same certified by a MD General Medicine qualified doctor along with
+                reports
+                ( no need to upload xray film) Max size 10MB</span>
+        </div>
+    </div>
+    <hr>
+
+
+    <h6 class="red text-uppercase">Upload Documents:</h6>
+    <div>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Pre Employment Medical" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Medical Document" disabled>
+                </div>
+            </div>
+            <!-- <div class="col-md-6" *ngIf="uploadedDocumentList[0]?.medicalDocumentCollectionId==0 || (uploadedDocumentList[0]?.medicalDocumentCollectionId>0 && uploadedDocumentList[0]?.approvalListId==2)"> -->
+            <div class="col-md-6" *ngIf="enableField">
+                <!-- && isEnabledMedicalDoc -->
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- If single -->
+    <div class="border-box mb-4 mt-2 p-3">
+        <h6 class="mt-0">Prejoining & Onboarding</h6>
+        <div class="uploadDocList" *ngIf="fileUploadArray.length>0">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">Pre Employment Medical</label>
+                    <div class="attach-file">
+
+                        <a *ngIf="fileUploadArray[0].uploaded=='NO'" [href]="fileUploadArray[0].pdfUrl" title="Download"
+                            target="_blank"><i
+                                class="las color-black la-paperclip">{{fileUploadArray[0].documentName}}</i></a>
+                        <a *ngIf="fileUploadArray[0].uploaded=='YES'" href="{{fileUploadArray[0].document}}"
+                            title="Download" target="_blank"><i
+                                class="las color-black la-paperclip">{{fileUploadArray[0].documentName}}</i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Status</label>
+                    <p class="yellow" *ngIf="fileUploadArray[0].approvalListName =='Sent Clarification'">Need
+                        Clarification</p>
+                    <p class="yellow" *ngIf="fileUploadArray[0].approvalListName !='Sent Clarification'">
+                        {{fileUploadArray[0].approvalListName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>{{fileUploadArray[0].approvalRemarks}}</p>
+                </div>
+                <!-- <div class="col-md-1 text-md-right mt-md-2" *ngIf="uploadedDocumentList[0]?.medicalDocumentCollectionId==0 || (uploadedDocumentList[0]?.medicalDocumentCollectionId>0 && uploadedDocumentList[0]?.approvalListId==2)"> -->
+                <div class="col-md-1 text-md-right mt-md-2" *ngIf="enableField ">
+                    <!-- && isEnabledMedicalDoc -->
+                    <a href="javascript:void(0)" class="row-btn" (click)="onClickRemoveDocument(fileUploadArray[0])"><i
+                            class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- If multiple -->
+    <!-- <div class="border-box mb-4 mt-2 p-3">
+        <h6 class="mt-0">Prejoining & Onboarding</h6>
+        <div class="uploadDocList" *ngIf="fileUploadArray.length>0">
+            <div class="form-row" *ngFor="let data of fileUploadArray">
+                <div class="col-md-4">
+                    <label class="grey">Pre Employment Medical</label>
+                    <div class="attach-file">
+                        <a href="#" title="Download"><i class="las color-black la-paperclip"></i>{{data.document}}</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Recruiter Verification</label>
+                    <p class="yellow">{{data.approvalListName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>{{data.approvalRemarks}}</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn"><i class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="mt-4">
+        <h6 class="red">Additional Remarks:</h6>
+
+        <!-- <div class="media mb-3">
+            <img class="mr-3" src="images/user-icon-2.png" alt="">
+            <div class="media-body">
+                <p class="my-0"><b>Candidate Name :<span>{{uploadedDocumentList[0]?.name}}</span></b></p>
+                {{uploadedDocumentList[0]?.remarks}}
+            </div>
+        </div> -->
+        <div *ngFor="let data of medicalDocumentsAdditionalRemarks">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                    <!-- {{data.createdOn}} -->
+                    <!-- Removed as not required while arun send retest failed on 10-10-2022 -->
+
+                </div>
+            </div>
+            <!-- <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{documentData?.candidateFullName}} <span></span></h6>
+                    {{data.reamrksReply}}
+                </div>
+            </div> -->
+        </div>
+        <!-- <div class="row" *ngIf="uploadedDocumentList[0]?.medicalDocumentCollectionId==0 || (uploadedDocumentList[0]?.medicalDocumentCollectionId>0 && uploadedDocumentList[0]?.approvalListId==2)"> -->
+        <div class="row" *ngIf="enableField">
+            <!--  && isEnabledMedicalDoc -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Enter reply comment..."
+                        [(ngModel)]="AdditionalRemarks"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="mt-4 text-right" *ngIf="uploadedDocumentList[0]?.medicalDocumentCollectionId==0 || (uploadedDocumentList[0]?.medicalDocumentCollectionId>0 && uploadedDocumentList[0]?.approvalListId==2)"> -->
+    <div class="mt-4 text-right" *ngIf="enableField">
+        <!-- && isEnabledMedicalDoc -->
+        <button type="button " class="btn btn-primary" (click)="onCancelClick()">Cancel</button>
+        <button type="button " class="btn btn-black ml-1" data-toggle="modal" data-target="#confirmPopup"
+            (click)="onSubmit('S')">Submit</button>
+    </div>
+</div>
+
+
+<!-- For Loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

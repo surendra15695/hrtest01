@@ -1,0 +1,351 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Upto Onboarding Completed</h1>
+    </div>
+
+    <form [formGroup]="searchform" (ngSubmit)="formSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" formControlName="fullName" #fullName placeholder="Enter Name." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Date Of Joining</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId
+                         name="verticalId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>                        
+                    </div>
+                </div>
+
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <!-- <th>Candidate Id</th> -->
+                    <th>Name</th>                   
+                    <th>DOB</th>
+                    <th>Date of Joining</th>
+                    <th>Permanent Address </th>
+                    <th>Permanent Area</th>
+                    <th>Permanent State</th>
+                    <th>Permanent PIN Code</th>
+                    <th>Permanent Contact Number</th>
+                    <th>Communication Address</th>
+                    <th>Communication State</th>
+                    <th>Communication PIN</th>
+                    <th>Communication Primary Contact No</th>
+                    <th>Communication Alternate Contact No</th>
+                    <th>Father's Name</th>
+                    <th>Father's DOB</th>
+                    <th>Mother's Name</th>
+                    <th>Mother's DOB</th>
+                    <th>College/University Graduated from</th>
+                    <!-- <th>Graduation University</th> -->
+                    <th>Graduation Course Done</th>
+                    <th>Year Of Passing Graduation</th>
+                    <th>College/University where Post Graduation done</th>
+                    <!-- <th>Post Graduation University</th> -->
+                    <th>Post Graduation Course</th>
+                    <th>Year Of Passing Post Graduation</th>
+                    <th>Name of the Organiation worked with before joining MRF -1st Org</th>
+                    <th>Date of joining -1st Org</th>
+                    <th>Date of Exit - 1st Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -2nd Org</th>
+                    <th>Date of joining -2nd Org</th>
+                    <th>Date of Exit - 2nd Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -3rd Org</th>
+                    <th>Date of joining -3rd Org</th>
+                    <th>Date of Exit - 3rd Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -4th Org</th>
+                    <th>Date of joining -4th Org</th>
+                    <th>Date of Exit - 4th Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -5th Org</th>
+                    <th>Date of joining -5th Org</th>
+                    <th>Date of Exit - 5th Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -6th Org</th>
+                    <th>Date of joining -6th Org</th>
+                    <th>Date of Exit - 6th Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -7th Org</th>
+                    <th>Date of joining -7th Org</th>
+                    <th>Date of Exit - 7th Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -8th Org</th>
+                    <th>Date of joining -8th Org</th>
+                    <th>Date of Exit - 8th Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -9th Org</th>
+                    <th>Date of joining -9th Org</th>
+                    <th>Date of Exit - 9th Org</th>
+                    <th>Name of the Organiation worked with before joining MRF -10th Org</th>
+                    <th>Date of joining -10th Org</th>
+                    <th>Date of Exit - 10th Org</th>
+                    <th>Pan Number</th>
+                    <th>Adhaar Number</th>
+                    <th>Blood Group</th>
+                    <th>Email Id</th>   
+                    <!-- <th>Vertical</th>                  -->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of onBoardingCompletedReportList">
+                    <!-- <td>{{data.candidateNo}}</td> -->
+                    <td>{{data.fullName}}</td>                   
+                    <td>{{data.dob}}</td>
+                    <td>{{data.dateofJoining}}</td>
+                    <td>{{data.permanentAddress}}</td>
+                    <td>{{data.permanentArea}}</td>
+                    <td>{{data.permanentState}}</td>
+                    <td>{{data.permanentPin}}</td>
+                    <td>{{data.permanentContactNo}}</td>
+                    <td>{{data.communicationAddress}}</td>
+                    <td>{{data.communicationState}}</td>
+                    <td>{{data.communicationPin}}</td>
+                    <td>{{data.communicationPrimaryContactNo}}</td>
+                    <td>{{data.communicationAlternateContactNo}}</td>
+                    <td>{{data.nameOfFather}}</td>
+                    <td>{{data.doBofFather}}</td>
+                    <td>{{data.nameOfMother}}</td>
+                    <td>{{data.doBofMother}}</td>
+                    <td>{{data.graduationCollegeName}}</td>
+                    <!-- <td>{{data.graduationUniversityName}}</td> -->
+                    <td>{{data.graduationCourseName}}</td>
+                    <td>{{data.graduationYearOfPassing}}</td>
+                    <td>{{data.postGraduationCollegeName}}</td>
+                    <!-- <td>{{data.postGraduationUniversityName}}</td> -->
+                    <td>{{data.postGraduationCourseName}}</td>
+                    <td>{{data.postGraduationYearOfPassing}}</td>
+                    <td>{{data.previousOrganizationName1}}</td>
+                    <td>{{data.previousOrganizationDOJ1}}</td>
+                    <td>{{data.previousOrganizationDOE1}}</td>
+                    <td>{{data.previousOrganizationName2}}</td>
+                    <td>{{data.previousOrganizationDOJ2}}</td>
+                    <td>{{data.previousOrganizationDOE2}}</td>
+                    <td>{{data.previousOrganizationName3}}</td>
+                    <td>{{data.previousOrganizationDOJ3}}</td>
+                    <td>{{data.previousOrganizationDOE3}}</td>
+                    <td>{{data.previousOrganizationName4}}</td>
+                    <td>{{data.previousOrganizationDOJ4}}</td>
+                    <td>{{data.previousOrganizationDOE4}}</td>
+                    <td>{{data.previousOrganizationName5}}</td>
+                    <td>{{data.previousOrganizationDOJ5}}</td>
+                    <td>{{data.previousOrganizationDOE5}}</td>
+                    <td>{{data.previousOrganizationName6}}</td>
+                    <td>{{data.previousOrganizationDOJ6}}</td>
+                    <td>{{data.previousOrganizationDOE6}}</td>
+                    <td>{{data.previousOrganizationName7}}</td>
+                    <td>{{data.previousOrganizationDOJ7}}</td>
+                    <td>{{data.previousOrganizationDOE7}}</td>
+                    <td>{{data.previousOrganizationName8}}</td>
+                    <td>{{data.previousOrganizationDOJ8}}</td>
+                    <td>{{data.previousOrganizationDOE8}}</td>
+                    <td>{{data.previousOrganizationNam9}}</td>
+                    <td>{{data.previousOrganizationDOJ9}}</td>
+                    <td>{{data.previousOrganizationDOE9}}</td>
+                    <td>{{data.previousOrganizationName10}}</td>
+                    <td>{{data.previousOrganizationDOJ10}}</td>
+                    <td>{{data.previousOrganizationDOE10}}</td>
+                    <td>{{data.panNo}}</td>
+                    <td>{{data.aadharNo}}</td>
+                    <td>{{data.bloodGroupName}}</td>
+                    <td>{{data.emailId}}</td>    
+                    <!-- <td>{{data.verticalName}}</td>              -->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </tr>
+            </tbody>
+        </table>
+        <div id="exportTable" style="display: none;" >
+            <table>
+                <thead>
+                    <tr>
+                        <!-- <th>Candidate Id</th> -->
+                        <th>Name</th>                   
+                        <th>DOB</th>
+                        <th>Date Of Joining</th>
+                        <th>Email Id</th>   
+                        <!-- <th>Vertical</th>                  -->
+                        <th>Adhaar Number</th>
+                        <th>Pan Number</th>
+                        <th>Permanent Address </th>
+                        <th>Permanent Area</th>
+                        <th>Permanent State</th>
+                        <th>Permanent PIN Code</th>
+                        <th>Permanent Contact Number</th>
+                        <th>Communication Address</th>
+                        <th>Communication State</th>
+                        <th>Communication PIN</th>
+                        <th>Communication Primary Contact No</th>
+                        <th>Communication Alternate Contact No</th>
+                        <th>Blood Group</th>
+                        <th>Father's Name</th>
+                        <th>Father's DOB</th>
+                        <th>Mother's Name</th>
+                        <th>Mother's DOB</th>
+                        <th>Graduation College</th>
+                        <th>Graduation University</th>
+                        <th>Graduation Course</th>
+                        <th>Passing Year</th>
+                        <th>Post Graduation College</th>
+                        <th>Post Graduation University</th>
+                        <th>Post Graduation Course</th>
+                        <th>Year of Passing</th>
+                        <th>Previous Organization-1</th>
+                        <th>DOJ-1</th>
+                        <th>DOE-1</th>
+                        <th>Previous Organization-2</th>
+                        <th>DOJ-2</th>
+                        <th>DOE-2</th>
+                        <th>Previous Organization-3</th>
+                        <th>DOJ-3</th>
+                        <th>DOE-3</th>
+                        <th>Previous Organization-4</th>
+                        <th>DOJ-4</th>
+                        <th>DOE-4</th>
+                        <th>Previous Organization-5</th>
+                        <th>DOJ-5</th>
+                        <th>DOE-5</th>
+                        <th>Previous Organization-6</th>
+                        <th>DOJ-6</th>
+                        <th>DOE-6</th>
+                        <th>Previous Organization-7</th>
+                        <th>DOJ-7</th>
+                        <th>DOE-7</th>
+                        <th>Previous Organization-8</th>
+                        <th>DOJ-8</th>
+                        <th>DOE-8</th>
+                        <th>Previous Organization-9</th>
+                        <th>DOJ-9</th>
+                        <th>DOE-9</th>
+                        <th>Previous Organization-10</th>
+                        <th>DOJ-10</th>
+                        <th>DOE-10</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of onBoardingCompletedReportList">
+                        <!-- <td>{{data.candidateNo}}</td> -->
+                        <td>{{data.fullName}}</td>                   
+                        <td>{{data.dob}}</td>
+                        <td>{{data.dateofJoining}}</td>
+                        <td>{{data.emailId}}</td>    
+                        <!-- <td>{{data.verticalName}}</td>              -->
+                        <td>{{data.aadharNo}}</td>
+                        <td>{{data.panNo}}</td>
+                        <td>{{data.permanentAddress}}</td>
+                        <td>{{data.permanentArea}}</td>
+                        <td>{{data.permanentState}}</td>
+                        <td>{{data.permanentPin}}</td>
+                        <td>{{data.permanentContactNo}}</td>
+                        <td>{{data.communicationAddress}}</td>
+                        <td>{{data.communicationState}}</td>
+                        <td>{{data.communicationPin}}</td>
+                        <td>{{data.communicationPrimaryContactNo}}</td>
+                        <td>{{data.communicationAlternateContactNo}}</td>
+                        <td>{{data.bloodGroupName}}</td>
+                        <td>{{data.nameOfFather}}</td>
+                        <td>{{data.doBofFather}}</td>
+                        <td>{{data.nameOfMother}}</td>
+                        <td>{{data.doBofMother}}</td>
+                        <td>{{data.graduationCollegeName}}</td>
+                        <td>{{data.graduationUniversityName}}</td>
+                        <td>{{data.graduationCourseName}}</td>
+                        <td>{{data.graduationYearOfPassing}}</td>
+                        <td>{{data.postGraduationCollegeName}}</td>
+                        <td>{{data.postGraduationUniversityName}}</td>
+                        <td>{{data.postGraduationCourseName}}</td>
+                        <td>{{data.postGraduationYearOfPassing}}</td>
+                        <td>{{data.previousOrganizationName1}}</td>
+                        <td>{{data.previousOrganizationDOJ1}}</td>
+                        <td>{{data.previousOrganizationDOE1}}</td>
+                        <td>{{data.previousOrganizationName2}}</td>
+                        <td>{{data.previousOrganizationDOJ2}}</td>
+                        <td>{{data.previousOrganizationDOE2}}</td>
+                        <td>{{data.previousOrganizationName3}}</td>
+                        <td>{{data.previousOrganizationDOJ3}}</td>
+                        <td>{{data.previousOrganizationDOE3}}</td>
+                        <td>{{data.previousOrganizationName4}}</td>
+                        <td>{{data.previousOrganizationDOJ4}}</td>
+                        <td>{{data.previousOrganizationDOE4}}</td>
+                        <td>{{data.previousOrganizationName5}}</td>
+                        <td>{{data.previousOrganizationDOJ5}}</td>
+                        <td>{{data.previousOrganizationDOE5}}</td>
+                        <td>{{data.previousOrganizationName6}}</td>
+                        <td>{{data.previousOrganizationDOJ6}}</td>
+                        <td>{{data.previousOrganizationDOE6}}</td>
+                        <td>{{data.previousOrganizationName7}}</td>
+                        <td>{{data.previousOrganizationDOJ7}}</td>
+                        <td>{{data.previousOrganizationDOE7}}</td>
+                        <td>{{data.previousOrganizationName8}}</td>
+                        <td>{{data.previousOrganizationDOJ8}}</td>
+                        <td>{{data.previousOrganizationDOE8}}</td>
+                        <td>{{data.previousOrganizationNam9}}</td>
+                        <td>{{data.previousOrganizationDOJ9}}</td>
+                        <td>{{data.previousOrganizationDOE9}}</td>
+                        <td>{{data.previousOrganizationName10}}</td>
+                        <td>{{data.previousOrganizationDOJ10}}</td>
+                        <td>{{data.previousOrganizationDOE10}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

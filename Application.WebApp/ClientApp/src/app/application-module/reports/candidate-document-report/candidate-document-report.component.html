@@ -1,0 +1,164 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+      <h1 class="f-l">Filters</h1>
+    </div>
+  
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()"> 
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label text-align: center>Candidate No</label>
+                        <input type="text" class="form-control" formControlName="candidateId" #candidateId placeholder="Enter Candidate Id" autocomplete="off" >
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <label text-align: center>  
+                                    From Date
+                                </label>
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                    placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label text-align: center> To Date </label>
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                    placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>              
+                </div>
+                <div>
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                        class="las la-sync-alt"></i>Reset</button>
+                </div>
+            </div>
+        </div>
+    
+    </form>
+  
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                <th>Serial No</th>
+                <th>Candidate ID</th>
+                <th>Candidate Name</th>
+                <th>DepartmentName</th>
+                <th>Plant</th>
+                <th>Grade</th>
+                <th>Qualification</th>
+                <th>Mobile_No</th>
+                <th>FamilyDetails</th>
+                <th>MRF_PPF</th>
+                <th>Resume</th>
+                <th>Interview_Assessment</th>
+                <th>Salary_Fitment</th>
+                <th>Management_Approval</th>
+                <th>Offer_Letter</th>
+                <th>Tenth_Marksheet</th>
+                <th>Twelveth_Marksheet</th>
+                <th>Diploma_Certificate</th>
+                <th>Diploma_Marksheet</th>
+                <th>PG_Diploma_Certificate</th>
+                <th>Post_Graduate_Marksheet</th>
+                <th>Degree_Certificate</th>
+                <th>Degree_Marksheet</th>
+                <th>Post_Graduate_Certificate</th>
+                <th>Post_Graduate_Mark_sheet</th>
+                <th>Doctoral_Certificate</th>
+                <th>ExpOrRelvletterCurrEmp</th>
+                <th>ExpOrRelvletterPreviEmp</th>
+                <th>MedicalReportsApproved</th>
+                <th>ADHAR</th>
+                <th>PAN</th>
+                <th>BGV_Report</th>
+                <th>ESIDeclarationForm</th>
+                <th>Form2PFNomination</th>
+                <th>GratuityNominationForm</th>
+                <th>CompositeDeclarationFormAutoTransfer</th>
+                <th>PersonalAccidentInsPolicyForm</th>
+                <th>SuperannuationBeneficiaryForm</th>
+                <th>SEBIInitialDisclosure</th>
+                <th>BankMandateForm</th>
+                <th>BankStatementOrCancChequeOrPassbook</th>
+                <th>Family_Details_Form</th>
+                <th>Joining_Report_Form</th>
+                <th>Eighth Pass Certificate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of candidatedocumetreportLists;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{data.candidateId}}</td>
+                <td>{{data.candidateFullName}}</td>
+                <td>{{data.departmentName}}</td>
+                <td>{{data.plant}}</td>
+                <td>{{data.grade}}</td>
+                <td>{{data.qualification}}</td>
+                <td>{{data.mobile_No}}</td>
+                <td>{{data.familyDetails}}</td>
+                <td>{{data.mrF_PPF}}</td>
+                <td>{{data.resume}}</td>
+                <td>{{data.interview_Assessment}}</td>
+                <td>{{data.salary_Fitment}}</td>
+                <td>{{data.management_Approval}}</td>
+                <td>{{data.offer_Letter}}</td>
+                <td>{{data.tenth_Marksheet}}</td>
+                <td>{{data.twelveth_Marksheet}}</td>
+                <td>{{data.diploma_Certificate}}</td>
+                <td>{{data.diploma_Marksheet}}</td>
+                <td>{{data.pG_Diploma_Certificate}}</td>
+                <td>{{data.post_Graduate_Marksheet}}</td>
+                <td>{{data.degree_Certificate}}</td>
+                <td>{{data.degree_Marksheet}}</td>
+                <td>{{data.post_Graduate_Certificate}}</td>
+                <td>{{data.post_Graduate_Mark_sheet}}</td>
+                <td>{{data.doctoral_Certificate}}</td>
+                <td>{{data.expOrRelvletterCurrEmp}}</td>
+                <td>{{data.expOrRelvletterPreviEmp}}</td>
+                <td>{{data.medicalReportsApproved}}</td>
+                <td>{{data.adhar}}</td>
+                <td>{{data.pan}}</td>
+                <td>{{data.bgV_Report}}</td>
+                <td>{{data.esiDeclarationForm}}</td>
+                <td>{{data.form2PFNomination}}</td>
+                <td>{{data.gratuityNominationForm}}</td>
+                <td>{{data.compositeDeclarationFormAutoTransfer}}</td>
+                <td>{{data.personalAccidentInsPolicyForm}}</td>
+                <td>{{data.superannuationBeneficiaryForm}}</td>
+                <td>{{data.sebiInitialDisclosure}}</td>
+                <td>{{data.bankMandateForm}}</td>
+                <td>{{data.bankStatementOrCancChequeOrPassbook}}</td>
+                <td>{{data.family_Details_Form}}</td>
+                <td>{{data.joining_Report_Form}}</td>
+                <td>{{data.eighth_Pass_Certificate}}</td>
+              </tr>
+            </tbody>
+          </table>
+      <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Export</button>
+    </div>
+  
+  
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  

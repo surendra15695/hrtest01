@@ -1,0 +1,135 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="gotoJobShadowReviewList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Job Shadowing Review</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee ID:</p>
+                <p class="d-inline-block">{{empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Employee Name:</p>
+                <p class="d-inline-block">{{empName}}</p>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+    <form [formGroup]="saveForm" autocomplete="off">
+        <div>
+            <div class="form-group">
+                <label>Please comment on employee's perspective about job(nature of work, envirnment, culture
+                    etc.)</label>
+                <div class="rdio rdio-primary mb-2 d-md-inline">
+                    <input formControlName="Question1Status" name="Question1Status" value="1" #radio1 id="radio1"
+                        type="radio" [checked]="selectedQuestion1Status=='1'?true:false"  [attr.disabled]="disableAll==true?true:null">
+                    <label for="radio1">Positive</label>
+                </div>
+                <div class="rdio rdio-primary mb-2 d-md-inline">
+                    <input formControlName="Question1Status" name="Question1Status" value="2" #radio2 id="radio2"
+                        type="radio" [checked]="selectedQuestion1Status=='2'?true:false"  [attr.disabled]="disableAll==true?true:null">
+                    <label for="radio2">Negative</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Reason" formControlName="Question1Reason" [attr.disabled]="disableAll==true?true:null">
+            </div>
+            <div class="form-group">
+                <label>Please comment on employee's ability to observe, learn and apply critical tacit knowledge, skills
+                    and behaviors </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question2Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Please summarize the expectations set for employee</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question3Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Please comment how well employee has understood his role and expectations of the
+                    organization</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question4Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Employee's ability to handle job independently </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question5Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Please mention the strengths observed </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question6Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Please mention the development area identified </label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question7Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Please summarize the support given to employee on development area</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Question8Answer" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Action Recommended</label>
+                <div class="rdio rdio-primary mb-2 d-md-inline">
+                    <input formControlName="Question9Status" name="Question9Status" value="1" #radio3
+                        id="radio3" type="radio" [checked]="selectedQuestion9Status=='1'?true:false" [attr.disabled]="disableAll==true?true:null">
+                    <label for="radio3">Job Allocation </label>
+                </div>
+                <div class="rdio rdio-primary mb-2 d-md-inline">
+                    <input formControlName="Question9Status" name="Question9Status" value="2" #radio4
+                        id="radio4" type="radio" [checked]="selectedQuestion9Status=='2'?true:false" [attr.disabled]="disableAll==true?true:null">
+                    <label for="radio4">Extend for one month</label>
+                </div>
+            </div>
+            <h6 class="red" >Remarks:</h6>
+        <div *ngFor="let data of remarksDetails">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdBy}} <span></span></h6>
+                    {{data.remarks}}
+                </div>
+            </div>
+            
+        </div>
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control" placeholder="Write here..." formControlName="Remarks" [attr.disabled]="disableAll==true?true:null"></textarea>
+            </div>
+            <div class="mt-4" *ngIf="!showButton">
+                <button type="button" data-toggle="modal" data-target="#confirmPopup" class="btn btn-black">Submit</button>
+            
+                <button type="button " class="btn btn-secondary" (click)="saveasDraftFormat()">Save as Draft</button>
+            </div>
+        </div>
+    </form>
+<!-- arg -->
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Do you want to continue?</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="onSubmit()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

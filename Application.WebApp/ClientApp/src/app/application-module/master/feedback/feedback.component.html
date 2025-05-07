@@ -1,0 +1,113 @@
+<!-- Start content -->
+<div class="content">
+    <div class="page-title-area pb-2 mb-2">
+        <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>   
+        <h1 class="f-l">Induction Feedback</h1>     
+    </div>
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l" *ngIf="Operation == 'insert'">Create New Feedback</h1>
+                        <h1 class="f-l" *ngIf="Operation == 'update'">Edit Feedback</h1>
+                    </div>
+                </div>
+            </div>
+             <!-- Form Section Start -->
+             <div>
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label>Feedback Name</label>
+                            <input type="text" name="FeedbackName" [(ngModel)]="FeedbackName" class="form-control" placeholder="Enter feedback name" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Feedback Type</label>
+                            <ng-select bindLabel="venueName" name="FeedbackType" [(ngModel)]="FeedbackType" class="ddltestvenue" name="FeedbackType" [(ngModel)]="FeedbackType" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                <ng-option [value]="rec.id" *ngFor="let rec of FeedbackTypeList">
+                                    {{rec.text}}
+                                </ng-option>
+                            </ng-select> 
+                        </div>
+                    </div>                                
+                 </div>
+            </div>
+            <div>
+                <h6 class="text-uppercase">Feedback Questionnaire</h6>
+                <div class="question-box mb-4 mt-2 pt-3" *ngFor="let parent of FeedbackQuestionnireList; let i=index">
+                    <div class="px-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Question Type</label>
+                                    <ng-select bindLabel="venueName" [name]="'QuestType_'+i" [(ngModel)]="parent.QuestionTypeID" class="ddltestvenue" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                        <ng-option [value]="rec.feedBackQuestionTypeId" *ngFor="let rec of FeedbackQuestionTypList">
+                                            {{rec.feedBackQuestionTypeName}}
+                                        </ng-option>
+                                    </ng-select> 
+                                </div>
+                            </div>
+                            <div class="col-md-3" [attr.id]="'ddlSec_'+i" *ngIf="parent.QuestionTypeID==1 || parent.QuestionTypeID==2">
+                                <div class="form-group">
+                                    <div *ngIf="parent.QuestionTypeID==1">
+                                        <label>Scale</label>                                 
+                                        <ng-select bindLabel="venueName" [attr.id]="'ddlRating_'+i" [name]="'Scale_'+i" [(ngModel)]="parent.ScaleID" class="ddltestvenue" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                         <ng-option [value]="rec.feedBackQuestionTypeOptionId" *ngFor="let rec of FeedbackQuestionRatingOptionList">
+                                            {{rec.feedBackQuestionOptionTypeName}} - Point Scale
+                                         </ng-option>
+                                       </ng-select>
+                                    </div>   
+                                     
+                                    <div *ngIf="parent.QuestionTypeID==2">
+                                        <label>Option</label>
+                                       <ng-select bindLabel="venueName" [attr.id]="'ddlOption_'+i" [name]="'Scale_'+i" [(ngModel)]="parent.ScaleID" class="ddltestvenue" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+                                         <ng-option [value]="rec.feedBackQuestionTypeOptionId" *ngFor="let rec of FeedbackQuestionOptionOptionList">
+                                            {{rec.feedBackQuestionOptionTypeName}}
+                                         </ng-option>
+                                        </ng-select>  
+                                    </div>
+                                                                                                        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">                               
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control" [attr.id]="'txtQuestion_'+i" name="'QuestionOrOption_'+i" [(ngModel)]="parent.QuestionOrOption" placeholder="Enter Question"></td>                                        
+                                        <td class="text-center"><a href="javascript:void(0)" (click)="AddOptionOrQuestion(i)" class="row-btn">+</a> </td>
+                                    </tr>
+                                    <tr *ngFor="let child of parent.QuestionOrOptionList; let j=index;">
+                                        <td>{{child.QuestionOrOption}}</td>                                        
+                                        <td class="text-center"><a href="javascript:void(0)" (click)="DeleteQuestionOrOption(i, j)" class="row-btn"><i class="las la-trash-alt"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                     <div class="sec-delete text-center">
+                        <button type="button" (click)="DeleteSection(i)" class="btn btn-link red"><i class="las la-trash-alt"></i> Delete Section</button>
+                     </div>
+                </div>               
+                <div class="text-center">
+                    <button type="button" (click)="AddSection()" class="btn btn-secondary btn-sm ml-1"><i class="las la-plus"></i> Add Question</button>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="button" (click)="onSubmit()" class="btn btn-black mr-1">Submit</button>
+                <!-- <button type="button" class="btn btn-secondary mr-1">Save as Draft</button> -->
+                <button type="button" class="btn btn-primary mr-1" (click)="CancelFeedback()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="SaveAsDraft()">Save As Draft</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

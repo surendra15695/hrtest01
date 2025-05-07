@@ -1,0 +1,54 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Pre Employment Medical Reimbursement</h1>
+            </div>
+        </div>   
+    </div>
+    <div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date of Joining</th>
+                        <th>Location of Medical test</th>
+                        <th>Posting Location</th>
+                        <th>Function</th>
+                        <th>Department</th>
+                        <th class="text-right">Claim Amount</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor=" let data of candidateMedicalReimbursementList; let i=index; ">
+                        <td>{{data.dateofJoining}}</td>
+                        <td>{{data.location}}</td>
+                        <td>{{data.locationName}}</td>
+                        <td>{{data.functionName}}</td>
+                        <td>{{data.departmentName}}</td>
+                        <td class="text-right">{{data.totalAmount}}</td>
+                        <td>{{data.approvalStatusName}}</td>
+                        <td class="text-center">
+                            <div class="row-dropdown">
+                                <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+                                <div  class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                    <a *ngIf="data.approvalStatus==0" class="dropdown-item" href="javascript:void(o)" (click)="onClickClaimReimbursement(data)"><i class="las la-pen"></i> Claim Reimbursement</a>
+                                    <a *ngIf="data.approvalStatus==2" class="dropdown-item" href="javascript:void(o)" (click)="onClickEditClaim(data)"><i class="las la-pen"></i> Edit</a>
+                                    <a *ngIf="data.approvalStatus!=0" class="dropdown-item" href="javascript:void(o)" (click)="onClickView(data)"><i class="las la-pen"></i> View Details</a>
+                                </div>
+                                <!-- <div  *ngIf="data.approvalStatus==2" class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                    
+                                </div>
+                                <div  *ngIf="data.approvalStatus!=0" class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" data-boundary="window" x-placement="bottom-end">
+                                   
+                                </div> -->
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

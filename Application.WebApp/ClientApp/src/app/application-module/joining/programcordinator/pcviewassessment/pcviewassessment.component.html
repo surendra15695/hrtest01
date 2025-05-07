@@ -1,0 +1,64 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" (click)="onClickBack()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">View Assesment</h1>
+            </div>
+        </div>   
+    </div>
+    <div class="form-row mb-4">
+        <div class="col-md-4">
+            <p class="d-inline-block grey">Employee No:</p>
+            <p class="d-inline-block">{{viewAssessmentDetails.candidateNo}}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="d-inline-block grey">Employee Name:</p>
+            <p class="d-inline-block">{{viewAssessmentDetails?.candidateName}}</p>
+        </div>
+    </div>
+
+    <div id="accordion" class="myaccordion">        
+        <div class="card" *ngFor="let ass of viewAssessmentQuestiondata">
+          <div class="card-header" id="headingOne" *ngIf="ass.assessmentTypeId==1">
+            <h2>
+              <button class="header-btn d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                {{ass.assessmentName}}
+                <span>
+                  <i class="fa fa-minus"></i>
+                </span>
+              </button>
+            </h2>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" *ngIf="ass.assessmentTypeId==1">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th style="width: 100px;">Evaluation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let qstnans of ass.candidateEvaluationAnswerData">
+                                <td>{{qstnans.assessmentQuestion}}</td>
+                                <td>{{qstnans.assessmentAnswer}}</td>
+                                <td [ngClass]="qstnans.questionStatus == true ? 'green' : 'red'">{{getQuestionStatus(qstnans.questionStatus)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="alert alert-warning">
+        <div class="row">
+            <div class="col"><b>Overall Evaluation%</b></div>
+            <div class="col text-right"><b>{{viewAssessmentDetails?.overAllPercentage}}</b></div>
+        </div>
+    </div>
+</div>

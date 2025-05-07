@@ -1,0 +1,270 @@
+<form [formGroup]="jobDescriptionForm" (ngSubmit)="onSubmit()">
+    <div class="content-box m-b-15 m-t-10">
+        <div class="page-title-area pb-2 mb-2">
+            <h1 class="f-l">JD Template</h1>
+        </div>
+        <h6 class="red">General information</h6>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Job title<span class="required">*</span></label>
+                    <input type="text" formControlName="JobDescriptionName" class="form-control" placeholder="">
+                    <input type="hidden" formControlName="JobDescriptionId" />
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Vertical<span class="required">*</span></label>
+                    <select class="selectpicker form-control" formControlName="VerticalId" #VerticalId title="Select"
+                        (change)="changeVertical()">
+                        <option *ngFor="let v of verticals" [ngValue]="v.verticalId">
+                            {{v.verticalName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Location<span class="required">*</span></label>
+                    <select class="selectpicker" formControlName="LocationId" #LocationId title="Select">
+                        <option *ngFor="let loc of locations" [ngValue]="loc.locationId">
+                            {{loc.locationOffice}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Function<span class="required">*</span></label>
+                    <select class="selectpicker" formControlName="FunctionId" title="Select" #FunctionId
+                        (change)="changeFunction()">
+                        <option *ngFor="let function of functions" [ngValue]="function.functionId">
+                            {{function.functionName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Department<span class="required">*</span></label>
+                    <select class="selectpicker" formControlName="DepartmentId" title="Select" #DepartmentId>
+                        <option *ngFor="let department of departments" [ngValue]="department.departmentId">
+                            {{department.departmentName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Position<span class="required">*</span></label>
+                    <select class="selectpicker" formControlName="PositionId" title="Select" #PositionId
+                        (change)="changePosition()">
+                        <option *ngFor="let position of positions" [ngValue]="position.positionId">
+                            {{position.positionName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <h6 class="red">Specification</h6>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Grade<span class="required">*</span></label>
+                    <select class="selectpicker" title="Select" formControlName="GradeId" #Grade>
+                        <option *ngFor="let grade of grades" [ngValue]="grade.gradeId">
+                            {{grade.gradeName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Reports to<span class="required">*</span></label>
+                    <input type="text" formControlName="ReportsTo" class="form-control" placeholder="">
+                    
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>No. of Reportees<span class="required">*</span></label>
+                    <select formControlName="NoOfReportees" class="selectpicker form-control" title='Select'>
+                        <option [ngValue]="1">1</option>
+                        <option [ngValue]="2">2</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Desired Industries<span class="required">*</span></label>
+                    <select formControlName="IndustryId" class="selectpicker form-control" multiple title='Select'>
+                        <option *ngFor="let rec of industries" [ngValue]="rec.industryId">
+                            {{rec.industryName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Experience<span class="required">*</span></label>
+                    <select formControlName="ExperienceId" class="selectpicker form-control" title='Select'>
+                        <option *ngFor="let rec of experiences" [ngValue]="rec.experienceId">
+                            {{rec.experienceName}}
+                        </option>
+                    </select> 
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Age<span class="required">*</span></label>
+                    <select formControlName="AgeId" class="selectpicker form-control" title='Select'>
+                        <option *ngFor="let rec of ages" [ngValue]="rec.ageId">
+                            {{rec.ageName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Qualification<span class="required">*</span></label>
+                    <select formControlName="QualificationId" class="selectpicker" title="Select"
+                        (change)="changeQualification()">
+                        <option *ngFor="let q of qualifications" [ngValue]="q.qualificationId">
+                            {{q.qualificationName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Course<span class="required">*</span></label>
+                    <select formControlName="CourseId" class="selectpicker" title="Select" #CourseId
+                        (change)="changeCourse()">
+                        <option *ngFor="let c of courses" [ngValue]="c.courseId">
+                            {{c.courseName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Stream<span class="required">*</span></label>
+                    <select class="selectpicker" title="Select" formControlName="StreamId" #StreamId>
+                        <option *ngFor="let s of streams" [ngValue]="s.streamId">
+                            {{s.streamName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Languages Known<span class="required">*</span></label>
+                    <select class="selectpicker" title="Select" formControlName="LanguageId" #LanguageId>
+                        <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                            {{lang.languageName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Any Other</label>
+                    <input type="text" formControlName="AnyOtherLanguage" class="form-control" placeholder="">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="red font-weight-bold">Main Purpose of Job <span class="required">*</span><small
+                            class="grey">(Why job exists / what it must achieve)</small></label>
+                    <textarea formControlName="JobPurpose" id="" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="red font-weight-bold">Main Responsibilities / Job Summary<span
+                            class="required">*</span> <small class="grey">(Primary deliverables of role and it's
+                            scope)</small></label>
+                    <textarea formControlName="JobSummary" id="" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-6">
+                <div class="form-group">
+                    <label class="red font-weight-bold">KPIs <span class="required">*</span><small
+                            class="grey">(Measurable parameters of the role)</small></label>
+                    <textarea formControlName="KPIs" id="" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col col-md-6">
+                <div class="form-group">
+                    <label class="red font-weight-bold">Dimensions <span class="required">*</span><small
+                            class="grey">(What is the span of the role)</small></label>
+                    <textarea formControlName="Dimensions" id="" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <h6 class="red mb-1">Skills and Knoledge Requirements:</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Knowledge<span class="required">*</span></label>
+                    <input formControlName="Knowledge" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Skills and Ability<span class="required">*</span></label>
+                    <input formControlName="Skills" id='Skills' type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="font-weight-bold red">External Stake Holders<span class="required">*</span></label>
+                    <input formControlName="ExternalStakeHolders" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="font-weight-bold red">Internal Stake Holders<span class="required">*</span></label>
+                    <input type="text" formControlName="InternalStakeHolders" class="form-control" placeholder="">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="red font-weight-bold">Restricted JD </label>
+                    <textarea formControlName="RestrictedJD" id="" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <input type="hidden" formControlName="JDDocument" />
+                <label class="font-weight-bold red" for="">Job Description Attachment</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                        (change)="handleUpload($event)">
+                    <label class="custom-file-label" for="customFile" #jobdescriptionfile>Choose file</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-4">
+            <!-- <button type="button" class="btn btn-secondary">Save as Draft</button> -->
+            <button type="submit" class="btn btn-black">Submit</button>
+            <button type="button" class="btn btn-primary">Cancel</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+
+}
+.acknowledge_container {
+    background-color: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0px 0.125rem 0.25rem rgb(126 142 177 / 18%);
+    -webkit-box-shadow: 0px 0.125rem 0.25rem rgb(126 142 177 / 18%);
+    width: 100%;
+    margin-top: 30px;
+    transition: 0.3s;
+}
+.acknowledge_container .logo-area {
+    background-color: #ed1c24;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 12px 0;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.acknowledge_container .content-area {
+    padding: 20px 40px;
+}
+
+.acknowledge_container .content-area .wrapper {
+    display: flex;
+    background: #fff;
+    height: 100px;
+    width: 264px;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5px;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+.acknowledge_container .content-area .wrapper .option {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 2px solid #b9b9b9;
+    transition: all 0.3s ease;
+}
+.acknowledge_container .content-area .wrapper .option .dot {
+    height: 20px;
+    width: 20px;
+    background: #b9b9b9;
+    border-radius: 50%;
+    position: relative;
+}
+.acknowledge_container .content-area .wrapper .option .dot::before {
+    position: absolute;
+    content: "";
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    background: #388e3c;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+.acknowledge_container .content-area .wrapper .option.option-2 .dot::before {
+    background: #ed1c24;
+}
+.acknowledge_container .content-area .wrapper input[type="radio"] {
+    display: none;
+}
+.acknowledge_container .content-area .wrapper #option-1:checked:checked ~ .option-1 {
+    border-color: #388e3c;
+    background: #388e3c;
+}
+.acknowledge_container .content-area .wrapper #option-2:checked:checked ~ .option-2 {
+    border-color: #ed1c24;
+    background: #ed1c24;
+}
+.acknowledge_container .content-area .wrapper #option-1:checked:checked ~ .option-1 .dot,
+.acknowledge_container .content-area .wrapper #option-2:checked:checked ~ .option-2 .dot {
+    background: #fff;
+}
+.acknowledge_container .content-area .wrapper #option-1:checked:checked ~ .option-1 .dot::before,
+.acknowledge_container .content-area .wrapper #option-2:checked:checked ~ .option-2 .dot::before {
+    opacity: 1;
+    transform: scale(1);
+}
+.acknowledge_container .content-area .wrapper .wrapper .option span {
+    font-size: 20px;
+    color: #808080;
+}
+.acknowledge_container .content-area .wrapper #option-1:checked:checked ~ .option-1 span,
+.acknowledge_container .content-area .wrapper #option-2:checked:checked ~ .option-2 span {
+    color: #fff;
+}
+.acknowledge_container .content-area .form-control {
+    font-size: 14px;
+    padding: 10px;
+}
+.acknowledge_container .content-area .btn-black {
+    font-size: 14px;
+    background-color: #414141;
+    color: #fff;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 3px;
+    width: 180px;
+    transition: ease all 0.3s;
+}
+
+.acknowledge_container .content-area .btn-black:hover,
+.acknowledge_container .content-area .btn-black:focus,
+.acknowledge_container .content-area .btn-black:visited {
+    background-color: #212121;
+    color: #fff;
+}

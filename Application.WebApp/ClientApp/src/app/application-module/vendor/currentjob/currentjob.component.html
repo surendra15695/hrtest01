@@ -1,0 +1,169 @@
+<div class="content-box">
+    <h5 class="mt-0">Current Jobs</h5>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="verticalId" (change)="changeVertical()">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Position</label>
+                        <ng-select bindLabel="positionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="positionId">
+                            <ng-option [value]="rec.positionId" *ngFor="let rec of positions">
+                                {{rec.positionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <select class="selectpicker ddlvertical" name="verticalId" title='Select'
+                            formControlName="verticalId" #verticalId (change)="changeVertical()" autocomplete="off">
+                            <option *ngFor="let rec of verticals" [ngValue]="rec.verticalId">
+                                {{rec.verticalName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Position</label>
+                        <select class="selectpicker" title='All' formControlName="positionId" #positionId>
+                            <option *ngFor="let rec of positions" [ngValue]="rec.positionId">
+                                {{rec.positionName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <select class="selectpicker" title='All' formControlName="functionId" #functionId>
+                            <option *ngFor="let rec of functions" [ngValue]="rec.functionId">
+                                {{rec.functionName}}
+                            </option>
+                        </select>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-2" style="display: none;">
+                <div class="form-group">
+                    <label>Location</label>
+                    <select class="selectpicker" title='All' formControlName="locationId" #locationId>
+                        <option *ngFor="let rec of locations" [ngValue]="rec.locationId">
+                            {{rec.locationNo}}
+                        </option>
+                    </select>
+                </div>
+            </div> -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-md-4 text-right">
+                    <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i> Filter</button>
+                    <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="resetForm()"><i class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="job-list-row" *ngFor="let data of currentJobs">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h6 class="red mt-0 mb-1">{{data.positionName}} - {{data.requisitionNo}}</h6>
+                <div class="info-header">
+                    <span class="mr-2"><i class="las la-map-marker"></i> {{data.locationNo}}</span>
+                    <span class="mr-2"><i class="las la-hourglass-start"></i> {{data.jobTypeName}}</span>                    
+                    <span class="mr-2"><i class="las la-paperclip"></i> {{data.functionName}}</span>
+                    <span class="mr-2"><i class="las la-arrow-circle-left"></i> {{data.departmentName}}</span>
+                </div>
+                <div class="info-header" *ngIf="data.salaryShowCount!=0">
+                    <span class="mr-2"><i class="las la-rupee-sign"></i> {{data.salaryName}}</span>
+                </div>
+            </div>
+            <div>
+                <span class="capsule outline-black"><i class="las la-calendar-check"></i> {{data.allocatedDate}}</span>
+                <button type="button" class="btn btn-rounded btn-outline-primary btn-sm ml-1" *ngIf="data.submittedCandidateCount!=0" (click)="gotoSubmittedCandidate(data.requisitionDetailId)">Submitted Candidate</button>
+                <a href="javascript:void(0)" class="btn btn-primary btn-rounded btn-sm ml-1" (click)="gotoSubmitCandidate(data.requisitionDetailId)">Submit Candidate</a>
+            </div>
+        </div>
+        <div class="mb-3" *ngIf="data.jdShowCount!=0">
+          <p class="grey">Description:</p>
+          <!-- <p>Job summary test</p> -->
+          <div [innerHTML]="data.jobSummary"></div>
+        </div>
+        <div class="mb-3" *ngIf="data.restrictedJDShowCount!=0">
+            <p class="grey">Details:</p>
+            <div [innerHTML]="data.restrictedJD"></div>
+            <!-- <p>Test resticted JD</p> -->
+        </div>
+        <div class="mb-3" *ngIf="data.notes!=''">
+            <p class="grey">Note:</p>
+            <p>{{data.notes}}</p>
+        </div>
+        <div  *ngIf="data.jdShowCount!=0">
+            <div class="attach-file">
+                <a href="javascript:void(0)" (click)="DownloadJD(data.jdDocument,data.jobDescriptionName)" title="Download"><i class="las color-black la-paperclip"></i> Job Details</a>
+                <a href="javascript:void(0)" (click)="DownloadJD(data.jdDocument,data.jobDescriptionName)"><i class="las la-download red"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

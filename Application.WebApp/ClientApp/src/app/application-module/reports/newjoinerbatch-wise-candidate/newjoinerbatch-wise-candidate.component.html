@@ -1,0 +1,105 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">New Joiner Report</h1>
+    </div>
+    <div class="page-title-area pb-2 mb-2">
+        <a class="back-btn" href="javascript:void(0)" (click)="onClickBack()"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Batch ID: {{batchNo}}</h1>
+    </div>
+    <div class="filter-sec mb-3">
+        <div class="form-row m-t-10">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Joining Date</label>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="input-group datepiker date">
+                                <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                    placeholder="From Date" #dtofJoiningFrom [(ngModel)]="objModel.FromDate"
+                                    autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group datepiker date">
+                                <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                    placeholder="To Date" #dtofJoiningTo [(ngModel)]="objModel.ToDate"
+                                    autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2"><i
+                                            class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Vertical</label>
+                    <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue"
+                        [(ngModel)]="objModel.verticalId" (change)="changeVertical()" name="verticalId"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false">
+                        <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                            {{rec.verticalName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Department</label>
+                    <ng-select bindLabel="venueName" class="ddltestvenue" [(ngModel)]="objModel.departmentId"
+                        name="departmentId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                        [searchable]="true" [clearable]="false">
+                        <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                            {{rec.departmentName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-black btn-sm" (click)="OnClickFilterIndividual()"><i class="las la-filter"
+                        ></i>Filter</button>
+                <button type="button" class="btn btn-secondary btn-sm ml-1" (click)="OnClickIndividualReset()"><i
+                        class="las la-sync-alt"></i>
+                    Reset</button>
+            </div>
+        </div>
+    </div>
+    <!-- Fiter section End -->
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial No.</th>
+                    <th>Month</th>
+                    <th>Candidate Name</th>
+                    <th>Mode of Joining</th>
+                    <th>Date of Joining</th>
+                    <th>Grade</th>
+                    <th>Department</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of newJoinerBatchWiseCandidate;let i=index;">
+                    <td>{{i+1}}</td>
+                    <td>{{data.month}}</td>
+                    <td>{{data.candidateFullName}}</td>
+                    <td>{{data.modeofJoiningName}}</td>
+                    <td>{{data.dateofJoining}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.locationName}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" (click)="ExportReport()" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Export</button>
+    </div>
+</div>

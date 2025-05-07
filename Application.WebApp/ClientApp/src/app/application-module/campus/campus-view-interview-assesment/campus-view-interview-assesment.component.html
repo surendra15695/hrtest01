@@ -1,0 +1,223 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)"  (click)="gotoCandidateList()" class="back-btn"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Interview Assesment </h1>
+            </div>
+            <div>
+                <button type="button" class="btn btn-rounded btn-outline-success btn-sm ml-1" (click)="DownloadPDF()"><i
+                        class="las la-download"></i> Download</button>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let rec of assessmentRecords">
+        <div class="form-row mb-2">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate Name:</p>
+                <p class="d-inline-block red">{{rec.fullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Position:</p>
+                <p class="d-inline-block red">{{rec.positionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Interview Name:</p>
+                <p class="d-inline-block red">{{rec.interviewName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Interview Date:</p>
+                <p class="d-inline-block red">{{rec.interviewDate}}</p>
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <div class="col-md-6">
+           <p> <b>Rating :</b> A = Good B= Average C = Below Average</p></div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="3" class="text-capitalize">Interviewer</th>
+                        <th colspan="15" class="text-center">AREAS OF ASSESMENT</th>
+                        <th rowspan="3" class="text-capitalize" style="display: none;">Joining time required</th>
+                        <th rowspan="3" class="text-capitalize" style="display: none;">Salary (Take-home/Gross)</th>
+                        <th rowspan="3" class="text-capitalize" style="min-width: 100px; max-width: 100px;">Joining time
+                            required/ Salary/ Location preference</th>
+                        <th rowspan="3" class="text-capitalize" style="min-width: 200px; max-width: 200px;">Others comments if any</th>
+                        <th rowspan="3" class="text-capitalize" style="min-width: 120px;">Action</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="text-capitalize" style="background-color: #ffc0c3;">Presonality (Turnout, Self-introduction, Poise, General
+                            Behaviour)</th>
+                        <th colspan="3" class="text-capitalize" style="background-color: #ffcb60;">Communication Oral communication, Command of English &
+                            Clarity of thought)</th>
+                        <th colspan="3" class="text-capitalize" style="background-color: #ffc0c3;">Subject / Job (Subject/ Job knowledge, Areas of
+                            expertise/ specialization)</th>
+                        <th colspan="3" class="text-capitalize" style="background-color: #ffcb60;">Aptitude for the position</th>
+                        <th colspan="3" class="text-capitalize" style="background-color: #ffc0c3;">Overall Rating</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" style="background-color: #ffc0c3;">A</th>
+                        <th class="text-center" style="background-color: #ffc0c3;">B</th>
+                        <th class="text-center" style="background-color: #ffc0c3;">C</th>
+
+                        <th class="text-center" style="background-color: #ffcb60;">A</th>
+                        <th class="text-center" style="background-color: #ffcb60;">B</th>
+                        <th class="text-center" style="background-color: #ffcb60;">C</th>
+
+                        <th class="text-center" style="background-color: #ffc0c3;">A</th>
+                        <th class="text-center" style="background-color: #ffc0c3;">B</th>
+                        <th class="text-center" style="background-color: #ffc0c3;">C</th>
+
+                        <th class="text-center" style="background-color: #ffcb60;">A</th>
+                        <th class="text-center" style="background-color: #ffcb60;">B</th>
+                        <th class="text-center" style="background-color: #ffcb60;">C</th>
+
+                        <th class="text-center" style="background-color: #ffc0c3;">A</th>
+                        <th class="text-center" style="background-color: #ffc0c3;">B</th>
+                        <th class="text-center" style="background-color: #ffc0c3;">C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of rec.assessmentList">
+                        <td>{{data.interviewerName}}</td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Personality{{data.calendarId}}"
+                                    [value]="personalidyScore" id="PersonalityRadio{{data.calendarId}}_1"
+                                    [checked]="data.personalityScore==3?true:false">
+                                <label class="chk" for="PersonalityRadio{{data.calendarId}}_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Personality{{data.calendarId}}"
+                                    [value]="personalidyScore" id="PersonalityRadio{{data.calendarId}}_2"
+                                    [checked]="data.personalityScore==2?true:false">
+                                <label class="chk" for="PersonalityRadio{{data.calendarId}}_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Personality{{data.calendarId}}"
+                                    [value]="personalidyScore" id="PersonalityRadio{{data.calendarId}}_3"
+                                    [checked]="data.personalityScore==1?true:false">
+                                <label class="chk" for="PersonalityRadio{{data.calendarId}}_3"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Communication{{data.calendarId}}" value="1"
+                                    id="CommunicationRadio{{data.calendarId}}_1"
+                                    [checked]="data.communicationScore==3?true:false">
+                                <label class="chk" for="CommunicationRadio{{data.calendarId}}_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Communication{{data.calendarId}}" value="2"
+                                    id="CommunicationRadio{{data.calendarId}}_2"
+                                    [checked]="data.communicationScore==2?true:false">
+                                <label class="chk" for="CommunicationRadio{{data.calendarId}}_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Communication{{data.calendarId}}" value="3"
+                                    id="CommunicationRadio{{data.calendarId}}_3"
+                                    [checked]="data.communicationScore==1?true:false">
+                                <label class="chk" for="CommunicationRadio{{data.calendarId}}_3"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Subject{{data.calendarId}}" value="1"
+                                    id="SubjectRadio{{data.calendarId}}_1" [checked]="data.subjectScore==3?true:false">
+                                <label class="chk" for="SubjectRadio{{data.calendarId}}_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Subject{{data.calendarId}}" value="2"
+                                    id="SubjectRadio{{data.calendarId}}_2" [checked]="data.subjectScore==2?true:false">
+                                <label class="chk" for="SubjectRadio{{data.calendarId}}_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Subject{{data.calendarId}}" value="3"
+                                    id="SubjectRadio{{data.calendarId}}_3" [checked]="data.subjectScore==1?true:false">
+                                <label class="chk" for="SubjectRadio{{data.calendarId}}_3"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Apptitude{{data.calendarId}}" value="1"
+                                    id="ApptitudeRadio{{data.calendarId}}_1"
+                                    [checked]="data.apptitudeScore==3?true:false">
+                                <label class="chk" for="ApptitudeRadio{{data.calendarId}}_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Apptitude{{data.calendarId}}" value="2"
+                                    id="ApptitudeRadio{{data.calendarId}}_2"
+                                    [checked]="data.apptitudeScore==2?true:false">
+                                <label class="chk" for="ApptitudeRadio{{data.calendarId}}_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Apptitude{{data.calendarId}}" value="3"
+                                    id="ApptitudeRadio{{data.calendarId}}_3"
+                                    [checked]="data.apptitudeScore==1?true:false">
+                                <label class="chk" for="ApptitudeRadio{{data.calendarId}}_3"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Overall{{data.calendarId}}" value="1"
+                                    id="OverallRadio{{data.calendarId}}_1" [checked]="data.overallScore==3?true:false">
+                                <label class="chk" for="OverallRadio{{data.calendarId}}_1"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Overall{{data.calendarId}}" value="2"
+                                    id="OverallRadio{{data.calendarId}}_2" [checked]="data.overallScore==2?true:false">
+                                <label class="chk" for="OverallRadio{{data.calendarId}}_2"></label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input type="radio" disabled name="Overall{{data.calendarId}}" value="3"
+                                    id="OverallRadio{{data.calendarId}}_3" [checked]="overallScore==1?true:false">
+                                <label class="chk" for="OverallRadio{{data.calendarId}}_3"></label>
+                            </div>
+                        </td>
+                        <td class="text-right" style="display: none;">
+                            {{data.noticePeriod}}
+                        </td>
+                        <td class="text-right" style="display: none;">
+                            {{data.expectedSalary}}
+                        </td>
+                        <td>
+                            {{data.preferredLocation}}
+                        </td>
+                        <td>
+                            {{data.otherComments}}
+                        </td>
+                        <td>
+                            {{data.actionStatusName}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="printerdiv" style="display: none;">
+    <app-campus-pdf-interview-assesment [assessmentRecords]="assessmentData"></app-campus-pdf-interview-assesment>
+</div>

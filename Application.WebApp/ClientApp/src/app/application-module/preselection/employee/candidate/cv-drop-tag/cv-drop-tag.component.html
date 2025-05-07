@@ -1,0 +1,1096 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="content-box" id="main">
+  <h6 class="red">All Candidates</h6>
+  <form [formGroup]="filterForm" (ngSubmit)="fromSubmit()">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>Applied Date</label>
+            <div class="form-row">
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                    placeholder="From Date" #FromDate formControlName="FromDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="todatepicker" placeholder="To Date"
+                    #ToDate formControlName="ToDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label> Requsition Mapped</label>
+            <select class="selectpicker" title='Select' formControlName="RequisitionProcessStatus"
+              (change)="onChangeReqmapp()" #RequisitionProcessStatus>
+              <option *ngFor="let rec of arr" [ngValue]="rec.reqid">
+                {{rec.reqstatus}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Vertical</label>
+            <!-- <label>Qualification Type</label> -->
+            <select class="selectpicker form-control" multiple formControlName="verticalId" #verticalId title="Select"
+              tabindex="-98" (change)="changeVertical()">
+              <option *ngFor="let qual of verticals" [ngValue]="qual.verticalId">
+                {{qual.verticalName}}
+              </option>
+            </select>
+
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Function</label>
+            <!-- <select class="selectpicker form-control" multiple formControlName="functionId" #functionId title="Select"
+            tabindex="-98" (change)="getAllLocations($event)">
+            <option *ngFor="let rec of functions" [ngValue]="rec.functionId">
+              {{rec.functionName}}
+            </option>
+          </select> -->
+            <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+              (change)="getAllLocations($event)" [multiple]="true" formControlName="functionId" #functionId>
+              <ng-option *ngFor="let rec of functions" [value]="rec.functionId">
+                {{rec.functionName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Location</label>
+            <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+              (change)="onChangeRequisitionType()" [multiple]="true" formControlName="locationId" #locationId>
+              <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                {{rec.locationOffice}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Requisition No.</label>
+
+            <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true"
+              [searchable]="true" [clearable]="false" formControlName="RequisitionNo">
+              <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of requisitionList">
+                {{rec.requisitionNo}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Requsition Status</label>
+            <select formControlName="PreviousApplied" #PreviousApplied [multiple]="true"
+              class="selectpicker form-control" title="Select" tabindex="-98"
+              (change)="onchangereqstatus();onclosereqstatus(PreviousApplied)">
+              <option [ngValue]="0">All</option>
+              <option [ngValue]="1">Active</option>
+              <option [ngValue]="2">Completed</option>
+              <option [ngValue]="3">Hold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Hiring Status</label>
+            <ng-select bindLabel="hiringStatusId" class="ddltestvenue" formControlName="HiringStatusId" #HiringStatusId
+              name="HiringStatusId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" [searchable]="false"
+              [clearable]="false">
+              <ng-option [value]="rec.hiringStatusId" *ngFor="let rec of candidateLists">
+                {{rec.hiringStatusName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Reffered Vertical</label>
+            <ng-select bindLabel="ddlvertical" class="ddlvertical" name="VerticalId"
+              formControlName="RefferedVerticalId" #RefferedVerticalId (change)="onChangeVerticalforReffered($event)"
+              [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                {{rec.verticalName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Reffered Function</label>
+            <ng-select bindLabel="ddlFunction" class="ddlFunction" name="FunctionId"
+              formControlName="RefferedFunctionId" #RefferedFunctionId [placeholder]="'Select'" [appendTo]="'body'"
+              [multiple]="false" [searchable]="false" [clearable]="false"
+              (change)="onChangeFunctionforReffered($event)">
+              <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                {{rec.functionName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Reffered Department</label>
+            <ng-select bindLabel="ddlDepartment" class="ddlDepartment" name="DepartmentId"
+              formControlName="RefferedDepartmentId" #RefferedDepartmentId [placeholder]="'Select'" [appendTo]="'body'"
+              [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                {{rec.departmentName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+
+        <div class="col-sm-12 text-right">
+          <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export As Excel</button>&nbsp;
+          <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+            Filter</button>&nbsp;
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm"><i class="las la-sync-alt"></i>
+            Reset</button>
+          <button type="button" class="btn btn-rounded btn-secondary btn-sm ml-3" (click)="openNav()"><i
+              class="las la-filter"></i>Aditional Filter</button>
+        </div>
+      </div>
+    </div>
+  </form>
+ 
+  <div class="text-right my-2">
+    <!--   <button *ngIf="enablecvdrop" type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+      data-target="#tagCVDropRequisition" (click)="btnClickEnableTagCVDropRequisition()">
+      Enable CV Drop Requisition List
+    </button> -->
+    <button *ngIf="enableMapRequisition" type="button" class="btn btn-rounded btn-outline-primary btn-sm"
+      data-toggle="modal" data-target="#mymodal32" (click)="btnClickMapRequsition()">
+      Map Requisition
+    </button>
+    <button *ngIf="enableRemapRequisition" type="button" class="btn btn-rounded btn-outline-primary btn-sm"
+      data-toggle="modal" data-target="#mymodal32" (click)="btnClickReMapRequsition()">
+      Remap Requisition
+    </button>
+    <button *ngIf="enabledeletebtn" type="button" class="btn btn-rounded btn-outline-primary btn-sm" data-toggle="modal"
+      data-target="#deletemodal" (click)="btnDelete()">
+      Delete Candidates
+    </button>
+    <button *ngIf="enablecanprofile" type="button" class="btn btn-rounded btn-outline-primary btn-sm"
+      data-toggle="modal" data-target="#updateprofile" (click)="btnUpdateProfile()">
+      Update Candidate Profile
+    </button>
+  </div>
+
+
+
+  <!-- Filters stat For All Individual field-->
+  <div class="content-box">
+    <div id="mySidenav" class="sidenav">
+      <div class="slidenav_header">
+        <h4>Filters</h4>
+        <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+      </div>
+      <form [formGroup]="filterForm" (ngSubmit)="onFilter()" autocomplete="off">
+        <div class="slidenav_container">
+          <div class="panel-group snj-panel" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Candidate Id</label>
+                <input type="text" class="form-control" formControlName="CandidateNo" #CandidateNo id="Name"
+                  placeholder="Enter CandidateId">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Candidate Name</label>
+                <input type="text" class="form-control" formControlName="CandidateName" #CandidateName id="Name"
+                  placeholder="Enter Candidate Name">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Gender</label>
+                <select class="selectpicker form-control" multiple title="Select" formControlName="GenderId">
+                  <option [ngValue]="1">Male</option>
+                  <option [ngValue]="2">Female</option>
+                  <option [ngValue]="3">Others</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Age</label>
+                <div class="form-row">
+                  <div class="col-sm-6">
+                    <input type="text" formControlName="FromAge" #FromAge class="form-control" placeholder="Min Age">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" formControlName="ToAge" #ToAge class="form-control" placeholder="Max Age">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Aadhar No.</label>
+                <input type="text" class="form-control" formControlName="AadharNo" #AadharNo
+                  placeholder="Enter Adhdar No.">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Phone No.</label>
+                <input type="text" class="form-control" formControlName="ContactNo" #ContactNo placeholder="Enter No.">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Email ID</label>
+                <input type="text" class="form-control" formControlName="EmailId" #EmailId placeholder="Enter Email">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Mother Tongue</label>
+                <select class="selectpicker form-control" title='Select' multiple formControlName="MotherTongueIds">
+                  <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                    {{lang.languageName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Languages Known</label>
+                <select class="selectpicker form-control" multiple title="Select" formControlName="LanguageIds">
+                  <option *ngFor="let lang of languages" [ngValue]="lang.languageId">
+                    {{lang.languageName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Qualification Type</label>
+                <select class="selectpicker form-control" multiple formControlName="QualificationTypeId"
+                  #QualificationTypeIdselect title="Select" tabindex="-98"
+                  (change)="changeQualificationType(); closeQualificationDropdown(QualificationTypeIdselect)">
+                  <option [ngValue]="0">All</option>
+                  <option *ngFor="let qual of qualificationType" [ngValue]="qual.qualificationTypeId">
+                    {{qual.qualificationTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Total Experience</label>
+                <div class="form-row">
+                  <div class="col-sm-6">
+                    <input type="number" formControlName="FromExperience" #FromExperience class="form-control"
+                      placeholder="Min">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" formControlName="ToExperience" #ToExperience class="form-control"
+                      placeholder="Max">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Highest Qualification</label>
+                <select formControlName="QualificationId" multiple class="selectpicker form-control" title="Select"
+                  tabindex="-98" (change)="changeQualification()">
+                  <option *ngFor="let q of qualifications" [ngValue]="q.qualificationId">
+                    {{q.qualificationName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Course</label>
+                <select formControlName="CourseId" #CourseId multiple class="selectpicker form-control" title="Select"
+                  tabindex="-98" (change)="changeCourse(); onclosecourse(CourseId)">
+                  <option [ngValue]="0">All</option>
+                  <option *ngFor="let c of courses" [ngValue]="c.courseId">
+                    {{c.courseName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Stream</label>
+                <select formControlName="StreamId" multiple #StreamId class="selectpicker form-control" title="Select"
+                  tabindex="-98" (change)="changeStream(); onclosestream(StreamId)">
+                  <option [ngValue]="0">All</option>
+                  <option *ngFor="let s of StreamList" [ngValue]="s.streamId">
+                    {{s.streamName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Percentage</label>
+                <div class="form-row">
+                  <div class="col-sm-6">
+                    <input type="number" formControlName="FromPercent" #FromPercent class="form-control"
+                      placeholder="Min">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" formControlName="ToPercent" #ToPercent class="form-control" placeholder="Max">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Year of Completion</label>
+                <select class="selectpicker form-control" multiple formControlName="CompletionYear" title="Select"
+                  tabindex="-98">
+                  <option *ngFor="let y of CompletionYear" [ngValue]="y.yearsId">
+                    {{y.yearsName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Domain</label>
+                <select formControlName="DomainId" multiple name="DomainId" #DomainId
+                  class="selectpicker form-control domains domainid" title="Select" tabindex="-98"
+                  (change)="changeDomain();closeDomain(DomainId)">
+                  <option [ngValue]="0">All</option>
+                  <option *ngFor="let d of domain" [ngValue]="d.domainId">
+                    {{d.domainName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Sub-Domain</label>
+                <select formControlName="SubDomainId" #SubDomainId multiple class="selectpicker form-control domains"
+                  title="Select" tabindex="-98" (change)="changeSubDomain(); closesubdomain(SubDomainId)">
+                  <option [ngValue]="0">All</option>
+                  <option *ngFor="let sd of subdomain" [ngValue]="sd.domainId">
+                    {{sd.domainName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Current CTC</label>
+                <div class="form-row">
+                  <div class="col-sm-6">
+                    <input type="number" formControlName="FromCTC" #FromCTC class="form-control" placeholder="Min">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" formControlName="ToCTC" #ToCTC class="form-control" placeholder="Max">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Current Employer</label>
+                <input type="text" class="form-control" formControlName="CurrentEmployer" #CurrentEmployer
+                  placeholder="Employer Name">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Designation</label>
+                <input type="text" class="form-control" formControlName="Designation" #Designation
+                  placeholder="Enter Designation">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Current Location</label>
+                <select formControlName="StateIds" #StateIds multiple class="selectpicker" title="Select"
+                  (change)="onChangeCurrentlocation();closecurrentlocation(StateIds)">
+                  <option [ngValue]="0">All</option>
+                  <option *ngFor="let s of State" [ngValue]="s.stateId">
+                    {{s.stateName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Any relative working in MRF</label>
+                <select formControlName="MRFRelativeStatus" multiple name="MRFRelativeStatus" #MRFRelativeStatus
+                  class="selectpicker form-control" title="Select" tabindex="-92">
+                  <option [ngValue]="2">Yes</option>
+                  <option [ngValue]="1">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Any previous Rec/Emp History</label>
+                <select formControlName="MRFHistory" multiple name="MRFHistory" #MRFHistory
+                  class="selectpicker form-control" title="Select" tabindex="-92">
+                  <option [ngValue]="2">Yes</option>
+                  <option [ngValue]="1">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Source</label>
+                <select class="selectpicker form-control" multiple formControlName="SourceChannelId" #SourceChannleId
+                  title='Select' (change)="onchangeSource();closesource(SourceChannleId)">
+                  <option [value]="0">All</option>
+                  <option [value]="7">Campus</option>
+                  <option [value]="2">Career Site </option>
+                  <option [value]="1">HR</option>
+                  <option [value]="3">Internal Employee</option>
+                  <option [value]="6">Job Portal</option>
+                  <option [value]="8">Off Campus</option>
+                  <option [value]="4">Referred</option>
+                  <option [value]="5">Vendor</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Candidate Owner</label>
+                <input type="text" class="form-control" formControlName="CandidateOwner" #CandidateOwner
+                  placeholder="Enter Candidate Owner Name">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Applcation Form Status</label>
+                <select formControlName="ApplicationFormStatusId" multiple name="ApplicationFormStatus"
+                  #ApplicationFormStatusId class="selectpicker form-control" title="Select" tabindex="-92">
+                  <option [ngValue]="2">Yes</option>
+                  <option [ngValue]="1">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Interview Status</label>
+                <select formControlName="InterviewStatusId" multiple name="InterviewStatus" #InterviewStatusId
+                  class="selectpicker form-control" title="Select" tabindex="-92">
+                  <option [ngValue]="0">Selected</option>
+                  <option [ngValue]="1">Hold</option>
+                  <option [ngValue]="2">Released</option>
+                  <option [ngValue]="3">Rejected</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Comments </label>
+                <input type="text" class="form-control" formControlName="InterviewassessmentForm"
+                  #InterviewassessmentForm id="Name" placeholder="Enter Comments">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slidenav_footer">
+          <button type="submit" class="btn btn-secondary btn-sm">Apply Filter</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="resetFilter()">Reset</button>
+
+        </div>
+      </form>
+    </div>
+    <!-- <div class="page-title-area pb-1 mb-2">
+      <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+        <div>
+          <button type="button" class="btn btn-rounded btn-secondary btn-sm ml-3" (click)="openNav()"><i
+            class="las la-filter"></i> Filter</button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <!-- filter end -->
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+            <div class="form-check">
+              <input type="checkbox" id="chkAll" [(ngModel)]="selectAll" (change)="onCheckSelectAll($event)">
+              <label class="chk" for="chkAll"></label>
+            </div>
+          </th>
+          <th>Candidate Id</th>
+          <th>Candidate Name</th>
+          <th>Age</th>
+          <th>Highest Qualification</th>
+          <th>Course</th>
+          <th>Stream</th>
+          <th>Experience</th>
+          <th>Present Company</th>
+          <th>Designation</th>
+          <th>Relatives</th>
+          <th>Source</th>
+          <th>Candidate Owner</th>
+          <th>Date of Submission</th>
+          <th>Mapped to Requisition</th>
+          <th>Requisition No</th>
+          <th>Requisition Status</th>
+          <th>Application Form Status</th>
+          <th>MRF Rec/Emp History</th>
+          <th>Hiring Status</th>
+          <th>IsReffered</th>
+          <th style="text-align: center;"></th>
+        </tr>
+      </thead>
+      <!-- *ngIf="data.hiringStatusId==0 || data.hiringStatusId==1 || data.hiringStatusId==4 || data.hiringStatusId==7
+            || data.hiringStatusId==30 || data.hiringStatusId==37 || data.hiringStatusId==42 || data.hiringStatusId==49 || data.hiringStatusId==55 || data.hiringStatusId==56
+            || data.hiringStatusId==57 || data.hiringStatusId==60 || data.hiringStatusId==63" -->
+      <tbody>
+        <tr *ngFor="let data of candidates;let i=index;">
+          <td>
+            <div class="form-check">
+              <input type="checkbox" id="{{i}}" [ngModel]="getEnableStatus(data)" [disabled]="disablerowcheck"
+                (change)="onCheckRowWise(data,$event,i)">
+              <label class="chk" for="{{i}}"></label>
+            </div>
+          </td>
+          <td>{{data.candidateNo}}</td>
+          <td>
+            <a href="javascript:void(0)"
+              (click)="gotoCandidateAction(data.candidateId,data.relativeStatus,data.childRelationshipId,data.cmdUpdateStatus, data.requisitionDetailId)"
+              class="red">{{data.prefixName}} {{data.fullName}}</a>
+          </td>
+          <td>{{data.age}}</td>
+          <td>{{data.qualificationName}}</td>
+          <td>{{data.courseName}}</td>
+          <td>{{data.streamName}}</td>
+          <td>{{data.experienceYear}} Years {{data.experienceMonth}} Months</td>
+          <td>{{data.currentEmployer}}</td>
+          <td>{{data.currentDesignation}}</td>
+          <td *ngIf="data.relativeStatus==1">
+            Yes
+          </td>
+          <td *ngIf="data.relativeStatus==0">
+            No
+          </td>
+          <td>
+            {{data.sourceChannelName}}
+            <a *ngIf="data.sourceChannelId==4" href="javascript:void(0)" class="red" data-toggle="popover"
+              [attr.data-content]="data.popoverContent" rel="popover" data-placement="left" data-trigger="hover"><i
+                class="fa fa-info-circle"></i></a>
+          </td>
+          <td>{{data.candidateOwner}}</td>
+          <td>{{data.dateOfSubmission}}</td>
+          <td>{{data.mappedToRequisition}}</td>
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.rmProcessStatus}}</td>
+          <td *ngIf="data.applicationCount==1">Application Filled</td>
+          <td *ngIf="data.applicationCount==0">Application Not Filled</td>
+          <td *ngIf="data.previousApplied==0">No</td>
+          <td *ngIf="data.previousApplied==1">Yes</td>
+          <td
+            *ngIf="data.hiringStatusId==4 || data.hiringStatusId==10 || data.hiringStatusId==13 || data.hiringStatusId==16  || data.hiringStatusId==19 || data.hiringStatusId1==22
+          || data.hiringStatusId==25 || data.hiringStatusId==28 || data.hiringStatusId==55 || data.hiringStatusId==56 || data.hiringStatusId==57">
+            <a href="javascript:void(0)" style="color: red;" (click)="onClickRejectedStatus(data)" data-toggle="modal"
+              data-target="#mymodal33">
+              {{data.hiringStatusName}} </a>
+          </td>
+          <td
+            *ngIf="data.hiringStatusId!=4 && data.hiringStatusId!=10 && data.hiringStatusId!=13 && data.hiringStatusId!=16 && data.hiringStatusId!=19 && data.hiringStatusId1!=22
+            && data.hiringStatusId!=25 && data.hiringStatusId!=28 && data.hiringStatusId!=55 && data.hiringStatusId!=56 && data.hiringStatusId!=57">
+            {{data.hiringStatusName}}</td>
+          <td *ngIf="data.isRefferedId == 0">
+            No
+          </td>
+          <td *ngIf="data.isRefferedId != 0">
+            Yes- <a href="javascript:void(0)" class="red" data-toggle="popover" [attr.data-content]="data.hovertext"
+              rel="popover" data-placement="left" data-trigger="hover"><i class="fa fa-info-circle"></i></a>
+          </td>
+          <td class="text-center">
+            <div class="row-dropdown">
+              <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" data-boundary="window"><i class="las la-ellipsis-v"></i></button>
+              <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
+                data-boundary="window" x-placement="bottom-end">
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==31" href="javascript:void(0)" data-toggle="modal"
+                  data-target="#callBackModal" (click)="openModalPopupCallBack(data)"><i class="las la-reply"></i>Call
+                  back
+                </a>
+                <a class="dropdown-item" *ngIf="data.requisitionDetailId==0" href="javascript:void(0)"
+                  data-toggle="modal" data-target="#mymodal32" (click)="optnClickMapRequisition(data)"><i
+                    class="las la-check-square"></i>Map Requisition
+                </a>
+                <a class="dropdown-item" *ngIf="data.hiringStatusId==31" href="javascript:void(0)" data-toggle="modal"
+                  data-target="#tagReleaseCandidateRequisition" (click)="onClickTagtoRequisition(data)"><i
+                    class="las la-reply"></i>Tag to Requisition
+                </a>
+
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    
+  </div>
+
+  <div >
+    <button type="button" (click)="Next()" class="btn btn-primary"><i class="las la-sync-alt"></i>
+      Load More Data</button>
+ </div>
+
+</div>
+
+
+
+<!-- Tag CV drop candidate to other requisition start -->
+<!-- Modal -->
+<div class="modal fade" id="tagCVDropRequisition" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Tag CV Drop With Requisition</h4>
+      </div>
+      <form [formGroup]="searchform" (ngSubmit)="onFilter()">
+        <div class="filter-sec">
+          <div class="form-row m-t-10">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Vertical</label>
+                <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                  formControlName="verticalId" #verticalId (change)="changeVertical()">
+                  <ng-option *ngFor="let rec of verticals" [value]="rec.verticalId">
+                    {{rec.verticalName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Function</label>
+                <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                  formControlName="functionId" #functionId>
+                  <ng-option *ngFor="let rec of functions" [value]="rec.functionId">
+                    {{rec.functionName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Location</label>
+                <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                  formControlName="locationId" #locationId>
+                  <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                    {{rec.locationOffice}}
+                  </ng-option>
+                </ng-select>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-black btn-sm">Filter</button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                    (click)="onResetClick()">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Requisition No<span class="required">*</span></label>
+          <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="false" [clearable]="false" [(ngModel)]="TagCVDropRequisition"
+            (change)="changeRequisition($event)" name="TagCVDropRequisition">
+            <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of requisitionLists">
+              {{rec.requisitionNo}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-black btn-sm" (click)="onCVCandidateTag()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Tag CV drop candidate to other requisition End -->
+
+<!-- Call back Modal Start -->
+<div class="modal fade" id="callBackModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="closeModal" class="close" data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Action on Request</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Action</label>
+              <h6 class="red m-0">{{actionName}}</h6>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>From which stage you want to process the candidate</label>
+              <div class="rdio rdio-primary d-inline-block">
+                <input name="callbackradio" value="1" id="radio3" type="radio" (change)="onChangeCandidateStage('I')">
+                <!--  [checked]="objCallbackHistoryInsert.isFromBeginning==true" -->
+                <label for="radio3">Initial</label>
+              </div>
+              <div class="rdio rdio-primary d-inline-block">
+                <input name="callbackradio" value="0" id="radio4" type="radio" (change)="onChangeCandidateStage('L')">
+                <!-- [checked]="objCallbackHistoryInsert.isFromBeginning==0" -->
+                <label for="radio4">Last</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="callbackremarks" #DeclineRemarks="ngModel"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="callBackCandidate()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Call back Modal End -->
+
+<div class="modal fade zoom-in" id="updateprofile" role="dialog">
+  <!-- <form [formGroup]="scheduleForm" (ngSubmit)="onTestSchedule()" autocomplete="off"> -->
+  <div class="modal-dialog modal-md modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="closeupdateprofile()" class="close">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Update Candidate Profile</h4>
+      </div>
+      <div class="modal-body">
+        <div class="step2">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Choose Template<span class="required">*</span></label>
+                <ng-select bindLabel="templateEmailName" class="ddlinterviewemailtemplate" [placeholder]="'Select'"
+                  [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false"
+                  [(ngModel)]="selectedInterviewEmailTemplateId" (change)="changeInterviewEmailTemplate()">
+                  <ng-option [value]="rec.templateId" *ngFor="let rec of interviewemailTemplates">
+                    {{rec.templateEmailName}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Edit Template</label>
+                <ckeditor [config]="ckeConfig" [(ngModel)]="interviewEmailTemplateDescription" debounce="500">
+                </ckeditor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary">Cancel</button> -->
+        <button type="button" class="btn btn-primary" (click)=" closeupdateprofile()">Cancel </button>
+
+        <button type="submit" class="btn btn-black" (click)="oncickupdateprofile()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<div class="modal fade" id="deletemodal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+        <h6 class="conComment text-center"> Do you want to delete these Candidates</h6>
+        <div class="mt-4 text-center">
+          <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+            (click)="deletecandidates()">Submit</button>&nbsp;
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- By Anif Unmapped candidate mapped to requisition start -->
+
+
+
+
+<div class="modal fade" id="mymodal32" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Candidate Requisition Map</h4>
+      </div>
+      <div class="filter-sec">
+        <div class="form-row m-t-10">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Vertical</label>
+              <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                [(ngModel)]="verticalIdforreq" (change)="changeVerticalforreq()">
+                <ng-option *ngFor="let rec of verticalsforreq" [value]="rec.verticalId">
+                  {{rec.verticalName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Function</label>
+              <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                [(ngModel)]="functionIdforreq">
+                <ng-option *ngFor="let rec of functionsforreq" [value]="rec.functionId">
+                  {{rec.functionName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Location</label>
+              <ng-select class="selectpicker" title='All' [searchable]="true" [clearable]="false"
+                [(ngModel)]="locationidforreq">
+                <ng-option *ngFor="let rec of locationsforreq" [value]="rec.locationId">
+                  {{rec.locationOffice}}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-row">
+                <div class="form-group">
+                  <button type="button" class="btn btn-black btn-sm" (click)="onReqFilter()">Filter</button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="onResetReqFilter()">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Requisition No<span class="required">*</span></label>
+          <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="true" [clearable]="false" name="selectedRequisitionDetailsIdForMap"
+            [(ngModel)]="selectedRequisitionDetailsIdForMap">
+            <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of requsitionListforMapping">
+              {{rec.requisitionNo}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-black btn-sm" (click)="onRequisitionMappedSubmit()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- By Anif Unmapped candidate mapped to requisition End -->
+<!-- Rejected By details popup start -->
+<div class="modal fade" id="mymodal33" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Rejected Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Rejected By : {{rejectedBy}}</label>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Rejected By details popup End -->
+
+
+<!-- Tag Release Candidate to other requisition start -->
+
+<div class="modal fade" id="tagReleaseCandidateRequisition" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Tag Release Candidate With Requisition</h4>
+      </div>
+      <div class="filter-sec">
+        <div class="form-row m-t-10">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Vertical</label>
+              <ng-select bindLabel="vertical" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" name="vertical" [(ngModel)]="objReleaseCandidateTag.verticalId"
+                (change)="onChangeVerticalForReleaseTag()">
+                <ng-option *ngFor="let rec of verticalsForReleaseTag" [value]="rec.verticalId">
+                  {{rec.verticalName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Function</label>
+              <ng-select bindLabel="function" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" name="function" [(ngModel)]="objReleaseCandidateTag.functionId">
+                <ng-option *ngFor="let rec of functionsForReleaseTag" [value]="rec.functionId">
+                  {{rec.functionName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Location</label>
+              <ng-select bindLabel="location" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" name="location" [(ngModel)]="objReleaseCandidateTag.locationId"
+                (change)="onChangeToGetReq()">
+                <ng-option *ngFor="let rec of locationsForReleasetag" [value]="rec.locationId">
+                  {{rec.locationOffice}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Requisition No<span class="required">*</span></label>
+              <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" name="TagCVDropRequisition"
+                [(ngModel)]="objReleaseCandidateTag.requisitionDetailId"
+                (change)="onChangeRequisitionForReleaseCandidate()">
+                <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of requisitionListsForReleaseTagFiltered">
+                  {{rec.requisitionNo}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Select Stage<span class="required">*</span></label>
+              <ng-select bindLabel="requisitionStage" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="false" [clearable]="false" name="requisitionStage"
+                [(ngModel)]="objReleaseCandidateTag.stageId">
+                <ng-option [value]="rec.hiringStatusId" *ngFor="let rec of requisitionTagStageList">
+                  {{rec.hiringStatusName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control" [(ngModel)]="objReleaseCandidateTag.remarks"
+                #DeclineRemarks="ngModel"></textarea>
+            </div>
+
+          </div>
+        </div>
+        <!--   <div class="modal-body">
+        <div class="form-group">
+          <label>Requisition No<span class="required">*</span></label>
+          <ng-select bindLabel="requisitionNo" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+            [searchable]="false" [clearable]="false" [(ngModel)]="TagCVDropRequisition"
+            (change)="changeRequisition($event)" name="TagCVDropRequisition">
+            <ng-option [value]="rec.requisitionDetailId" *ngFor="let rec of requisitionLists">
+              {{rec.requisitionNo}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div> -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-black btn-sm" (click)="onSubmitReleaseCandidateTag()">Submit</button>
+        </div>
+      </div>
+      <!-- End modal content -->
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  <!-- Tag Release Candidate to other requisition End -->
+  
+
+
+
+
+  

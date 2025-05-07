@@ -1,0 +1,274 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+      <h1 class="f-l">Plant Resignation</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+      <div class="filter-sec">
+        <div class="form-row m-t-10">
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Vertical</label>
+              <select class="selectpicker ddlvertical" title='Select' disabled formControlName="verticalId" #verticalId
+               (change)="changeVertical()">
+                <option *ngFor="let rec of verticals" [ngValue]="rec.verticalId">
+                  {{rec.verticalName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Location</label>
+              <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" formControlName="locationId" #locationId>
+                <ng-option *ngFor="let rec of locations" [value]="rec.locationId">
+                  {{rec.locationOffice}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Function</label>
+              <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" formControlName="functionId" #functionId>
+                <ng-option *ngFor="let rec of functions" [value]="rec.functionId">
+                  {{rec.functionName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label>Request Date</label>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <div class="input-group datepiker date">
+                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                      placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="input-group datepiker date">
+                    <input type="text" class="form-control pull-right datepicker" id="todatepicker" placeholder="To Date"
+                      #toDate formControlName="toDate" autocomplete="off">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Position Status</label>
+              <select class="selectpicker" data-container="body" title="All" formControlName="replacementStatusId"
+                #replacementStatusId>
+                <option *ngFor="let replacementStatus of replacementStatuses" [ngValue]="replacementStatus.statusId">
+                  {{replacementStatus.statusName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Reason</label>
+              <select class="selectpicker" data-container="body" title="All" formControlName="reasonId" #reasonId>
+                <option *ngFor="let reason of reasons" [ngValue]="reason.statusId">
+                  {{reason.statusName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Status</label>
+              <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                [searchable]="true" [clearable]="false" formControlName="resignationProcessStatus"
+                #resignationProcessStatus>
+                <ng-option *ngFor="let rec of statuses" [value]="rec.statusId">
+                  {{rec.statusName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-12 text-right">
+  
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i class="las la-filter"></i>
+              Filter
+            </button>
+            <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1">
+              <i class="las la-sync-alt"></i>
+              Reset
+            </button>
+  
+          </div>
+  
+        </div>
+      </div>
+    </form>
+    <div class="page-title-area pb-1 mb-2" *ngIf="isMerge">
+      <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+  
+        <button type="button" class="btn btn-rounded btn-outline-primary btn-sm" (click)="merge()"><i
+            class="las la-plus-circle"></i> Merge</button>
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+  
+      <table id="dataTable1" class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Requested By</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>EmpNo</th>
+            <th>EmpName</th>
+            <th>Designation</th>
+            <th>Grade</th>
+            <th>Function</th>
+            <th>Department</th>
+            <th>DOR</th>
+            <th>LWD</th>
+            <th>Sep Int</th>
+            <th>Position Status</th>
+            <th>Reason</th>
+            <th>Replacement Position</th>
+            <th>Replacement Grade</th>
+            <th>Type</th>
+            <th>Target</th>
+            <th>JD</th>
+            <th style="text-align: center;">Approval</th>
+            <th>Status</th>
+            <th style="text-align: center;" *ngIf="!isHrOps"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of resignationLists">
+            <td>
+              <div class="form-check" *ngIf="data.resignationProcessStatusId==9">
+                <input type="checkbox" id="chkm{{data.resignationDetailId}}" value="{{data.resignationDetailId}}"
+                  (click)="select($event,data.resignationDetailId)">
+                <label class="chk" for="chkm{{data.resignationDetailId}}"></label>
+              </div>
+            </td>
+            <td>{{data.createdByUserName}}</td>
+            <td>{{data.locationNo}}</td>
+            <td>{{data.createdOn}}</td>
+            <td>{{data.empNo}}</td>
+            <td>{{data.empName}}</td>
+            <td>{{data.designation}}</td>
+            <td>{{data.oldGradeName}}</td>
+            <td>{{data.functionName}}</td>
+            <td>{{data.departmentName}}</td>
+            <td>{{data.dor}}</td>
+            <td>{{data.lwd}}</td>
+            <td><a (click)="openFile(data.sepInt)" style="cursor: pointer;">letter</a></td>
+            <td>{{data.replacementStatusName}}</td>
+            <td>{{data.reasonName}}</td>
+            <td>{{data.positionName}}</td>
+            <td>{{data.gradeName}}</td>
+            <td>{{data.jobTypeName}}</td>
+            <td>{{data.targetDate}}</td>
+            <td>{{data.jobDescriptionName}}</td>
+            <td class="text-center"><img src="{{data.processStatusIcon}}" alt="Send For Approval" /></td>
+            <td>{{data.processStatus}}</td>
+            <td class="text-center" *ngIf="!isHrOps">
+              <div class="row-dropdown">
+                <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"><i class="las la-ellipsis-v"></i></button>
+                <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <a *ngIf="(data.resignationProcessStatusId==6 || data.resignationProcessStatusId==8 )||(data.replacementStatusId==2 || data.replacementStatusId==3)"
+                    data-toggle="modal" data-target="#myModal" class="dropdown-item" href="javascript:void(0)"
+                    (click)="openModalPopup(data.resignationDetailId)"><i class="las la-check-square"></i> Take
+                    Action</a>
+                  <a *ngIf="data.resignationProcessStatusId>=6 && data.resignationProcessStatusId<10"
+                    class="dropdown-item" href="javascript:void(0)"
+                    (click)="deleteRequisition(data.resignationDetailId)"><i class="las la-check-square"></i> Delete
+                    Resignation</a>
+                  <a *ngIf="data.resignationProcessStatusId==9 && data.replacementStatusId!=2 && data.replacementStatusId!=3"
+                    class="dropdown-item" href="javascript:void(0)"
+                    (click)="CreateRequisition(data.resignationDetailId)"><i class="las la-check-square"></i> Create
+                    Requisition</a>
+                  <a *ngIf="data.resignationProcessStatusId>=6 && data.replacementStatusId!=2 && data.replacementStatusId!=3"
+                    (click)="DownloadJD(data.jdDocument,data.jobDescriptionName)" class="dropdown-item"
+                    href="javascript:void(0)"><i class="las la-file-pdf"></i>
+                    View JD</a>
+                  <!-- Added condition for hold and position removed by anif on 14-07-2022 as per requirement -->
+                </div>
+              </div>
+            </td>
+          </tr>
+  
+        </tbody>
+      </table>
+  
+    </div>
+  
+  
+  </div>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModal" #closeModal data-dismiss="modal"><i
+              class="las la-times"></i></button>
+          <h4 class="modal-title">Take Action</h4>
+        </div>
+        <form [formGroup]="saveform">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="media" *ngFor="let data of resignationClarificationList">
+                  <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                  <div class="media-body">
+                    <h6 class="mt-0">{{data.createdByName}}</h6>
+                    {{data.clarificationRemarks}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label>Action<span class="required">*</span></label>
+                  <select class="selectpicker ddlacknowledge" data-container="body" title="Select"
+                    formControlName="acknowledgementStatusId" #replacementStatusId>
+                    <option [ngValue]="9">Acknowledge</option>
+                    <option [ngValue]="7">Clarification Needed</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label>Remarks</label>
+                  <textarea class="form-control" formControlName="remarks"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-black btn-sm" [disabled]="saveform.invalid"
+              (click)="acknowledge()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>

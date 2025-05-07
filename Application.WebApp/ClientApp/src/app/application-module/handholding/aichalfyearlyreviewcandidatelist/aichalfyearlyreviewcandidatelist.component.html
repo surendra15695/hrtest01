@@ -1,0 +1,156 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">All Candidates</h1>
+            </div>
+        </div>
+    </div>
+    <!-- Fiter section start -->
+    <div class="filter-sec mb-3">
+        <form [formGroup]="searchformAllocated" (ngSubmit)="filterFormSubmit()">
+            <div class="form-row m-t-10">
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>Employee Id</label>
+                        <input type="text" class="form-control" formControlName="empId">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" formControlName="empName">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Joining Date</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDatePending formControlName="fromDate"
+                                        autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDatePending formControlName="toDate"
+                                        autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false"
+                            formControlName="verticalId" (change)="changeVertical()">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Pos. Location</label>
+                        <ng-select bindLabel="locationNo" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="locationId">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="functionName" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="false" [clearable]="false" formControlName="functionId">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>Probation</label>
+                        <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false" formControlName="probationId">
+                            <ng-option [value]="0">Select</ng-option>
+                            <ng-option [value]="1">6 Months</ng-option>
+                            <ng-option [value]="2">1 Year</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-md-4 text-right">
+                    <button type="submit" class="btn btn-primary btn-sm"><i
+                            class="las la-filter"></i>Filter</button>
+                    <button type="button" class="btn btn-secondary btn-sm ml-2" (click)="formResetClick()"><i class="las la-sync-alt"></i>
+                        Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Fiter section End -->
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Emp. ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>DOJ</th>
+                    <th>Probation</th>
+                    <th>Designation</th>
+                    <th>Pos. Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Grade</th>
+                    <th>Confirmation Due</th>
+                    <th>Review Status</th>
+                    <th style="text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of allocationAllocatedList;let i=index;">
+                    <td>{{data.employeeNo}}</td>
+                    <td>{{data.fullName}}</td>
+                    <td>{{data.employeeStatus}}</td>
+                    <td>{{data.doj}}</td>
+                    <td>{{data.probation}}</td>
+                    <td>{{data.designation}}</td>
+                    <td>{{data.locationOffice}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.confirmationDue}}</td>
+                    <td *ngIf="data.reviewStatus==0 || data.reviewStatus==6">Review Pending</td>
+                    <td *ngIf="data.reviewStatus==1">Approval Pending</td>
+                    <td *ngIf="data.reviewStatus==2">Approved</td>
+                    <td *ngIf="data.reviewStatus==3">Rejected</td>
+                    <td *ngIf="data.reviewStatus==4">Need Clarification</td>
+                    <td *ngIf="data.reviewStatus==5">Sent Clarification</td>
+                    <td class="text-center">
+                        <a href="javascript:void(0)" class="row-btn" (click)="gotoHalfYearlyReview(data)" *ngIf="data.reviewStatus== 0 || data.reviewStatus== 6"><i class="las la-pen"></i></a>
+                        <a href="javascript:void(0)" class="row-btn" (click)="gotoHalfYearlyReview(data)" *ngIf="data.reviewStatus>0 && data.reviewStatus<6" ><i class="las la-eye"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MRF Connect Us</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="faviconmrf.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/4.9.2/full-all/ckeditor.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <body class="fixed-left viewpdf" >
+    <div id="loader">
+      <style>
+        .application-loading-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+  
+        .application-loading-box {
+          width: 300px;
+          margin: 5px;
+          text-align: center;
+        }
+      </style>
+      <div class="application-loading-container">
+        <div class="application-loading-box"><h2>Loading...</h2></div>
+      </div>
+    </div>
+    <app-root></app-root>
+  </body>
+</html>

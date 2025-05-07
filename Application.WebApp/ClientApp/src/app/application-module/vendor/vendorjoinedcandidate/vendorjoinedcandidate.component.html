@@ -1,0 +1,358 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">All Candidates</h1>
+  </div>
+  <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>Submit Date</label>
+            <div class="form-row">
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                         placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                         placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-sm-2">
+            <div class="form-group">
+                <label>Status</label>
+                <select class="selectpicker" title='Select' formControlName="requisitionProcessStatus" #requisitionProcessStatus>
+                    <option *ngFor="let rec of statuses" [ngValue]="rec.statusId">
+                        {{rec.statusName}}
+                      </option>
+                </select>
+            </div>
+        </div> -->
+        <div class="col-sm-12 text-right">
+
+          <button type="submit" class="btn btn-black btn-sm">
+            <i class="las la-filter"></i>
+            Filter
+          </button>
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm">
+            <i class="las la-sync-alt"></i>
+            Reset
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </form>
+  <div class="text-right my-2">
+    <button type="button" *ngIf="isBtnUpload"
+            class="btn btn-rounded btn-outline-primary btn-sm ml-1" data-toggle="modal"
+            data-target="#myModal">
+      Upload Invoice
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+            <div class="form-check">
+              <input type="checkbox" id="chkAll">
+              <label class="chk" for="chkAll"></label>
+            </div>
+          </th>
+          <th>Requisition No</th>
+          <th> Emp No</th>
+          <th>Candidate Name</th>
+          <th> Age</th>
+          <th> Highest Qualification</th>
+          <th>Course</th>
+          <th>Stream</th>
+          <th>Designation</th>
+          <th>Function</th>
+          <th>Department</th>
+          <th>Grade</th>
+          <th>Experience</th>
+          <th>Email Id</th>
+          <th>Contact No.</th>
+          <th>DOJ</th>
+          <th>Montly Gross</th>
+          <th>Hiring Status</th>
+          <th>Invoice Status</th>
+          <th>Invoice Date</th>
+          <th>Credit Note Status</th>
+          <th style="text-align: center;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of candidateList">
+          <td>
+            <input type="hidden" class="invoiceStatus" [value]="data.invoiceStatusId" />
+            <div class="form-check" *ngIf="(data.invoiceStatusId==0 )">
+              <input type="checkbox" id="chkm{{data.candidateId}}" value="1"
+                     (click)="select($event,data.candidateId,data.invoiceStatusId)">
+              <label class="chk" for="chkm{{data.candidateId}}"></label>
+            </div>
+          </td>
+          <td><a href="javascript:void(0)">{{data.requisitionNo}}</a></td>
+          <td>{{data.candidateNo}}</td>
+          <td>{{data.candidateFullName}}</td>
+          <td>{{data.age}}</td>
+          <td>{{data.qualificationName}}</td>
+          <td>{{data.courseName}}</td>
+          <td>{{data.streamName}}</td>
+          <td>{{data.designationName}}</td>
+          <td>{{data.functionName}}</td>
+          <td>{{data.departmentName}}</td>
+          <td>{{data.gradeName}}</td>
+          <td>{{data.workExperience}}</td>
+          <td>{{data.emailId}}</td>
+          <td>{{data.contact}}</td>
+          <td>{{data.dateOfJoining}}</td>
+          <td>{{data.monthlyGross}}</td>
+          <td *ngIf="data.isResigned==1" > Resigned</td>
+          <td *ngIf="data.isResigned==0" >{{data.hiringStatusName}} </td>
+          <td>{{data.invoiceStatusName}}</td>
+          <td>{{data.submittedOn}}</td>
+          <td>{{data.creditNoteStatus}}</td>
+          <td class="text-center">
+            <div class="row-dropdown">
+              <button data-boundary="window" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                <i class="las la-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu custom-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" *ngIf="data.creditNoteStatusID==1 && data.isResigned==1"
+                  data-target="#CreditNoteModal" (click)="onClickUploadCreditNote(data)">
+                 <i class="las la-check-square"></i> Upload Credit Note
+               </a>
+                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" *ngIf="data.invoiceStatusId == 2"
+                   data-target="#myModal" (click)="onClickReRaiseInvoice(data)">
+                  <i class="las la-check-square"></i> Resubmit Invoice
+                </a>
+                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                   (click)="gotoSubmittedCandidateDetail(data.candidateId)">
+                  <i class="las la-check-square"></i> Profile Details
+                </a>
+                <!--<a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" *ngIf="data.invoiceStatusId==2"
+                data-target="#clarificationModal" (click)="openClarificationModal(data.vendorInvoiceId)" ><i
+                        class="las la-check-square"></i> View Clarification</a>-->
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Resubmit Invoice</h4>
+      </div>
+      <!-- <form [formGroup]="saveForm" (ngSubmit)="onSubmitRaiseInvoice()" autocomplete="off"> -->
+      <div class="modal-body">
+        <!-- <div class="from-row">
+            <div class="col-sm-12">
+                <div class="media-body">
+                    <label>Current Name: aawadd ea</label>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="media-body">
+                    <label>Billable CTC: 2234.8</label>
+                </div>
+            </div>
+        </div> -->
+        <div class="form-row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Employee Name: {{ candidateName}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Billable CTC: {{ billableCTC}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Service Charge%</label>
+              <input type="text" class="form-control" appTwoDigitDecimaNumber maxlength="5" [(ngModel)]="ServiceChargePercent" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Service Charge Amount</label>
+              <!-- <input type="text" class="form-control"  [(ngModel)]="ServiceCharge"/> -->
+              <input type="text" class="form-control"
+                     value="{{((billableCTC * ServiceChargePercent) / 100) > 0 ? ((billableCTC * ServiceChargePercent) / 100):null}}" disabled>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>GST%</label>
+              <input type="text" class="form-control" [(ngModel)]="GSTPercent" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>GST Amount</label>
+              <!-- <input type="text" class="form-control"  [(ngModel)]="GST"/> -->
+              <input type="text" class="form-control"
+                     value="{{((billableCTC * GSTPercent) / 100) > 0 ? ((billableCTC * GSTPercent) / 100):null}}" disabled>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Total Bill Amount</label>
+              <!-- <input type="text" class="form-control"  [(ngModel)]="TotalBillAmount"/> -->
+              <input type="text" class="form-control"
+                     value="{{(((billableCTC * ServiceChargePercent) / 100)+((billableCTC * GSTPercent) / 100)) > 0 ?
+                                             (((billableCTC * ServiceChargePercent) / 100)+((billableCTC * GSTPercent) / 100)) : null}}" disabled>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Upload Bill</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                       (change)="onFileChange($event.target.files)">
+                <label class="custom-file-label" for="customFile" #uploadBillimport>Choose file</label>
+                <p class="error-msg msgfile" style="display: none;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-black btn-sm" (click)="onSubmitRaiseInvoice()">Submit</button>
+      </div>
+      <!-- </form> -->
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="CreditNoteModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+        <h4 class="modal-title">Upload Credit Note</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Employee Name: {{ candidateName}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Total Bill Amount: {{ TotalBillAmount}}</label>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Credit Amount</label>
+              <input type="text" class="form-control" appTwoDigitDecimaNumber [(ngModel)]="CreditBillAmount"/>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label>Upload Document</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                       (change)="creditFileUpload($event.target.files)">
+                <label class="custom-file-label" for="customFile" #creditFileimport>Choose file</label>
+                <p class="error-msg msgfile" style="display: none;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-black btn-sm" (click)="onUploadCreditNote()">Submit</button>
+      </div>
+      <!-- </form> -->
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="clarificationModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closeSelectedvendorInvoice()" id="closeClarificationModal" #closeClarificationModal
+                data-dismiss="modal">
+          <i class="las la-times"></i>
+        </button>
+        <h4 class="modal-title">Take Action</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="media" *ngFor="let data of clarificationList">
+              <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+              <div class="media-body">
+                <h6 class="mt-0">{{data.createdByName}}</h6>
+                {{data.clarificationRemarks}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Remarks</label>
+              <textarea class="form-control txtRemarks" [(ngModel)]="ClarificationRemarks"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-black btn-sm" (click)="clarificationSubmit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)"
+             size="medium"
+             color="#fff"
+             type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

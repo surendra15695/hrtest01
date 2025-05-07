@@ -1,0 +1,49 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">Location & Function Mapping</h1>
+                    </div>
+                    <div>
+                        <!-- <button type="button" (click)="createForm()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><i class="las la-plus"></i> Add New</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="swichLabel">Location</label>
+                        <ng-select bindLabel="locationNo" class="ddllocation" [placeholder]="'Select'" [appendTo]="'body'" (change)="onChangeLocation($event)" [multiple]="false" [searchable]="true" [clearable]="false" [(ngModel)]="SelectedLocation">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of LocationList">
+                                {{rec.locationNo}}-{{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue people_pickr" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false" [(ngModel)]="SelectedFunction">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-black btn-sm" (click)="onSubmit()">Submit</button>
+                    <!-- <button type="button" class="btn btn-primary btn-sm ml-2" data-dismiss="modal">Cancel</button>                     -->
+                </div>
+            </div>          
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->
+

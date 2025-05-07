@@ -1,0 +1,406 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Upload Document for Verification</h1>
+            </div>
+        </div>
+    </div>
+    <h6 class="red text-uppercase">Current Salary Details:</h6>
+    <table class="table table-bordered rwd-table">
+        <thead>
+            <tr>
+                <th>Emoluments</th>
+                <th>Monthly(Rs.)</th>
+                <th>Yearly(Rs.)</th>
+                <th *ngIf="salaryRemarksVisible">Document Verification</th>
+                <th *ngIf="salaryRemarksVisible">Recruiter Remarks</th>
+                <th *ngIf="documentData?.isEnabled==true"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of documentData?.salaryDetails">
+                <td data-th="Emoluments">
+                    <p>{{data.emolumntName}}</p>
+                </td>
+                <td data-th="Monthly(Rs.)">
+                    <input type="text" class="form-control text-right" placeholder="" [disabled]="(isFormEnable==false || data.emolumntVerifyStatus==3)?true:false" [(ngModel)]="data.monthly"
+                        (ngModelChange)="changeMonthlySalary($event,data.offerDocumentCollectionSalaryId)">
+                </td>
+                <td data-th="Yearly(Rs.)">
+                    <input type="text" class="form-control text-right" placeholder=""  [disabled]="(isFormEnable==false || data.emolumntVerifyStatus==3)?true:false" [(ngModel)]="data.yerly"
+                        (ngModelChange)="changeYearlySalary($event,data.offerDocumentCollectionSalaryId)">
+                </td>
+                <td *ngIf="data.emolumntVerifyStatus==1 && salaryRemarksVisible==true" class="red">Pending</td>
+                <td *ngIf="data.emolumntVerifyStatus==2 && salaryRemarksVisible==true" class="yellow">Need Clarification</td>
+                <td *ngIf="data.emolumntVerifyStatus==3 && salaryRemarksVisible==true" class="green">Verified</td>
+                <td *ngIf="salaryRemarksVisible">{{data.emolumntVerifyRemarks}}</td>
+                <td class="text-center"  *ngIf="documentData?.isEnabled==true && data.emolumntVerifyStatus!=3"><a *ngIf="data.emolumntVerifyStatus!=3" href="javascript:void(0)" class="row-btn"
+                        (click)="removeSalaryHead(data.offerDocumentCollectionSalaryId)"><i
+                            class="las la-trash-alt"></i></a></td>
+            </tr>
+            <tr *ngFor="let data of previousNewSalary">
+                <td data-th="Emoluments">
+                    <p>{{data.emolumntName}}</p>
+                </td>
+                <td data-th="Monthly(Rs.)">
+                    <input type="text" class="form-control text-right" placeholder="" [(ngModel)]="data.monthly"
+                        (ngModelChange)="changeNewMonthlySalary($event,data.offerDocumentCollectionSalaryId)">
+                </td>
+                <td data-th="Yearly(Rs.)">
+                    <input type="text" class="form-control text-right" placeholder="" [(ngModel)]="data.yerly"
+                        (ngModelChange)="changeNewYearlySalary($event,data.offerDocumentCollectionSalaryId)">
+                </td>
+                <td class="text-center"  *ngIf="documentData?.isEnabled==true && data.emolumntVerifyStatus==1"><a href="javascript:void(0)" class="row-btn"
+                        (click)="removeNewSalaryHead(data.offerDocumentCollectionSalaryId)"><i
+                            class="las la-trash-alt"></i></a></td>
+            </tr>
+            <tr *ngIf="!salaryRemarksVisible">
+                <td data-th="Emoluments">
+                    <input type="text" class="newEmolument form-control" placeholder="" [(ngModel)]="newEmolumentName">
+                </td>
+                <td data-th="Monthly(Rs.)">
+                    <input type="text" class="newMonthly form-control text-right" placeholder=""
+                        [(ngModel)]="newMonthlySal" (ngModelChange)="changeMonthlySalaryData($event)">
+                </td>
+                <td data-th="Yearly(Rs.)">
+                    <input type="text" class="newYearly form-control text-right" placeholder=""
+                        [(ngModel)]="newYearlySal" (ngModelChange)="changeYearlySalaryData($event)">
+                </td>
+                <td class="text-center"  *ngIf="documentData?.isEnabled==true && salaryRemarksVisible==false"><a href="javascript:void(0)" class="row-btn" (click)="addNewSalary()"><i
+                            class="las la-plus"></i></a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td class="text-right">{{monthlyTotal}}</td>
+                <td class="text-right">{{yearlyTotal}}</td>
+            </tr>
+        </tfoot>
+    </table>
+    <span class="red"><b>NOTE:</b></span><span class="grey font-italic">The components are representative. If needed,
+        please add/delete components to match your existing CTC.</span>
+    <div class="mb-3"  *ngIf="salaryRemarksVisible">
+        <h6 class="red">Additional Remarks:</h6>
+        <div *ngFor="let data of submittedSalaryRemarksDetails">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdByName}} <span></span></h6>
+                    {{data.reamrks}}
+                </div>
+            </div>
+            <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.candidateFullName}} <span></span></h6>
+                    {{data.reamrksReply}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="isFormEnable">
+            <label for="">Remarks</label>
+            <textarea id="" class="form-control" [(ngModel)]="salaryRemarks"></textarea>
+        </div>
+    </div>
+    <div class="mb-2 text-right">
+        <!-- <button type="button" class="btn btn-sm btn-black ml-1"><i class="las la-plus"></i> Add More</button> -->
+    </div>
+    <hr>
+    <h6 class="red text-uppercase" *ngIf="documentData?.isEnabled">Upload Documents:</h6>
+    <div class="border-box mb-2" *ngIf="documentData?.isEnabled">
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <ng-select bindLabel="attachmentDocumentTypeName" class="documentType" [placeholder]="'Select'"
+                        [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false"
+                        [(ngModel)]="selectedDocumentType" (change)="changeDocumentType($event)">
+                        <ng-option [value]="rec.attachmentDocumentTypeId" *ngFor="let rec of documentTypes">
+                            {{rec.attachmentDocumentTypeName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <ng-select class="" bindLabel="attachmentDocumentParticularName" class="documentParticular"
+                        [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="selectedDocumentParticular"
+                        (change)="changeDocumentParticular($event)">
+                        <ng-option [value]="rec.attachmentDocumentParticularId"
+                            *ngFor="let rec of documentParticularList">
+                            {{rec.attachmentDocumentParticularName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <ng-select class="" bindLabel="attachmentDocumentName" class="documentName" [placeholder]="'Select'"
+                        [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false"
+                        [(ngModel)]="selectedDocumentName">
+                        <ng-option [value]="rec.attachmentDocumentNameId" *ngFor="let rec of documentNameList">
+                            {{rec.attachmentDocumentName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                        (change)="onFileChange($event)">
+                    <label class="custom-file-label" for="customFile" #documentFileImport>Choose File</label>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-sm btn-black mt-md-4" (click)="UploadDocument()"><i
+                        class="las la-plus"></i> Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3" *ngIf="additionalDocumentList.length>0">
+        <h6 class="red text-uppercase">Upload Additional Documents:</h6>
+        <div class="border-box mb-2">
+            <div class="form-row" *ngFor="let data of additionalDocumentList">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Document Type<span class="required">*</span></label>
+                        <input type="text" class="form-control" placeholder="" disabled [value]="data.doumentTypName">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Document Particular<span class="required">*</span></label>
+                        <input type="text" class="form-control" placeholder="" disabled [value]="data.doumentParticularName">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Document Name<span class="required">*</span></label>
+                        <input type="text" class="form-control" placeholder="" disabled [value]="data.doumentName">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" (change)="onAdditionFileChange($event,data.offerDocumentCollectionDocumentId)">
+                        <label class="custom-file-label" id="pdffile{{data.offerDocumentCollectionDocumentId}}" for="customFile">Choose File</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <span class="red"><b>NOTE:</b></span><span class="grey font-italic">Please upload employment details in ascending
+        order i.e. first employment 1 and so on.</span>
+    <div class="border-box mb-2 mt-2 p-3" *ngFor="let data of submittedDocumentArrayList">
+        <h6 class="mt-0">{{data.doumentTypName}}</h6>
+        <div class="uploadDocList" *ngFor="let rec of data.documents">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">{{rec.doumentParticularName}} - {{rec.doumentName}}</label>
+                    <div class="attach-file">
+                        <a (click)="openFile(rec.documentPath)" style="cursor: pointer;" title="Download"><i
+                                class="las color-black la-paperclip"></i>Document</a>
+                        <a (click)="openFile(rec.documentPath)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Document Verification</label>
+                    <p class="red" *ngIf="rec.approvalStatus==1">Pending</p>
+                    <p class="yellow" *ngIf="rec.approvalStatus==2">Need Clarification</p>
+                    <p class="green" *ngIf="rec.approvalStatus==3">Verified</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>{{rec.approvalRemarks}}</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn"  *ngIf="documentData?.isEnabled && rec.approvalStatus==2"
+                        (click)="removeSubmittedDocument(rec.offerDocumentCollectionDocumentId)"><i
+                            class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border-box mb-2 mt-2 p-3" *ngFor="let data of attachedDocumentArrayList">
+        <h6 class="mt-0">{{data.doumentTypName}}</h6>
+        <div class="uploadDocList" *ngFor="let rec of data.documents">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">{{rec.doumentParticularName}} - {{rec.doumentName}}</label>
+                    <div class="attach-file">
+                        <a href="{{rec.documentPath}}" target="_blank" title="Download"><i
+                                class="las color-black la-paperclip"></i>Document</a>
+                        <a href="{{rec.documentPath}}" target="_blank"><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Document Verification</label>
+                    <p class="red">Pending</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p></p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn" *ngIf="documentData?.isEnabled" 
+                        (click)="removeUploadedDocument(rec.offerDocumentCollectionDocumentId)"><i
+                            class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-t-4"  *ngIf="salaryRemarksVisible">
+        <h6 class="red">Additional Remarks:</h6>
+        <div *ngFor="let data of submittedAdditionalRemarksDetails">
+            <div class="media mb-3">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.createdByName}} <span></span></h6>
+                    {{data.reamrks}}
+                </div>
+            </div>
+            <div class="media mb-3" *ngIf="data.reamrksReply!=''">
+                <img class="mr-3" src="assets/images/user-icon-2.png" alt="">
+                <div class="media-body">
+                    <h6 class="mt-0">{{data.candidateFullName}} <span></span></h6>
+                    {{data.reamrksReply}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="isFormEnable">
+            <label for="">Remarks</label>
+            <textarea id="" class="form-control" [(ngModel)]="additionalRemarks"></textarea>
+        </div>
+    </div>
+    <!-- <div class="border-box mb-2 mt-2 p-3">
+        <h6 class="mt-0">Personal Info & KYC</h6>
+        <div class="uploadDocList">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">PAN</label>
+                    <div class="attach-file">
+                        <a href="#" title="Download"><i class="las color-black la-paperclip"></i>Sample Document</a>
+                        <a href="#"><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Recruiter Verification</label>
+                    <p class="yellow">Pending</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn"><i class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="uploadDocList">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">Aadhar</label>
+                    <div class="attach-file">
+                        <a href="#" title="Download"><i class="las color-black la-paperclip"></i>Sample Document</a>
+                        <a href="#"><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Recruiter Verification</label>
+                    <p class="yellow">Pending</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn"><i class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border-box mb-2 mt-2 p-3">
+        <h6 class="mt-0">Academics</h6>
+        <div class="uploadDocList">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">10th Marksheet</label>
+                    <div class="attach-file">
+                        <a href="#" title="Download"><i class="las color-black la-paperclip"></i>Sample Document</a>
+                        <a href="#"><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Recruiter Verification</label>
+                    <p class="yellow">Pending</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn"><i class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="uploadDocList">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">10th Certificate</label>
+                    <div class="attach-file">
+                        <a href="#" title="Download"><i class="las color-black la-paperclip"></i>Sample Document</a>
+                        <a href="#"><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Recruiter Verification</label>
+                    <p class="yellow">Pending</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Recruiter Comment</label>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2">
+                    <a href="javascript:void(0)" class="row-btn"><i class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="mt-4 text-right" *ngIf="documentData?.isEnabled">
+        <!-- <button type="button " class="btn btn-primary">Cancel</button> -->
+        <button type="button " class="btn btn-secondary ml-1" (click)="submitData(true)">Save as Draft</button>
+        <button type="button " class="btn btn-black ml-1" data-toggle="modal"
+            data-target="#confirmPopup">Submit</button>
+    </div>
+</div>
+<!-- Modal -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                    correctly.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="submitData(false)">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

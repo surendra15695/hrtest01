@@ -1,0 +1,248 @@
+<div class="content-box m-b-15 m-t-10">
+  <div class="page-title-area pb-2 mb-2">
+    <h1 class="f-l">All Positions</h1>
+  </div>
+
+  <form [formGroup]="searchform" (ngSubmit)="fromSubmit()">
+    <div class="filter-sec">
+      <div class="form-row m-t-10">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Candidate No</label>
+            <input type="text" class="form-control" formControlName="candidateNo" #candidateNo placeholder="Enter candidate no." autocomplete="off">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Requisition No</label>
+            <input type="text" class="form-control" formControlName="requisitionNo" #requisitionNo placeholder="Enter requisition no." autocomplete="off">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>DOJ</label>
+                      <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                        <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                            placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+
+
+          </div>
+        </div>      
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Vertical</label>
+            <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="verticalId" #verticalId (change)="changeVertical()" name="verticalId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                {{rec.verticalName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>Location</label>
+            <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="locationId" #locationId name="locationId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+              <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                {{rec.locationOffice}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <!-- <div class="col-sm-2">
+          <div class="form-group">
+            <label>Function</label>
+            <ng-select bindLabel="venueName" class="ddltestvenue" name="functionId" formControlName="functionId" (change)="changeFuction()" #functionId [placeholder]="'Select'" [appendTo]="'body'" [multiple]="" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                {{rec.functionName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div> -->
+        <div class="col-sm-2">
+          <div class="form-group">
+              <label>Function</label>
+              <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" formControlName="functionId"  (change)="changeFuction()" #functionId [placeholder]="'Select'" [appendTo]="'body'"
+               [multiple]="false" [searchable]="true" [clearable]="false">
+                  <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                      {{rec.functionName}}
+                  </ng-option>
+              </ng-select> 
+
+              <!-- <select class="selectpicker ddlfunction" title='Select' formControlName="functionId" #functionId>
+                  <option *ngFor="let rec of functions" [ngValue]="rec.functionId">
+                      {{rec.functionName}}
+                    </option>
+              </select> -->
+          </div>
+        </div>
+        
+        <!-- <div class="col-sm-2">
+          <div class="form-group">
+            <label>Candidate No</label>
+            <ng-select bindLabel="venueName" class="ddltestvenue" name="candidateNo" formControlName="candidateNo" (change)="changeCandidateNo()" #candidateNo [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false" [clearable]="false">
+              <ng-option [value]="rec.candidateNo" *ngFor="let rec of employeeNoDetails">
+                {{rec.candidateNo}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div> -->
+        <!-- <div class="col-sm-3">
+          <div class="form-group">
+            <label>Request Date</label>
+            <div class="form-row">
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                         placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-group datepiker date">
+                  <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                         placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> 
+        </div>-->
+
+
+        <div class="col-sm-12 text-right">
+          <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+          <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i class="las la-sync-alt"></i>Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table id="dataTable1" class="table table-striped">
+      <thead>
+        <tr>
+          <!-- <th>Candidate ID</th> -->
+          <th>Candidate No</th>
+          <th>Name</th>
+          <th>Req No</th>
+          <th>Vertical</th>
+          <th>Location</th>
+          <th>Function</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Grade</th>
+          <th>Date of Submission</th>
+          <th>Date of Joining</th>
+          <th>Date of Leaving</th>
+          <th>Source</th>
+          <th>Hiring Status</th>
+          <th>Bill amount raised</th>
+          <th>Payment Status</th>
+          <th>Credit Note  Applicable</th>
+          <!-- <th style="text-align: center;"></th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of vendorcandidateLists">
+          <!-- <td>{{data.candidateId}}</td> -->
+          <td>{{data.candidateNo}}</td>
+          <td>{{data.fullName}}</td>
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.verticalName}}</td>
+          <td>{{data.locationName}}</td>
+          <td>{{data.functionName}}</td>
+          <td>{{data.departmentName}}</td>
+          <td>{{data.designation}}</td>
+          <td>{{data.gradeName}}</td>
+          <td>{{data.dateOfSubmission}}</td>
+          <td>{{data.doj}}</td>
+          <td>{{data.dol}}</td>
+          <td>{{data.source}}</td>
+          <td>{{data.hiringStatusName}}</td>
+          <td>{{data.billAmountRaised}}</td>
+          <td>{{data.paymentStatus}}</td>
+          <td>{{data.creditNoteApplicable}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table id="exportTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>Candidate ID</th>
+          <th>Name</th>
+          <th>Req No</th>
+          <th>Vertical</th>
+          <th>Location</th>
+          <th>Function</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Grade</th>
+          <th>Date of Submission</th>
+          <th>Date of Joining</th>
+          <th>Date of Leaving</th>
+          <th>Hiring Status</th>
+          <th>Bill amount raised</th>
+          <th>Payment Status</th>
+          <th>Credit Note  Applicable</th>
+          <!-- <th style="text-align: center;"></th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of vendorcandidateLists">
+          <td>{{data.candidateId}}</td>
+          <td>{{data.fullName}}</td>
+          <td>{{data.requisitionNo}}</td>
+          <td>{{data.verticalName}}</td>
+          <td>{{data.locationName}}</td>
+          <td>{{data.functionName}}</td>
+          <td>{{data.departmentName}}</td>
+          <td>{{data.designation}}</td>
+          <td>{{data.gradeName}}</td>
+          <td>{{data.dateOfSubmission}}</td>
+          <td>{{data.doj}}</td>
+          <td>{{data.dol}}</td>
+          <td>{{data.hiringStatusName}}</td>
+          <td>{{data.billAmountRaised}}</td>
+          <td>{{data.paymentStatus}}</td>
+          <td>{{data.creditNoteApplicable}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

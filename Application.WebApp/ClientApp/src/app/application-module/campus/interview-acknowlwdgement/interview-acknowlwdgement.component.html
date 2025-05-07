@@ -1,0 +1,38 @@
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <div class="acknowledge_container">
+                    <div class="logo-area text-center">
+                        <img src="../../../../assets/images/logo.png" alt="">
+                    </div>
+                    <div class="content-area">
+                        <div class="text-center">
+                            <img src="../../../../assets/images/ack_icon.png" alt="">
+                        </div>
+                        <h3 class="text-center">Are you acknowledge for the Interview?</h3>
+                        <div class="wrapper">
+                            <input type="radio" name="select" id="option-1" (change)="onClickRadioBtn(1)">
+                            <input type="radio" name="select" id="option-2" (change)="onClickRadioBtn(2)">
+                            <label for="option-1" class="option option-1">
+                                <div class="dot"></div>
+                                <span>Yes</span>
+                            </label>
+                            <label for="option-2" class="option option-2">
+                                <div class="dot"></div>
+                                <span>No</span>
+                            </label>
+                        </div>
+                        <div *ngIf="isRemarksVisible">
+                            <label for="">Reason</label>
+                            <textarea class="form-control" cols="30" rows="10" [(ngModel)]="remarks" placeholder="Enter reason..."></textarea>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button type="button " class="btn-black ml-1" (click)="onSubmit()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

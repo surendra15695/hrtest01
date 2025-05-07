@@ -1,0 +1,266 @@
+<div class="content-box">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Induction Feedback Templates</h1>
+            </div>
+            <div>
+                <a href="#" class="btn btn-primary btn-sm"><i class="las la-plus"></i> Add New</a>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tabTwo" role="tabpanel" aria-labelledby="secondtab">
+        <!-- tab pill section Start -->
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-one-tab" data-toggle="pill" href="#pills-one" role="tab"
+                    aria-controls="pills-one" aria-selected="true" (click)="onLClickIndividualJoiner()">Individual
+                    Joiner</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-two-tab" data-toggle="pill" href="#pills-two" role="tab"
+                    aria-controls="pills-two" aria-selected="false" (click)="onClickBatchJoiner()">Batch Joiner</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <!-- pills one start -->
+            <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab">
+                <!-- Individual Table start -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 60px;">Sl. No.</th>
+                                <th>Feedback Name</th>
+                                <th>Created By</th>
+                                <th>Days of Release</th>
+                                <th>Modified on</th>
+                                <th style="text-align: center;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of inductionIndividualFeedback">
+                                <td class="text-center">1</td>
+                                <td>Phase 1-Basic of Tyre manufacturing</td>
+                                <td>Ananth Subbarao</td>
+                                <td>1</td>
+                                <td>12/06/2021</td>
+                                <td class="text-center">
+                                    <div class="row-dropdown">
+                                        <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                                class="las la-ellipsis-v"></i></button>
+                                        <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                            aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                            x-placement="bottom-end">
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#assignToCandidateModal" (click)="onClickAssignToCandidate(data)"><i class="las la-plus-circle"></i>
+                                                Assign to Candidate</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#scheduleReleaseModal"><i class="las la-calendar"></i>
+                                                Schedule Release</a>
+                                            <a class="dropdown-item" href="javascript:void(0)"><i
+                                                    class="las la-pen"></i> Edit/View Feedback Form</a>
+                                            <a class="dropdown-item" href="javascript:void(0)"><i
+                                                    class="las la-trash-alt"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Individual Table End -->
+
+            </div>
+            <!-- pills one End -->
+
+            <!-- pills two start -->
+            <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab">
+                <!-- Batch Table start -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 60px;">Sl. No.</th>
+                                <th>Feedback Name</th>
+                                <th>Created By</th>
+                                <th>Modified on</th>
+                                <th style="text-align: center;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of inductionBatchFeedback">
+                                <td class="text-center">1</td>
+                                <td>Phase 1-Basic of Tyre manufacturing</td>
+                                <td>Ananth Subbarao</td>
+                                <td>12/06/2021</td>
+                                <td class="text-center">
+                                    <div class="row-dropdown">
+                                        <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                                class="las la-ellipsis-v"></i></button>
+                                        <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                            aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                            x-placement="bottom-end">
+                                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#assignToBatchModal" (click)="onClickAssignToBatch(data)"><i class="las la-plus-circle"></i>
+                                                Assign to Batch</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal"
+                                                data-target="#scheduleReleaseModal"><i class="las la-calendar"></i>
+                                                Schedule Release</a>
+                                            <a class="dropdown-item" href="#"><i class="las la-pen"></i> Edit/View
+                                                Feedback Form</a>
+                                            <a class="dropdown-item" href="#"><i class="las la-trash-alt"></i>
+                                                Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- pills two end -->
+        </div>
+        <!-- tab pill section Start -->
+    </div>
+
+
+</div>
+
+
+<!-- Schedule Release Modal -->
+<div class="modal fade" id="scheduleReleaseModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Schedule Release</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="d-inline-block grey">Feedback Name:</p>
+                        <p class="d-inline-block">in plant Training - phase 2</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Days after induction start</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="onClickCancel()">Cancel</button>
+                <button type="submit" class="btn btn-black btn-sm">Schedule</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+<!-- Assign to Batch Modal -->
+<div class="modal fade" id="assignToBatchModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Assign Induction Feedback</h4>
+            </div>
+            <form [formGroup]="inductionFeedbackAssignForm" (ngSubmit)="onSubmitAssignAssessment()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Batch</label>
+                                <ng-select bindLabel="batchNo" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="batchId" (change)="onChageBatch()">
+                                    <ng-option [value]="rec.batchId" *ngFor="let rec of batchs">
+                                        {{rec.batchNo}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Training Title</label>
+                                <ng-select bindLabel="traingTitle" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="candidateInductionScheduleDetailsId">
+                                    <ng-option [value]="rec.candidateInductionScheduleDetailsId"
+                                        *ngFor="let rec of trainingTittleList">
+                                        {{rec.traingTitle}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="onClickCancel()">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Modal end -->
+<!-- Assign to Candidate Modal -->
+<div class="modal fade" id="assignToCandidateModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title">Assign Induction Feedback</h4>
+            </div>
+            <form [formGroup]="inductionFeedbackAssignForm" (ngSubmit)="onSubmitAssignAssessment()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Cnadidate</label>
+                                <ng-select bindLabel="candidateFullName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="candidateId" (change)="onChangeCandidate()">
+                                    <ng-option [value]="rec.candidateId" *ngFor="let rec of candidateList">
+                                        {{rec.candidateFullName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Training Title</label>
+                                <ng-select bindLabel="traingTitle" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="candidateInductionScheduleDetailsId">
+                                    <ng-option [value]="rec.candidateInductionScheduleDetailsId"
+                                        *ngFor="let rec of trainingTittleList">
+                                        {{rec.traingTitle}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        (click)="onClickCancel()">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal end -->

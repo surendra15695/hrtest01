@@ -1,0 +1,116 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">External Venue Master</h1>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="createForm()" data-toggle="modal"
+                            data-target="#myModal"><i class="las la-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>External Venue Name</th>
+                            <th>External Venue Address</th>
+                            <th>Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of ExternalVenueList; let i = index;">
+                            <td>{{i+1}}</td>
+                            <td>{{item.externalVenueName}}</td>
+                            <td>{{item.externalVenueAddress}}</td>
+                            <td class="green" *ngIf="item.isActive==true">Active</td>
+                            <td class="red" *ngIf="item.isActive==false">Inactive</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="onEdit(item)"
+                                            data-toggle="modal" data-target="#myModal"><i class="las la-pen"></i>
+                                            Edit</a>
+                                        <!-- <a class="dropdown-item" href="#"><i class="las la-trash"></i> Delete</a> -->
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+                <h4 class="modal-title" *ngIf="Operation=='add'">Add External Induction Venue</h4>
+                <h4 class="modal-title" *ngIf="Operation=='edit'">Edit External Induction Venue</h4>
+            </div>
+            <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>External Venue Name</label>
+                                <input type="text" class="form-control" formControlName="ExternalVenueName"
+                                    name="InductionVenueName" placeholder="Enter Venue Name" />
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="swichLabel">Active</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="togBtn" name="togBtn" formControlName="IsActive"
+                                        name="IsActive" />
+                                    <div class="slider round">
+                                        <!--ADDED HTML -->
+                                        <span class="on">Yes</span><span class="off">No</span>
+                                        <!--END-->
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>External Venue Address</label>
+                                <!-- <input type="text" class="form-control" formControlName="ReportingVenueAddress"
+                                    name="ReportingVenueAddress" placeholder="Enter Venue Address" /> -->
+                                <textarea class="form-control" cols="30" rows="10"
+                                    formControlName="ExternalVenueAddress" placeholder="Enter Venue Address"
+                                    name="InductionVenueAddress"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="createForm()" class="btn btn-primary btn-sm"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveForm.invalid">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

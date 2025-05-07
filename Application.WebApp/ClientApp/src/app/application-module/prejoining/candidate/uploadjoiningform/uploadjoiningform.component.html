@@ -1,0 +1,389 @@
+<div class="content-box m-b-15 m-t-10" *ngIf="joiningDocumentData?.hiringStatusId<=49">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Joining forms will be available once after the joining acknowledgement is done</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="content-box m-b-15 m-t-10" *ngIf="joiningDocumentData?.hiringStatusId>=50">
+    <!--  -->
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Upload Joining Document</h1>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-warning">
+        <span class="mr-2"> Please download Instruction Manual to fill the forms below:</span>
+        <a (click)="openFile(downloadInstructionManual?.documentPath)" style="cursor: pointer;" class="btn btn-rounded btn-warning btn-sm">Download Manual<i
+                class="las la-download"></i></a>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 col-sm-12">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>Bank Mandate Form</div>
+                <div>
+                    <a (click)="openFile(bankMandiate?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>Form 2 - PF Nomination</div>
+                <div>
+                    <a (click)="openFile(pfNomination?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>Form 11 -Composite Declaration Form for Auto Transfers</div>
+                <div>
+                    <a (click)="openFile(autoTrans?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>Form F - Gratuity Nomination Form</div>
+                <div>
+                    <a (click)="openFile(gratiNormForm?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12" *ngIf="showESIDeclarationForm">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>ESI Declaration Form</div>
+                <div>
+                    <a (click)="openFile(ESIDecleareform?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12" *ngIf="showAnnuationBeneficiaryForm">
+            <div class="border-box p-2 mb-1 d-flex justify-content-between align-items-center">
+                <div>Super Annuation-Beneficiary Form</div>
+                <div>
+                    <a (click)="openFile(SuperBenefish?.documentPath)" style="cursor: pointer;"
+                        class="btn btn-rounded btn-primary btn-sm">Download <i class="las la-download"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <span class="red"><b>NOTE:</b></span><span class="grey font-italic">Please download forms and fill manualy
+                with valid information and upload back to the portal.</span>
+        </div>
+    </div>
+    <hr>
+
+
+    <h6 class="red text-uppercase">Upload Documents:</h6>
+    <div>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Bank Mandate Form" disabled>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || bankMandateReupload">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange1($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport1></label>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <!-- Bank Statement -->
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Bank Statement/Cancelled Cheque/Passbook" disabled>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || bankStatementReupload">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange5($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport5></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Form 2 - PF Nomination" disabled>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || pfNominationReupload">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange2($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport2></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control"
+                        value="Form 11 -Composite Declaration Form for Auto Transfers" disabled>
+                </div>
+            </div>
+            <div class="col-md-4"
+                *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || compositeDeclarationReupload">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange3($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport3></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Form F - Gratuity Nomination Form" disabled>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || graturityReupload">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange4($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport4></label>
+                </div>
+            </div>
+        </div>
+        <!-- Added Extra Field -->
+        
+        <!-- ESI Declaration Document-->
+        <div class="form-row" *ngIf="showESIDeclarationForm">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="ESI Declaration Form" disabled>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || esiDeclarationReupload">
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange6($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport6></label>
+                </div>
+            </div>
+        </div>
+        <!-- Super Annuation Document -->
+        <div class="form-row" *ngIf="showAnnuationBeneficiaryForm">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Type<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Prejoining & Onboarding" disabled>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Document Particular<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Joining Document" disabled>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Document Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" value="Super Annuation-Beneficiary Form" disabled>
+                </div>
+            </div>
+            <div class="col-md-4"
+                *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || annuationBeneficiaryReupload">
+
+                <label for="">Upload <span class="grey">(PDF format only)</span><span class="required">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="application/pdf" id="customFile"
+                        (change)="onAttachmentFileChange7($event.target.files)">
+                    <label class="custom-file-label" for="customFile" #attachmentFileImport7></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-box mb-4 mt-2 p-3">
+        <h6 class="mt-0">Prejoining & Onboarding</h6>
+        <div class="uploadDocList" *ngFor="let data of fileUploadArray;let i=index;">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label class="grey">{{data.doumentName}}</label>
+                    <div class="attach-file">
+                        <a *ngIf="data.documentPath==''" [href]="data.pdfURL" target="_blank" title="Download"><i
+                                class="las color-black la-paperclip">{{data.document}}</i></a>
+                        <a *ngIf="data.documentPath!=''" (click)="openFile(data.documentPath)" style="cursor: pointer;"
+                            title="Download"><i class="las color-black la-paperclip">{{data.document}}</i></a>
+                            <!-- by Sayandeep -->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="grey">Document Verification</label>
+                    <p class="yellow">{{data.approvalListName}}</p>
+                </div>
+                <div class="col-md-4">
+                    <label class="grey">Comment</label>
+                    <p>{{data.approvalRemarks}}</p>
+                </div>
+                <div class="col-md-1 text-md-right mt-md-2" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0">
+                    <a href="javascript:void(0)" class="row-btn" (click)="onClickRemove(data)"><i
+                            class="las la-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <h6 class="red">Additional Remarks:</h6>
+        <div class="media mb-3">
+            <img class="mr-3" src="images/user-icon-2.png" alt="">
+            <div class="media-body">
+                <p class="my-0"><b>Candidate Name : <span>{{joiningDocumentData?.name}}</span></b></p>
+                {{joiningDocumentData?.additionalRemarks}}
+            </div>
+        </div>
+
+        <div class="row" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || showSaveButton">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Enter reply comment..."
+                        [(ngModel)]="additionalRemarks"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 text-right" *ngIf="joiningDocumentData?.joiningDocumentCollectionId==0 || showSaveButton">
+        <button type="button " class="btn btn-primary" (click)="onCancelClick()">Cancel</button>
+        <!-- <button type="button " class="btn btn-secondary ml-1">Save as Draft</button> -->
+        <button type="button " class="btn btn-black ml-1" data-toggle="modal"
+            data-target="#confirmPopup">Submit</button>
+    </div>
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Please confirm all the details are filled/documents are uploaded
+                    correctly.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="onClickConfirmatin('N')">No</button>
+                    <button type="button" class="btn btn-black ml-2" data-dismiss="modal"
+                        (click)="onClickConfirmatin('Y')">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,323 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoTravelReimbursement()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Travel Reimbursement</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Name<span class="required">*</span></label>
+                <input type="text" class="form-control" disabled placeholder="" [(ngModel)]="travelReimbursement.fullName">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Date of Interview<span class="required">*</span></label>
+                <div class="input-group date">
+                    <input type="text" disabled class="form-control pull-right" [(ngModel)]="travelReimbursement.interviewDate"
+                        id="" placeholder="From Date">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Place of Interview<span class="required">*</span></label>
+                <input type="text" class="form-control" disabled placeholder="" [(ngModel)]="travelReimbursement.venueName">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Position<span class="required">*</span></label>
+                <input type="text" class="form-control" disabled placeholder="" [(ngModel)]="travelReimbursement.positionName">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Email ID<span class="required">*</span></label>
+                <input type="text" class="form-control" disabled placeholder="" [(ngModel)]="travelReimbursement.emailId">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Mobile No.<span class="required">*</span></label>
+                <input type="text" class="form-control" disabled placeholder="" [(ngModel)]="travelReimbursement.phoneNo">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Comminication Address<span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!isVisible"
+                    [(ngModel)]="CommunicationAddress"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>State<span class="required">*</span></label>
+                <ng-select bindLabel="stateName" disabled [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="false" [clearable]="false" [(ngModel)]="travelReimbursement.stateId">
+                    <ng-option [value]="rec.stateId" *ngFor="let rec of states">
+                        {{rec.stateName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>PIN Code<span class="required">*</span></label>
+                <input type="text" class="form-control" maxlength="6" minlength="6" numbersOnly placeholder="" [disabled]="!isVisible" [(ngModel)]="PinCode"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+    </div>
+    <h6 class="red">Journey Details:</h6>
+
+    <table class="table table-bordered rwd-table">
+        <thead>
+            <tr>
+                <th>Journey Type</th>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Mode of Travel</th>
+                <th>Amount</th>
+                <th *ngIf="travelReimbursement.claimStatusId==2 || travelReimbursement.claimStatusId==0"></th>
+            </tr>
+        </thead>
+        <tbody *ngIf="travelReimbursement.claimStatusId==2 || travelReimbursement.claimStatusId==0">
+            <tr>
+                <td data-th="Journey Type">
+                    <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="JourneyTypeId">
+                        <ng-option [value]="0">Select</ng-option>
+                        <ng-option [value]="1">Onward</ng-option>
+                        <ng-option [value]="2">Return</ng-option>
+                    </ng-select>
+                </td>
+                <td data-th="Date">
+                    <div class="input-group datepiker date">
+                        <input type="text" class="form-control datepicker pull-right" #jDate [(ngModel)]="JourneyDate" placeholder="Journey Date">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="From">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="JourneySource">
+                </td>
+                <td data-th="To">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="JourneyDestination">
+                </td>
+                <td data-th="Mode of Travel">
+                    <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="TravelModeId">
+                        <ng-option [value]="0">Select</ng-option>
+                        <ng-option [value]="1">Bus</ng-option>
+                        <ng-option [value]="2">Taxi</ng-option>
+                        <ng-option [value]="3">Train</ng-option>
+                        <ng-option [value]="4">Air</ng-option>
+                    </ng-select>
+                </td>
+                <td data-th="Amount">
+                    <input type="text" class="form-control" placeholder="" numbersOnly [(ngModel)]="ClaimAmount">
+                </td>
+                <td  class="text-center"><a href="javascript:void(0)" class="row-btn" (click)="addJourneyRow()">+</a>
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let data of journeyAddedDataArray; let i=index">
+                <td>{{data.journeyTypeName}}</td>
+                <td>{{data.journeyDate}}</td>
+                <td>{{data.journeySource}}</td>
+                <td>{{data.journeyDestination}}</td>
+                <td>{{data.travelModeName}}</td>
+                <td>{{data.claimAmount}}</td>
+                <td *ngIf="isVisible" class="text-center"><a href="javascript:void(0)" (click)="removeJourneyAddedRow(data.autoId)" class="row-btn"><i
+                    class="las la-trash-alt"></i></a> </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let data of journeyDataArray">
+                <td>{{data.JourneyType}}</td>
+                <td>{{data.JourneyDate}}</td>
+                <td>{{data.JourneySource}}</td>
+                <td>{{data.JourneyDestination}}</td>
+                <td>{{data.TravelMode}}</td>
+                <td>{{data.ClaimAmount}}</td>
+                <td *ngIf="travelReimbursement.claimStatusId<=3" class="text-center"><a href="javascript:void(0)" (click)="removeJourneyRow(data.AutoId)" class="row-btn"><i
+                    class="las la-trash-alt"></i></a> </td>
+            </tr>
+        </tbody>
+    </table>
+    <h6 class="red">Bank Account Details:</h6>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Name as per your bank records<span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!isVisible" [(ngModel)]="BankAccountName"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Bank Account Number<span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!isVisible" [(ngModel)]="BankAccountNumber"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Name of the bank<span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!isVisible" [(ngModel)]="BankName"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>11 Digit NEFT / IFSC code number of the bank branch<span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!isVisible" [(ngModel)]="IFSC"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Bank branch & Address<span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="" [disabled]="!isVisible" [(ngModel)]="BankBranch"  [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            </div>
+        </div>
+    </div>
+    <h6 class="red">Upload document(s) as proof:</h6>
+
+    <table class="table table-bordered rwd-table">
+        <thead>
+            <tr>
+                <th>Journey Type</th>
+                <th>Ticket / Pass / Bill</th>
+                <th>Upload (Max size : 2MB)</th>
+                <th *ngIf="travelReimbursement.claimStatusId==2 || travelReimbursement.claimStatusId==0"></th>
+            </tr>
+        </thead>
+        <tbody *ngIf="travelReimbursement.claimStatusId==2 || travelReimbursement.claimStatusId==0">
+            <tr>
+                <td data-th="Journey Type">
+                    <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="AttachmentJourneyTypeId">
+                        <ng-option [value]="0">Select</ng-option>
+                        <ng-option [value]="1">Onward</ng-option>
+                        <ng-option [value]="2">Return</ng-option>
+                    </ng-select>
+                </td>
+                <td data-th="Ticket / Pass / Bill">
+                    <ng-select [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                        [clearable]="false" [(ngModel)]="TicketId">
+                        <ng-option [value]="0">Select</ng-option>
+                        <ng-option [value]="1">Train/Bus/Air ticket</ng-option>
+                        <ng-option [value]="2">Boarding Pass</ng-option>
+                        <ng-option [value]="2">Taxi Bills</ng-option>
+                    </ng-select>
+                </td>
+                <td data-th="Upload" style="padding-top: 14px;">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                            (change)="onAttachmentFileChange($event.target.files)">
+                        <label class="custom-file-label" for="customFile" #attachmentFileImport></label>
+                    </div>
+                </td>
+                <td class="text-center"><a href="javascript:void(0)" class="row-btn" (click)="addAttachmentRow()">+</a>
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let data of journeyAddedAttachmentArray; let i=index">
+                <td>{{data.journeyTypeName}}</td>
+                <td>{{data.ticketName}}</td>
+                <td><a (click)="openFile(data.attachmentLink)" style="cursor: pointer;">attachment</a></td>
+                <td *ngIf="isVisible" class="text-center"><a href="javascript:void(0)" (click)="removeJourneyAddedAttachmentRow(data.autoId,i)" class="row-btn"><i
+                    class="las la-trash-alt"></i></a> </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let data of journeyAttachmentArray; let i=index">
+                <td>{{data.JourneyType}}</td>
+                <td>{{data.TicketName}}</td>
+                <td>attachment</td>
+                <td *ngIf="travelReimbursement.claimStatusId<=3" class="text-center"><a href="javascript:void(0)" (click)="removeJourneyAttachmentRow(data.AutoId)" class="row-btn"><i
+                    class="las la-trash-alt"></i></a> </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="red"><b>NB:</b></span><span class="grey font-italic">You are requested to submit the proof for
+        reimbursement. Scanned copy of the return journey should be attached. Otherwise we shall only consider onward journey
+        tickets for reimbursement.</span>
+    <h6 class="red">Bank Details:</h6>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Bank Document<span class="required">*</span></label>
+          <ng-select [placeholder]="'Select'" [disabled]="!isVisible" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                     [clearable]="false" [(ngModel)]="BankStatementId" [disabled]="travelReimbursement.claimStatusId<=3?false:true">
+            <ng-option [value]="0">Select</ng-option>
+            <ng-option [value]="1">Bank Passbook</ng-option>
+            <ng-option [value]="2">Cancelled Cheque</ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="isVisible">
+        <div class="form-group">
+          <label>Upload copy of selected bank document (Max size : 2MB)<span class="required">*</span></label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" accept="application/pdf"
+                   (change)="onBankFileChange($event.target.files)">
+            <label class="custom-file-label" for="customFile" #bankStatementFileImport>Choose file</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1" style="margin-top:2.5%;margin-left:-1.5%;">
+        <label></label>
+        <a href="javascript:void(0)" style="border:1px solid;
+          border-color: coral;
+          background-color: #ffe6e6;
+          box-sizing: border-box;
+          width: 30px;
+          height: 30px;
+          padding: 3px;" >
+          <i class="las la-download red" (click)="onShowFilePreview(imageURL)"></i>
+        </a>
+      </div>
+      <div class="col-md-3" *ngIf="BankStatementDocument!=''" style="margin-left:-2%">
+        <div class="form-group">
+          <label>Uploaded Document</label>
+          <div class="attach-file">
+            <a (click)="openFile(BankStatementDocument)" style="cursor: pointer;" title="Download"><i class="las color-black la-paperclip"></i>Attachment </a>
+            <a (click)="openFile(BankStatementDocument)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h6 class="red">Declaration:</h6>
+    <div class="alert alert-warning" role="alert">
+        I hereby declare that the particulars as given above are correct and complete. I request and authorize you to
+        effect payment by NEFT to my above stated bank account.
+        I confirm that I shall bear the charges, if any levied by my bank for the credit in our above account through
+        NEFT. If the transaction is delayed or lost because of incomplete
+        or incorrect information, I will not hold MRF Limited not responsible.
+    </div>
+    <!--by kuntal-->
+    <div class="row">
+        <div class="col-md-2">
+            <p class="d-inline-block grey">Attached Signature:</p>
+            <div class="circle">
+                <img class="profile-pic" [src]="travelReimbursement?.signature" alt="No Signature Available" [(ngModel)]="travelReimbursement.signature">
+            </div>
+        </div>
+    </div>
+    <div class="mt-4" *ngIf="travelReimbursement.claimStatusId==0 || travelReimbursement.claimStatusId==2">
+        <button type="button" class="btn btn-black" (click)="formSubmit()">Submit</button>
+        <!-- <button type="button" class="btn btn-primary ml-1">Cancel</button> -->
+    </div>
+</div>

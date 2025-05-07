@@ -1,0 +1,109 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <h1 class="f-l">Induction Assesment</h1>
+            </div>
+        </div>   
+    </div>
+    <div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">EMP ID:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.empNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Name:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.candidateFullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Date of Joining:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.dateofJoining}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Designation:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.designationName}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Posting Location:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.locationName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.functionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Department:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.departmentName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade:</p>
+                <p class="d-inline-block">{{candidateAssessmentDataList?.gradeName}}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div>
+        <h6 class="red">Assessment List</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Assessment Name</th>
+                        <th>Training Title</th>
+                        <th>Training Assessment Type</th>
+                        <th class="text-center" >Assigned on</th>
+                        <th class="text-center">Score</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of candiddateAssementDetails">
+                        <td>{{data.assessmentName}}</td>
+                        <td>{{data.traingTitle}}</td>
+                        <td>{{data.assessmentTypeName}}</td>
+                        <td class="text-center">{{data.assignedOn}}</td>
+                        <td class="text-center">{{data.score}}</td>
+                        <td>{{data.status}}</td>
+                        <td *ngIf="data.status=='Assessment Completed'" class="text-center"><a href="javascript:void(0)" (click)="onClickViewAssessment(data)" class="btn btn-primary btn-rounded btn-sm">View Assessment</a></td>
+                        <td *ngIf="(data.status=='Assigned') && (data.assessmentTypeName=='Classroom') " class="text-center"><a href="javascript:void(0)" (click)="onClickTakeAssessment(data)" class="btn btn-primary btn-rounded btn-sm">Take Assessment</a></td>
+                        <td *ngIf="(data.status=='Assigned') && (data.assessmentTypeName=='Practical') " class="text-center"><a href="javascript:void(0)"  class="btn btn-primary btn-rounded btn-sm">Due for Assessment</a></td>
+                    </tr>
+                    <!-- <tr>
+                        <td>In plant training - Phase1</td>
+                        <td>In plant training - Phase1 assessment</td>
+                        <td class="text-center">10/10/2021</td>
+                        <td class="text-center">0</td>
+                        <td>Assigned</td>
+                        <td class="text-center"><a href="#" class="btn btn-primary btn-rounded btn-sm">Take Assessment</a></td>
+                    </tr>
+                    <tr>
+                        <td>Technical Training</td>
+                        <td>Technical Training assessment</td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        <td>Not Assigned</td>
+                        <td class="text-center"></td>
+                    </tr> -->
+                    <tr>
+                      <td colspan="3"><b>Assessment Score (Average)</b></td>
+                      <td></td>
+                      <td class="text-center"><b>{{candidateAssessmentDataList?.totalScore}}</b></td>
+                      <td colspan="2"></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>    
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

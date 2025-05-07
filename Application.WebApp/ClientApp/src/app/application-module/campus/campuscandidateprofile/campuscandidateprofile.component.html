@@ -1,0 +1,312 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Candidate Details</h1>
+
+
+    </div>
+    <div *ngFor="let data of campusCandidateData.profileData">
+        <div class="candidate-info-header mb-4">
+            <div class="d-flex align-items-center mb-2">
+                <div class="col">
+                    <h6 class="red d-inline-block mt-1">{{data.fullName}}</h6>
+                    <span> {{data.emailId}}</span>
+                </div>
+                <div class="col">
+                    <span class="badge badge-pill badge-success">{{hiringstatus}}</span>
+                </div>
+                <div class="col-md-2" *ngIf="data.candiadatePhoto!=null">
+                    <!-- <div class="avater">
+                        <img [src]="candidateProfile?.candiadatePhoto" width="170px" alt="">
+                    </div> -->
+                    <div class="circle">
+                        <img class="profile-pic" [src]="data?.candiadatePhoto">
+                    </div>
+                </div>
+            </div>
+            <div class="pb-1">
+                <span class="mr-3"><i class="las la-mobile"></i> {{data.phoneNo}}</span><span><i
+                        [class]="data.genderName=='Male'?'las la-male':'las la-female'"></i> {{data.genderName}}</span>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Age :</p>
+                <p class="d-inline-block">{{data.age}}Yrs</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Aadhar No. :</p>
+                <p class="d-inline-block">{{data.aadharNo}}</p>
+            </div>
+
+
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Home Town :</p>
+                <p class="d-inline-block">{{data.homeTown}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Native State :</p>
+                <p class="d-inline-block">{{data.nativeState}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Present State :</p>
+                <p class="d-inline-block">{{data.presentState}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Mother Tongue :</p>
+                <p class="d-inline-block">{{data.motherTongueName}}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Languages Known :</p>
+                <p class="d-inline-block">{{data.languageNames}}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Eye Sight Corrected :</p>
+                <p class="d-inline-block">{{data.eyeSightCorrected}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3" *ngIf="data.eyeSightCorrected!='No'">
+                <p class="d-inline-block grey">Right Eye :</p>
+                <p class="d-inline-block">{{data.eyeSightRight}}</p>
+            </div>
+            <div class="col-md-3" *ngIf="data.eyeSightCorrected!='No'">
+                <p class="d-inline-block grey">Left Eye :</p>
+                <p class="d-inline-block">{{data.eyeSightLeft}}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Father Occupation :</p>
+                <p class="d-inline-block">{{data.fatherOccupation}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Mother Occupation :</p>
+                <p class="d-inline-block">{{data.motherOccupation}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Disability :</p>
+                <p class="d-inline-block">{{data.disability}}</p>
+            </div>
+            <div class="col-md-9" *ngIf="data.disability!='No'">
+                <p class="d-inline-block grey">Disability Details :</p>
+                <p class="d-inline-block">{{data.disabilityDetails}}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Health Issue :</p>
+                <p class="d-inline-block">{{data.healthIssue}}</p>
+            </div>
+            <div class="col-md-9" *ngIf="data.healthIssue!='No'">
+                <p class="d-inline-block grey">Health Issue Details :</p>
+                <p class="d-inline-block">{{data.healthIssueDetails}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Siblings :</p>
+                <p class="d-inline-block">{{data.siblings}}</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        <hr>
+        <h6 class="red">Academic Details</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Course Status</th>
+                        <th>Specialization/Stream</th>
+                        <th>Institution</th>
+                        <th>Institution Location</th>
+                        <th>Year Of Passing</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of academicDataDetail">
+                        <td>{{data.courseName}}</td>
+                        <td>{{data.courseStatus}}</td>
+                        <td>{{data.streamName}}</td>
+                        <td>{{data.institution}}</td>
+                        <td>{{data.stateName}}</td>
+                        <td>{{data.yearOfPassing}}</td>
+                        <td>{{data.marks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngFor="let data of campusCandidateData.profileData">
+        <div>
+            <h6 class="red">Other Details</h6>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Willing for 3 year commitment :</label>
+                        {{data.commitment}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Willing to work anywhere in India :</label>
+                        {{data.anyWhere}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Job Type Priority :</label>
+                        {{data.jobPriority}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Critical factor which influence Job decision :</label>
+                        {{data.criticalFactor}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Most Preferred Benefit :</label>
+                        {{data.mostPreferdBenifit}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Extra Curricular Activities :</label>
+                        {{data.extraCurricularActivities}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row mt-3">
+
+            <div class="col-md-6">
+                <p>Resume :</p>
+                <div class="attach-file">
+                    <a (click)="openFile(data.resume)" style="cursor: pointer;" title="Download"><i
+                            class="las color-black la-paperclip"></i>Resume doc </a>
+                    <a (click)="openFile(data.resume)" style="cursor: pointer;"><i class="las la-download red"></i></a>
+                </div>
+            </div>
+            <!--  By Sayandeepon 05-08-2023-->
+            <!-- <div class="col-md-3">
+            <div class="form-group">
+                <label>Application Form :</label>
+                <div class="attach-file">
+                <a (click)="onclickDownload()" target=_blank title="Download"><i class="las color-black la-paperclip"></i>Sample.pdf </a>
+                <a (click)="onclickDownload()" target=_blank><i class="las la-download red"></i></a>
+            </div>
+            </div>
+        </div> -->
+            <!--  By Sayandeepon 05-08-2023-->
+            <div *ngIf="applicationFormData != undefined" class="col-md-3">
+                <div class="form-group">
+                    <label>Application Form :</label>
+                    <div class="attach-file">
+                        <a   (click)="viewapplicationform($event)"  href="" target=_blank title="Download"><i
+                                class="las color-black la-paperclip"></i>ApplicationForm.pdf </a>
+                        <a  (click)="viewapplicationform($event)"  href="" target=_blank><i class="las la-download red"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="candidateremarksList.length>0" class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr> 
+                    <th>Remarks For</th>
+                    <th>Remarks By</th>
+                    <th>Date</th>
+                    <th>Remarks</th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rec of candidateremarksList">
+                    <td>{{rec.statusName}}</td>
+                    <td>{{rec.empName}}</td> 
+                    <td>{{rec.createdOn | date: 'dd/MM/yyyy'}}</td> 
+                    <td>{{rec.remarks}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="showtest">
+        <hr>
+        <h6 class="red">Test Score</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Test Completion Date</th>
+                        <th class="text-center">Technical</th>
+                        <th class="text-center">Aptitude</th>
+                        <th class="text-center">Reading/Planning Excercise</th>
+                        <th class="text-center">Written Excercise/Emotional Maturity</th>
+                        <th class="text-center">Score Obtained</th>
+                        <th>Test Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of testResults">
+                        <td>{{data.testCompletionDate}}</td>
+                        <td class="text-center">{{data.technical}}</td>
+                        <td class="text-center">{{data.apptitude}}</td>
+                        <td class="text-center">{{data.readingExercise}}</td>
+                        <td class="text-center">{{data.writtenExercise}}</td>
+                        <td class="text-center">{{data.scoreObtained}}</td>
+                        <td>{{data.testResult}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <hr>
+        <h6 class="red">Interview Details</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Round</th>
+                        <th>Interview Date </th>
+                        <th>Panel Member</th>
+                        <th>Status</th>
+                        <th>Assesment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of interviewDetailsData;">
+                        <td>{{data.functionName}}</td>
+                        <td>{{data.roundName}}</td>
+                        <td>{{data.interviewDate}}</td>
+                        <td>{{data.pannelMemberName}}</td>
+                        <td>{{data.status}}</td>
+                        <td>{{data.assesmentstatus}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="printerdiv" style="display: none;">
+    <app-pdfapplicationform [candidateProfile]="applicationFormData"></app-pdfapplicationform>
+</div>
+<!-- Sayandeep -->

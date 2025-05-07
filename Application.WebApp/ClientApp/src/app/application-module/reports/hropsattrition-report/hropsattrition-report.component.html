@@ -1,0 +1,350 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Filters</h1>
+    </div>
+    <form [formGroup]="searchform" (ngSubmit)="formSubmit()">
+        <div class="filter-sec">
+            <div class="form-row m-t-10">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Employee Id</label>
+                        <input type="text" class="form-control" formControlName="employeeNo" #employeeNo
+                            placeholder="Enter Employee Id." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>DOJ</label>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="fromdatepicker"
+                                        placeholder="From Date" #fromDate formControlName="fromDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group datepiker date">
+                                    <input type="text" class="form-control pull-right datepicker" id="todatepicker"
+                                        placeholder="To Date" #toDate formControlName="toDate" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Employee Name</label>
+                        <input type="text" class="form-control" formControlName="fullName" #fullName
+                            placeholder="Enter Employment Name." autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Vertical</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue"
+                            formControlName="verticalId" #verticalId (change)="changeVertical()" name="verticalId"
+                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="false"
+                            [clearable]="false">
+                            <ng-option [value]="rec.verticalId" *ngFor="let rec of verticals">
+                                {{rec.verticalName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Function</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue" name="functionId"
+                            formControlName="functionId" #functionId (change)="changeFunction()"
+                            [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false" [searchable]="true"
+                            [clearable]="false">
+                            <ng-option [value]="rec.functionId" *ngFor="let rec of functions">
+                                {{rec.functionName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Department</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="departmentId"
+                            #departmentId name="departmentId" [placeholder]="'Select'" [appendTo]="'body'"
+                            [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.departmentId" *ngFor="let rec of departments">
+                                {{rec.departmentName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <ng-select class="selectpicker" bindLabel="venueName" class="ddltestvenue"
+                            formControlName="locationId" #locationId name="locationId" [placeholder]="'Select'"
+                            [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.locationId" *ngFor="let rec of locations">
+                                {{rec.locationOffice}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="gradeId" #gradeId
+                            name="gradeId" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                            [searchable]="true" [clearable]="false">
+                            <ng-option [value]="rec.gradeId" *ngFor="let rec of grades">
+                                {{rec.gradeName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mt-md-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="las la-filter"></i>Filter</button>
+                    <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                            class="las la-sync-alt"></i>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table id="dataTable1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial No.</th>
+                    <th>Candidate Id</th>
+                    <th>Employee Id</th>
+                    <th>Employee Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Age</th>
+                    <th>DOJ</th>
+                    <th>DOL</th>
+                    <th>DOR</th>
+                    <th>LWD</th>
+                    <th>Reason</th>
+                    <th>Requisition No</th>
+                    <th>Vertical</th>
+                    <th>Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Grade</th>
+                    <th>Position</th>
+                    <th>Source</th>
+                    <th>Candidate Owner</th>
+                    <th>Ref. Emp. Id</th>
+                    <th>Email Id</th>
+                    <th>Phone No</th>
+                    <th>Home Town</th>
+                    <th>Native State</th>
+                    <th>Present State</th>
+                    <th>Mother Tongue</th>
+                    <th>Languages known</th>
+                    <th>Fathers Occupation</th>
+                    <th>No of Siblings</th>
+                    <th>No of Brothers</th>
+                    <th>No of Sisters</th>
+                    <th>Maritial Status</th>
+                    <th>Spouse Occupation</th>
+                    <th>No of Children</th>
+                    <th>Highest Qualification</th>
+                    <th> Highest Qual- Course</th>
+                    <th>Highest Qual - Stream</th>
+                    <th>Highest Qual - Type</th>
+                    <th>Highest Qual - University/Board</th>
+                    <th>Highest Qual- Mark%</th>
+                    <th>Previous Work Exp(Years)</th>
+                    <th>Previous Work Exp(Months)</th>
+                    <th>MRF Experience(Years)</th>
+                    <th>MRF Experience(Months)</th>
+                    <th>Previous Employer</th>
+                    <th>Total Experience(Years)</th>
+                    <th>Total Experience(Months)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of hrOpsAttritionList;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.empNo}}</td>
+                    <td>{{data.empName}}</td>
+                    <td>{{data.genderName}}</td>
+                    <td>{{data.dob}}</td>
+                    <td>{{data.age}}</td>
+                    <td>{{data.doj}}</td>
+                    <td>{{data.dol}}</td>
+                    <td>{{data.dor}}</td>
+                    <td>{{data.lwd}}</td>
+                    <td>{{data.reasonName}}</td>
+                    <td>{{data.requisitionNo}}</td>
+                    <td>{{data.verticalName}}</td>
+                    <td>{{data.locationOffice}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.designation}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.positionName}}</td>
+                    <td>{{data.sourceChannelName}}</td>
+                    <td>{{data.candidateOwner}}</td>
+                    <td>{{data.refEmployeeId}}</td>
+                    <td>{{data.empEmailId}}</td>
+                    <td>{{data.contactNo}}</td>
+                    <td>{{data.permanentHomeTown}}</td>
+                    <td>{{data.nativeState}}</td>
+                    <td>{{data.presentState}}</td>
+                    <td>{{data.motherTongueName}}</td>
+                    <td>{{data.languagsKnown}}</td>
+                    <td>{{data.fatherOccupation}}</td>
+                    <td>{{data.noOfSibilings}}</td>
+                    <td>{{data.noOfBrothers}}</td>
+                    <td>{{data.noOfSisters}}</td>
+                    <td>{{data.maritialStatus}}</td>
+                    <td>{{data.spouseOccupation}}</td>
+                    <td>{{data.noOfChildren}}</td>
+                    <td>{{data.qualificationName}}</td>
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.streamName}}</td>
+                    <td>{{data.qualificationTypeName}}</td>
+                    <td>{{data.qulificationUniversityBoardName}}</td>
+                    <td>{{data.marksPercentage}}</td>
+                    <td>{{data.previousExperienceYear}}</td>
+                    <td>{{data.previousExperienceMonth}}</td>
+                    <td>{{data.mrfExperienceYear}}</td>
+                    <td>{{data.mrfExperienceMonth}}</td>
+                    <td>{{data.previousEmployer}}</td>
+                    <td>{{data.totalExperienceYear}}</td>
+                    <td>{{data.totalExperienceMonth}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="exportTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Serial No.</th>
+                    <th>Candidate Id</th>
+                    <th>Employee Id</th>
+                    <th>Employee Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Age</th>
+                    <th>DOJ</th>
+                    <th>DOL</th>
+                    <th>DOR</th>
+                    <th>LWD</th>
+                    <th>Reason</th>
+                    <th>Requisition No</th>
+                    <th>Vertical</th>
+                    <th>Location</th>
+                    <th>Function</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Grade</th>
+                    <th>Position</th>
+                    <th>Source</th>
+                    <th>Candidate Owner</th>
+                    <th>Ref. Emp. Id</th>
+                    <th>Email Id</th>
+                    <th>Phone No</th>
+                    <th>Home Town</th>
+                    <th>Native State</th>
+                    <th>Present State</th>
+                    <th>Mother Tongue</th>
+                    <th>Languages known</th>
+                    <th>Fathers Occupation</th>
+                    <th>No of Siblings</th>
+                    <th>No of Brothers</th>
+                    <th>No of Sisters</th>
+                    <th>Maritial Status</th>
+                    <th>Spouse Occupation</th>
+                    <th>No of Children</th>
+                    <th>Highest Qualification</th>
+                    <th> Highest Qual- Course</th>
+                    <th>Highest Qual - Stream</th>
+                    <th>Highest Qual - Type</th>
+                    <th>Highest Qual - University/Board</th>
+                    <th>Highest Qual- Mark%</th>
+                    <th>Previous Work Exp(Years)</th>
+                    <th>Previous Work Exp(Months)</th>
+                    <th>MRF Experience(Years)</th>
+                    <th>MRF Experience(Months)</th>
+                    <th>Previous Employer</th>
+                    <th>Total Experience(Years)</th>
+                    <th>Total Experience(Months)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of hrOpsAttritionList;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{data.candidateNo}}</td>
+                    <td>{{data.empNo}}</td>
+                    <td>{{data.empName}}</td>
+                    <td>{{data.genderName}}</td>
+                    <td>{{data.dob}}</td>
+                    <td>{{data.age}}</td>
+                    <td>{{data.doj}}</td>
+                    <td>{{data.dol}}</td>
+                    <td>{{data.dor}}</td>
+                    <td>{{data.lwd}}</td>
+                    <td>{{data.reasonName}}</td>
+                    <td>{{data.requisitionNo}}</td>
+                    <td>{{data.verticalName}}</td>
+                    <td>{{data.locationOffice}}</td>
+                    <td>{{data.functionName}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.designation}}</td>
+                    <td>{{data.gradeName}}</td>
+                    <td>{{data.positionName}}</td>
+                    <td>{{data.sourceChannelName}}</td>
+                    <td>{{data.candidateOwner}}</td>
+                    <td>{{data.refEmployeeId}}</td>
+                    <td>{{data.empEmailId}}</td>
+                    <td>{{data.contactNo}}</td>
+                    <td>{{data.permanentHomeTown}}</td>
+                    <td>{{data.nativeState}}</td>
+                    <td>{{data.presentState}}</td>
+                    <td>{{data.motherTongueName}}</td>
+                    <td>{{data.languagsKnown}}</td>
+                    <td>{{data.fatherOccupation}}</td>
+                    <td>{{data.noOfSibilings}}</td>
+                    <td>{{data.noOfBrothers}}</td>
+                    <td>{{data.noOfSisters}}</td>
+                    <td>{{data.maritialStatus}}</td>
+                    <td>{{data.spouseOccupation}}</td>
+                    <td>{{data.noOfChildren}}</td>
+                    <td>{{data.qualificationName}}</td>
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.streamName}}</td>
+                    <td>{{data.qualificationTypeName}}</td>
+                    <td>{{data.qulificationUniversityBoardName}}</td>
+                    <td>{{data.marksPercentage}}</td>
+                    <td>{{data.previousExperienceYear}}</td>
+                    <td>{{data.previousExperienceMonth}}</td>
+                    <td>{{data.mrfExperienceYear}}</td>
+                    <td>{{data.mrfExperienceMonth}}</td>
+                    <td>{{data.previousEmployer}}</td>
+                    <td>{{data.totalExperienceYear}}</td>
+                    <td>{{data.totalExperienceMonth}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="exportToExcel()">Export</button>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

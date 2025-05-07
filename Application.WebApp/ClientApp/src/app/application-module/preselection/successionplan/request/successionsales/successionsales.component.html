@@ -1,0 +1,261 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <h1 class="f-l">Succession Plan - Sales & Marketing</h1>
+    </div>
+    <!-- <form > -->
+    <div class="form-row m-t-10">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Sales Office <span class="required">*</span></label>
+                <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'" [multiple]="false"
+                    [searchable]="true" [clearable]="false" [(ngModel)]="selectedLocation"
+                    (change)="onLocationChange()">
+                    <ng-option *ngFor="let location of locations" [value]="location">
+                        {{location.locationNo}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Code</label>
+                <input type="text" class="form-control" disabled [value]="selectedLocationCode">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" class="form-control" disabled [value]="selectedLocationOffice">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <a href="javascript:void(0)" class="add_btn" (click)="startRequisition()"><span>+</span>Add</a>
+        </div>
+    </div>
+    <div *ngIf="showTable">
+        <div class="row m-t-10">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 70px;">EmpNo <span class="required">*</span></th>
+                                <th style="min-width: 160px;">Name</th>
+                                <th style="min-width: 160px;">Designation</th>
+                                <th style="min-width: 60px;">Grade</th>
+                                <th style="max-width: 120px; min-width:120px">Function <span class="required">*</span>
+                                </th>
+                                <th style="max-width: 50px;">Department <span class="required">*</span></th>
+                                <th style="min-width: 120px;">DOR <span class="required">*</span></th>
+                                <th style="max-width: 120px;">Pos. Status <span class="required">*</span></th>
+                                <th>Rep. Position <span class="required">*</span></th>
+                                <th style="max-width: 50px;">Rep. Grade <span class="required">*</span></th>
+                                <th>Type <span class="required">*</span></th>
+                                <th style="min-width: 120px;">Target <span class="required">*</span></th>
+                                <th>JD <span class="required">*</span></th>
+                                <th style="min-width: 160px;">Remarks</th>
+                                <th style="text-align: center;">Status</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control" [(ngModel)]="empNo"
+                                            (change)="changeEmpNo($event)">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control" disabled [(ngModel)]="empName">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control" disabled [(ngModel)]="designation">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control" disabled [(ngModel)]="oldGradeName">
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="hidden" [(ngModel)]="oldFunctionId" />
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control" disabled [(ngModel)]="oldFunctionName">
+                                    </div>
+                                    <!-- <div class="form-group m-0" style="width: 160px !important;">
+                                            <select class="selectpicker no-remove functions" data-container="body" title="Select" [(ngModel)]="selectedFunction"
+                                                (change)="onFunctionChange()">
+                                                <option *ngFor="let function of functions" [ngValue]="function">
+                                                    {{function.functionName}}
+                                                </option>
+                                            </select>
+                                        </div> -->
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 160px !important;">
+                                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                                            [multiple]="false" [searchable]="true" [clearable]="false"
+                                            [(ngModel)]="selectedDepartment" (change)="onDepartmentChange()">
+                                            <ng-option *ngFor="let department of departments" [value]="department">
+                                                {{department.departmentName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                [disabled]="isHoldStatus" id="datepicker" placeholder="DOR"
+                                                #dDate [(ngModel)]="dor" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 160px !important;">
+                                        <select class="selectpicker no-remove" data-container="body" title="Select"
+                                            [(ngModel)]="selectedReplacementStatus" (change)="onReplacementChange()">
+                                            <option *ngFor="let replacementStatus of replacementStatuses"
+                                                [ngValue]="replacementStatus">
+                                                {{replacementStatus.statusName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 160px !important;">
+                                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                                            [multiple]="false" [searchable]="true" [clearable]="false"
+                                            [(ngModel)]="selectedPosition" (change)="onPositionChange()"
+                                            [disabled]="isHoldStatus">
+                                            <ng-option *ngFor="let position of positions" [value]="position">
+                                                {{position.positionName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 120px !important;">
+                                        <select class="selectpicker hold" data-container="body" title="Select"
+                                            [(ngModel)]="selectedGrade">
+                                            <option *ngFor="let grade of grades" [ngValue]="grade">
+                                                {{grade.gradeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 110px !important;">
+                                        <ng-select bindLabel="domainName" [placeholder]="'Select'" [appendTo]="'body'"
+                                            [multiple]="false" [searchable]="true" [clearable]="false"
+                                            [(ngModel)]="selectedJobType" [disabled]="isHoldStatus">
+                                            <ng-option *ngFor="let jobtype of jobtypes" [value]="jobtype">
+                                                {{jobtype.jobTypeName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <!-- Previous -->
+                                    <!--  <div class="form-group m-0">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                id="datepicker1" placeholder="DOR" #dDate [(ngModel)]="dor">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group m-0">
+                                        <div class="input-group datepiker date">
+                                            <input type="text" class="form-control pull-right datepicker"
+                                                [disabled]="isHoldStatus" id="datepicker" placeholder="Target Date"
+                                                #tDate [(ngModel)]="targetDate" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"><i
+                                                        class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0" style="width: 190px !important;">
+                                        <select class="selectpicker no-remove hold" data-container="body" title="Select"
+                                            [(ngModel)]="selectedJobDescription">
+                                            <option *ngFor="let jobdescription of jobdescriptions"
+                                                [ngValue]="jobdescription">
+                                                {{jobdescription.jobDescriptionName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group m-0">
+                                        <input type="text" class="form-control" [(ngModel)]="remarks">
+                                        <!-- [disabled]="isHoldStatus" -->
+                                    </div>
+                                </td>
+                                <td>&nbsp; </td>
+                                <td class="text-center"><a href="javascript:void(0)" class="row-btn"
+                                        (click)="addRow()">+</a> </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr *ngFor="let data of successionDetailDataArray">
+                                <td>{{data.empNo}}</td>
+                                <td>{{data.empName}}</td>
+                                <td>{{data.designation}}</td>
+                                <td>{{data.oldGradeName}}</td>
+                                <td>{{data.functionName}}</td>
+                                <td>{{data.departmentName}}</td>
+                                <td>{{data.dor}}</td>
+                                <td>{{data.replacementStatusName}}</td>
+                                <td>{{data.positionName}}</td>
+                                <td>{{data.gradeName}}</td>
+                                <td>{{data.jobTypeName}}</td>
+                                <td>{{data.targetDate}}</td>
+                                <td>{{data.jobDescriptionName}}</td>
+                                <td>{{data.remarks}}</td>
+                                <td class="text-center"
+                                    *ngIf="data.replacementStatusId==2 || data.replacementStatusId==3"><img
+                                        src="../../../../assets/images/icon_sendforApproval.png"
+                                        alt="Send For Approval" /></td>
+                                <td class="text-center"
+                                    *ngIf="data.replacementStatusId==1 || data.replacementStatusId==4"><img
+                                        src="../../../../assets/images/icon_autoApproved.png" alt="Send For Approval" />
+                                </td>
+                                <td class="text-center"><a href="javascript:void(0)" (click)="removeRow(data.autoId)"
+                                        class="row-btn"><i class="las la-trash-alt"></i></a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary" (click)="formSubmit()"><i class="las la-save"></i>
+                    Submit</button>
+                <button type="button" class="btn btn-secondary" (click)="clearEntireForm()"><i
+                        class="las la-undo-alt"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,191 @@
+<div class="content" *ngIf="showList">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <div class="page-title-area pb-2 mb-2">
+                <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+                    <div>
+                        <h1 class="f-l">Panel Member Master</h1>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" (click)="onClickAddNew()" class="btn btn-primary btn-sm"><i
+                                class="las la-plus"></i> Add Panel Member</a>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="filter()">
+                <div class="filter-sec">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="verticalName" [placeholder]="'Select'" [appendTo]="'body'"
+                                    [multiple]="false" [searchable]="false" [clearable]="false"
+                                    formControlName="VerticalId" (change)="onChangeVertical($event)">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="FunctionId"
+                                    name="FunctionId" (change)="onChangeFunction($event)" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Panel Type</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="PanelTypeId"
+                                    name="PanelTypeId" (change)="onChangePanelType($event)" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                    <ng-option [value]="rec.id" *ngFor="let rec of PanelType">
+                                        {{rec.text}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-4">
+                            <button type="submit" class="btn btn-black btn-sm"><i class="las la-filter"></i>
+                                Filter</button>
+                            <button type="button" (click)="reset()" class="btn btn-secondary btn-sm ml-1"><i
+                                    class="las la-sync-alt"></i>
+                                Reset</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table id="dataTable1" class="table table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 60px;">Sl. No.</th>
+                            <th class="text-center">Vertical</th>
+                            <th class="text-center">Function</th>
+                            <th class="text-center">Panel Type</th>
+                            <th>Panel Members</th>
+                            <th>Active</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of panelMembersList;let i=index">
+                            <td class="text-center">{{i+1}}</td>
+                            <td class="text-center">{{data.verticalName}}</td>
+                            <td class="text-center">{{data.functionName}}</td>
+                            <td class="text-center">{{data.panelType}}</td>
+                            <td>{{data.empNameEmpNo}}</td>
+                            <td class="green" *ngIf="data.isActive==true">Active</td>
+                            <td class="red" *ngIf="data.isActive==false">Inactive</td>
+                            <td class="text-center">
+                                <div class="row-dropdown">
+                                    <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" data-boundary="window"><i
+                                            class="las la-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu custom-menu dropdown-menu-right"
+                                        aria-labelledby="dropdownMenuButton" data-boundary="window"
+                                        x-placement="bottom-end">
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            (click)="onClickEdit(data)"><i class="las la-pen"></i> Edit</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!showList">
+    <div class="container-fluid">
+        <div class="content-box m-b-15 m-t-10">
+            <!-- <div class="modal-header">                    
+            <h4 class="modal-title">Interview Panel</h4>
+        </div> -->
+            <div class="page-title-area pb-2 mb-2">
+                <a (click)="onBackClick()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">{{labelText}}</h1>
+            </div>
+            <form [formGroup]="saveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Vertical</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="VerticalId"
+                                    name="VerticalId" (change)="onChangeVertical($event)" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                    <ng-option [value]="rec.verticalId" *ngFor="let rec of VerticalList">
+                                        {{rec.verticalName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="FunctionId"
+                                    name="FunctionId" (change)="onChangeFunction($event)" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                    <ng-option [value]="rec.functionId" *ngFor="let rec of FunctionList">
+                                        {{rec.functionName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Panel Type</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue" formControlName="PanelTypeId"
+                                    name="PanelTypeId" (change)="onChangePanelType($event)" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="false" [searchable]="true" [clearable]="false">
+                                    <ng-option [value]="rec.id" *ngFor="let rec of PanelType">
+                                        {{rec.text}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Panel Members</label>
+                                <ng-select bindLabel="venueName" class="ddltestvenue people_pickr" formControlName="MemberId"
+                                    name="MemberId" [(ngModel)]="SelectedMemID" [placeholder]="'Select'"
+                                    [appendTo]="'body'" [multiple]="true" [searchable]="true" [clearable]="false">
+                                    <ng-option [value]="rec.autoUserId" *ngFor="let rec of UserRoleList">
+                                        {{rec.employeeName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="onCancelClick()"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-black btn-sm" [disabled]="saveForm.invalid">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- START: NGX-SPINNER -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<!-- START: NGX-SPINNER -->

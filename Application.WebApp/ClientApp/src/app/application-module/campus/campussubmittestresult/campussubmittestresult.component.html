@@ -1,0 +1,81 @@
+
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" class="back-btn" (click)="gotoRMRequisitionList()"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Submit Test Result</h1>
+    </div>
+    <div class="alert alert-warning">
+        <p>
+          <span style="color:red;">Note:</span>
+          While uploading test result, please convert the Aadhaar number field to Numeric before uploading.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="">Upload Test Result<span class="required">*</span><small class="font-italic grey">(Only CSV File)</small></label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" (change)="onFileChange($event.target.files)">
+                <label class="custom-file-label" for="customFile" #testResult></label>
+            </div>
+        </div>
+        <div class="mt-4 text-right">
+            <button type="button" class="btn btn-black" (click)="onupload()"><i class="las la-upload"></i>Upload</button>
+        </div>&nbsp;
+        <div class="mt-4 text-right">
+            <button type="button" class="btn btn-black" (click)="ExportReport()"><i class="las la-download"></i>Download Status Report</button>
+        </div>&nbsp;
+        <div class="mt-4 text-right">
+            <button type="button" class="btn btn-black" (click)="SampleFile()"><i class="las la-download"></i>Sample File</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-12">
+            <table class="table table-striped" id="dataTable1">
+                <thead>
+                    <tr>
+                        <th>Attempt Id</th>
+                        <th>Test Pin</th>
+                        <th>Candidate Id</th>
+                        <th>Name</th>
+                        <th>Email Id</th>
+                        <th>Aadhar No</th>
+                        <th>Contact No</th>
+                        <th>DOB</th>
+                        <th>Test Date</th>
+                        <th>Technical</th>
+                        <th>Apptitude</th>
+                        <th>Reading / Planning Exercise</th>
+                        <th>Written Exercise / Emotionaql Maturity</th>
+                        <th>Score Obtained</th>
+                        <th>Test Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of testResults">
+                        <td>{{data.attemptId}}</td>
+                        <td>{{data.testPin}}</td>
+                        <td>{{data.candidateNo}}</td>
+                        <td>{{data.fullName}}</td>
+                        <td>{{data.emailId}}</td>
+                        <td>{{data.aadharNo}}</td>
+                        <td>{{data.contactNo}}</td>
+                        <td>{{data.DOB}}</td>
+                        <td>{{data.testCompletionDate}}</td>
+                        <td>{{data.technical}}</td>
+                        <td>{{data.apptitude}}</td>
+                        <td>{{data.readingExercise}}</td>
+                        <td>{{data.writtenExercise}}</td>
+                        <td>{{data.scoreObtained}}</td>
+                        <td>{{data.testResult}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <div class="mt-4 text-right">
+                <button type="button" class="btn btn-primary">Cancel</button>
+                <button type="button" class="btn btn-black">Submit</button>
+            </div> -->
+        </div>
+    </div>
+
+
+</div>

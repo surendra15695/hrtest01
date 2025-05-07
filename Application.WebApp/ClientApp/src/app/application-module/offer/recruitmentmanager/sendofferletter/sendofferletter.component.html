@@ -1,0 +1,73 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" (click)="gotoCandidateList()" class="back-btn"><i class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Send Offer Letter</h1>
+    </div>
+    <div class="border-bottom mb-4">
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate Name:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.name}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Location:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.location}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Function:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.functionName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Position:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.position}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.grade}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Proposed Basic Salary P.M.:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.proposedBasic}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Proposed CTC:</p>
+                <p class="d-inline-block">{{offerLetterHeader?.proposedCTC}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="form-group">
+            <label>Edit Template</label>
+            <ckeditor [(ngModel)]="offerLetterTemplateDescription" [config]="ckeConfig"
+                                    debounce="500"></ckeditor>
+        </div>
+    </div>
+
+      <div class="mt-4 text-right">
+        <button type="button " class="btn btn-black ml-1" data-toggle="modal" (click)="yessubmitData()">Send to Candidate</button>
+        
+    </div>
+</div>
+<div class="modal fade" id="confirmPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="conPopIcon"><i class="las la-question-circle"></i></div>
+                <h6 class="conComment text-center">Are you sure you want to continue.</h6>
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-primary" #closeModal data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-black ml-2" (click)="submitData()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

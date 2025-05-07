@@ -1,0 +1,82 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <div class="d-flex align-items-center d-flex justify-content-between mb-2">
+            <div>
+                <a href="javascript:void(0)" class="back-btn" routerLink="/career/candidate-assessment-list"><i
+                        class="las la-arrow-circle-left"></i></a>
+                <h1 class="f-l">Take Assesment </h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h6 class="red text-uppercase">{{takeAssessmentData?.assessmentName}}</h6>
+        <div *ngIf="takeAssessmentData.assessmentTypeId=='1'">
+
+          <div class="form-group" *ngFor="let qstn of assessmentQuestionData;let i=index;">
+            <label>{{i+1}} {{qstn.assessmentQuestion}}</label>
+            <div *ngIf="qstn.assessmentQuestionTypeId=='1'">
+              <!-- [(ngModel)]="option.isAnswer" [value]="option.isAnswer" -->
+              <div class="rdio rdio-primary mb-1 d-md-inline"
+                   *ngFor="let option of qstn.assessmentQuestionAnswerOptionCandidate">
+                <input type="radio" name="{{qstn.assessmentQuestionId}}" [checked]="option.isAnswer"
+                       (change)="onChangeRadio(option)" id="{{option.assessmentQuestionAnswerOptionId}}"
+                       [disabled]="disabledField">
+                <label for="{{option.assessmentQuestionAnswerOptionId}}">{{option.assessmentAnswer}}</label>
+              </div>
+            </div>
+            <div *ngIf="qstn.assessmentQuestionTypeId=='2'">
+              <div *ngFor="let textanswer of qstn.assessmentQuestionAnswerOptionCandidate">
+                <textarea class="form-control" placeholder="Write answer" [(ngModel)]="textanswer.assessmentAnswer"
+                          [disabled]="disabledField" (change)="onChangeTextValue(textanswer,qstn)"></textarea>
+              </div>
+            </div>
+
+            <div *ngIf="qstn.assessmentQuestionTypeId=='3'">
+              <div class="form-row">
+                <div class="col" *ngFor="let option of qstn.assessmentQuestionAnswerOptionCandidate">
+                  <label class="checkbox_label" for="{{option.assessmentQuestionAnswerOptionId}}">
+                    {{option.assessmentAnswer}}
+                    <input type="checkbox" name="{{qstn.assessmentQuestionId}}" [checked]="option.isAnswer"
+                           (change)="onChangeCheck(option,$event)" id="{{option.assessmentQuestionAnswerOptionId}}"
+                           [disabled]="disabledField">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+    </div>
+    <div class="mt-4" *ngIf="!disabledField">
+        <button  type="button" class="btn btn-black" (click)="onSubmitAssessmentAnswer()">Submit</button>
+        <button  type="button" class="btn btn-primary ml-1" (click)="onClickCancel()">Cancel</button>
+    </div>
+    <div *ngIf="assessmentTypeName=='Practical'" class="table-responsive my-4">
+      <table id="dataTable1" class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Employee ID</th>
+                  <th>Employee Name</th>
+                  <th>Evaluator Comments</th>
+                  <th class="text-center">Score</th>
+                  <th>Remarks</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let data of uploadeddetailsarray">
+                  <td>{{data.empNo}}</td>
+                  <td>{{data.empName}}</td>
+                  <td>{{data.evaluatorComments}}</td>
+                  <td class="text-center">{{data.score}}</td>
+                  <td>{{data.remarks}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

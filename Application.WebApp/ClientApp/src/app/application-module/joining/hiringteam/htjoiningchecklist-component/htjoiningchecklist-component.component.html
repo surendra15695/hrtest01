@@ -1,0 +1,117 @@
+<div class="content-box m-b-15 m-t-10">
+    <div class="page-title-area pb-2 mb-2">
+        <a href="javascript:void(0)" class="back-btn" (click)="backToViewCandidatelist()"><i
+                class="las la-arrow-circle-left"></i></a>
+        <h1 class="f-l">Joining Checklist</h1>
+    </div>
+    <div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Candidate ID:</p>
+                <p class="d-inline-block">{{rmJoiningCheckListData?.candidateNo}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Name:</p>
+                <p class="d-inline-block">{{rmJoiningCheckListData?.candidateFullName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Posting Location:</p>
+                <p class="d-inline-block">{{rmJoiningCheckListData?.locationName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Designation:</p>
+                <p class="d-inline-block">{{rmJoiningCheckListData?.designationName}}</p>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="col-md-3">
+                <p class="d-inline-block grey">Grade:</p>
+                <p class="d-inline-block">{{rmJoiningCheckListData?.gradeName}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="d-inline-block grey">DOJ:</p>
+                <p class="d-inline-block">{{rmJoiningCheckListData?.dateofJoining}}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div>
+        <h6 class="red text-uppercase">Onboarding Checklist</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 40px;">Sl. No.</th>
+                        <th style="width: 150px;">Document Name</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of rmJoiningCheckDocumentDate;let i=index;">
+                        <td class="text-center">{{i+1}}</td>
+                        <td>{{data.doumentName}}
+                            <!-- <div class="attach-file">
+                                <a *ngIf="data.documentPath!=''" href="{{data.documentPath}}" target="_blank"
+                                    title="Download"><i class="las color-black la-paperclip"></i>Document</a>
+                                <a *ngIf="data.documentPath==''" href="javascript:void(0)"
+                                    (click)="downLoadPDF(data.doumentNameId)" title="Download"><i
+                                        class="las color-black la-paperclip"></i>Document</a>
+                                <a *ngIf="data.documentPath!=''" href="{{data.documentPath}}" target="_blank"><i
+                                        class="las la-download red"></i></a>
+                                <a *ngIf="data.documentPath==''" href="javascript:void(0)"
+                                    (click)="downLoadPDF(data.doumentNameId)"><i class="las la-download red"></i></a>
+                            </div> -->
+                        </td>
+                        <td *ngIf="data.approvalStatus==3" class="green" style="width: 130px;">Approved</td>
+                        <!-- <td *ngIf="data.approvalStatus=='3'" class="green" style="width: 130px;">{{data.approvalStatus}}</td> -->
+                        <td *ngIf="data.approvalStatus==1" class="yellow" style="width: 130px;">Pending</td>
+                        <!-- <td *ngIf="data.approvalStatus=='1'" class="yellow" style="width: 130px;">{{data.approvalStatus}}</td> -->
+                        <td *ngIf="data.approvalStatus==2" class="red" style="width: 130px;">Need Clarification</td>
+                        <td *ngIf="data.approvalStatus==0" class="red" style="width: 130px;">NA</td>
+                        <!-- <td *ngIf="data.approvalStatus=='2'" class="red" style="width: 130px;">{{data.approvalStatus}}</td> -->
+                        <td><input type="text" class="form-control" [(readonly)]="readremarks"
+                                [(ngModel)]="data.remarks"></td>
+                    </tr>
+                    <!-- <tr>
+                        <td class="text-center">2</td>
+                        <td>Resume</td>
+                        <td class="green" style="width: 130px;">Verified</td>
+                        <td><textarea class="form-control"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>Interview Assessment</td>
+                        <td class="yellow" style="width: 130px;">Pending</td>
+                        <td><textarea class="form-control"></textarea></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="button" class="btn btn-black mr-2" (click)="onClickSave()">Save</button>
+        <button type="button" class="btn btn-primary" (click)="onClickCancel()">Cancel</button>
+    </div>
+</div>
+
+
+<!-- for showing loader -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="printFamilyDetailsDiv" style="display: none;">
+    <app-pdffamilydetailsform [familyDetailsRecord]="familyDetailsData"></app-pdffamilydetailsform>
+</div>
+
+<div id="printJoiningReport" style="display: none;">
+    <app-pdfjoiningreportform [inductionRecord]="joiningReportData"></app-pdfjoiningreportform>
+</div>
+<div id="printAccidentInsurancePolicy" style="display: none;">
+    <app-pdfpersonalaccidentinsuranceform [accidentInsurancePolicyRecord]="accidentInsurancePolicyData">
+    </app-pdfpersonalaccidentinsuranceform>
+</div>
+<div id="printSEBIDisclosure" style="display: none;">
+    <app-pdfsebiinitialdisclosureform [sebiDisclosureRecord]="SEBIDisclosureData"></app-pdfsebiinitialdisclosureform>
+</div>

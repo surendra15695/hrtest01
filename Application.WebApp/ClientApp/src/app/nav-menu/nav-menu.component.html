@@ -1,0 +1,244 @@
+<div class="topbar">
+  <button class="button-menu-mobile open-left waves-effect waves-primary">
+    <i class="fa fa-bars"></i>
+  </button>
+  <div class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <a class="logo-area" href="javascript:void(0);"><img src="assets/images/logo.png" width="74" height="56"
+              alt="" /></a>
+        </li>
+      </ul>
+      <div>
+        <a *ngIf="showEDMSLinkVisible" href="{{edmslink}}login/otp-authentication/{{autoUserId}}"
+          target="_blank" style="    margin: 14px 45px;
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 500;
+      color: #fff;">MRF EDMS <i class="fa fa-arrow-circle-right"></i></a>
+
+      <!-- Local path :  http://localhost:4200/login/otp-authentication/{{autoUserId}}-->
+      <!-- Server Path : https://mrfedms-app.azurewebsites.net/login/otp-authentication/{{autoUserId}} -->
+
+
+        <div class="dropdown user show">
+
+          <a href="#" data-toggle="dropdown" id="dropdownMenuLink" aria-expanded="false" aria-haspopup="true"
+            role="button">
+            <div class="name">{{userName}}</div>
+            <!--by kuntal-->
+            <div class="name">( {{userId}} )</div>
+
+
+            <div id="propic" class="user-img"><img alt="" src="assets/images/user-icon.png"></div>
+          </a>
+          <!-- <ul class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <li><a id="previousSiteUrl" href="#"><i class="fa fa-cog" aria-hidden="true"></i>Home</a></li>
+              <li><a id="signout" href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>log out</a></li>
+          </ul> -->
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="javascript:void(0)"><i class="las la-home"></i> Home</a>
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#changePasswordModal"><i
+                class="las la-key"></i> Change Password</a>
+            <a class="dropdown-item" href="javascript:void(0)" (click)="onlogout()"><i class="las la-sign-out-alt"></i>
+              Log Out</a>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+<!-- ========== Left Sidebar Start ========== -->
+<div class="left side-menu">
+  <!-- <div data-simplebar class="sidebar-inner slimscrollleft"> -->
+  <div data-simplebar class="sidebar-inner">
+    <div id="sidebar-menu">
+      <ul class="sidebar-menu" data-widget="tree">
+        <!-- <li class="has_sub">
+          <a href="javascript:void(0);"><i class="las la-sitemap"></i><span>Admin</span><span class="menu-arrow"></span></a>
+          <ul>
+            <li><a href="javascript:void(0);"><span>User Management</span></a></li>
+            <li><a href="javascript:void(0);"><span>JD Management</span></a></li>
+            <li><a href="javascript:void(0);"><span>JD Library</span></a></li>
+            <li><a href="javascript:void(0);"><span>Employee Master</span></a></li>
+            <li><a href="javascript:void(0);"><span>Location Master</span></a></li>
+            <li><a href="javascript:void(0);"><span>Position Master</span></a></li>
+            <li><a href="javascript:void(0);"><span>Document Management</span></a></li>
+          </ul>
+        </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);"><i class="las la-plus"></i><span>New Request</span><span
+              class="menu-arrow"></span></a>
+          <ul class="list-unstyled">
+            <li><a routerLink="/requisition/plant">Plant</a></li>
+            <li><a href="javascript:void(0);">Corporate</a></li>
+            <li><a href="javascript:void(0);">Sales & Marketing</a></li>
+            <li><a href="javascript:void(0);">Hold Release</a></li>
+          </ul>
+        </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);"><i class="las la-exchange-alt"></i><span>Replacement
+              Request</span><span class="menu-arrow"></span></a>
+          <ul class="list-unstyled">
+            <li class="has_sub">
+              <a href="javascript:void(0);"><span>Resignation</span><span class="menu-arrow"></span></a>
+              <ul class="list-unstyled">
+                <li><a href="javascript:void(0);">Plant</a></li>
+                <li><a href="javascript:void(0);">Corporate</a></li>
+                <li><a href="javascript:void(0);">Sales & Marketing</a></li>
+                <li><a href="javascript:void(0);">Hold Release</a></li>
+              </ul>
+            </li>
+            <li class="has_sub">
+              <a href="javascript:void(0);"><span>Succession Plan</span><span class="menu-arrow"></span></a>
+              <ul class="list-unstyled">
+                <li><a href="javascript:void(0);">Plant</a></li>
+                <li><a href="javascript:void(0);">Corporate</a></li>
+                <li><a href="javascript:void(0);">Sales & Marketing</a></li>
+                <li><a href="javascript:void(0);">Hold Release</a></li>
+              </ul>
+            </li>
+            <li class="has_sub">
+              <a href="javascript:void(0);"><span>Transfer</span><span class="menu-arrow"></span></a>
+              <ul class="list-unstyled">
+                <li><a href="javascript:void(0);">Plant</a></li>
+                <li><a href="javascript:void(0);">Corporate</a></li>
+                <li><a href="javascript:void(0);">Sales & Marketing</a></li>
+                <li><a href="javascript:void(0);">Hold Release</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:void(0);"><i class="las la-edit"></i><span>My Action</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0);"><i class="las la-file-alt"></i><span>Reports</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0);"><i class="las la-tachometer-alt"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0);"><i class="las la-search"></i><span>Profile Search</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0);"><i class="las la-user-tie"></i><span>Employee
+              Profile</span></a>
+        </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);"><i class="las la-lightbulb"></i><span>Talent
+              Pipeline</span><span class="menu-arrow"></span></a>
+          <ul class="list-unstyled">
+            <li><a href="javascript:void(0);">Campus</a></li>
+            <li><a href="javascript:void(0);">Off Campus</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:void(0);"><i class="las la-exclamation-triangle"></i><span>Critical
+              Request</span></a>
+        </li> -->
+
+        <li [class]="link.subMenu.length>0?'has_sub':'no_sub'" *ngFor="let link of userMenus ; let i = index;">
+          <a [routerLink]="link.subMenu.length==0 ? link.subUrl : null" (click)="onClickMenuData(link)"><i
+              [class]="link.iconUrl"></i><span>{{link.moduleName}}</span><span class="menu-arrow"
+              *ngIf="link.subMenu.length>0"></span></a>
+          <ul class="list-unstyled" *ngIf="link.subMenu">
+            <li *ngFor="let sublink of link.subMenu">
+              <a [routerLink]="sublink.subUrl" (click)="onClickSubMenu(sublink)">{{sublink.moduleName}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<!-- Left Sidebar End -->
+
+<!-- Added By Anif on 06-08-2022 -->
+
+<!-- Modal -->
+<div class="modal fade" id="changePasswordModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <!-- Modal content-->
+    <form [formGroup]="changePasswordForm" (ngSubmit)="actionFormSubmit()" autocomplete="off">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="las la-times"></i></button>
+          <h4 class="modal-title">Change Password</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Old Password <span class="red">*</span></label>
+                <input type="text" class="form-control" formControlName="oldPassword">
+                <p class="error-msg"
+                  *ngIf="changePasswordForm.controls['oldPassword'].touched && !changePasswordForm.controls['oldPassword'].valid">
+                  <span
+                    *ngIf="changePasswordForm.controls['oldPassword'].hasError('required') || changePasswordForm.controls['oldPassword']==''">Please
+                    Enter Password</span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>New Password <span class="red">*</span></label>
+                <input type="password" class="form-control" formControlName="newPassword"
+                  (keyup)="onNewPasswordPress($event)">
+                <!--  (keyup)="onNewPasswordPress($event)" -->
+                <p class="error-msg"
+                  *ngIf="changePasswordForm.controls['newPassword'].touched && !changePasswordForm.controls['newPassword'].valid">
+                  <span
+                    *ngIf="changePasswordForm.controls['newPassword'].hasError('required') || changePasswordForm.controls['newPassword']==''">Please
+                    Enter Password</span>
+                  <span *ngIf="changePasswordForm.controls['newPassword'].hasError('pattern') "
+                    title="Password should be atleast 8 characters long and should contain one number,one character and one special character">Invalid
+                    Password<i class="fa fa-info-circle"></i></span>
+                  <span class="error-msg" style="position: relative; margin-left: 5px" *ngIf="newPassMissmatch">Password
+                    doesn't match</span>
+
+                </p>
+                <!-- <p class="error-msg" *ngIf="newPassMissmatch">Password doesn't match</p> -->
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Confirm Password <span class="red">*</span></label>
+                <input [type]="passwordhide ? 'password' : 'text'" class="form-control" formControlName="cnfNewPassword"
+                  (keyup)="onCnfPasswordPress($event)">
+                  <i [class]="passwordhide ? 'fa fa-fw field-icon toggle-password fa-eye' :'fa fa-fw field-icon toggle-password fa-eye-slash'" id="togglePassword" style="position: absolute; right:10px; bottom: 10px;" (click)="onclickeye()"></i>
+                <p class="error-msg"
+                  *ngIf="changePasswordForm.controls['cnfNewPassword'].touched && !changePasswordForm.controls['cnfNewPassword'].valid">
+                  <span
+                    *ngIf="changePasswordForm.controls['cnfNewPassword'].hasError('required') || changePasswordForm.controls['cnfNewPassword']==''">Please
+                    Enter Password</span>
+                  <!-- <span class="error-msg" style="position: relative; margin-left: 5px" *ngIf="cnfPasswordMissmatch">Password doesn't match</span> -->
+                </p>
+                <p class="error-msg" style="position: relative; margin-left: 5px"
+                  *ngIf="cnfPasswordMissmatch && changePasswordForm.controls['cnfNewPassword'].valid">Password doesn't
+                  match</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-black btn-sm" (click)="actionFormSubmit()">Submit</button> -->
+          <button type="submit" class="btn btn-black btn-sm">Submit</button>
+
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- Modal  end -->
+
+<!-- Test 20-09-2022 -->
