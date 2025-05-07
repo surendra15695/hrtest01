@@ -30,11 +30,16 @@ jobs:
         node-version: ${{env.Node_Version}}
 
     - name: Install Angular
-      run: npm install -g @angular@cli@8.3.29
+      run: npm install -g @angular/cli@8.3.29
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Publish
+      run: |
+        dotnet publish --configuration Release --output ./output
+        ls -l
 
    
