@@ -10,7 +10,8 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'       # set this to the path to your function app project, defaults to the repository root
   DOTNET_VERSION: '3.1'
   Node_Version: '16.13.0'
-  Working-Directory: Application.WebApp
+  WORKING_DIRECTORY: Application.WebApp
+  AZURE_WEBAPP_PACKAGE_PATH: .\publish
 
 jobs:
   build-and-deploy:
