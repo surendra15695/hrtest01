@@ -46,7 +46,7 @@ jobs:
       run: dotnet restore
 
     - name: Build Application
-      run: dotnet Build
+      run: dotnet build
 
     - name: Publish
       run: |
