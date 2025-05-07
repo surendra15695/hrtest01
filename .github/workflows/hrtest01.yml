@@ -45,13 +45,11 @@ jobs:
     #- name: Restore Dependencies
      # run: dotnet restore
 
-    - name: Build Application
-      run: dotnet build
+    #- name: Build Application
+     # run: dotnet build
 
     - name: Publish
       run: |
-        cd Application.WebApp
-        ls -l
         dotnet publish --output ./output
         ls -l
 
