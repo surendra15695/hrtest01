@@ -29,6 +29,15 @@ jobs:
       with:
         node-version: ${{env.Node_Version}}
 
+    - name: Install LibSSL
+      run: |
+        wget https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_0c/openssl-1.1.0c.tar.gz
+        tar -xzvf openssl-1.1.1c.tar.gz
+        cd openssl-1.1.1c
+        ./config
+        make
+        sudo make install
+
     - name: Install Angular
       run: npm install -g @angular/cli@8.3.29
 
