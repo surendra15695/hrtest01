@@ -44,8 +44,8 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    #- name: Restore Dependencies
-    #  run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Restore Dependencies
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
     #- name: Build Application
      # run: dotnet build
