@@ -47,8 +47,8 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
-    #- name: Build Application
-     # run: dotnet build
+    - name: Build Application
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}"
 
     - name: Publish
       run: |
