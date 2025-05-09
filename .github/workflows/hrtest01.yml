@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_NAME: 'hrtest01'   # set this to your function app name on Azure
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'       # set this to the path to your function app project, defaults to the repository root
+  AZURE_WEBAPP_NAME: 'hrtest01'   # set this to your function app name on Azure
+  AZURE_WEBAPP_PACKAGE_PATH: '.'       # set this to the path to your function app project, defaults to the repository root
   DOTNET_VERSION: '3.1'
   Node_Version: '16.13.0'
   WORKING_DIRECTORY: "/home/runner/work/hrtest01/hrtest01/Application.WebApp"
@@ -56,5 +56,23 @@ jobs:
         #dotnet nuget locals all --clear
         dotnet publish "${{ env.WORKING_DIRECTORY }}" --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
         ls -l
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: hrtest-app
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: hrtest-app
 
+    - name: Deploy to Webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
    
