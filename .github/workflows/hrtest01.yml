@@ -47,13 +47,13 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
-    - name: Build Application
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}"
+    #- name: Build Application
+     # run: dotnet build "${{ env.WORKING_DIRECTORY }}"
 
     - name: Publish
       run: |
         #dotnet publish --output ./output
-        dotnet publish "${{ env.WORKING_DIRECTORY }}" --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+        dotnet publish "${{ env.WORKING_DIRECTORY }}" --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
         ls -l
 
    
