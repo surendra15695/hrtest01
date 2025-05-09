@@ -11,7 +11,7 @@ env:
   DOTNET_VERSION: '3.1'
   Node_Version: '16.13.0'
   WORKING_DIRECTORY: "/home/runner/work/hrtest01/hrtest01/Application.WebApp"
-  AZURE_WEBAPP_PACKAGE_PATH: .\publish
+  AZURE_WEBAPP_PUBLISH_PATH: .\publish
 
 jobs:
   build-and-deploy:
@@ -54,13 +54,13 @@ jobs:
       run: |
         #dotnet publish --output ./output
         #dotnet nuget locals all --clear
-        dotnet publish "${{ env.WORKING_DIRECTORY }}" --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+        dotnet publish "${{ env.WORKING_DIRECTORY }}" --output "${{ env.AZURE_WEBAPP_PUBLISH_PATH }}"
         ls -l
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: hrtest-app
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: ${{ env.AZURE_WEBAPP_PUBLISH_PATH }}
   deploy:
     runs-on: ubuntu-latest
     steps:
