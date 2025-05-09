@@ -53,7 +53,7 @@ jobs:
     - name: Publish
       run: |
         #dotnet publish --output ./output
-        dotnet publish "${{ env.WORKING_DIRECTORY }}" --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+        dotnet publish --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
         ls -l
 
    
