@@ -11,7 +11,7 @@ env:
   DOTNET_VERSION: '3.1'
   Node_Version: '16.13.0'
   WORKING_DIRECTORY: "/home/runner/work/hrtest01/hrtest01/Application.WebApp"
-  AZURE_WEBAPP_PUBLISH_PATH: .\publish
+  AZURE_WEBAPP_PUBLISH_PATH: publish
 
 jobs:
   build-and-deploy:
