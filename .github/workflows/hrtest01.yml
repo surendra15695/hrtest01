@@ -44,8 +44,8 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    #- name: Restore Dependencies
-     # run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Restore Dependencies
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
     #- name: Build Application
      # run: dotnet build "${{ env.WORKING_DIRECTORY }}"
@@ -53,8 +53,8 @@ jobs:
     - name: Publish
       run: |
         #dotnet publish --output ./output
-        dotnet nuget locals all --clear
-        dotnet publish --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+        #dotnet nuget locals all --clear
+        dotnet publish "${{ env.WORKING_DIRECTORY }}" --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
         ls -l
 
    
