@@ -6,14 +6,14 @@ export const environment = {
 
   production: true,
   //local
-  apiurl: 'https://localhost:5001/api',
-  apppath: 'https://localhost:5001',
-  apiKey: "embee.co.in",
+  //apiurl: 'https://localhost:5001/api',
+  //apppath: 'https://localhost:5001',
+  //apiKey: "embee.co.in",
 
   //For UAT AppGateway
-  // apiurl: 'https://mrfconnectuat.mrfindia.net/api',
-  // apppath: 'https://mrfconnectuat.mrfindia.net:5001',
-  // apiKey: "embee.co.in",
+   apiurl: 'https://mrfconnectuat.mrfindia.net/api',
+   apppath: 'https://mrfconnectuat.mrfindia.net:5001',
+   apiKey: "embee.co.in",
 
   //campus link for UAT
   //campuslink: "https://mrfconnectuat.mrfindia.net",
